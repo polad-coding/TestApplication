@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\polad\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\polad\\.nuget\\packages"
+    ]
+  }
+}
