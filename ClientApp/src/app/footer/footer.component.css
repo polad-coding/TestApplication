@@ -1,0 +1,25 @@
+#footer {
+  height: 200px;
+  width:100%;
+  background-color: #006F91;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+  #footer img {
+    align-self: end;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  }
+
+.footer-section {
+  display: flex;
+}
+
+.footer-section-texts {
+  display: flex;
+  flex-flow:column;
+  align-items: center;
+  color: white;
+  font-family: barlowSemiCondensedMedium;
+}

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TestApplication.Data;
+using KPProject.Data;
 
-namespace TestApplication.Migrations
+namespace KPProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210228190735_testMigration")]

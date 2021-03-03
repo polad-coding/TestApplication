@@ -1,0 +1,224 @@
+#kp-values-in-action {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  background-color: #006F91;
+  background-image: url('../../assets/KP-logotype/KP-logotype-Bk-empty.svg');
+  background-repeat: no-repeat;
+  background-size:600px;
+  background-position-x:right;
+  flex-flow:column;
+  margin-top:10px;
+}
+
+#kp-values-in-action-kp-text{
+    color:white;
+    font-size:8vw;
+    font-family:barlowSemiCondensedThin;
+    width:70%;
+    display:flex;
+    justify-content:end;
+    align-items:end;
+    line-height:120px;
+    margin-top:50px;
+}
+
+#kp-values-in-action-values-text {
+  width: 70%;
+  color: white;
+  font-family: barlowSemiCondensedBold;
+  font-size: 4vw;
+  display: flex;
+  justify-content: end;
+  align-items:start;
+}
+
+
+.kp-main-page-even-section {
+  height: 350px;
+  display: flex;
+}
+
+.kp-main-page-even-section-image {
+  height: 100%;
+  width: 35%;
+  padding-left: 50px;
+}
+
+.kp-main-page-even-section-texts {
+  display: flex;
+  flex-flow: column;
+  margin-top: 15px;
+  font-family: barlowSemiCondensedLight;
+  color: #187293;
+  width:65%;
+}
+
+#kp-vpm-header {
+  font-family: barlowSemiCondensedLight;
+  font-size: 4vw;
+  color: #187293;
+  line-height:60px;
+}
+
+#kp-vpm-description {
+  font-family: barlowSemiCondensedLight;
+  font-size: 1.3vw;
+  color: #187293;
+  width:89%;
+  margin-top:10px;
+}
+
+.kp-leaf-button {
+  width: 55px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #187293;
+  border: none;
+  margin-top: 10px;
+}
+
+  .kp-leaf-button img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    max-width: 100%;
+    max-height: 100%;
+    transform: scale(1.6);
+  }
+
+#kp-the-values-perspectives-survey{
+    display:flex;
+    height:350px;
+}
+
+#kp-vps-texts {
+  width: 75%;
+  height: calc(100% - .5px);
+  background-color: #9AC7EC;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: end;
+  text-align: right;
+  font-family: barlowSemiCondensedLight;
+  color: #187293;
+  padding-right: 30px;
+}
+
+#kp-vps-texts-header {
+  font-size: 3.9vw;
+  line-height: 60px;
+}
+
+#kp-vps-texts-description {
+  font-size: 1.8vw;
+  line-height: 30px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+  #kp-vps-image {
+    width: 25%;
+    height: 100%;
+  }
+
+#kp-blog-section-texts {
+  align-items: start;
+  justify-content: center;
+}
+
+#kp-blog-section-picture {
+  filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding-top:30px;
+}
+
+  #kp-blog-section-picture img {
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+
+
+#kp-main-page-slideshow {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+}
+
+#kp-main-page-slideshow div{
+    width:300px;
+    height:300px;
+}
+
+  #kp-main-page-slideshow div:nth-child(even) {
+    background-color: #006F91;
+  }
+
+  #kp-main-page-slideshow div:nth-child(odd) {
+    background-color: #9AC7EC;
+  }
+
+
+#kp-main-page-resources-texts{
+    display:flex;
+    justify-content:center;
+    align-items:end;
+}
+
+#kp-main-page-resources-image img {
+  filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
+  margin-top:40px;
+}
+
+#kp-main-page-paractitioners-section{
+    height:350px;
+    width:100%;
+    display:flex;
+}
+
+#kp-main-page-paractitioners-image{
+    width:22%;
+    height:100%;
+}
+
+#kp-main-page-paractitioners-texts {
+  width: 78%;
+  height: calc(100% - 0.5px);
+  display: flex;
+  flex-flow: column;
+  font-family: barlowSemiCondensedLight;
+  color: white;
+  background-color: #90BFC5;
+  justify-content: center;
+  padding-left: 40px;
+}
+
+#kp-main-page-become-practitioner-section{
+    display:flex;
+    height:350px;
+    width:100%;
+}
+
+#kp-main-page-become-practitioner-section-image{
+    width:22%;
+    height:100%;
+}
+
+  #kp-main-page-become-practitioner-section-image img {
+    filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
+  }
+
+#kp-main-page-become-practitioner-section-texts {
+  width: 78%;
+  display: flex;
+  flex-flow: column;
+  font-family: barlowSemiCondensedLight;
+  color: #187293;
+  justify-content: center;
+  padding-left: 40px;
+  width: 100%;
+}

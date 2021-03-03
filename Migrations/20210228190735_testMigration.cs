@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TestApplication.Migrations
+namespace KPProject.Migrations
 {
     public partial class testMigration : Migration
     {

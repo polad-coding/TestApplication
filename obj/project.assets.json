@@ -9498,9 +9498,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\polad\\source\\repos\\TestApplication\\TestApplication.csproj",
-      "projectName": "TestApplication",
-      "projectPath": "C:\\Users\\polad\\source\\repos\\TestApplication\\TestApplication.csproj",
+      "projectUniqueName": "C:\\Users\\polad\\source\\repos\\TestApplication\\KPProject.csproj",
+      "projectName": "KPProject",
+      "projectPath": "C:\\Users\\polad\\source\\repos\\TestApplication\\KPProject.csproj",
       "packagesPath": "C:\\Users\\polad\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\polad\\source\\repos\\TestApplication\\obj\\",
       "projectStyle": "PackageReference",

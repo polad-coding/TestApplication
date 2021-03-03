@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TestApplication.Data;
-using TestApplication.Models;
+using KPProject.Data;
+using KPProject.Models;
 
-namespace TestApplication
+namespace KPProject
 {
     public class Startup
     {

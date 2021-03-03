@@ -1,16 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+html *{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
 }
 
-code {
-  color: #e01a76;
+html{
+    height:100vh;
+    width:100%;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+
+@font-face{
+    font-family:barlowSemiCondensedMedium;
+    src:url('../../wwwroot/Fonts/BarlowSemiCondensed-Medium.ttf') format('truetype');
+}
+@font-face{
+    font-family:barlowSemiCondensed;
+    src:url('../../wwwroot/Fonts/BarlowSemiCondensed-Black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensedThin;
+  src: url('../../wwwroot/Fonts/BarlowSemiCondensed-Thin.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: barlowSemiCondensedBold;
+  src: url('../../wwwroot/Fonts/BarlowSemiCondensed-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensedLight;
+  src: url('../../wwwroot/Fonts/BarlowSemiCondensed-Light.ttf') format('truetype');
 }

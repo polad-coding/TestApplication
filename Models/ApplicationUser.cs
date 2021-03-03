@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestApplication.Models
+namespace KPProject.Models
 {
     public class ApplicationUser : IdentityUser
     {

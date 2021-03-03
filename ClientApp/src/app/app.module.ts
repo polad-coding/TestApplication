@@ -7,12 +7,15 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HomeComponent } from './home/home.component';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, HomeComponent, NavigationBarComponent, FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,6 +29,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
       }
     }),
     RouterModule.forRoot([
+      { path: '', component: HomeComponent }
     ])
   ],
   providers: [

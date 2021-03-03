@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TestApplication.Models;
+using KPProject.Models;
 
-namespace TestApplication.Data
+namespace KPProject.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
