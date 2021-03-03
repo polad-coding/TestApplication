@@ -63,13 +63,80 @@
     </button>
   </div>
 </div>
-<div id="kp-main-page-slideshow">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+<div id="kp-main-page-slideshow-container">
+  <button>
+    <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" (click)="GoRight()" />
+  </button>
+  <div id="kp-main-page-slideshow">
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">1Values alignment</p>
+      <p>
+        For groups of people or
+        organisations seeking harmonious,
+        coherent and efficient development.
+      </p>
+    </div>
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">2Values education</p>
+      <p>
+        To be informed, to be trained,
+        to reinforce one’s educational
+        curriculum...
+      </p>
+    </div>
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">3Values education</p>
+      <p>
+        How values operate in leadership,
+        how it can help, how to share...
+        A conference organised by Kairios
+        Praxis (face to face or online)
+      </p>
+    </div>
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">4Values alignment</p>
+      <p>
+        For groups of people or
+        organisations seeking harmonious,
+        coherent and efficient development.
+      </p>
+    </div>
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">5Values alignment</p>
+      <p>
+        For groups of people or
+        organisations seeking harmonious,
+        coherent and efficient development.
+      </p>
+    </div>
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">6Values alignment</p>
+      <p>
+        For groups of people or
+        organisations seeking harmonious,
+        coherent and efficient development.
+      </p>
+    </div>
+    <div #slide class="slide" @myInsertRemoveTrigger>
+      <img src="../../assets/KP-logotype/KP-logotype-Bk-empty_1.svg" />
+      <p class="slide-text-header">7Values alignment</p>
+      <p>
+        For groups of people or
+        organisations seeking harmonious,
+        coherent and efficient development.
+      </p>
+    </div>
+
+  </div>
+  <button>
+    <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" (click)="GoLeft()" />
+  </button>
 </div>
 <div id="kp-main-page-resources-section" class="kp-main-page-even-section">
   <div id="kp-main-page-resources-texts" class="kp-main-page-even-section-texts">
