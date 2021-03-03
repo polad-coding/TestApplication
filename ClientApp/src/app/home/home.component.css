@@ -18,7 +18,7 @@
     width:70%;
     display:flex;
     justify-content:end;
-    align-items:end;
+    align-items:flex-end;
     line-height:120px;
     margin-top:50px;
 }
@@ -30,7 +30,7 @@
   font-size: 4vw;
   display: flex;
   justify-content: end;
-  align-items:start;
+  align-items:flex-start;
 }
 
 
@@ -99,7 +99,7 @@
   display: flex;
   justify-content: center;
   flex-flow: column;
-  align-items: end;
+  align-items: flex-end;
   text-align: right;
   font-family: barlowSemiCondensedLight;
   color: #187293;
@@ -124,7 +124,7 @@
   }
 
 #kp-blog-section-texts {
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -166,7 +166,7 @@
 #kp-main-page-resources-texts{
     display:flex;
     justify-content:center;
-    align-items:end;
+    align-items:flex-end;
 }
 
 #kp-main-page-resources-image img {
