@@ -29,7 +29,7 @@
   font-family: barlowSemiCondensedBold;
   font-size: 4vw;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items:flex-start;
 }
 
@@ -131,7 +131,7 @@
 #kp-blog-section-picture {
   filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   padding-top:30px;
 }
