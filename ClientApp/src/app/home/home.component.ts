@@ -37,23 +37,41 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.lastSlideIndex = this.slides.length;
     if (window.innerWidth >= 1304) {
-      this.slidesNoVisible = 4
+      this.slidesNoVisible = 4;
+    }
+    else if (window.innerWidth <= 1304 && window.innerWidth > 650) {
+      this.slidesNoVisible = 3;
+    }
+    else if (window.innerWidth <= 650 && window.innerWidth > 430) {
+      this.slidesNoVisible = 2;
     }
     else {
-      this.slidesNoVisible = 3
+      this.slidesNoVisible = 1;
     }
     this.DisplayNewSlides();
-    }
+  }
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
     if (window.innerWidth >= 1304) {
-      this.slidesNoVisible = 4
+      this.slidesNoVisible = 4;
       this.DisplayNewSlides();
+
+    }
+    else if (window.innerWidth <= 1304 && window.innerWidth > 650) {
+      this.slidesNoVisible = 3;
+      this.DisplayNewSlides();
+
+    }
+    else if (window.innerWidth <= 650 && window.innerWidth > 430) {
+      this.slidesNoVisible = 2;
+      this.DisplayNewSlides();
+
     }
     else {
-      this.slidesNoVisible = 3
+      this.slidesNoVisible = 1;
       this.DisplayNewSlides();
+
     }
   }
 
@@ -83,7 +101,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
+
   }
 
 }
