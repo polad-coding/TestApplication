@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, OnInit, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnChanges, OnInit, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
 import {
   trigger,
   state,
@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChildren("slide")
   public slides: QueryList<ElementRef>;
+  public currentWidth: number = window.innerWidth;
   public slidesNoVisible: number = 4;
   public currentIndex: number = this.slidesNoVisible;
   public lastSlideIndex: number;
@@ -34,17 +35,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2) { }
 
   ngAfterViewInit(): void {
-      this.lastSlideIndex = this.slides.length;
-
-      this.slides.forEach((e, index) => {
-        if ((index >= (this.currentIndex - this.slidesNoVisible)) && (index < this.currentIndex)) {
-          this.renderer.setStyle(e.nativeElement, 'display', 'flex');
-        }
-        else {
-          this.renderer.setStyle(e.nativeElement, 'display', 'none');
-        }
-      });
+    this.lastSlideIndex = this.slides.length;
+    if (window.innerWidth >= 1304) {
+      this.slidesNoVisible = 4
     }
+    else {
+      this.slidesNoVisible = 3
+    }
+    this.DisplayNewSlides();
+    }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(event) {
+    if (window.innerWidth >= 1304) {
+      this.slidesNoVisible = 4
+      this.DisplayNewSlides();
+    }
+    else {
+      this.slidesNoVisible = 3
+      this.DisplayNewSlides();
+    }
+  }
 
   public DisplayNewSlides() {
     this.slides.forEach((e, index) => {

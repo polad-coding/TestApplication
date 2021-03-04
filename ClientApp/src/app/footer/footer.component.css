@@ -1,15 +1,17 @@
 #footer {
   height: 200px;
-  width:100%;
+  width: 100%;
   background-color: #006F91;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
   #footer img {
+    height: 140px;
+    width: 140px;
     align-self: flex-end;
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    filter: invert(100%) sepia(98%) saturate(0%) hue-rotate(11deg) brightness(102%) contrast(106%);
   }
 
 .footer-section {
@@ -18,8 +20,25 @@
 
 .footer-section-texts {
   display: flex;
-  flex-flow:column;
+  flex-flow: column;
   align-items: center;
   color: white;
   font-family: barlowSemiCondensedMedium;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1304px) {
+  .footer-section-texts {
+    font-size: 1.3vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  #footer {
+    height: 150px;
+  }
+
+    #footer img {
+      height: 100px;
+      width: 100px;
+    }
 }

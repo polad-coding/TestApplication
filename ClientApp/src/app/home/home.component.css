@@ -1,3 +1,5 @@
+
+
 #kp-values-in-action {
   height: 300px;
   width: 100%;
@@ -53,6 +55,8 @@
   color: #187293;
   width: 65%;
 }
+
+
 
 #kp-vpm-header {
   font-family: barlowSemiCondensedLight;
@@ -123,10 +127,23 @@
   height: 100%;
 }
 
+#perspectives-wheel img {
+  height: 300px;
+  width: 300px;
+}
+
 #kp-blog-section-texts {
   align-items: flex-start;
   justify-content: center;
 }
+
+  #kp-blog-section-texts p:first-child {
+    font-size: 3.9vw;
+  }
+
+  #kp-blog-section-texts p:last-child {
+    font-size: 1.4vw;
+  }
 
 #kp-blog-section-picture {
   filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
@@ -139,6 +156,8 @@
   #kp-blog-section-picture img {
     margin-top: 20px;
     margin-right: 20px;
+    width: 350px;
+    height: 350px;
   }
 
 #kp-main-page-slideshow-container {
@@ -157,27 +176,27 @@
   margin-right: auto;
 }
 
-  .slide {
-    flex-grow: 1;
-    flex-basis:0;
-    height: 100%;
-    margin-right: 10px;
-  }
+.slide {
+  flex-grow: 1;
+  flex-basis: 0;
+  height: 100%;
+  margin-right: 10px;
+}
 
 
-    #kp-main-page-slideshow div img {
-      width: 150px;
-      height: 150px;
-    }
+#kp-main-page-slideshow div img {
+  width: 150px;
+  height: 150px;
+}
 
 
-    #kp-main-page-slideshow div:nth-child(odd) img {
-      filter: invert(21%) sepia(85%) saturate(2551%) hue-rotate(176deg) brightness(94%) contrast(103%);
-    }
+#kp-main-page-slideshow div:nth-child(odd) img {
+  filter: invert(21%) sepia(85%) saturate(2551%) hue-rotate(176deg) brightness(94%) contrast(103%);
+}
 
-    #kp-main-page-slideshow div:nth-child(even) img {
-      filter: invert(89%) sepia(100%) saturate(0%) hue-rotate(214deg) brightness(103%) contrast(101%);
-    }
+#kp-main-page-slideshow div:nth-child(even) img {
+  filter: invert(89%) sepia(100%) saturate(0%) hue-rotate(214deg) brightness(103%) contrast(101%);
+}
 
 #kp-main-page-slideshow-container button {
   position: absolute;
@@ -189,7 +208,7 @@
 }
 
   #kp-main-page-slideshow-container button:first-child {
-    left: 10px;
+    left: 0px;
   }
 
   #kp-main-page-slideshow-container button:last-child {
@@ -204,7 +223,7 @@
 
 #kp-main-page-slideshow div:nth-child(even) {
   background-color: #006F91;
-  color:white;
+  color: white;
 }
 
 #kp-main-page-slideshow div:nth-child(odd) {
@@ -216,15 +235,14 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: center;
   font-family: barlowSemiCondensedLight;
-  text-align:left;
-  padding:20px;
+  text-align: left;
+  padding: 20px;
 }
 
 .slide-text-header {
-    margin-top:10px;
-  font-size: 1.8vw;
+  margin-top: 10px;
+  font-size: 2.5vw;
   align-self: flex-start;
 }
 
@@ -237,6 +255,16 @@
 #kp-main-page-resources-image img {
   filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
   margin-top: 40px;
+  width: 300px;
+  height: 300px;
+}
+
+#kp-main-page-resources-texts p:first-child {
+  font-size: 5vw;
+}
+
+#kp-main-page-resources-texts p:nth-child(2) {
+  font-size: 1.8vw;
 }
 
 #kp-main-page-paractitioners-section {
@@ -262,6 +290,14 @@
   padding-left: 40px;
 }
 
+  #kp-main-page-paractitioners-texts p:first-child {
+    font-size: 3.9vw;
+  }
+
+  #kp-main-page-paractitioners-texts p:nth-child(2) {
+    font-size: 1.6vw;
+  }
+
 #kp-main-page-become-practitioner-section {
   display: flex;
   height: 350px;
@@ -275,6 +311,8 @@
 
   #kp-main-page-become-practitioner-section-image img {
     filter: invert(31%) sepia(99%) saturate(438%) hue-rotate(150deg) brightness(97%) contrast(87%);
+    width: 300px;
+    height: 300px;
   }
 
 #kp-main-page-become-practitioner-section-texts {
@@ -287,3 +325,171 @@
   padding-left: 40px;
   width: 100%;
 }
+
+  #kp-main-page-become-practitioner-section-texts p:first-child {
+    font-size: 4.5vw;
+    line-height:70px;
+  }
+
+  #kp-main-page-become-practitioner-section-texts p:nth-child(2) {
+    font-size: 1.4vw;
+  }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1304px) {
+  #kp-values-in-action {
+    height: 250px;
+    justify-content: center;
+    background-size: 41%;
+    background-position-y: 15px;
+  }
+
+  #kp-values-in-action-kp-text {
+    margin-top: 0px;
+    line-height: 50px;
+  }
+
+  #kp-the-values-perspectives-method {
+    height: 280px;
+  }
+
+  #perspectives-wheel {
+    padding-left: 0px;
+  }
+
+    #perspectives-wheel img {
+      width: 100%;
+      height: 100%;
+    }
+
+  #kp-vpm-header {
+    font-size: 3.5vw;
+    color: #187293;
+    line-height: 40px;
+  }
+
+  .kp-leaf-button {
+    width: 45px;
+    height: 35px;
+  }
+
+  #kp-the-values-perspectives-survey {
+    height: 280px;
+  }
+
+  #kp-vps-texts-header {
+    font-size: 3.9vw;
+    line-height: 40px;
+  }
+
+  #kp-vps-texts-description {
+    font-size: 1.8vw;
+    line-height: 20px;
+  }
+
+  #kp-blog-section {
+    height: 240px;
+    margin-bottom: 20px;
+  }
+
+  #kp-blog-section-picture {
+    padding-top: 0px;
+  }
+
+    #kp-blog-section-picture img {
+      height: 100%;
+      width: 100%;
+    }
+
+  #kp-blog-section-texts p:first-child {
+    font-size: 4.5vw;
+  }
+
+  #kp-blog-section-texts p:last-child {
+    font-size: 1.9vw;
+  }
+
+  #kp-main-page-slideshow-container button, #kp-main-page-slideshow-container button img {
+    height: 40px;
+    width: 40px;
+  }
+
+    #kp-main-page-slideshow-container button:first-child {
+      left: 0px;
+      margin-right: 10px;
+    }
+
+    #kp-main-page-slideshow-container button:last-child {
+      right: 10px;
+    }
+
+  #kp-main-page-resources-section {
+    height: 250px;
+  }
+
+  #kp-main-page-resources-image img {
+    width: 100%;
+    height: 100%;
+    margin-top: 0px;
+  }
+
+  #kp-main-page-resources-texts p:first-child {
+    font-size: 6.5vw;
+  }
+
+  #kp-main-page-resources-texts p:nth-child(2) {
+    font-size: 2.5vw;
+  }
+
+  #kp-main-page-paractitioners-section {
+    height: 250px;
+  }
+
+  #kp-main-page-paractitioners-texts p:first-child {
+    font-size: 4.5vw;
+  }
+
+  #kp-main-page-paractitioners-texts p:nth-child(2) {
+    font-size: 2.2vw;
+  }
+
+  #kp-main-page-become-practitioner-section {
+    height: 250px;
+  }
+
+  #kp-main-page-become-practitioner-section-image img {
+    width: 100%;
+    height: 100%;
+  }
+
+  #kp-main-page-become-practitioner-section-texts p:first-child{
+      line-height:50px;
+  }
+
+  #kp-main-page-become-practitioner-section-texts p:nth-child(2){
+      margin-top:10px;
+  }
+}
+
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1150px) {
+  #kp-main-page-become-practitioner-section-texts p:first-child {
+    line-height: 40px;
+  }
+
+  #kp-main-page-become-practitioner-section-texts p:nth-child(2) {
+    font-size: 1.7vw;
+  }
+}
+  @media only screen and (min-device-width: 768px) and (max-device-width: 870px) {
+    #kp-vpm-description {
+      font-size: 1.6vw;
+      margin-top: 10px;
+    }
+  }
+
+  @media only screen and (min-device-width: 871px) and (max-device-width: 1304px) {
+    #kp-vpm-description {
+      font-size: 1.3vw;
+      margin-top: 10px;
+    }
+  }
