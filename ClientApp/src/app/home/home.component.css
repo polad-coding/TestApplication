@@ -328,7 +328,7 @@
 
   #kp-main-page-become-practitioner-section-texts p:first-child {
     font-size: 4.5vw;
-    line-height:70px;
+    line-height: 70px;
   }
 
   #kp-main-page-become-practitioner-section-texts p:nth-child(2) {
@@ -461,12 +461,12 @@
     height: 100%;
   }
 
-  #kp-main-page-become-practitioner-section-texts p:first-child{
-      line-height:50px;
+  #kp-main-page-become-practitioner-section-texts p:first-child {
+    line-height: 50px;
   }
 
-  #kp-main-page-become-practitioner-section-texts p:nth-child(2){
-      margin-top:10px;
+  #kp-main-page-become-practitioner-section-texts p:nth-child(2) {
+    margin-top: 10px;
   }
 }
 
@@ -480,16 +480,259 @@
     font-size: 1.7vw;
   }
 }
-  @media only screen and (min-device-width: 768px) and (max-device-width: 870px) {
-    #kp-vpm-description {
-      font-size: 1.6vw;
-      margin-top: 10px;
-    }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 870px) {
+  #kp-vpm-description {
+    font-size: 1.6vw;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-device-width: 871px) and (max-device-width: 1304px) {
+  #kp-vpm-description {
+    font-size: 1.3vw;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-device-width: 768px) {
+  #kp-values-in-action {
+    height: 150px;
   }
 
-  @media only screen and (min-device-width: 871px) and (max-device-width: 1304px) {
-    #kp-vpm-description {
-      font-size: 1.3vw;
+  #kp-values-in-action-kp-text {
+    line-height: 40px;
+    font-size: 10vw;
+  }
+
+  #kp-the-values-perspectives-method {
+    height: 500px;
+    display: flex;
+    flex-flow: column;
+    height: auto;
+  }
+
+  #perspectives-wheel {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+  }
+
+    #perspectives-wheel img {
+      height: 100%;
+      width: 100%;
+      max-width: 330px;
+      max-height: 330px;
+    }
+
+  #kp-the-values-perspectives-method-text {
+    margin-top: 0px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  #kp-vpm-header {
+    line-height: 30px;
+    font-size: 2.3rem;
+    text-align: center;
+  }
+
+  #kp-vpm-description {
+    font-size: 1rem;
+    text-align: justify;
+  }
+
+  #kp-the-values-perspectives-survey {
+    height: 250px;
+    display: flex;
+  }
+
+  #kp-vps-texts {
+    width: 65%;
+  }
+
+  #kp-vps-texts-header {
+    font-size: 5.8vw;
+    line-height: 1;
+  }
+
+  #kp-vps-texts-description {
+    font-size: 3vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  #kp-vps-image {
+    width: 35%;
+  }
+
+  #kp-blog-section {
+    height: auto;
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 20px;
+  }
+
+  #kp-blog-section-picture {
+    width: 100%;
+    padding: 0px;
+    justify-content: center;
+  }
+
+    #kp-blog-section-picture img {
+      max-width: 300px;
+      max-height: 300px;
+      width: 100%;
+      height: 100%;
+    }
+
+  #kp-blog-section-texts {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    display: flex;
+  }
+
+    #kp-blog-section-texts p:first-child {
+      font-size: 6.9vw;
+    }
+
+    #kp-blog-section-texts p:nth-child(2) {
+      margin: 0px;
+      padding: 0px;
+      font-size: 4.8vw;
+      text-align: center;
+    }
+
+  #kp-main-page-slideshow-container button img, #kp-main-page-slideshow-container button {
+    width: 40px;
+    height: 40px;
+  }
+
+  #kp-main-page-slideshow-container {
+    height: 380px;
+  }
+
+  .slide-text-header {
+    margin-top: 10px;
+    font-size: 2rem;
+    align-self: flex-start;
+    line-height: 1;
+  }
+
+  .slide p:nth-child(3) {
+    height: 100%;
+    text-align: justify;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  #kp-main-page-resources-section {
+    height: auto;
+    display: flex;
+    flex-flow: column-reverse;
+    margin-top: 20px;
+  }
+
+  #kp-main-page-resources-texts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+    #kp-main-page-resources-texts p:first-child {
+      font-size: 11vw;
+    }
+
+    #kp-main-page-resources-texts p:nth-child(2) {
+      font-size: 4.5vw;
+    }
+
+  #kp-main-page-resources-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+    #kp-main-page-resources-image img {
+      max-width: 250px;
+      max-height: 250px;
+    }
+
+  #kp-main-page-paractitioners-section {
+    height: 250px;
+    width: 100%;
+  }
+
+  #kp-main-page-paractitioners-image {
+    width: 35%;
+    height: 100%;
+  }
+
+
+
+  #kp-main-page-paractitioners-texts {
+    width: 65%;
+    height: calc(100% - 0.8px);
+    padding-left: 20px;
+  }
+
+    #kp-main-page-paractitioners-texts p:first-child {
+      font-size: 6.9vw;
+      line-height: 1;
+    }
+
+    #kp-main-page-paractitioners-texts p:nth-child(2) {
+      font-size: 3.6vw;
+      line-height: 1;
       margin-top: 10px;
     }
+
+  #kp-main-page-become-practitioner-section {
+    display: flex;
+    height: auto;
+    width: 100%;
+    flex-flow: column;
+    margin-bottom: 20px;
   }
+
+  #kp-main-page-become-practitioner-section-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+    #kp-main-page-become-practitioner-section-image img {
+      max-width: 250px;
+      max-height: 250px;
+    }
+
+  #kp-main-page-become-practitioner-section-texts {
+    width: 100%;
+    align-items: center;
+    padding:0px;
+  }
+
+    #kp-main-page-become-practitioner-section-texts p:first-child {
+      font-size: 8.5vw;
+      line-height: 1;
+      text-align: center;
+    }
+
+    #kp-main-page-become-practitioner-section-texts p:nth-child(2) {
+      font-size: 3.9vw;
+      line-height: 1;
+      margin: 10px;
+    }
+}
