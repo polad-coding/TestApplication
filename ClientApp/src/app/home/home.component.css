@@ -546,28 +546,38 @@
   }
 
   #kp-the-values-perspectives-survey {
-    height: 250px;
+    height: 450px;
     display: flex;
+    position:relative;
   }
 
   #kp-vps-texts {
-    width: 65%;
+    text-align: center;
+    position: absolute;
+    z-index: 100;
+    height: 450px;
+    background-color: rgba(0,0,0, 0.3);
+    padding: 0px;
+    width: 100%;
+    color: white;
+    align-items: center;
   }
 
   #kp-vps-texts-header {
-    font-size: 5.8vw;
+    font-size: 10.8vw;
     line-height: 1;
   }
 
   #kp-vps-texts-description {
-    font-size: 3vw;
+    font-size: 6vw;
     margin-top: 10px;
     margin-bottom: 10px;
     line-height: 1;
   }
 
   #kp-vps-image {
-    width: 35%;
+    width: 100%;
+    filter:blur(10px);
   }
 
   #kp-blog-section {
@@ -670,30 +680,35 @@
     }
 
   #kp-main-page-paractitioners-section {
-    height: 250px;
+    height: 450px;
     width: 100%;
+    position:relative;
   }
 
   #kp-main-page-paractitioners-image {
-    width: 35%;
+    width: 100%;
     height: 100%;
+    filter: blur(5px);
   }
 
 
 
   #kp-main-page-paractitioners-texts {
-    width: 65%;
-    height: calc(100% - 0.8px);
+    width: 100%;
+    height: 450px;
     padding-left: 20px;
+    position: absolute;
+    align-items: center;
+    background-color: rgba(0,0,0, 0.3);
   }
 
     #kp-main-page-paractitioners-texts p:first-child {
-      font-size: 6.9vw;
+      font-size: 9.9vw;
       line-height: 1;
     }
 
     #kp-main-page-paractitioners-texts p:nth-child(2) {
-      font-size: 3.6vw;
+      font-size: 4.9vw;
       line-height: 1;
       margin-top: 10px;
     }
@@ -735,4 +750,34 @@
       line-height: 1;
       margin: 10px;
     }
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 420px) {
+  #kp-values-in-action {
+    background-size: 180px;
+    background-position-x: right;
+    margin-top: 10px;
+    background-position-y: 60px;
+    justify-content: center;
+  }
+
+  #kp-values-in-action-kp-text {
+    font-size: 11vw;
+    text-align: right;
+    margin-top:0px;
+  }
+}
+
+@media only screen and (min-device-width: 420px) and (max-device-width: 768px) {
+  #kp-values-in-action {
+    background-size: 200px;
+    background-position-x: right;
+    margin-top: 10px;
+    background-position-y: 40px;
+    justify-content: center;
+  }
+
+  #kp-values-in-action-kp-text {
+    margin-top: 0px;
+  }
 }

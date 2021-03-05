@@ -1,4 +1,4 @@
-<nav id="navigation-bar">
+<nav id="navigation-bar" *ngIf="!isMobile">
   <div id="navigation-bar-kp-logo">
     <img src="../../assets/KP-logotype/KP-logotype-006F91-empty.png" />
   </div>
@@ -41,5 +41,82 @@
       </ul>
     </div>
   </div>
-  
+
 </nav>
+
+<nav id="navigation-bar-mobile" *ngIf="isMobile">
+  <button id="actions-menu-button" (click)="DisplayActionsSideBar($event)">
+    <img src="../../assets/Images/Side-menu-icon.png" />
+  </button>
+    <img id="kp-logo" src="../../assets/KP-logotype/KP-logotype-006F91-empty.png" />
+  <button id="languages-menu-button" (click)="DisplayLanguagesSideBar($event)">
+    <img src="../../assets/Images/Globe-icon.png" />
+  </button>
+</nav>
+
+<div id="languages-side-bar-modal" *ngIf="languagesSideBarIsVisible">
+  <div id="languages-side-bar" (click)="LanguagesSideBarClick($event)">
+    <ul id="languages">
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/enFlag.jpg"/>
+        <span>English</span>
+      </li>
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/frFlag.png" />
+        <span>Français</span>
+      </li>
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/grFlag.png" />
+        <span>Ελληνικά</span>
+      </li>
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/gerFlag.png" />
+        <span>Deutsche</span>
+      </li>
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/spFlag.png" />
+        <span>Spanisch</span>
+      </li>
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/itFlag.png" />
+        <span>Italiana</span>
+      </li>
+      <li class="side-bar-language">
+        <img src="../../assets/Flags/ruFlag.png" />
+        <span>Русский</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="actions-side-bar-modal" *ngIf="actionsSideBarIsVisible">
+  <div id="actions-side-bar" (click)="ActionsSideBarClick($event)">
+    <ul id="actions">
+      <li class="side-bar-action">
+        <a>The Survey</a>
+      </li>
+      <li class="side-bar-action">
+        <a>Values?</a>
+      </li>
+      <li class="side-bar-action">
+        <a>The Method</a>
+      </li>
+      <li class="side-bar-action">
+        <a>The Blog</a>
+      </li>
+      <li class="side-bar-action">
+        <a>Practitioners</a>
+      </li>
+      <li class="side-bar-action">
+        <a>Resources</a>
+      </li>
+      <li class="side-bar-action">
+        <a>Sign in</a>
+      </li>
+      <li class="side-bar-action">
+        <a>Pros-access</a>
+      </li>
+
+    </ul>
+  </div>
+</div>

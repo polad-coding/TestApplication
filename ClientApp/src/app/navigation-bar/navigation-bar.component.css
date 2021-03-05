@@ -8,7 +8,7 @@
   height: 100%;
   display: flex;
   align-items: flex-end;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
   #navigation-bar-kp-logo img {
@@ -68,4 +68,133 @@
 
 #navigation-bar-main-part div{
     flex-grow:1;
+}
+
+#navigation-bar-mobile{
+    height:50px;
+    width:100%;
+    display:flex;
+    position:relative;
+}
+
+
+#actions-menu-button {
+  width: 40px;
+  height: 40px;
+  margin-top: auto;
+  margin-left:10px;
+  background:transparent;
+  border:none;
+}
+
+  #actions-menu-button img {
+    height: 100%;
+    width: 100%;
+    filter: invert(30%) sepia(96%) saturate(588%) hue-rotate(152deg) brightness(94%) contrast(104%);
+  }
+
+/*  #kp-logo-container {
+    display: flex;
+    width: 100%;
+  }*/
+
+#kp-logo {
+  width:50px;
+  height:50px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#languages-menu-button {
+  width: 40px;
+  height: 35px;
+  background: transparent;
+  margin-top: auto;
+  margin-right: 10px;
+  border:none;
+}
+
+  #languages-menu-button img {
+    height: 100%;
+    width: 100%;
+    filter: invert(30%) sepia(96%) saturate(588%) hue-rotate(152deg) brightness(94%) contrast(104%);
+  }
+
+#actions-side-bar-modal {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  position: fixed;
+  top: 0;
+  z-index: 500;
+}
+
+#languages-side-bar-modal {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  position: fixed;
+  top: 0;
+  z-index: 500;
+}
+
+#actions-side-bar {
+  position: fixed;
+  height: auto;
+  width: 40%;
+  top: 0;
+  background-color: #006F91;
+  margin-left: 50px;
+  z-index: 500;
+}
+
+#languages-side-bar {
+  position: fixed;
+  height: auto;
+  width: 40%;
+  top: 0;
+  right:50px;
+  background-color: #006F91;
+  z-index: 500;
+}
+
+  #actions {
+    height: auto;
+    color: white;
+    font-family: barlowSemiCondensedMedium;
+  }
+
+#languages {
+  height: auto;
+  color: white;
+  font-family: barlowSemiCondensedMedium;
+}
+
+.side-bar-action{
+    height:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.side-bar-language {
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.side-bar-language img{
+    width:40px;
+    height:30px;
+    margin-right:10px;
+    margin-left:10px;
+}
+
+  .side-bar-action:not(.side-bar-action:last-child) {
+    border-bottom: 1px solid white;
+  }
+
+.side-bar-language:not(.side-bar-language:last-child) {
+  border-bottom: 1px solid white;
 }

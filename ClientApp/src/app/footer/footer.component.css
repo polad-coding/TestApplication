@@ -1,4 +1,4 @@
-#footer {
+#footer, #medium-footer, #mini-footer, #micro-footer {
   height: 200px;
   width: 100%;
   background-color: #006F91;
@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-  #footer img {
+  #footer img, #medium-footer img, #mini-footer img {
     height: 140px;
     width: 140px;
     align-self: flex-end;
@@ -26,18 +26,22 @@
   font-family: barlowSemiCondensedMedium;
 }
 
+#micro-footer{
+    justify-content:center;
+}
+
 @media only screen and (min-device-width: 768px) and (max-device-width: 1304px) {
   .footer-section-texts {
-    font-size: 1.3vw;
+    font-size: 0.9rem;
     margin-top: 10px;
     margin-bottom: 10px;
   }
 
-  #footer {
+  #footer, #medium-footer, #mini-footer, #micro-footer {
     height: 150px;
   }
 
-    #footer img {
+    #footer img, #medium-footer img, #mini-footer img {
       height: 100px;
       width: 100px;
     }
