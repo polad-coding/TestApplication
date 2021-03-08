@@ -1,0 +1,445 @@
+#kp-survey-page-welcome-to-perspectives-survey-section {
+  display: flex;
+  width: 90%;
+  height: auto;
+  align-items: center;
+  margin: auto;
+}
+
+#kp-survey-page-welcome-to-perspectives-survey-section-image {
+  max-height: 250px;
+  max-width: 250px;
+  margin: 30px;
+  margin-left: 50px;
+}
+
+  #kp-survey-page-welcome-to-perspectives-survey-section-image img {
+    width: 250px;
+    height: 250px;
+  }
+
+#kp-survey-page-welcome-to-perspectives-survey-section-texts {
+  color: #006F91;
+  margin-left: 20px;
+  font-family: barlowSemiCondensedLight;
+  line-height: 1;
+}
+
+  #kp-survey-page-welcome-to-perspectives-survey-section-texts p:first-child {
+    font-size: 4.7vw;
+  }
+
+  #kp-survey-page-welcome-to-perspectives-survey-section-texts p:last-child {
+    font-size: 1.9vw;
+    margin-top: 20px;
+  }
+
+#kp-survey-page-perspectives-survey-description-section {
+  display: flex;
+  height: auto;
+}
+
+
+#kp-survey-page-perspectives-survey-description-section-lock-icon {
+  height: 110px;
+  min-width: 110px;
+  margin-left: 50px;
+}
+
+  #kp-survey-page-perspectives-survey-description-section-lock-icon img {
+    height: 100%;
+    width: 100%;
+  }
+
+#kp-survey-page-perspectives-survey-description-section-text {
+  color: #006F91;
+  font-family: barlowSemiCondensedLight;
+  font-size: 1.1rem;
+  margin-left: 5px;
+  margin-right: 50px;
+}
+
+  #kp-survey-page-perspectives-survey-description-section-text p {
+    display: inline;
+  }
+
+.kp-leaf-button {
+  height: 30px;
+  width: 40px;
+  background: #006F91;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  .kp-leaf-button img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    max-width: 100%;
+    max-height: 100%;
+    transform: scale(1.6);
+  }
+
+#kp-the-values-perspectives-survey {
+  display: flex;
+  height: 350px;
+}
+
+#kp-survey-page-buttons-section {
+  height: 80px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.the-survey-section-button {
+  width: 180px;
+  height: 60px;
+  background-color: #006F91;
+  color: white;
+  border: none;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 3px;
+  line-height: 1;
+  font-family: barlowSemiCondensedLight;
+  border-radius: 1px;
+}
+
+  .the-survey-section-button img {
+    height: 50px;
+    width: 50px;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    transform: scale(1.2);
+  }
+
+
+#kp-survey-page-cards-section {
+  display: flex;
+  justify-content: space-evenly;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+.kp-cards-section-card {
+  width: 22%;
+  margin-right: 10px;
+  font-family: barlowSemiCondensedLight;
+  padding: 20px;
+  border-radius: 1px;
+}
+
+  .kp-cards-section-card img {
+    height: 30px;
+    width: 30px;
+    filter: invert(31%) sepia(79%) saturate(6940%) hue-rotate(180deg) brightness(89%) contrast(102%);
+  }
+
+  .kp-cards-section-card p {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+
+    .kp-cards-section-card p:first-child {
+      font-size: 1.6rem;
+    }
+
+
+
+  .kp-cards-section-card:last-child {
+    margin: 0px;
+  }
+
+#kp-survey-page-cards-section div:nth-child(even) {
+  background-color: #006F91;
+  color: white;
+}
+
+#kp-survey-page-cards-section div:nth-child(odd) {
+  background-color: #9AC7EC;
+  color: #006F91;
+}
+
+#kp-survey-page-whats-next-section {
+  display: flex;
+  width: 100%;
+  margin: 20px;
+}
+
+#kp-survey-page-whats-next-section-texts {
+  color: #006F91;
+  font-family: barlowSemiCondensedLight;
+  width: 70%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-align: right;
+  line-height: 1.3;
+  font-size: 1rem;
+}
+
+
+  #kp-survey-page-whats-next-section-texts p:first-child {
+    font-size: 3.1rem;
+  }
+
+  #kp-survey-page-whats-next-section-texts p {
+    margin-bottom: 10px;
+  }
+
+#kp-survey-page-whats-next-section-image {
+  width: 30%;
+}
+
+  #kp-survey-page-whats-next-section-image img {
+    height: 100%;
+    width: 100%;
+    filter: invert(19%) sepia(66%) saturate(4495%) hue-rotate(180deg) brightness(90%) contrast(103%);
+  }
+
+#kp-survey-page-whats-next-section-choose-practitioner-button {
+  display: flex;
+  max-width: 300px;
+  min-width: 250px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 1px;
+  background-color: #006F91;
+  margin-left: auto;
+  font-size: 1.2rem;
+}
+
+  #kp-survey-page-whats-next-section-choose-practitioner-button img {
+    width: 60px;
+    height: 60px;
+    filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(27deg) brightness(104%) contrast(101%);
+  }
+
+#kp-survey-page-our-privacy-policy-section {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+#kp-survey-page-our-privacy-policy-section-image {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #90BFC5;
+}
+
+  #kp-survey-page-our-privacy-policy-section-image img {
+    max-height: 300px;
+    max-width: 300px;
+  }
+
+#kp-survey-page-our-privacy-policy-section-texts {
+  display: flex;
+  flex-flow: column;
+  background-color: #9AC7EC;
+  color: #006F91;
+  padding: 30px;
+  font-family: barlowSemiCondensedLight;
+}
+
+  #kp-survey-page-our-privacy-policy-section-texts p:first-child {
+    font-size: 2.7rem;
+  }
+
+  #kp-survey-page-our-privacy-policy-section-texts p:last-child {
+    font-size: 1.1rem;
+  }
+
+@media only screen and (min-device-width: 460px) and (max-device-width: 768px) {
+  #kp-survey-page-welcome-to-perspectives-survey-section-image {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+    #kp-survey-page-welcome-to-perspectives-survey-section-image img {
+      height: 100%;
+      width: 100%;
+    }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 460px) {
+  #kp-survey-page-welcome-to-perspectives-survey-section-image {
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+    #kp-survey-page-welcome-to-perspectives-survey-section-image img {
+      height: 100%;
+      width: 100%;
+    }
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 600px) {
+  .the-survey-section-button {
+    width: 30%;
+    height: 40px;
+    font-size: 0.7rem;
+  }
+
+  .the-survey-section-button  img{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 900px) {
+  .the-survey-section-button {
+    width: 140px;
+    height: 55px;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (min-device-width: 786px) and (max-device-width: 1200px) {
+  #kp-survey-page-cards-section {
+    width: 100%;
+  }
+
+  .kp-cards-section-card {
+    width: 31%;
+    font-size: 1rem;
+  }
+}
+
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 786px) {
+
+  #kp-survey-page-welcome-to-perspectives-survey-section {
+    flex-flow: column;
+    margin-bottom: 20px;
+  }
+
+  #kp-survey-page-welcome-to-perspectives-survey-section-texts {
+    text-align: center;
+  }
+
+    #kp-survey-page-welcome-to-perspectives-survey-section-texts p:first-child {
+      font-size: 7.7vw;
+    }
+
+    #kp-survey-page-welcome-to-perspectives-survey-section-texts p:last-child {
+      font-size: 3.1vw;
+    }
+}
+
+
+  @media only screen and (min-device-width: 300px) and (max-device-width: 786px) {
+
+
+    #kp-survey-page-our-privacy-policy-section {
+      height: 450px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    #kp-survey-page-our-privacy-policy-section-image {
+      filter: blur(6px);
+      width: 100%;
+    }
+
+      #kp-survey-page-our-privacy-policy-section-image img {
+        width: 100%;
+        height: 100%;
+      }
+
+    #kp-survey-page-our-privacy-policy-section-texts {
+      background-color: rgba(0,0,0,0.6);
+      color: white;
+      position: absolute;
+      height: 100%;
+      padding-left: 20px;
+      padding-right: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+      #kp-survey-page-our-privacy-policy-section-texts p:first-child {
+        font-size: 2.5rem;
+      }
+
+      #kp-survey-page-our-privacy-policy-section-texts p:last-child {
+        font-size: 1.3rem;
+      }
+  }
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 560px) {
+  #kp-survey-page-our-privacy-policy-section-texts p:first-child {
+    font-size: 7.5vw;
+  }
+
+  #kp-survey-page-our-privacy-policy-section-texts p:last-child {
+    font-size: 3.3vw;
+  }
+
+  #kp-survey-page-our-privacy-policy-section {
+    height: 350px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+}
+
+
+  @media only screen and (min-device-width: 300px) and (max-device-width: 786px) {
+    #kp-survey-page-perspectives-survey-description-section-text {
+      text-align: justify;
+      font-size: 0.9rem;
+      width: 100%;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    #kp-survey-page-perspectives-survey-description-section-lock-icon {
+      display: none;
+    }
+
+    #kp-survey-page-whats-next-section {
+      flex-flow: column-reverse;
+      width: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #kp-survey-page-whats-next-section-texts {
+      text-align: center;
+      width: 100%;
+    }
+
+      #kp-survey-page-whats-next-section-texts button {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+    #kp-survey-page-whats-next-section-image {
+      width: 100%;
+      max-height: 150px;
+    }
+
+    #kp-survey-page-cards-section {
+      flex-flow: column;
+    }
+
+    .kp-cards-section-card{
+        width:100%;
+        margin-bottom:10px;
+        text-align:center;
+    }
+
+    .kp-cards-section-card p:last-child{
+        font-size:0.9rem;
+    }
+    }

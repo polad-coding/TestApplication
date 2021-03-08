@@ -11,12 +11,14 @@ import { HomeComponent } from './home/home.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SurveyComponent } from './survey/survey.component';
+import { PageTitleComponent } from './page-title/page-title.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, NavigationBarComponent, FooterComponent
+    AppComponent, HomeComponent, NavigationBarComponent, FooterComponent, SurveyComponent, PageTitleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,7 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent }
+      { path: '', component: HomeComponent },
+      { path: 'survey', component: SurveyComponent }
     ])
   ],
   providers: [

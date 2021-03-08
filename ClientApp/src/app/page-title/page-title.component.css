@@ -1,0 +1,51 @@
+#page-title {
+  height: 180px;
+  background-color: #006F91;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-image: url("../../assets/KP-logotype/KP-logotype-Bk-empty.svg");
+  background-repeat: no-repeat;
+  background-size: 300px;
+  background-position-x: right;
+  background-position-y: 20px;
+}
+
+#page-title-texts {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex-flow: column;
+}
+
+  #page-title-texts p:first-child {
+    font-family: barlowSemiCondensedThin;
+    font-size:7vw;
+    line-height:1;
+  }
+
+  #page-title-texts p:last-child {
+    font-family: barlowSemiCondensedMedium;
+    font-size: 4vw;
+    line-height: 1;
+  }
+
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 786px) {
+
+  #page-title {
+    height: 140px;
+    background-size: 200px;
+    background-position-y: 40px;
+  }
+
+}
+
+@media only screen and (max-device-width: 480px) {
+  #page-title {
+    height: 120px;
+    background-size: 160px;
+    background-position-y: 40px;
+  }
+}
