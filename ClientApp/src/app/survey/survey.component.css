@@ -429,6 +429,10 @@
       max-height: 150px;
     }
 
+    #kp-survey-page-whats-next-section-image img{
+      max-height: 150px;
+    }
+
     #kp-survey-page-cards-section {
       flex-flow: column;
     }
