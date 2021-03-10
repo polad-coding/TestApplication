@@ -1,0 +1,120 @@
+#signup-form {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  background-color: #9AC7EC;
+  color: #006F91;
+  padding: 20px;
+  width: 600px;
+  align-items: center;
+  border-radius: 2px;
+  position: relative;
+  font-family: barlowSemiCondensedLight;
+  font-size: 1.1rem;
+}
+
+#agree-to-terms-radio-button-section {
+  display: flex;
+  margin-top: 10px;
+  font-family: barlowSemiCondensedLightItalic;
+  text-align:left;
+}
+
+  #agree-to-terms-radio-button-section label {
+    margin-left: 3px;
+    font-size: 0.9rem;
+  }
+
+
+  #name-surname-section {
+    display: flex;
+    justify-content: space-between;
+  }
+
+#name-surname-section div{
+    width:45%;
+}
+
+#signup-form * {
+  margin-bottom: 10px;
+}
+
+  #signup-form input {
+    border: none;
+    border-radius: 1px;
+    padding: 10px;
+    text-align: center;
+  }
+
+label {
+  text-align: center;
+}
+
+#signup-title {
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+#signup-form * {
+  width: 100%;
+}
+
+#signup-form-component {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+#agree-to-terms-radio-button {
+  align-self: flex-start;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+
+input {
+  color: #006F91;
+}
+
+#code-section {
+  width: 300px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #90BFC5;
+  flex-flow: column;
+  color: white;
+  font-family: barlowSemiCondensedLight;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+#submit-button {
+  color: #006F91;
+  background-color: white;
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 630px) {
+    #name-surname-section{
+        flex-flow:column;
+        margin-bottom:0px;
+    }
+
+  #name-surname-section div{
+      width:100%;
+  }
+
+  #signup-form{
+      width:300px;
+  }
+
+  #signup-title{
+      text-align:center;
+      line-height:1;
+  }
+}

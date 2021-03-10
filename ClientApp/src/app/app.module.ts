@@ -13,12 +13,25 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SurveyComponent } from './survey/survey.component';
 import { PageTitleComponent } from './page-title/page-title.component';
+import { SigninComponent } from './signin/signin.component';
+import { SignupComponent } from './signup/signup.component';
+import { SigninFormComponent } from './signin-form/signin-form.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, NavigationBarComponent, FooterComponent, SurveyComponent, PageTitleComponent
+    AppComponent,
+    HomeComponent,
+    NavigationBarComponent,
+    FooterComponent,
+    SurveyComponent,
+    PageTitleComponent,
+    SigninComponent,
+    SignupComponent,
+    SigninFormComponent,
+    SignupFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +47,9 @@ import { PageTitleComponent } from './page-title/page-title.component';
     }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'survey', component: SurveyComponent }
+      { path: 'survey', component: SurveyComponent },
+      { path: 'signin', component: SigninComponent },
+      { path: 'signup', component: SignupComponent }
     ])
   ],
   providers: [

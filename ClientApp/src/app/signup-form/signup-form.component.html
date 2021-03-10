@@ -1,0 +1,53 @@
+<div id="signup-form-component">
+  <div id="code-section" *ngIf="surveyCode !== null && surveyCode !== undefined && surveyCode.length > 0">
+    <p>Your Survey code is:</p>
+    <p>{{surveyCode}}</p>
+  </div>
+  <form id="signup-form">
+    <p id="signup-title">Your personal account</p>
+    <div id="name-surname-section">
+      <div id="name-section">
+        <label for="Name">First name</label>
+        <input type="text" placeholder="First name" name="Name" />
+        <!--<div *ngIf="signInForm.controls['Name'].error.required">
+          <p>First name field is required.</p>
+        </div>-->
+      </div>
+      <div id="surname-section">
+        <label for="Surname">Last name</label>
+        <input type="text" placeholder="Last name" name="Surname" />
+        <!--<div *ngIf="signInForm.controls['Surname'].error.required">
+          <p>Last name field is required.</p>
+        </div>-->
+      </div>
+    </div>
+    <label for="Email">Enter your email</label>
+    <input type="text" placeholder="Email" name="Email" />
+    <!--<div *ngIf="signInForm.controls['Email'].error.required">
+      <p>Email field is required.</p>
+    </div>
+    <div *ngIf="signInForm.controls['Email'].error.incorrect">
+      <p>Inout is incorrect.</p>
+    </div>
+    <div *ngIf="signInForm.controls['Email'].error.alreadyExists">
+      <p>This email already registered in our database.</p>
+    </div>-->
+    <label for="Password">Enter your password</label>
+    <input type="password" placeholder="Password" name="Password" />
+    <!--<div *ngIf="signInForm.controls['Password'].error.required">
+      <p>Password field is required.</p>
+    </div>
+    <div *ngIf="signInForm.controls['Email'].error.tooShort">
+      <p>Password is too short.</p>
+    </div>-->
+    <div id="agree-to-terms-radio-button-section">
+      <input type="radio" id="agree-to-terms-radio-button" value="agree-to-terms" style="width:auto;" />
+      <label for="agree-to-terms">
+        I agree that the anonymized survey data will be stored by Kairios Praxis for statistical uses only and
+        I have read and understand the Terms & Conditions of this agreement and understand that some of
+        the questions in the survey may refer to sensitive data.
+      </label>
+    </div>
+    <input id="submit-button" type="submit" value="Register" />
+  </form>
+</div>

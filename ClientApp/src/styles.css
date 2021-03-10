@@ -38,3 +38,8 @@ body{
   font-family: barlowSemiCondensedLight;
   src: url('../../wwwroot/Fonts/BarlowSemiCondensed-Light.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: barlowSemiCondensedLightItalic;
+  src: url('../../wwwroot/Fonts/BarlowSemiCondensed-LightItalic.ttf') format('truetype');
+}
