@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using KPProject.Data;
 using KPProject.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace KPProject
 {
@@ -30,7 +32,8 @@ namespace KPProject
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -48,7 +51,7 @@ namespace KPProject
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +64,7 @@ namespace KPProject
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
@@ -95,6 +99,18 @@ namespace KPProject
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            //CreateRoles(serviceProvider).Wait();
+
+        }
+
+        public async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            await roleManager.CreateAsync(new IdentityRole("Practitioner"));
+            await roleManager.CreateAsync(new IdentityRole("User"));
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
         }
     }
 }

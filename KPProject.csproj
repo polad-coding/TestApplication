@@ -33,6 +33,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210311142848_Added_Languages_And_Regions_Tables.cs" />
+    <Compile Remove="Migrations\20210311142848_Added_Languages_And_Regions_Tables.Designer.cs" />
+    <Compile Remove="Migrations\20210311152207_Added_Languages_And_Regions_Entities.cs" />
+    <Compile Remove="Migrations\20210311152207_Added_Languages_And_Regions_Entities.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="ClientApp\src\assets\Flags\enFlag.jpg" />
     <Content Include="ClientApp\src\assets\Flags\frFlag.png" />
     <Content Include="ClientApp\src\assets\Flags\gerFlag.png" />
@@ -55,6 +62,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Enumerators\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -3,14 +3,16 @@ using System;
 using KPProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KPProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210311152528_Added_Languages_And_Regions_Entities")]
+    partial class Added_Languages_And_Regions_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,7 +132,7 @@ namespace KPProject.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("GenderId")
+                    b.Property<int>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -183,8 +185,6 @@ namespace KPProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenderId");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -193,20 +193,6 @@ namespace KPProject.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("KPProject.Models.Gender", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("GenderName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Gender");
                 });
 
             modelBuilder.Entity("KPProject.Models.LanguageModel", b =>
@@ -393,13 +379,6 @@ namespace KPProject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("KPProject.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("KPProject.Models.Gender", "Gender")
-                        .WithMany()
-                        .HasForeignKey("GenderId");
                 });
 
             modelBuilder.Entity("KPProject.Models.UserLanguage", b =>
