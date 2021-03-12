@@ -52,6 +52,16 @@ namespace KPProject
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+                });
+            });
+
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAutoMapper(typeof(Startup));
@@ -103,6 +113,7 @@ namespace KPProject
                 app.UseHsts();
             }
 
+            app.UseCors("EnableCORS");
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
