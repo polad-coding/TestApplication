@@ -6,6 +6,6 @@ namespace KPProject.Models
     {
         public int Id { get; set; }
         public string RegionName { get; set; }
-        public List<UserRegion> UserRegion { get; set; }
+        public virtual List<UserRegion> UserRegion { get; set; }
     }
 }

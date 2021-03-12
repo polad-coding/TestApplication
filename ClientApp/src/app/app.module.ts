@@ -17,8 +17,12 @@ import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { JwtModule } from "@auth0/angular-jwt";
+import { TestComponent } from './test/test.component';
 
-
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     SigninComponent,
     SignupComponent,
     SigninFormComponent,
-    SignupFormComponent
+    SignupFormComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -49,8 +54,16 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
       { path: '', component: HomeComponent },
       { path: 'survey', component: SurveyComponent },
       { path: 'signin', component: SigninComponent },
-      { path: 'signup', component: SignupComponent }
-    ])
+      { path: 'signup', component: SignupComponent },
+      { path: 'success', component: TestComponent },
+    ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:5001"],
+        blacklistedRoutes: []
+      }
+    })
   ],
   providers: [
   ],

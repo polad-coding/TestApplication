@@ -3,26 +3,29 @@
     <p>Your Survey code is:</p>
     <p>{{surveyCode}}</p>
   </div>
-  <form id="signup-form">
+  <div id="error-section" *ngIf="formIsInvalid">
+    <p>{{errorMessage}}</p>
+  </div>
+  <form id="signup-form" #registerForm="ngForm" (ngSubmit)="SubmitSignUpForm(registerForm)">
     <p id="signup-title">Your personal account</p>
     <div id="name-surname-section">
       <div id="name-section">
         <label for="Name">First name</label>
-        <input type="text" placeholder="First name" name="Name" />
+        <input type="text" placeholder="First name" #firstName="ngModel" [(ngModel)]="registerViewModel.firstName" name="Name" />
         <!--<div *ngIf="signInForm.controls['Name'].error.required">
           <p>First name field is required.</p>
         </div>-->
       </div>
       <div id="surname-section">
         <label for="Surname">Last name</label>
-        <input type="text" placeholder="Last name" name="Surname" />
+        <input type="text" placeholder="Last name" [(ngModel)]="registerViewModel.lastName" #lastName="ngModel" name="Surname" />
         <!--<div *ngIf="signInForm.controls['Surname'].error.required">
           <p>Last name field is required.</p>
         </div>-->
       </div>
     </div>
     <label for="Email">Enter your email</label>
-    <input type="text" placeholder="Email" name="Email" />
+    <input type="text" placeholder="Email" #email="ngModel" [(ngModel)]="registerViewModel.email" name="Email" />
     <!--<div *ngIf="signInForm.controls['Email'].error.required">
       <p>Email field is required.</p>
     </div>
@@ -33,7 +36,7 @@
       <p>This email already registered in our database.</p>
     </div>-->
     <label for="Password">Enter your password</label>
-    <input type="password" placeholder="Password" name="Password" />
+    <input type="password" placeholder="Password" #password="ngModel" [(ngModel)]="registerViewModel.password" name="Password" />
     <!--<div *ngIf="signInForm.controls['Password'].error.required">
       <p>Password field is required.</p>
     </div>

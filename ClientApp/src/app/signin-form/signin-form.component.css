@@ -13,6 +13,16 @@
   font-size: 1.1rem;
 }
 
+#error-section {
+  height: auto;
+  width: 300px;
+  padding: 10px;
+  background-color: #f03;
+  margin-bottom: 10px;
+  color: white;
+  text-align: center;
+}
+
   #signin-form *{
       margin-bottom:10px;
   }

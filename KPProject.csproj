@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.8" />
@@ -37,6 +38,22 @@
     <Compile Remove="Migrations\20210311142848_Added_Languages_And_Regions_Tables.Designer.cs" />
     <Compile Remove="Migrations\20210311152207_Added_Languages_And_Regions_Entities.cs" />
     <Compile Remove="Migrations\20210311152207_Added_Languages_And_Regions_Entities.Designer.cs" />
+    <Compile Remove="Migrations\20210312180308_Edited_Relationships.cs" />
+    <Compile Remove="Migrations\20210312180308_Edited_Relationships.Designer.cs" />
+    <Compile Remove="Migrations\20210312181545_Edited_Relationships.cs" />
+    <Compile Remove="Migrations\20210312181545_Edited_Relationships.Designer.cs" />
+    <Compile Remove="Migrations\20210312184746_Added_New_Relationships.cs" />
+    <Compile Remove="Migrations\20210312184746_Added_New_Relationships.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app-services\authentication-service.ts" />
+    <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\language-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\region-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\register-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\signin-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\user-view-model.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,8 +78,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Enumerators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app-services\authentication-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\language-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\signin-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\register-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\user-view-model.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

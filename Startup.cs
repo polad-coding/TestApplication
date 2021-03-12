@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +12,13 @@ using KPProject.Data;
 using KPProject.Models;
 using System;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using KPProject.Interfaces;
+using KPProject.Services;
+using System.Text;
+using AutoMapper;
 
 namespace KPProject
 {
@@ -33,20 +39,52 @@ namespace KPProject
                     Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedAccount = false;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration.GetSection("JwtIssuer").Value,
+                        ValidAudience = Configuration.GetSection("JwtAudience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JwtKey").Value)),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddControllers();
+
+            services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                //TODO - figure out here.
+                configuration.RootPath = "wwwroot/dist";
             });
         }
 
@@ -77,14 +115,11 @@ namespace KPProject
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
 
             app.UseSpa(spa =>
@@ -100,7 +135,8 @@ namespace KPProject
                 }
             });
 
-            //CreateRoles(serviceProvider).Wait();
+            CreateRoles(serviceProvider).Wait();
+            //CreateUsers(serviceProvider).Wait();
 
         }
 
@@ -111,6 +147,23 @@ namespace KPProject
             await roleManager.CreateAsync(new IdentityRole("Practitioner"));
             await roleManager.CreateAsync(new IdentityRole("User"));
             await roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
+
+        public async Task CreateUsers(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            if (await userManager.FindByEmailAsync("polad20178@gmail.com") == null)
+            {
+                await userManager.CreateAsync(new ApplicationUser
+                {
+                    FirstName = "Polad",
+                    LastName = "Safaraliyev",
+                    Email = "polad20178@gmail.com",
+                    UserName = "polad20178@gmail.com",
+                }, "plamf12345"); ;
+            }
+
         }
     }
 }

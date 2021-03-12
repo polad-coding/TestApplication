@@ -3,27 +3,16 @@
     <p>Your Survey code is:</p>
     <p>{{surveyCode}}</p>
   </div>
-  <form id="signin-form" #signInForm>
+  <div id="error-section" *ngIf="formIsInvalid">
+    <p>{{errorMessage}}</p>
+  </div>
+  <form id="signin-form" #signInForm="ngForm" (ngSubmit)="SubmitSignInForm(signInForm)">
     <p id="signin-title">Connect</p>
     <label for="Email">Enter your email</label>
-    <input type="text" placeholder="Email" name="Email" />
-    <!--<div *ngIf="signInForm.controls['Email'].error.required">
-      <p>Email field is required.</p>
-    </div>
-    <div *ngIf="signInForm.controls['Email'].error.doesntExists">
-      <p>This email field doesn't exist in our database.</p>
-    </div>-->
+    <input type="email" required placeholder="Email" #email="ngModel" [(ngModel)]="signInViewModel.email" name="Email" />
     <label for="Password">Enter your password</label>
-    <input type="password" placeholder="Password" name="Password">
-    <!--<div *ngIf="signInForm.controls['Password'].error.required">
-      <p>Password field is required.</p>
-    </div>
-    <div *ngIf="signInForm.controls['Password'].error.tooShort">
-      <p>Password given is too short. Must be minimum 8 characters long.</p>
-    </div>
-    <div *ngIf="signInForm.controls['Password'].error.incorrect">
-      <p>Password is incorrect.</p>
-    </div>-->
+    <input type="password" minLength="8" required placeholder="Password" #password="ngModel" [(ngModel)]="signInViewModel.password" name="Password" />
+
     <a id="forgot-password">Forgot my password</a>
     <p id="not-registered-paragraph">
       If you have not yet created your

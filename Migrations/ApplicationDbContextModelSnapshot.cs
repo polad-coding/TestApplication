@@ -249,7 +249,7 @@ namespace KPProject.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("UserLanguage");
+                    b.ToTable("UserLanguages");
                 });
 
             modelBuilder.Entity("KPProject.Models.UserRegion", b =>
@@ -264,7 +264,7 @@ namespace KPProject.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("UserRegion");
+                    b.ToTable("UserRegions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

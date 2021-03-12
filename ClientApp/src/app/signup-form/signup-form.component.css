@@ -13,11 +13,21 @@
   font-size: 1.1rem;
 }
 
+#error-section {
+  height: auto;
+  width: 300px;
+  padding: 10px;
+  background-color: #f03;
+  margin-bottom: 10px;
+  color: white;
+  text-align: center;
+}
+
 #agree-to-terms-radio-button-section {
   display: flex;
   margin-top: 10px;
   font-family: barlowSemiCondensedLightItalic;
-  text-align:left;
+  text-align: left;
 }
 
   #agree-to-terms-radio-button-section label {

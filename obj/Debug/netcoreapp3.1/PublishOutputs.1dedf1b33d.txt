@@ -26,6 +26,7 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\KPPr
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\KPProject.runtimeconfig.json
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\KPProject.pdb
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\AutoMapper.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\IdentityModel.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\IdentityServer4.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\IdentityServer4.AspNetIdentity.dll

@@ -6,7 +6,7 @@ namespace KPProject.Models
     {
         public int Id { get; set; }
         public string LanguageName { get; set; }
-        public List<UserLanguage> UserLanguage { get; set; }
+        public virtual List<UserLanguage> UserLanguage { get; set; }
 
     }
 }
