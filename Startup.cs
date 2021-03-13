@@ -19,6 +19,7 @@ using KPProject.Interfaces;
 using KPProject.Services;
 using System.Text;
 using AutoMapper;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace KPProject
 {
@@ -101,6 +102,12 @@ namespace KPProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
