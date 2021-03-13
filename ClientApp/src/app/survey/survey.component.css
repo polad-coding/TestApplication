@@ -73,6 +73,11 @@
   align-items: center;
 }
 
+  .kp-leaf-button:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  }
+
   .kp-leaf-button img {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
     max-width: 100%;
@@ -92,6 +97,11 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+  #kp-survey-page-buttons-section button:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  }
 
 .the-survey-section-button {
   width: 180px;
@@ -215,6 +225,11 @@
   background-color: #006F91;
   margin-left: auto;
   font-size: 1.2rem;
+}
+
+#kp-survey-page-whats-next-section-choose-practitioner-button:hover {
+  cursor: pointer;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
 }
 
   #kp-survey-page-whats-next-section-choose-practitioner-button img {

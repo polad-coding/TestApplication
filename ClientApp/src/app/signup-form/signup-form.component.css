@@ -109,6 +109,11 @@ input {
   background-color: white;
 }
 
+  #submit-button:hover {
+    color: white;
+    background-color: #006F91;
+  }
+
 @media only screen and (min-device-width: 300px) and (max-device-width: 630px) {
     #name-surname-section{
         flex-flow:column;

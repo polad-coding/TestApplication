@@ -46,3 +46,8 @@
       width: 100px;
     }
 }
+
+.footer-section-texts p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -25,6 +25,10 @@
   margin-top: 50px;
 }
 
+#kp-the-values-perspectives-method {
+  margin-bottom: 10px;
+}
+
 #kp-values-in-action-values-text {
   width: 70%;
   color: white;
@@ -82,7 +86,13 @@
   background-color: #187293;
   border: none;
   margin-top: 10px;
+  outline:none;
 }
+
+  .kp-leaf-button:hover {
+    cursor: pointer;
+    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+  }
 
   .kp-leaf-button img {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
@@ -205,6 +215,12 @@
   height: 80px;
   width: 80px;
   align-self: center;
+  outline:none;
+}
+
+#kp-main-page-slideshow-container button:hover {
+  cursor: pointer;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
 }
 
   #kp-main-page-slideshow-container button:first-child {
@@ -350,6 +366,7 @@
 
   #kp-the-values-perspectives-method {
     height: 280px;
+    margin-bottom:10px;
   }
 
   #perspectives-wheel {
@@ -510,6 +527,7 @@
     display: flex;
     flex-flow: column;
     height: auto;
+    margin-bottom:10px;
   }
 
   #perspectives-wheel {

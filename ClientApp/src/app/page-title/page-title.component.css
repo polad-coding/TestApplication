@@ -8,6 +8,7 @@
   background-size: 300px;
   background-position-x: right;
   background-position-y: 20px;
+  padding-bottom:20px;
 }
 
 #page-title-texts {
@@ -38,6 +39,7 @@
     height: 140px;
     background-size: 200px;
     background-position-y: 40px;
+    padding-bottom: 10px;
   }
 
 }
@@ -47,5 +49,6 @@
     height: 120px;
     background-size: 160px;
     background-position-y: 40px;
+    padding-bottom: 0px;
   }
 }
