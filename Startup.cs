@@ -90,11 +90,11 @@ namespace KPProject
             services.AddControllers();
 
             services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                //TODO - figure out here.
                 configuration.RootPath = "wwwroot/dist";
             });
         }
@@ -153,7 +153,7 @@ namespace KPProject
                 }
             });
 
-            CreateRoles(serviceProvider).Wait();
+            //CreateRoles(serviceProvider).Wait();
             //CreateUsers(serviceProvider).Wait();
 
         }

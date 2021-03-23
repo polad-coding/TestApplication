@@ -130,7 +130,7 @@ namespace KPProject.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("GenderId")
+                    b.Property<int>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -162,7 +162,13 @@ namespace KPProject.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Position")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("ProfessionalEmail")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ProfileImageName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("SectorOfActivity")
@@ -399,7 +405,9 @@ namespace KPProject.Migrations
                 {
                     b.HasOne("KPProject.Models.Gender", "Gender")
                         .WithMany()
-                        .HasForeignKey("GenderId");
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("KPProject.Models.UserLanguage", b =>

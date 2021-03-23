@@ -13,8 +13,10 @@ namespace KPProject.ViewModels
         public string LastName { get; set; }
         public int Age { get; set; }
         public Gender Gender { get; set; }
+        public string Email { get; set; }
         public List<RegionModel> Regions { get; set; }
         public string Education { get; set; }
+        public string Position { get; set; }
         public string SectorOfActivity { get; set; }
         public string ProfessionalEmail { get; set; }
         public string Bio { get; set; }
@@ -23,5 +25,6 @@ namespace KPProject.ViewModels
         public string MyerBriggsCode { get; set; }
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
+        public string ProfileImageName { get; set; }
     }
 }

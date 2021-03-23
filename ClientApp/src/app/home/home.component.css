@@ -351,7 +351,7 @@
     font-size: 1.4vw;
   }
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1304px) {
+@media only screen and (min-width: 768px) and (max-width: 1304px) {
   #kp-values-in-action {
     height: 250px;
     justify-content: center;
@@ -488,7 +488,7 @@
 }
 
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1150px) {
+@media only screen and (min-width: 768px) and (max-width: 1150px) {
   #kp-main-page-become-practitioner-section-texts p:first-child {
     line-height: 40px;
   }
@@ -498,21 +498,21 @@
   }
 }
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 870px) {
+@media only screen and (min-width: 768px) and (max-width: 870px) {
   #kp-vpm-description {
     font-size: 1.6vw;
     margin-top: 10px;
   }
 }
 
-@media only screen and (min-device-width: 871px) and (max-device-width: 1304px) {
+@media only screen and (min-width: 871px) and (max-width: 1304px) {
   #kp-vpm-description {
     font-size: 1.3vw;
     margin-top: 10px;
   }
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-width: 768px) {
   #kp-values-in-action {
     height: 150px;
   }
@@ -770,7 +770,7 @@
     }
 }
 
-@media only screen and (min-device-width: 360px) and (max-device-width: 420px) {
+@media only screen and (min-width: 360px) and (max-width: 420px) {
   #kp-values-in-action {
     background-size: 180px;
     background-position-x: right;
@@ -786,7 +786,7 @@
   }
 }
 
-@media only screen and (min-device-width: 420px) and (max-device-width: 768px) {
+@media only screen and (min-width: 420px) and (max-width: 768px) {
   #kp-values-in-action {
     background-size: 200px;
     background-position-x: right;

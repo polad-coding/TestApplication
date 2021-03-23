@@ -6,6 +6,7 @@ export class UserViewModel {
   public id: string;
   public firstName: string;
   public lastName: string;
+  public email: string;
   public age: number;
   public gender: GenderViewModel;
   public regions: Array<RegionViewModel>;
@@ -18,4 +19,6 @@ export class UserViewModel {
   public myerBriggsCode: string;
   public accessToken: string;
   public refreshToken: string;
+  public position: string;
+  public profileImageName: string;
 }

@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using KPProject.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace KPProject.Services
 {
@@ -96,12 +97,22 @@ namespace KPProject.Services
 
             userAttemptingToSignIn.Languages = _dbContext.UserLanguages
                 .Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id)
-                .Select(el => new UserLanguage() { 
+                .Select(el => new UserLanguage()
+                {
                     ApplicationUserId = el.ApplicationUserId,
                     User = el.User,
                     LanguageId = el.LanguageId,
-                    Language = _dbContext.Languages.First(lang => lang.Id == el.LanguageId) }).ToList();
-            //TODO - do the same with Regions
+                    Language = _dbContext.Languages.First(lang => lang.Id == el.LanguageId)
+                }).ToList();
+            userAttemptingToSignIn.Regions = _dbContext.UserRegions
+                .Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id)
+                .Select(ur => new UserRegion()
+                {
+                    ApplicationUserId = ur.ApplicationUserId,
+                    User = ur.User,
+                    RegionId = ur.RegionId,
+                    Region = _dbContext.Regions.First(reg => reg.Id == ur.RegionId)
+                }).ToList();
             //userAttemptingToSignIn.Regions = _dbContext.UserRegions.Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id).ToList();
 
             var signIn = await _signInManager.PasswordSignInAsync(userAttemptingToSignIn, signInViewModel.Password, false, false);
@@ -131,7 +142,8 @@ namespace KPProject.Services
                 FirstName = registerViewModel.FirstName,
                 LastName = registerViewModel.LastName,
                 Email = registerViewModel.Email,
-                UserName = registerViewModel.Email
+                UserName = registerViewModel.Email,
+                Gender = await _dbContext.Gender.FirstAsync(g => g.GenderName == "Other")
             };
 
             var userCreation = await _userManager.CreateAsync(newUser, registerViewModel.Password);

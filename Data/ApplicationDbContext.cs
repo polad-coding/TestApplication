@@ -16,6 +16,7 @@ namespace KPProject.Data
         public DbSet<RegionModel> Regions { get; set; }
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<UserRegion> UserRegions { get; set; }
+        public DbSet<Gender> Gender { get; set; }
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

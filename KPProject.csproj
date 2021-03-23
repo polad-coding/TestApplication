@@ -24,6 +24,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,8 @@
     <Compile Remove="Migrations\20210312181545_Edited_Relationships.Designer.cs" />
     <Compile Remove="Migrations\20210312184746_Added_New_Relationships.cs" />
     <Compile Remove="Migrations\20210312184746_Added_New_Relationships.Designer.cs" />
+    <Compile Remove="Migrations\20210322145415_Added_Profile_Image_Field_To_Application_User_Entity.cs" />
+    <Compile Remove="Migrations\20210322145415_Added_Profile_Image_Field_To_Application_User_Entity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +81,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\assets\Profile-Images\" />
     <Folder Include="Enumerators\" />
   </ItemGroup>
 

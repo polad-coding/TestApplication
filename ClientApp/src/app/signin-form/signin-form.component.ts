@@ -7,6 +7,7 @@ import { error } from 'protractor';
 import { UserViewModel } from '../../view-models/user-view-model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-signin-form',
@@ -22,7 +23,11 @@ export class SigninFormComponent implements OnInit {
   public errorMessage = "";
   public user: UserViewModel = new UserViewModel();
 
-  constructor(private _router: Router, private _authService: AuthenticationService, private http: HttpClient) {
+  constructor(private _router: Router,
+    private _authService: AuthenticationService,
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService
+  ) {
   }
 
   ngOnInit() {
@@ -31,10 +36,15 @@ export class SigninFormComponent implements OnInit {
   public SubmitSignInForm(signInForm: NgForm) {
     if (signInForm.valid) {
       this._authService.SignInUser(this.signInViewModel).subscribe(response => {
+        //Assign value to user variable and set token
         this.user = response.body;
         localStorage.setItem("jwt", this.user.accessToken);
-        console.log('here');
-        this._router.navigate(['/success']);
+        if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+          this._router.navigate(['/personalAccount'], { state: { user: this.user } });
+        }
+        else if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+          this._router.navigate(['/practitionerAccount']);
+        }
       },
         error => {
           this.formIsInvalid = true;

@@ -114,7 +114,7 @@ input {
     background-color: #006F91;
   }
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 630px) {
+@media only screen and (min-width: 300px) and (max-width: 630px) {
     #name-surname-section{
         flex-flow:column;
         margin-bottom:0px;

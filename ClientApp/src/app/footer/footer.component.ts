@@ -15,10 +15,10 @@ export class FooterComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void {
-    this.AdjustFooterSize();
   }
 
   ngOnInit() {
+    this.AdjustFooterSize();
   }
 
   @HostListener('window:resize', ['$event'])

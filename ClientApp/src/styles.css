@@ -5,19 +5,25 @@ html * {
 }
 
 html{
-    height:100vh;
     width:100%;
     /*overflow-x:hidden;*/
 }
 
-body{
-    /*overflow-x:hidden;*/
+body {
+  width: 100%;
+  /*overflow-x:hidden;*/
 }
 
 @font-face{
     font-family:barlowSemiCondensedMedium;
     src:url('../../wwwroot/Fonts/BarlowSemiCondensed-Medium.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: barlowSemiCondensedRegular;
+  src: url('../../wwwroot/Fonts/BarlowSemiCondensed-Regular.ttf') format('truetype');
+}
+
 @font-face{
     font-family:barlowSemiCondensed;
     src:url('../../wwwroot/Fonts/BarlowSemiCondensed-Black.ttf') format('truetype');

@@ -274,7 +274,7 @@
     font-size: 1.1rem;
   }
 
-@media only screen and (min-device-width: 460px) and (max-device-width: 768px) {
+@media only screen and (min-width: 460px) and (max-width: 768px) {
   #kp-survey-page-welcome-to-perspectives-survey-section-image {
     max-width: 200px;
     max-height: 200px;
@@ -286,7 +286,7 @@
     }
 }
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 460px) {
+@media only screen and (min-width: 300px) and (max-width: 460px) {
   #kp-survey-page-welcome-to-perspectives-survey-section-image {
     max-width: 150px;
     max-height: 150px;
@@ -298,7 +298,7 @@
     }
 }
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 600px) {
+@media only screen and (min-width: 300px) and (max-width: 600px) {
   .the-survey-section-button {
     width: 30%;
     height: 40px;
@@ -312,7 +312,7 @@
 }
 
 
-@media only screen and (min-device-width: 600px) and (max-device-width: 900px) {
+@media only screen and (min-width: 600px) and (max-width: 900px) {
   .the-survey-section-button {
     width: 140px;
     height: 55px;
@@ -320,7 +320,7 @@
   }
 }
 
-@media only screen and (min-device-width: 786px) and (max-device-width: 1200px) {
+@media only screen and (min-width: 786px) and (max-width: 1200px) {
   #kp-survey-page-cards-section {
     width: 100%;
   }
@@ -332,7 +332,7 @@
 }
 
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 786px) {
+@media only screen and (min-width: 300px) and (max-width: 786px) {
 
   #kp-survey-page-welcome-to-perspectives-survey-section {
     flex-flow: column;
@@ -353,7 +353,7 @@
 }
 
 
-  @media only screen and (min-device-width: 300px) and (max-device-width: 786px) {
+  @media only screen and (min-width: 300px) and (max-width: 786px) {
 
 
     #kp-survey-page-our-privacy-policy-section {
@@ -392,7 +392,7 @@
       }
   }
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 560px) {
+@media only screen and (min-width: 300px) and (max-width: 560px) {
   #kp-survey-page-our-privacy-policy-section-texts p:first-child {
     font-size: 7.5vw;
   }
@@ -409,7 +409,7 @@
 }
 
 
-  @media only screen and (min-device-width: 300px) and (max-device-width: 786px) {
+  @media only screen and (min-width: 300px) and (max-width: 786px) {
     #kp-survey-page-perspectives-survey-description-section-text {
       text-align: justify;
       font-size: 0.9rem;
