@@ -21,4 +21,5 @@ export class UserViewModel {
   public refreshToken: string;
   public position: string;
   public profileImageName: string;
+  public phoneNumber: string;
 }

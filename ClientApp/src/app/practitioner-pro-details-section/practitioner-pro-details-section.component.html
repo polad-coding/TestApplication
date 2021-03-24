@@ -1,0 +1,163 @@
+<div id="regions-modal-container" #regionModalContainer>
+  <div id="regions-modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
+      <p>Choose your regions</p>
+    </div>
+    <form class="modal-form" #regionsForm="ngForm">
+      <div *ngFor="let region of regions" class="region-checkbox-container">
+        <input type="checkbox" (click)="ToggleRegionSelection($event)" name="region" ngModel value="{{region | json}}">
+        <label class="is-not-selected" for="region">{{region.regionName}}</label>
+      </div>
+    </form>
+    <div id="region-modal-submit-button">
+      <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="languages-modal-container" #languageModalContainer>
+  <div id="languages-modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
+      <p>Choose your languages</p>
+    </div>
+    <form class="modal-form" #languagesForm="ngForm">
+      <div *ngFor="let language of languages" class="language-checkbox-container">
+        <input type="checkbox" (click)="ToggleLanguagesSelection($event)" name="language" ngModel value="{{language | json}}">
+        <label class="is-not-selected" for="language">{{language.languageName}}</label>
+      </div>
+    </form>
+    <div id="language-modal-submit-button">
+      <button (click)="SubmitLanguagesForm(languagesForm)">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="practitioner-pro-account-container">
+  <div id="practitioner-pro-account-form-container">
+    <div id="practitioner-pro-account-main-part">
+      <div id="practitioner-pro-account-photo-section">
+        <div id="upload-image-container">
+          <img *ngIf="user.profileImageName === null" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
+          <img *ngIf="user.profileImageName !== null" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+          <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
+        </div>
+        <p>Certified</p>
+        <p>practitioner</p>
+        <p>{{certificateLevel}}</p>
+      </div>
+      <div id="practitioner-pro-account-form">
+        <div id="certificate-identificator-container">
+          <div id="certificate-label-part">
+            <p>Certification level:</p>
+          </div>
+          <div id="certificate-content-part">
+            <p>{{certificationLevel}}</p>
+          </div>
+        </div>
+        <div id="membership-identificator-container">
+          <div id="membership-label-part">
+            <p>Membership:</p>
+          </div>
+          <div id="membership-content-part">
+            <p>{{membership}}</p>
+          </div>
+        </div>
+        <p></p>
+        <form id="practitioner-information-form" #proInformationForm="ngForm" autocomplete="off">
+          <div class="input-section">
+            <div class="label-section">
+              <label for="professionalEmail">Professional email:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="professionalEmail" #inputField placeholder="Your professional email address." pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$" type="email" required (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.professionalEmail" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('professionalEmail',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="phoneNumber">Phone number:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="phoneNumber" #inputField placeholder="Enter your mobile number" (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.phoneNumber" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('phoneNumber',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="website">Website:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="website" #inputField placeholder="Your website." (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.website" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('website',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="language">Language:</label>
+            </div>
+            <div class="input-field-section">
+              <div *ngFor="let language of user.languages" class="language-container">
+                <p>{{language.languageName}}</p>
+              </div>
+            </div>
+            <div class="edit-button-section">
+              <button (click)="DisplayLanguagesModal($event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="Region">Region:</label>
+            </div>
+            <div class="input-field-section">
+              <div *ngFor="let region of user.regions" class="region-container">
+                <p>{{region.regionName}} </p>
+              </div>
+            </div>
+            <div class="edit-button-section">
+              <button (click)="DisplayRegionsModal($event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section" id="bio-section">
+            <div class="label-section">
+              <label for="bio">Bio:</label>
+            </div>
+            <div class="input-field-section">
+              <textarea name="bio" placeholder="Write some info about yourself." style="resize:none"  #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.bio"> </textarea>
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('bio',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="submit-form-section">
+      <div>
+
+      </div>
+      <div id="valid-changes-section">
+        <button (click)="ChangeProfileData($event,proInformationForm)">Valid changes</button>
+      </div>
+      <div id="see-privacy-image-block">
+        <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+        <a>See privacy policy</a>
+      </div>
+    </div>
+  </div>
+</div>

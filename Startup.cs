@@ -120,7 +120,6 @@ namespace KPProject
                 app.UseHsts();
             }
 
-            app.UseCors("EnableCORS");
 
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
@@ -131,6 +130,9 @@ namespace KPProject
             }
 
             app.UseRouting();
+
+            app.UseCors("EnableCORS");
+
 
             app.UseAuthentication();
 

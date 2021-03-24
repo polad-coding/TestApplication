@@ -1,0 +1,562 @@
+#practitioner-pro-account-container {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  display: flex;
+  font-family: barlowSemiCondensedRegular;
+  width: 95%;
+  margin: auto;
+  flex-flow: column;
+  margin-bottom: 20px;
+}
+
+#certificate-identificator-container {
+  display: flex;
+  border: 2px solid #006F91;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  color: #006F91;
+}
+
+.language-container:first-child, .region-container:first-child {
+  margin-left: auto;
+}
+
+.language-container:last-child, .region-container:last-child {
+  margin-right: auto;
+}
+
+#bio-section{
+    min-height:40px;
+    display:flex;
+    height:auto;
+}
+
+#bio-section div{
+    align-self:flex-start;
+}
+
+
+  #bio-section textarea {
+    width: 100%;
+    background: transparent;
+    color: #006F91;
+    margin:5px;
+    text-align:center;
+  }
+
+#certificate-label-part {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#certificate-content-part {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  padding-right:30px;
+}
+
+#membership-label-part {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#membership-content-part {
+  width: 80%;
+  display: flex;
+  padding-right: 30px;
+  justify-content: center;
+}
+
+#membership-identificator-container {
+  display: flex;
+  border: 2px solid #006F91;
+  margin-bottom: 5px;
+  color: #006F91;
+  padding: 5px;
+}
+
+#practitioner-pro-account-form-container {
+  width: 100%;
+  background-color: #9AC7EC;
+  z-index: 1500;
+  min-height: 200px;
+  box-shadow: 1px 3px 3px rgba(0,0,0,0.4), -4px 3px 3px rgba(0,0,0,0.3);
+}
+
+#practitioner-pro-account-main-part {
+  display: flex;
+}
+
+#practitioner-pro-account-photo-section {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+  #practitioner-pro-account-photo-section img {
+    height: 220px;
+    width: 220px;
+  }
+
+  #practitioner-pro-account-photo-section p {
+    color: #006F91;
+  }
+
+#image-upload-element {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+#upload-image-container {
+  position: relative;
+  cursor: pointer;
+}
+
+#upload-image-container img{
+    object-fit:cover;
+}
+
+#practitioner-pro-account-form {
+  width: 70%;
+  margin-left: 30px;
+  display: flex;
+  flex-flow: column;
+  margin-top:20px;
+}
+
+#myer-code-description-paragraph{
+    text-align:center;
+}
+
+#practitioner-information-form {
+  width: 100%;
+}
+
+.input-section {
+  width: 100%;
+  color: #006F91;
+  background-color: white;
+  margin-bottom: 5px;
+  display: flex;
+  height: 40px;
+  align-items: center;
+}
+
+.label-section {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input-field-section {
+  width: 75%;
+  display: flex;
+  overflow-x:auto;
+}
+
+  .input-field-section input {
+    width: 100%;
+    border: none;
+    text-align: center;
+    margin-left: 10px;
+    color: #006F91;
+  }
+
+    .input-field-section input:focus {
+      outline: none;
+    }
+
+.edit-button-section {
+  width: 5%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+  .edit-button-section button {
+    background: transparent;
+    outline: none;
+    border: none;
+  }
+
+    .edit-button-section button img {
+      height: 40px;
+      width: 40px;
+    }
+
+#submit-form-section {
+  display: flex;
+}
+
+  #submit-form-section div {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+
+    #submit-form-section div:nth-child(2) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #submit-form-section div:nth-child(3) {
+      display: flex;
+      flex-flow: column;
+    }
+
+
+#see-privacy-image-block {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  padding-right: 40px;
+}
+
+  #see-privacy-image-block img {
+    height: 100px;
+    width: 100px;
+  }
+
+  #see-privacy-image-block a {
+    text-decoration-line: underline;
+    color: #006F91;
+  }
+
+#valid-changes-section button {
+  width: 160px;
+  height: 60px;
+  background: white;
+  border: none;
+  color: #006F91;
+}
+
+  #valid-changes-section button:hover {
+    background: #006F91;
+    color: white;
+  }
+
+#valid-changes-section {
+  display: flex;
+  flex-flow: column;
+}
+
+.region-container {
+  padding: 5px;
+  background-color: #006F91;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.language-container {
+  padding: 5px;
+  background-color: #006F91;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+input:disabled {
+  background-color: white;
+  border: none;
+}
+
+#regions-modal-container {
+  display: none;
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 2000;
+}
+
+#languages-modal-container {
+  display: none;
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 2000;
+}
+
+#regions-modal {
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  background-color: white;
+  color: #006F91;
+  border-radius: 3px;
+}
+
+#languages-modal {
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  background-color: white;
+  color: #006F91;
+  border-radius: 3px;
+}
+
+.modal-header {
+  height: 40px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #006F91;
+  color: white;
+  padding: 30px;
+  font-family: barlowSemiCondensedMedium;
+}
+
+.modal-form {
+  height: 100%;
+  padding: 10px;
+  overflow-y: auto;
+  font-family: barlowSemiCondensedLight;
+}
+
+.region-checkbox-container {
+  display: flex;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.language-checkbox-container {
+  display: flex;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+  .region-checkbox-container input {
+    border: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+.language-checkbox-container input {
+  border: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.is-not-selected {
+  width: 100%;
+  color: #006F91;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #9AC7EC;
+}
+
+.is-selected {
+  width: 100%;
+  color: white;
+  background-color: #006F91;
+  text-align: center;
+  padding: 10px;
+}
+
+#region-modal-submit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+  #region-modal-submit-button button {
+    border: 1px solid #006F91;
+    padding: 10px;
+    color: #006F91;
+    font-family: barlowSemiCondensedLight;
+    text-align: center;
+    background-color: transparent;
+  }
+
+    #region-modal-submit-button button:hover {
+      border: none;
+      color: white;
+      background-color: #006F91;
+    }
+
+#language-modal-submit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+  #language-modal-submit-button button {
+    border: 1px solid #006F91;
+    padding: 10px;
+    color: #006F91;
+    font-family: barlowSemiCondensedLight;
+    text-align: center;
+    background-color: transparent;
+  }
+
+    #language-modal-submit-button button:hover {
+      border: none;
+      color: white;
+      background-color: #006F91;
+    }
+
+#error-message-container {
+  max-width: 300px;
+  height: auto;
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: red;
+  color: white;
+}
+
+@media only screen and (min-width:780px) and (max-width:950px) {
+    #practitioner-pro-account-form{
+        width:90%;
+    }
+}
+
+@media only screen and (min-width:500px) and (max-width:950px) {
+  #practitioner-pro-account-form {
+    font-size: 0.9rem;
+  }
+}
+@media only screen and (min-width:320px) and (max-width:500px) {
+  #practitioner-pro-account-form {
+    font-size: 0.7rem;
+  }
+}
+
+  @media only screen and (min-width:320px) and (max-width:950px) {
+    #practitioner-pro-account-main-part {
+      flex-flow: column;
+    }
+
+    #bio-section div{
+        align-self:center;
+    }
+
+    #practitioner-pro-account-form {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #practitioner-pro-account-photo-section {
+      margin-left: 0px;
+      margin-top: 20px;
+    }
+
+    #upload-image-container img {
+      height: 150px;
+      width: 150px;
+    }
+
+    #valid-changes-section {
+      align-items: center;
+    }
+
+      #valid-changes-section button {
+        width: 100px;
+        height: 40px;
+      }
+
+    #submit-form-section {
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    #see-privacy-image-block {
+      align-items: center;
+      padding: 0px;
+      font-size: 0.5rem;
+    }
+
+      #see-privacy-image-block img {
+        height: 40px;
+        width: 40px;
+      }
+
+    #practitioner-pro-account-form {
+      /*font-size: 0.7rem;*/
+      width: 95%;
+    }
+
+    #certificate-identificator-container {
+      height: 60px;
+      align-items: center;
+      text-align: center;
+    }
+
+    #membership-identificator-container {
+      height: 60px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .input-section {
+      height: 60px;
+      align-items: center;
+    }
+
+    .label-section {
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      height: 100%
+    }
+
+    .edit-button-section {
+      width: 10%;
+      justify-content: center;
+      align-self: center;
+    }
+
+      .edit-button-section button img {
+        height: 30px;
+        width: 30px;
+      }
+
+    .input-field-section {
+      height: 95%;
+      width: 70%;
+      overflow-x: auto;
+      align-items: center;
+    }
+
+      .input-field-section input {
+        height: 100%;
+      }
+
+    .language-container, .region-container {
+      height: max-content;
+    }
+  }

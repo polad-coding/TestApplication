@@ -15,12 +15,24 @@ export class AccountService {
     return this.http.get('https://localhost:5001/Account/Regions', { observe: 'response' });
   }
 
+  public GetAllLanguages() {
+    return this.http.get('https://localhost:5001/Account/Languages', { observe: 'response' });
+  }
+
   public CheckIfMailIsRegistered(mail: string) {
     return this.http.get(`https://localhost:5001/Account/MailIsRegistered`, { observe: 'response', params: { mail: `${mail}`} });
   }
 
+  public CheckIfProfessionalMailIsRegistered(professionalEmail: string) {
+    return this.http.get(`https://localhost:5001/Account/ProfessionalEmailIsRegistered`, { observe: 'response', params: { professionalEmail: `${professionalEmail}` } });
+  }
+
   public ChangeUserPersonalData(user: UserViewModel) {
     return this.http.post('https://localhost:5001/Account/ChangeUserPersonalData', user, { observe: 'response' });
+  }
+
+  public TestRequest() {
+    return this.http.get('https://somefreedomain.ml/Account/TestRequest', { observe: 'response' });
   }
 
   public UploadProfileImage(data: string) {

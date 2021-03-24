@@ -20,6 +20,9 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { PersonalAccountComponent } from './personal-account/personal-account.component';
 import { PractitionerAccountComponent } from './practitioner-account/practitioner-account.component';
+import { PractitionerMyAccountSectionComponent } from './practitioner-my-account-section/practitioner-my-account-section.component';
+import { PractitionerProDetailsSectionComponent } from './practitioner-pro-details-section/practitioner-pro-details-section.component';
+import { TestComponent } from './test/test.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -38,7 +41,10 @@ export function tokenGetter() {
     SigninFormComponent,
     SignupFormComponent,
     PersonalAccountComponent,
-    PractitionerAccountComponent
+    PractitionerAccountComponent,
+    PractitionerMyAccountSectionComponent,
+    PractitionerProDetailsSectionComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

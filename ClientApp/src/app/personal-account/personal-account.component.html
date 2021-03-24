@@ -79,15 +79,15 @@
           </div>
           <div class="input-field-section" id="gender-radio-buttons-section" (click)="PreventEventPropagation($event)">
             <div class="gender-option">
-              <input type="radio" name="Gender" (click)="SetGender($event, 'Male')" #inputField value="Male" disabled [attr.checked]="{'checked' : user.gender ==='Male'}" />
+              <input type="radio" name="Gender" (click)="SetGender($event, 'Male')" #inputField value="Male" disabled [attr.checked]="{'checked' : user.gender.genderName ==='Male'}" />
               <p>Male</p>
             </div>
             <div class="gender-option">
-              <input type="radio" name="Gender" (click)="SetGender($event, 'Female')" #inputField value="Female" disabled [attr.checked]="{'checked' : user.gender ==='Female'}" />
+              <input type="radio" name="Gender" (click)="SetGender($event, 'Female')" #inputField value="Female" disabled [attr.checked]="{'checked' : user.gender.genderName ==='Female'}" />
               <p>Female</p>
             </div>
             <div class="gender-option">
-              <input type="radio" name="Gender" (click)="SetGender($event, 'Other')" #inputField value="Other" disabled [attr.checked]="{'checked' : user.gender ==='Other'}" />
+              <input type="radio" name="Gender" (click)="SetGender($event, 'Other')" #inputField value="Other" disabled [attr.checked]="{'checked' : user.gender.genderName ==='Other'}" />
               <p>Other</p>
             </div>
           </div>
@@ -196,5 +196,6 @@
   </div>
 
 </div>
+
 <app-footer></app-footer>
 

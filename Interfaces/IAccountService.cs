@@ -11,7 +11,9 @@ namespace KPProject.Interfaces
     {
         Task<UserViewModel> GetCurrentUserAsync(string userId);
         Task<List<RegionModel>> GetAllRegionsAsync();
+        Task<List<LanguageModel>> GetAllLanguagesAsync();
         Task<bool> MailIsRegisteredAsync(string mail);
+        Task<bool> ProfessionalEmailIsRegisteredAsync(string professionalEmail);
         Task<UserViewModel> ChangeUserPersonalDataAsync(UserViewModel userViewModel);
         Task<string> UploadProfileImageAsync(string data, string userId);
     }

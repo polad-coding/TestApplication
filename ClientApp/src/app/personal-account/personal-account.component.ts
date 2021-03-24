@@ -23,6 +23,7 @@ export class PersonalAccountComponent implements OnInit {
   public regionModal: ElementRef;
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   public errorMessage: string = '';
+  public selectedTab: string = 'my-account-section';
   public formHasError: boolean = false;
 
   constructor(private _router: Router, private accountService: AccountService, private renderer2: Renderer2, private renderer: Renderer) {

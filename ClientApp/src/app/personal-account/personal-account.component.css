@@ -83,6 +83,10 @@
   align-items: center;
 }
 
+#upload-image-container img {
+  object-fit: cover;
+}
+
 .label-section {
   width: 20%;
   display: flex;
@@ -91,8 +95,9 @@
 
 .input-field-section {
   width: 75%;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  overflow-x: auto;
+  justify-content: center;
 }
 
   .input-field-section input {
@@ -327,16 +332,114 @@ input:disabled {
     color:white;
 }
 
-@media only screen and (min-width:850px) and (max-width:1100px){
-
+@media only screen and (min-width:800px) and (max-width:1000px) {
     #personal-account-form{
         width:90%;
     }
 
   #see-privacy-image-block img {
-    height: 70px;
-    width: 70px;
-    margin-right: 20px;
+    height: 80px;
+    width: 80px;
+  }
+}
+
+  @media only screen and (min-width:320px) and (max-width:800px) {
+    #personal-account-form {
+      width: 95%;
+    }
+
+    #personal-account-sections {
+      font-size: 0.9rem;
+    }
+
+      #personal-account-sections div p {
+        text-align: center;
+      }
+
+    #personal-information-form {
+      font-size: 0.9rem;
+    }
+
+    .input-section {
+      height: 60px;
+    }
+
+    #valid-changes-section {
+      align-items: center;
+    }
+
+      #valid-changes-section button {
+        width: 100px;
+        height: 40px;
+      }
+
+    #submit-form-section {
+      margin-top: 10px;
+    }
+
+    #see-privacy-image-block {
+      align-items: center;
+      padding: 0px;
+      font-size: 0.5rem;
+    }
+
+      #see-privacy-image-block img {
+        height: 40px;
+        width: 40px;
+      }
+
+    #myer-code-description-paragraph {
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .input-field-section {
+      height: 95%;
+      margin: 0px;
+      width: 70%;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    .region-container {
+      height: max-content;
+      margin-right: 0px;
+    }
+
+    .edit-button-section {
+      height: 100%;
+      width: 10%;
+    }
+
+      .edit-button-section button img {
+        height: 30px;
+        width: 30px;
+      }
+
+    .label-section {
+      height: 100%;
+      padding-left: 10px;
+      justify-content: flex-start;
+    }
+
+      .label-section label {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        line-height:1.3;
+      }
   }
 
-}
+  @media only screen and (min-width:850px) and (max-width:1100px) {
+
+    #personal-account-form {
+      width: 90%;
+    }
+
+    #see-privacy-image-block img {
+      height: 70px;
+      width: 70px;
+      margin-right: 20px;
+    }
+  }

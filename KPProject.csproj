@@ -81,7 +81,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\assets\Profile-Images\" />
     <Folder Include="Enumerators\" />
   </ItemGroup>
 
