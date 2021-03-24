@@ -155,7 +155,7 @@ namespace KPProject
                 }
             });
 
-            //CreateRoles(serviceProvider).Wait();
+            CreateRoles(serviceProvider).Wait();
             //CreateUsers(serviceProvider).Wait();
 
         }
