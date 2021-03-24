@@ -1,5 +1,4 @@
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\KPProject.exe
-<<<<<<< HEAD
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\3rdpartylicenses.txt
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\Downut\KP-Downut-GB-HumanEnergy.svg
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\Flags\enFlag.jpg
@@ -72,8 +71,6 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwr
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\runtime-es2015.c5fa8325f89fc516600b.js
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\runtime-es5.c5fa8325f89fc516600b.js
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\styles.1d0d72fe5f93ce5f5eac.css
-=======
->>>>>>> 82242eccfa9b31ca31c738b551293345c4064bb7
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\favicon.ico
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\Fonts\BarlowSemiCondensed-Black.ttf
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\Fonts\BarlowSemiCondensed-BlackItalic.ttf

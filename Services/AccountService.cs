@@ -76,15 +76,15 @@ namespace KPProject.Services
             oldUser.MyerBriggsCode = userViewModel.MyerBriggsCode;
             oldUser.ProfileImageName = $"{userViewModel.Email}-user-profile-image";
 
-            if (userViewModel.Email != oldEmail)
-            {
-                File.Copy(
-                    Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"),
-                    Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldUser.ProfileImageName}.png")
-                );
+            //if (userViewModel.Email != oldEmail)
+            //{
+            //    File.Copy(
+            //        Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"),
+            //        Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldUser.ProfileImageName}.png")
+            //    );
 
-                File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
-            }
+            //    File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
+            //}
 
 
             var userWithNewData = await _userManager.UpdateAsync(oldUser);
@@ -190,21 +190,21 @@ namespace KPProject.Services
 
             data = data.Split(",")[1];
 
-            if (updateResult.Succeeded)
-            {
-                var dataBytes = Convert.FromBase64String(data);
+            //if (updateResult.Succeeded)
+            //{
+            //    var dataBytes = Convert.FromBase64String(data);
 
-                using (MemoryStream ms = new MemoryStream(dataBytes))
-                {
-                    Image pic = Image.FromStream(ms);
+            //    using (MemoryStream ms = new MemoryStream(dataBytes))
+            //    {
+            //        Image pic = Image.FromStream(ms);
 
-                    string path = Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{user.ProfileImageName}.png");
+            //        string path = Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{user.ProfileImageName}.png");
 
-                    File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldImageName}.png"));
+            //        File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldImageName}.png"));
 
-                    pic.Save(path, ImageFormat.Png);
-                }
-            }
+            //        pic.Save(path, ImageFormat.Png);
+            //    }
+            //}
 
             return user.ProfileImageName;
         }
