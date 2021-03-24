@@ -137,12 +137,12 @@ namespace KPProject.Services
 
         public async Task<UserViewModel> RegisterUserAsync(RegisterViewModel registerViewModel)
         {
-            if(_roleManager.Roles.Count() == 0)
-            {
-                await _roleManager.CreateAsync(new IdentityRole("Practitioner"));
-                await _roleManager.CreateAsync(new IdentityRole("User"));
-                await _roleManager.CreateAsync(new IdentityRole("Admin"));
-            }
+            //if(_roleManager.Roles.Count() == 0)
+            //{
+            //    await _roleManager.CreateAsync(new IdentityRole("Practitioner"));
+            //    await _roleManager.CreateAsync(new IdentityRole("User"));
+            //    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+            //}
 
 
 

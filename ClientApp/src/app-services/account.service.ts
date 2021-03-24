@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   public TestRequest() {
-    return this.http.get('https://somefreedomain.ml/Account/TestRequest', { observe: 'response' });
+    return this.http.get('https://localhost:5001/Account/TestRequest', { observe: 'response' });
   }
 
   public UploadProfileImage(data: string) {
