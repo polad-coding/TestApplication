@@ -18,6 +18,7 @@ namespace KPProject.ViewModels
         public string Education { get; set; }
         public string Position { get; set; }
         public string SectorOfActivity { get; set; }
+        public string PhoneNumber { get; set; }
         public string ProfessionalEmail { get; set; }
         public string Bio { get; set; }
         public List<LanguageModel> Languages { get; set; }

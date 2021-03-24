@@ -51,13 +51,40 @@ namespace KPProject.Controllers
             return BadRequest();
         }
 
+        [HttpGet("Languages")]
+        public async Task<ActionResult> GetAllLanguagesAsync()
+        {
+            var languages = await _accountService.GetAllLanguagesAsync();
+
+            if (languages != null)
+            {
+                return Ok(languages);
+            }
+
+            return BadRequest();
+        }
+
         [HttpGet("MailIsRegistered")]
         public async Task<ActionResult> MailIsRegisteredAsync([FromQuery]string mail)
         {
             var isRegistered = await _accountService.MailIsRegisteredAsync(mail);
 
             return Ok(isRegistered);
-        } 
+        }
+
+        [HttpGet("ProfessionalEmailIsRegistered")]
+        public async Task<ActionResult> ProfessionalEmailIsRegisteredAsync([FromQuery] string professionalEmail)
+        {
+            var isRegistered = await _accountService.ProfessionalEmailIsRegisteredAsync(professionalEmail);
+
+            return Ok(isRegistered);
+        }
+
+        [HttpGet("TestRequest")]
+        public ActionResult TestRequest()
+        {
+            return Ok("We rock!!!");
+        }
 
         [HttpPost]
         [Route("ChangeUserPersonalData")]

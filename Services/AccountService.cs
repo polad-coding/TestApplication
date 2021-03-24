@@ -33,7 +33,14 @@ namespace KPProject.Services
         public async Task<UserViewModel> ChangeUserPersonalDataAsync(UserViewModel userViewModel)
         {
             var oldUser = await _userManager.FindByIdAsync(userViewModel.Id);
+            var oldEmail = oldUser.Email;
             var newUserRegions = new List<UserRegion>();
+            var newUserLanguages = new List<UserLanguage>();
+
+            _dbContext.UserRegions.RemoveRange(_dbContext.UserRegions.Where(ur => ur.ApplicationUserId == userViewModel.Id));
+            _dbContext.UserLanguages.RemoveRange(_dbContext.UserLanguages.Where(ul => ul.ApplicationUserId == userViewModel.Id));
+
+            await _dbContext.SaveChangesAsync();
 
             userViewModel.Regions.ForEach(region => newUserRegions.Add(new UserRegion
             {
@@ -43,23 +50,42 @@ namespace KPProject.Services
                 RegionId = region.Id
             }));
 
+            userViewModel.Languages.ForEach(language => newUserLanguages.Add(new UserLanguage
+            {
+                ApplicationUserId = oldUser.Id,
+                //User = oldUser,
+                //Region = region,
+                LanguageId = language.Id
+            }));
+
             oldUser.Email = userViewModel.Email;
             oldUser.UserName = userViewModel.Email;
             oldUser.FirstName = userViewModel.FirstName;
             oldUser.LastName = userViewModel.LastName;
             oldUser.Gender = userViewModel.Gender;
             oldUser.Regions = newUserRegions;
+            oldUser.Languages = newUserLanguages;
             oldUser.Education = userViewModel.Education;
             oldUser.Position = userViewModel.Position;
+            oldUser.ProfessionalEmail = userViewModel.ProfessionalEmail;
+            oldUser.PhoneNumber = userViewModel.PhoneNumber;
+            oldUser.Website = userViewModel.Website;
+            oldUser.Bio = userViewModel.Bio;
             oldUser.SectorOfActivity = userViewModel.SectorOfActivity;
             oldUser.Age = userViewModel.Age;
             oldUser.MyerBriggsCode = userViewModel.MyerBriggsCode;
             oldUser.ProfileImageName = $"{userViewModel.Email}-user-profile-image";
 
-            File.Copy(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"),
-                Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldUser.ProfileImageName}.png"));
+            if (userViewModel.Email != oldEmail)
+            {
+                File.Copy(
+                    Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"),
+                    Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldUser.ProfileImageName}.png")
+                );
 
-            File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
+                File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
+            }
+
 
             var userWithNewData = await _userManager.UpdateAsync(oldUser);
 
@@ -69,6 +95,18 @@ namespace KPProject.Services
             }
 
             return null;
+        }
+
+        public async Task<List<LanguageModel>> GetAllLanguagesAsync()
+        {
+            var languages = await _dbContext.Languages.ToListAsync();
+
+            if (languages == null)
+            {
+                return null;
+            }
+
+            return languages;
         }
 
         public async Task<List<RegionModel>> GetAllRegionsAsync()
@@ -130,6 +168,18 @@ namespace KPProject.Services
             return true;
         }
 
+        public async Task<bool> ProfessionalEmailIsRegisteredAsync(string professionalEmail)
+        {
+            var result = await _userManager.Users.FirstOrDefaultAsync(u => (u.ProfessionalEmail == professionalEmail) || (u.Email == professionalEmail));
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public async Task<string> UploadProfileImageAsync(string data, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -152,7 +202,7 @@ namespace KPProject.Services
 
                     File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldImageName}.png"));
 
-                    pic.Save(path,ImageFormat.Png);
+                    pic.Save(path, ImageFormat.Png);
                 }
             }
 

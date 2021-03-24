@@ -1,0 +1,193 @@
+<div id="regions-modal-container" #regionModalContainer>
+  <div id="regions-modal" (click)="PreventEventPropagation($event)">
+    <div id="modal-header">
+      <p>Choose your regions</p>
+    </div>
+    <form id="modal-form" #regionsForm="ngForm">
+      <div *ngFor="let region of regions" class="region-checkbox-container">
+        <input type="checkbox" (click)="ToggleRegionSelection($event)" name="region" ngModel value="{{region | json}}">
+        <label class="is-not-selected" for="region">{{region.regionName}}</label>
+      </div>
+    </form>
+    <div id="region-modal-submit-button">
+      <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="practitioner-account-container">
+  <div id="practitioner-account-form-container">
+    <div id="practitioner-account-main-part">
+      <div id="practitioner-account-photo-section" *ngIf="imageSectionIsVisible === 'true'">
+        <div id="upload-image-container">
+          <img *ngIf="user.profileImageName === null" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
+          <img *ngIf="user.profileImageName !== null" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+          <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
+        </div>
+        <p>Certified</p>
+        <p>practitioner</p>
+        <p>{{certificateLevel}}</p>
+      </div>
+      <div id="practitioner-account-form">
+        <form id="practitioner-information-form" #personalInformationForm="ngForm" autocomplete="off">
+          <div class="input-section">
+            <div class="label-section">
+              <label for="email">Email address:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="email" #inputField placeholder="Your email address." pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$" type="email" required (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.email" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('email',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="firstName">First name:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="firstName" #inputField placeholder="Your first name." (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.firstName" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('firstName',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="lastName">Last name:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="lastName" #inputField placeholder="Your lastName." (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.lastName" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('lastName',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="Gender">Gender:</label>
+            </div>
+            <div class="input-field-section" id="gender-radio-buttons-section" (click)="PreventEventPropagation($event)">
+              <div class="gender-option">
+                <input type="radio" name="Gender" (click)="SetGender($event, 'Male')" #inputField value="Male" disabled [attr.checked]="{'checked' : user.gender.genderName ==='Male'}" />
+                <p>Male</p>
+              </div>
+              <div class="gender-option">
+                <input type="radio" name="Gender" (click)="SetGender($event, 'Female')" #inputField value="Female" disabled [attr.checked]="{'checked' : user.gender.genderName ==='Female'}" />
+                <p>Female</p>
+              </div>
+              <div class="gender-option">
+                <input type="radio" name="Gender" (click)="SetGender($event, 'Other')" #inputField value="Other" disabled [attr.checked]="{'checked' : user.gender.genderName ==='Other'}" />
+                <p>Other</p>
+              </div>
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('Gender',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="Region">Region:</label>
+            </div>
+            <div class="input-field-section">
+              <div *ngFor="let region of user.regions" class="region-container">
+                <p>{{region.regionName}} </p>
+              </div>
+            </div>
+            <div class="edit-button-section">
+              <button (click)="DisplayRegionsModal($event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="Education">Education:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="Education" placeholder="Enter your education." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.education" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('Education',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="Position">Position / Profession:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="Position" placeholder="Enter your position." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.position" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('Position',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="ActivitySector">Sector of activity:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="ActivitySector" placeholder="Enter your sector of activity." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.sectorOfActivity" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('ActivitySector',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="Age">Age:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="Age" placeholder="Enter your age." type="number" (click)="PreventEventPropagation($event)" #inputField [(ngModel)]="user.age" disabled />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('Age',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+          <div class="input-section">
+            <div class="label-section">
+              <label for="MBCode">4-Letter Myer-Briggs*:</label>
+            </div>
+            <div class="input-field-section">
+              <input name="MBCode" placeholder="Add your 4-Letter Myer-Briggs code." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.myerBriggsCode" />
+            </div>
+            <div class="edit-button-section">
+              <button (click)="EditInputField('MBCode',$event)">
+                <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
+              </button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+    <div id="submit-form-section">
+      <div>
+
+      </div>
+      <div id="valid-changes-section">
+        <button (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
+      </div>
+      <div id="see-privacy-image-block">
+        <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+        <a>See privacy policy</a>
+      </div>
+    </div>
+    <p id="myer-code-description-paragraph">* Not compulsory - To know your 4-Letter Myer-Briggs Type Indicator Score : <span>www.16personalities.com</span></p>
+  </div>
+</div>

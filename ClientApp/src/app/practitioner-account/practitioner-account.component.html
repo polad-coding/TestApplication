@@ -1,22 +1,24 @@
-<div id="regions-modal-container" #regionModalContainer>
-  <div id="regions-modal" (click)="PreventEventPropagation($event)">
-    <div id="modal-header">
-      <p>Choose your regions</p>
-    </div>
-    <form id="modal-form" #regionsForm="ngForm">
-      <div *ngFor="let region of regions" class="region-checkbox-container">
-        <input type="checkbox" (click)="ToggleRegionSelection($event)" name="region" ngModel value="{{region | json}}">
-        <label class="is-not-selected" for="region">{{region.regionName}}</label>
-      </div>
-    </form>
-    <div id="region-modal-submit-button">
-      <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
-    </div>
-  </div>
-</div>
+
 <app-navigation-bar></app-navigation-bar>
 <app-page-title titleText="Practitioner account"></app-page-title>
-<div id="practitioner-account-container">
+<div id="practitioner-account-sections">
+  <div class="practitioner-account-section section-selected" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
+    <p>My account</p>
+  </div>
+  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="pro-details-section">
+    <p>Pro details</p>
+  </div>
+  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
+    <p>Survey & Reports</p>
+  </div>
+  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="certification-membership-section">
+    <p>Certification / Membership</p>
+  </div>
+  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="get-codes-and-support-section">
+    <p>Get codes and support</p>
+  </div>
+</div>
+<!--<div id="practitioner-account-container">
   <div id="practitioner-account-sections">
     <div class="practitioner-account-section section-selected" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
       <p>My account</p>
@@ -209,5 +211,7 @@
     </div>
     <p id="myer-code-description-paragraph">* Not compulsory - To know your 4-Letter Myer-Briggs Type Indicator Score : <span>www.16personalities.com</span></p>
   </div>
-</div>
+</div>-->
+<ng-container *ngIf="selectedTab == 'my-account-section'"><app-practitioner-my-account-section [user]="user"></app-practitioner-my-account-section></ng-container>
+<ng-container *ngIf="selectedTab == 'pro-details-section'"><app-practitioner-pro-details-section [user]="user"></app-practitioner-pro-details-section></ng-container>
 <app-footer></app-footer>
