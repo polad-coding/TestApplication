@@ -12,11 +12,11 @@ export class AuthenticationService {
   }
 
   public SignInUser(signInViewModel: SignInViewModel): Observable<HttpResponse<any>> {
-    return this.http.post('https://localhost:5001/Authentication/SignInUser', signInViewModel, { observe:'response' });
+    return this.http.post('https://somefreedomain.ml/Authentication/SignInUser', signInViewModel, { observe:'response' });
   }
 
   public RegisterUser(registerViewModel: RegisterViewModel): Observable<HttpResponse<any>> {
-    return this.http.post('https://localhost:5001/Authentication/RegisterUser', registerViewModel, { observe: 'response' });
+    return this.http.post('https://somefreedomain.ml/Authentication/RegisterUser', registerViewModel, { observe: 'response' });
   }
 
 }
