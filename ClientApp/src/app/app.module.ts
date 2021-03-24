@@ -65,6 +65,7 @@ export function tokenGetter() {
       { path: 'signup', component: SignupComponent },
       { path: 'personalAccount', component: PersonalAccountComponent },
       { path: 'practitionerAccount', component: PractitionerAccountComponent },
+      { path: 'test', component: TestComponent },
     ]),
     JwtModule.forRoot({
       config: {

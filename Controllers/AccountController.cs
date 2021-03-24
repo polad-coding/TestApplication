@@ -81,6 +81,7 @@ namespace KPProject.Controllers
         }
 
         [HttpGet("TestRequest")]
+        [AllowAnonymous]
         public ActionResult TestRequest()
         {
             return Ok("We rock!!!");

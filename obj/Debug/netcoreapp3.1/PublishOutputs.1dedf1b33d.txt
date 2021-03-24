@@ -54,6 +54,7 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwr
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\KP-logotype\KP-logotype-Bk.jpg
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\KP-logotype\KP-logotype-Wh-chip.png
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\KP-logotype\KP-logotype-Wt-empty.png
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\Profile-Images\andy@gmail.com-user-profile-image.png
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\assets\Profile-Images\peter@gmail.com-user-profile-image.png
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\BarlowSemiCondensed-Black.fc1f16b63038ada16925.ttf
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\dist\BarlowSemiCondensed-Bold.396b59d3782c926f8773.ttf
