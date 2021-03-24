@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace KPProject.Controllers
 {
-    [Authorize(Roles = "Practitioner,User")]
+    //[Authorize(Roles = "Practitioner,User")]
     [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
