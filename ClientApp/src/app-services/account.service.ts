@@ -5,39 +5,41 @@ import { UserViewModel } from '../view-models/user-view-model';
 @Injectable()
 export class AccountService {
 
+  private url: string = 'somefreedomain.ml';
+
   constructor(private http: HttpClient) { }
 
   public GetCurrentUser() {
-    return this.http.get('https://localhost:5001/Account/', { observe: 'response' });
+    return this.http.get(`https://${this.url}/Account/`, { observe: 'response' });
   }
 
   public GetAllRegions() {
-    return this.http.get('https://localhost:5001/Account/Regions', { observe: 'response' });
+    return this.http.get(`https://${this.url}/Account/Regions`, { observe: 'response' });
   }
 
   public GetAllLanguages() {
-    return this.http.get('https://localhost:5001/Account/Languages', { observe: 'response' });
+    return this.http.get(`https://${this.url}/Account/Languages`, { observe: 'response' });
   }
 
   public CheckIfMailIsRegistered(mail: string) {
-    return this.http.get(`https://localhost:5001/Account/MailIsRegistered`, { observe: 'response', params: { mail: `${mail}`} });
+    return this.http.get(`https://${this.url}/Account/MailIsRegistered`, { observe: 'response', params: { mail: `${mail}`} });
   }
 
   public CheckIfProfessionalMailIsRegistered(professionalEmail: string) {
-    return this.http.get(`https://localhost:5001/Account/ProfessionalEmailIsRegistered`, { observe: 'response', params: { professionalEmail: `${professionalEmail}` } });
+    return this.http.get(`https://${this.url}/Account/ProfessionalEmailIsRegistered`, { observe: 'response', params: { professionalEmail: `${professionalEmail}` } });
   }
 
   public ChangeUserPersonalData(user: UserViewModel) {
-    return this.http.post('https://localhost:5001/Account/ChangeUserPersonalData', user, { observe: 'response' });
+    return this.http.post(`https://${this.url}/Account/ChangeUserPersonalData`, user, { observe: 'response' });
   }
 
   public TestRequest() {
-    return this.http.get('https://localhost:5001/Account/TestRequest', { observe: 'response' });
+    return this.http.get(`https://${this.url}/Account/TestRequest`, { observe: 'response' });
   }
 
   public UploadProfileImage(data: string) {
     console.log(data);
-    return this.http.post('https://localhost:5001/Account/UploadProfileImage', `\"${data}\"`, {
+    return this.http.post(`https://${this.url}/Account/UploadProfileImage`, `\"${data}\"`, {
       observe: 'response', headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })

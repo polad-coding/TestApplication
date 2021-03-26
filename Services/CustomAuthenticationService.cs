@@ -58,13 +58,13 @@ namespace KPProject.Services
                 new Claim(ClaimTypes.Role, userRole[0])
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtKey").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(Convert.ToInt32(_configuration.GetSection("JwtExpireHours").Value));
+            var expires = DateTime.Now.AddHours(Convert.ToInt32("3"));
 
             var tokenTemplate = new JwtSecurityToken(
-                _configuration.GetSection("JwtIssuer").Value,
-                _configuration.GetSection("JwtAudience").Value,
+                "somefreedomain.ml",
+                "somefreedomain.ml",
                 claims,
                 expires: expires,
                 signingCredentials: creds

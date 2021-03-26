@@ -26,7 +26,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
   @ViewChild('languageModalContainer', { read: ElementRef, static: false })
   public languageModal: ElementRef;
   public newLanguagesSelected: Array<LanguageViewModel> = new Array<LanguageViewModel>();
-  public profileImageName = 'KP-logotype-006F91-empty.svg';
+  public profileImageName;
   public regions: Array<RegionViewModel>;
   public languages: Array<LanguageViewModel>;
   public certificateLevel: string = 'Level 1';

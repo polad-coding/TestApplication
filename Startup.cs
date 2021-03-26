@@ -80,9 +80,9 @@ namespace KPProject
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = Configuration.GetSection("JwtIssuer").Value,
-                        ValidAudience = Configuration.GetSection("JwtAudience").Value,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JwtKey").Value)),
+                        ValidIssuer = "somefreedomain.ml",
+                        ValidAudience = "somefreedomain.ml",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc")),
                         ClockSkew = TimeSpan.Zero
                     };
                 });
@@ -121,7 +121,7 @@ namespace KPProject
             }
 
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             if (!env.IsDevelopment())

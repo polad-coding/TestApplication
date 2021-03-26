@@ -22,7 +22,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
-  public profileImageName = 'KP-logotype-006F91-empty.svg';
+  public profileImageName;
   @Input()
   public certificateLevel: string = 'Level 1';
   public imageSectionIsVisible: string = 'true';

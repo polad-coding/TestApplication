@@ -7,16 +7,18 @@ import { SignInViewModel } from "../view-models/signin-view-model";
 @Injectable()
 export class AuthenticationService {
 
+  private url: string = 'somefreedomail.ml';
+
   constructor(private http: HttpClient) {
 
   }
 
   public SignInUser(signInViewModel: SignInViewModel): Observable<HttpResponse<any>> {
-    return this.http.post('https://somefreedomain.ml/Authentication/SignInUser', signInViewModel, { observe:'response' });
+    return this.http.post(`https://${this.url}/Authentication/SignInUser`, signInViewModel, { observe:'response' });
   }
 
   public RegisterUser(registerViewModel: RegisterViewModel): Observable<HttpResponse<any>> {
-    return this.http.post('https://somefreedomain.ml/Authentication/RegisterUser', registerViewModel, { observe: 'response' });
+    return this.http.post(`https://${this.url}/Authentication/RegisterUser`, registerViewModel, { observe: 'response' });
   }
 
 }
