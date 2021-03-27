@@ -36,7 +36,7 @@ export class SignupFormComponent implements OnInit {
       this._authService.SignInUser(svw).subscribe(res => {
         this.user = res.body;
         localStorage.setItem("jwt", this.user.accessToken);
-        this._router.navigate(['/success']);
+        this._router.navigate(['/personalAccount']);
       },
         error => {
           this.formIsInvalid = true;
