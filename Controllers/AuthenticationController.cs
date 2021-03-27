@@ -24,15 +24,14 @@ namespace KPProject.Controllers
         [Route("SignInUser")]
         public async Task<ActionResult> SignInUserAsync(SignInViewModel signInViewModel)
         {
-            //var signedInUser = await _authenticationService.SignInUserAsync(signInViewModel);
+            var signedInUser = await _authenticationService.SignInUserAsync(signInViewModel);
 
-            //if (signedInUser != null)
-            //{
-            //    return Ok(signedInUser);
-            //}
+            if (signedInUser != null)
+            {
+                return Ok(signedInUser);
+            }
 
-            //return BadRequest();
-            return new JsonResult("blah");
+            return BadRequest();
         }
 
         [HttpPost]

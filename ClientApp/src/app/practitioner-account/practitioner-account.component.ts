@@ -23,7 +23,7 @@ export class PractitionerAccountComponent   {
   public accountSectionTabs: QueryList<ElementRef>;
   public currentSelectedTabIndex: number;
   public selectedTab: string = 'my-account-section';
-  public user: UserViewModel = new UserViewModel();
+  public user: UserViewModel;
 
   ngAfterViewInit(): void {
     this.AdjustZIndexes();

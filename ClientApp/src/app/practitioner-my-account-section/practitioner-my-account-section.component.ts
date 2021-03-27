@@ -57,24 +57,25 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
   }
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
-    //this.errorMessage = '';
-    personalInformationForm.control.enable();
     if (personalInformationForm.errors === null) {
-      //this.formHasError = false;
-      //TODO - check if email and Myer code are correct
-      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
-        if (response.body === true) {
-          //this.formHasError = true;
-          //this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
-        }
-        else {
-          this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-            this._router.navigate(['/practitionerAccount']);
-          });
-        }
-      });
-      //TODO - perform the changes if so
-      console.log(this.user);
+      if (personalInformationForm.controls['email'].pristine) {
+        this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+          this._router.navigate(['/practitionerAccount']);
+        });
+      }
+      else {
+        this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
+          if (response.body === true) {
+            //this.formHasError = true;
+            //this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
+          }
+          else {
+            this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+              this._router.navigate(['/practitionerAccount']);
+            });
+          }
+        });
+      }
     }
     else {
       //this.formHasError = true;
@@ -86,9 +87,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
         //this.errorMessage = this.errorMessage.concat('Incorrect email address! ');
       }
 
-      if (true) {
 
-      }
     }
 
   }

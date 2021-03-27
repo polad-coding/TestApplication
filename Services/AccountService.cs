@@ -45,16 +45,12 @@ namespace KPProject.Services
             userViewModel.Regions.ForEach(region => newUserRegions.Add(new UserRegion
             {
                 ApplicationUserId = oldUser.Id,
-                //User = oldUser,
-                //Region = region,
                 RegionId = region.Id
             }));
 
             userViewModel.Languages.ForEach(language => newUserLanguages.Add(new UserLanguage
             {
                 ApplicationUserId = oldUser.Id,
-                //User = oldUser,
-                //Region = region,
                 LanguageId = language.Id
             }));
 

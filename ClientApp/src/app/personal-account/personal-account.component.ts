@@ -16,7 +16,7 @@ import { LanguageViewModel } from '../../view-models/language-view-model';
 })
 export class PersonalAccountComponent implements OnInit {
 
-  public user: UserViewModel = new UserViewModel();
+  public user: UserViewModel;
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   public regions: Array<RegionViewModel>;
@@ -72,17 +72,25 @@ export class PersonalAccountComponent implements OnInit {
     if (personalInformationForm.errors === null) {
       this.formHasError = false;
       //TODO - check if email and Myer code are correct
-      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
-        if (response.body === true) {
-          this.formHasError = true;
-          this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
-        }
-        else {
-          this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-            this._router.navigate(['/personalAccount']);
-          });
-        }
-      });
+      if (personalInformationForm.controls['email'].pristine) {
+        this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+          this._router.navigate(['/personalAccount']);
+        });
+      }
+      else {
+        this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
+          if (response.body === true) {
+            this.formHasError = true;
+            this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
+          }
+          else {
+            this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+              this._router.navigate(['/personalAccount']);
+            });
+          }
+        });
+      }
+
       //TODO - perform the changes if so
       console.log(this.user);
     }

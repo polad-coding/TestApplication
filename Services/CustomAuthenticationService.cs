@@ -71,7 +71,6 @@ namespace KPProject.Services
             );
 
             var token = new JwtSecurityTokenHandler().WriteToken(tokenTemplate);
-            //var jsonFormatedToken = JsonSerializer.Serialize(token);
 
             if (token != null)
             {
@@ -113,7 +112,6 @@ namespace KPProject.Services
                     RegionId = ur.RegionId,
                     Region = _dbContext.Regions.First(reg => reg.Id == ur.RegionId)
                 }).ToList();
-            //userAttemptingToSignIn.Regions = _dbContext.UserRegions.Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id).ToList();
 
             var signIn = await _signInManager.PasswordSignInAsync(userAttemptingToSignIn, signInViewModel.Password, false, false);
 
@@ -137,15 +135,6 @@ namespace KPProject.Services
 
         public async Task<UserViewModel> RegisterUserAsync(RegisterViewModel registerViewModel)
         {
-            //if(_roleManager.Roles.Count() == 0)
-            //{
-            //    await _roleManager.CreateAsync(new IdentityRole("Practitioner"));
-            //    await _roleManager.CreateAsync(new IdentityRole("User"));
-            //    await _roleManager.CreateAsync(new IdentityRole("Admin"));
-            //}
-
-
-
             var newUser = new ApplicationUser()
             {
                 FirstName = registerViewModel.FirstName,
