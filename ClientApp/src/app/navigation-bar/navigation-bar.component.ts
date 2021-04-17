@@ -26,6 +26,12 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (window.innerWidth < 768) {
+      this.isMobile = true;
+    }
+    else {
+      this.isMobile = false;
+    }
   }
 
   public DocumentClicked() {

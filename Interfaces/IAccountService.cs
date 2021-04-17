@@ -9,6 +9,8 @@ namespace KPProject.Interfaces
 {
     public interface IAccountService
     {
+
+        List<ValueModel> GetAllValues();
         Task<UserViewModel> GetCurrentUserAsync(string userId);
         Task<List<RegionModel>> GetAllRegionsAsync();
         Task<List<LanguageModel>> GetAllLanguagesAsync();

@@ -44,6 +44,10 @@
               "target": "Package",
               "version": "[8.1.1, )"
             },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[26.1.0, )"
+            },
             "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
               "target": "Package",
               "version": "[3.1.8, )"
@@ -107,7 +111,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -23,6 +23,12 @@ import { PractitionerAccountComponent } from './practitioner-account/practitione
 import { PractitionerMyAccountSectionComponent } from './practitioner-my-account-section/practitioner-my-account-section.component';
 import { PractitionerProDetailsSectionComponent } from './practitioner-pro-details-section/practitioner-pro-details-section.component';
 import { TestComponent } from './test/test.component';
+import { SurveyFirstStageComponent } from './survey-first-stage/survey-first-stage.component';
+import { SimplebarAngularModule } from 'simplebar-angular';
+import { DragDropModule } from '@angular/cdk/drag-drop'; 
+import { SurveySecondStageComponent } from './survey-second-stage/survey-second-stage.component';
+import { AppSettingsService } from '../app-services/app-settings.service';
+import { SurveyThirdStageComponent } from './survey-third-stage/survey-third-stage.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -44,13 +50,18 @@ export function tokenGetter() {
     PractitionerAccountComponent,
     PractitionerMyAccountSectionComponent,
     PractitionerProDetailsSectionComponent,
-    TestComponent
+    TestComponent,
+    SurveyFirstStageComponent,
+    SurveySecondStageComponent,
+    SurveyThirdStageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    DragDropModule,
+    SimplebarAngularModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -65,7 +76,10 @@ export function tokenGetter() {
       { path: 'signup', component: SignupComponent },
       { path: 'personalAccount', component: PersonalAccountComponent },
       { path: 'practitionerAccount', component: PractitionerAccountComponent },
-      { path: 'test', component: TestComponent },
+      { path: 'surveyFirstStage', component: SurveyFirstStageComponent },
+      { path: 'surveySecondStage', component: SurveySecondStageComponent },
+      { path: 'surveyThirdStage', component: SurveyThirdStageComponent },
+      { path: 'success', component: TestComponent },
     ]),
     JwtModule.forRoot({
       config: {
@@ -76,7 +90,7 @@ export function tokenGetter() {
     })
   ],
   providers: [
-
+    AppSettingsService
   ],
   bootstrap: [AppComponent]
 })

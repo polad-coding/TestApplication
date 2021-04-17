@@ -17,6 +17,12 @@ namespace KPProject.Data
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<UserRegion> UserRegions { get; set; }
         public DbSet<Gender> Gender { get; set; }
+        public DbSet<ValueModel> Values { get; set; }
+        public DbSet<PerspectiveModel> Perspectives { get; set; }
+        public DbSet<SurveyModel> Surveys { get; set; }
+        public DbSet<SurveyFirstStageModel> SurveyFirstStages { get; set; }
+        public DbSet<SurveySecondStageModel> SurveySecondStages { get; set; }
+        public DbSet<SurveyThirdStageModel> SurveyThirdStages { get; set; }
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -26,12 +32,11 @@ namespace KPProject.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //builder.Entity<UserLanguage>().HasOne(ul => ul.User).WithMany(u => u.Languages).HasForeignKey(ul => ul.ApplicationUserId);
-            //builder.Entity<UserLanguage>().HasOne(ul => ul.Language).WithMany(l => l.UserLanguage).HasForeignKey(ul => ul.LanguageId);
-            //builder.Entity<UserRegion>().HasOne(ur => ur.User).WithMany(u => u.Regions).HasForeignKey(ur => ur.ApplicationUserId);
-            //builder.Entity<UserRegion>().HasOne(ur => ur.Region).WithMany(u => u.UserRegion).HasForeignKey(ur => ur.RegionId);
             builder.Entity<UserLanguage>().HasKey(ul => new { ul.ApplicationUserId, ul.LanguageId });
             builder.Entity<UserRegion>().HasKey(ur => new { ur.ApplicationUserId, ur.RegionId });
+            builder.Entity<SurveyFirstStageModel>().HasKey(sft => new { sft.SurveyId, sft.ValueId });
+            builder.Entity<SurveySecondStageModel>().HasKey(sss => new { sss.SurveyId, sss.ValueId });
+            builder.Entity<SurveyThirdStageModel>().HasKey(sts => new { sts.SurveyId, sts.ValueId });
         }
     }
 }

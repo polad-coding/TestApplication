@@ -91,6 +91,8 @@ namespace KPProject
 
             services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IDataService, DataService>();
+            services.AddScoped<ISurveyService, SurveyService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -155,8 +157,43 @@ namespace KPProject
                 }
             });
 
-            CreateRoles(serviceProvider).Wait();
+            //CreateRoles(serviceProvider).Wait();
             //CreateUsers(serviceProvider).Wait();
+            //CreatePerspectives(serviceProvider).Wait();
+            //CreateValues(serviceProvider).Wait();
+            //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
+            //CreateValuesLanguageFiles(serviceProvider).Wait();
+        }
+
+        public async Task CreateValues(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithValuesAsync();
+
+        }
+
+        public async Task CreatePerspectivesLanguageFiles(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.CreatePerspectivesLanguageFilesAsync();
+
+        }        
+        
+        public async Task CreateValuesLanguageFiles(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.CreateValuesLanguageFilesAsync();
+
+        }
+
+        public async Task CreatePerspectives(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithPerspectivesAsync();
 
         }
 

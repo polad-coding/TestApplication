@@ -11,8 +11,7 @@ export class AppComponent {
 
   constructor(private translateService: TranslateService) {
     translateService.setDefaultLang('en');
-    translateService.addLangs(['en']);
+    translateService.addLangs(['en', 'fr']);
     translateService.use('en');
-    
   } 
 }

@@ -32,6 +32,7 @@
       "KPProject/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
+          "CsvHelper": "26.1.0",
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.1.8",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.1.8",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.8",
@@ -337,6 +338,20 @@
         },
         "compile": {
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
+      "CsvHelper/26.1.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/CsvHelper.dll": {
+            "assemblyVersion": "26.0.0.0",
+            "fileVersion": "26.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/CsvHelper.dll": {}
         }
       },
       "IdentityModel/4.0.0": {
@@ -4295,6 +4310,13 @@
       "sha512": "sha512-xSWoVzOipuDU4PeZcUfaZQ+xqXU8QmGv5jrdlxt3MYm9xaOmrefqcfzGQ3SQ+D+8wfBa/ZwSuL0qKOVj080inA==",
       "path": "automapper.extensions.microsoft.dependencyinjection/8.1.1",
       "hashPath": "automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512"
+    },
+    "CsvHelper/26.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bcyX9U6OYwx2P5pSgyiULEpGPVu8m+SMnC4atB9W8Srp+jQbsvAwgZ1PxSNfhM4CULhShYTDz22ABroCaxEpOQ==",
+      "path": "csvhelper/26.1.0",
+      "hashPath": "csvhelper.26.1.0.nupkg.sha512"
     },
     "IdentityModel/4.0.0": {
       "type": "package",

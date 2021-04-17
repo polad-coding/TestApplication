@@ -1,0 +1,149 @@
+<app-navigation-bar></app-navigation-bar>
+<app-page-title titleText="The survey"></app-page-title>
+<div id="survey-third-stage-container">
+  <div id="title-section">
+    <div class="prev-step-button-container">
+      <button class="button-enabled" *ngIf="isSelectionStage || isDescriptionStage" (click)="GoToDescriptionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
+      <button class="button-enabled" *ngIf="isValidationStage" (click)="GoToSelectionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Selection </button>
+    </div>
+    <div id="step-title-container">
+      <p>
+        3rd step
+      </p>
+      <p>Among theses values, choose and rank your top 9</p>
+    </div>
+    <div class="step-validation-container">
+      <button [ngClass]="{'button-enabled':selectedValues.length == 9,'button-disabled':selectedValues.length < 9}" (click)="GoToValidationStage()" *ngIf="isSelectionStage">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button class="button-enabled" *ngIf="isDescriptionStage" (click)="GoToSelectionStage()">To selection <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button id="button-invisible" *ngIf="isValidationStage"></button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isDescriptionStage" id="description-page-container">
+  <div class="go-to-selection-stage-button">
+
+  </div>
+  <div id="description-page-text">
+    <p>{{'Survey.ThirdStage.FirstParagraph' | translate}}</p><br />
+  </div>
+  <div class="go-to-selection-stage-button">
+    <button (click)="GoToSelectionStage($event)"><img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" /></button>
+  </div>
+</div>
+<div id="validation-stage-container" *ngIf="isValidationStage">
+  <div id="validation-stage-main-section">
+    <div id="ideogram-table-results">
+      <ul>
+        <li *ngFor="let value of selectedValues;index as i">
+          <span>{{i + 1}}</span>
+          <div class="validation-stage-ideogram-section">
+            <span>{{value.character}}</span>
+            <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div id="validation-stage-texts">
+      <p>{{'Survey.ThirdStage.ValidationStepTexts.FirstParagraph' | translate}}</p>
+      <p>{{'Survey.ThirdStage.ValidationStepTexts.SecondParagraph' | translate}}</p>
+      <p>{{'Survey.ThirdStage.ValidationStepTexts.ThirdParagraph' | translate}}</p>
+      <p>{{'Survey.ThirdStage.ValidationStepTexts.FourthParagraph' | translate}}</p>
+    </div>
+  </div>
+  <div id="validation-stage-button-section">
+    <button class="button-enabled" (click)="UploadSurveyResults()">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
+  </div>
+</div>
+<div id="body-section" *ngIf="isSelectionStage">
+  <div id="value-ideogram-section">
+    <button id="prev-value-button" (click)="SelectPrevValue($event)">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+    </button>
+    <div id="value">
+      <div id="value-ideogram">
+        <p>{{values[currentIndex].character}}</p>
+      </div>
+      <div id="value-description">
+        <p>{{'Values.' + values[currentIndex].character + '.Title' | translate}}</p>
+        <p>{{'Values.' + values[currentIndex].character + '.Definition' | translate}}</p>
+      </div>
+    </div>
+    <button id="next-value-button" (click)="SelectNextValue($event)">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
+    </button>
+  </div>
+  <div id="table-section">
+    <div class="priorities-container">
+      <div class="values-priorities-column-first">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+      </div>
+      <ul>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="1">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="2">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="3">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="4">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="5">
+          <p></p>
+          <p></p>
+        </li>
+      </ul>
+    </div>
+    <div class="priorities-container">
+      <div class="values-priorities-column-second">
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+      </div>
+      <ul>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="6">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="7">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="8">
+          <p></p>
+          <p></p>
+        </li>
+        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="9">
+          <p></p>
+          <p></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="bottom-section" *ngIf="isSelectionStage">
+  <div class="values-display-options">
+    <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="TurnOffDescriptiveMode()" />
+    <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="TurnOnDescriptiveMode()" />
+  </div>
+  <div id="values-list-section" *ngIf="isSelectionStage">
+    <ul id="values-bar" (drop)="Drop($event)" (dragover)="DragOver($event)">
+      <li #valueContainers *ngFor="let value of values; index as i;" (dragstart)="Drag($event)" (click)="SelectNewValue($event, i)" [attr.data-title]="'Values.' + value.character + '.Title' | translate" [attr.data-character]="value.character" [attr.data-index]="i" [attr.data-id]="value.id" class="value-container" draggable="true">
+        <p>{{value.character}}</p>
+        <p *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<app-footer></app-footer>

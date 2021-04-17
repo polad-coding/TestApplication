@@ -172,3 +172,4 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\KPProject.de
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\KPProject.runtimeconfig.json
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\KPProject.runtimeconfig.dev.json
 C:\Users\polad\source\repos\TestApplication\obj\Debug\netcoreapp3.1\KPProject.genruntimeconfig.cache
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\CsvHelper.dll

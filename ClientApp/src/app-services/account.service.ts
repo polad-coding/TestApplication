@@ -33,10 +33,6 @@ export class AccountService {
     return this.http.post(`https://${this.url}/Account/ChangeUserPersonalData`, user, { observe: 'response' });
   }
 
-  public TestRequest() {
-    return this.http.get(`https://${this.url}/Account/TestRequest`, { observe: 'response' });
-  }
-
   public UploadProfileImage(data: string) {
     console.log(data);
     return this.http.post(`https://${this.url}/Account/UploadProfileImage`, `\"${data}\"`, {

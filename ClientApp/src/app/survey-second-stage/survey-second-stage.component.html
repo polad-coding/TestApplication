@@ -1,0 +1,106 @@
+<app-navigation-bar></app-navigation-bar>
+<app-page-title titleText="The survey"></app-page-title>
+<div id="survey-second-stage-container">
+  <div id="title-section">
+    <div class="prev-step-button-container">
+      <button class="button-enabled" (click)="ProceedToDescription($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
+    </div>
+    <div id="step-title-container">
+      <p>
+        2nd step
+      </p>
+      <p>Choose 3 values in each of the following {{numberOfPagesToShow}} pages</p>
+    </div>
+    <div class="step-validation-container">
+      <button [ngClass]="{'button-disabled':!stepIsFilledCorrectly,'button-enabled':stepIsFilledCorrectly}" (click)="ProceedNextStage($event)" *ngIf="isSelectionStage">Next step <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button class="button-enabled" (click)="ProceedToSelection($event)" *ngIf="isDescriptionStage">To selection <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+    </div>
+  </div>
+</div>
+<div id="description-page-container" *ngIf="isDescriptionStage">
+  <div class="go-to-selection-stage-button">
+
+  </div>
+  <div id="description-page-text">
+    <p>{{'Survey.SecondStage.FirstParagraph' | translate}}</p><br />
+    <p>{{'Survey.SecondStage.SecondParagraph' | translate}}</p><br />
+  </div>
+  <div class="go-to-selection-stage-button">
+    <button (click)="ProceedToSelection($event)"><img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" /></button>
+  </div>
+</div>
+<div id="main-section" *ngIf="isSelectionStage">
+  <div id="go-to-prev-page-button">
+    <button (click)="GoToPreviousGroupPage($event)">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+    </button>
+  </div>
+  <div id="values-container">
+    <div id="unselected-values">
+      <div id="unselected-values-container" #unselectedValuesContainer cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="valuesGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)">
+        <div cdkDrag [ngClass]="{'value-ideogram-container':!descriptiveModeIsOn, 'value-ideogram-container-list-mode':descriptiveModeIsOn}" *ngFor="let value of currentValuesGroup" (click)="DisplayValueModal($event, value)">
+          <span>{{value.character}}</span>
+          <span *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <div id="display-option">
+      <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="DisableDescriptiveMode($event)" />
+      <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="EnableDescriptiveMode($event)" />
+    </div>
+    <div id="selected-values">
+      <p>Selected Values</p>
+      <div id="selected-values-container" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="valuesMarkedAsImportantGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
+        <div cdkDrag [ngClass]="{'value-ideogram-container':!descriptiveModeIsOn, 'value-ideogram-container-list-mode':descriptiveModeIsOn, 'value-is-important':!descriptiveModeIsOn}" *ngFor="let value of currentImportantValuesGroup" (click)="DisplayValueModal($event, value)">
+          <span [ngClass]="{'value-is-important':descriptiveModeIsOn}">{{value.character}}</span>
+          <span *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <div id="value-modal" *ngIf="valueModalIsVisible">
+      <div id="value-modal-ideogram-section">
+        <div>
+          <button *ngIf="currentClickedValueImportance == 'important'" (click)="MarkValueAsLessImportant($event)">
+            <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+          </button>
+        </div>
+        <div #valueModalIdeogram id="value-modal-ideogram" [ngClass]="{'value-is-important':currentClickedValueImportance == 'important'}">
+          {{currentClickedValueCharacter | translate}}
+        </div>
+        <div>
+          <button *ngIf="currentClickedValueImportance == ''" (click)="MarkValueAsImportant($event)">
+            <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
+          </button>
+        </div>
+      </div>
+      <p id="value-modal-title">
+        {{'Values.' + currentClickedValueCharacter + '.Title' | translate}}
+      </p>
+      <p id="value-modal-description">
+        {{'Values.' + currentClickedValueCharacter + '.Definition' | translate}}
+      </p>
+      <img id="close-modal-icon" (click)="CloseModal($event)" src="../../assets/Images/close.svg" />
+    </div>
+  </div>
+  <div id="go-to-next-page-button">
+    <button (click)="GoToNextGroupPage($event)">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
+    </button>
+  </div>
+</div>
+<div id="pages-section" *ngIf="isSelectionStage">
+  <div id="go-to-previous-group-container">
+    <button (click)="GoToPreviousGroupPage($event)">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+    </button>
+  </div>
+  <div class="values-page" #valuesPageButton *ngFor="let key of arrayOfPages;index as i" (click)="ChangePage($event,key, i)" [attr.data-id]="key" [ngClass]="{'currentPage':currentPageIndex == i+1}">
+    <p>{{i + 1}}</p>
+  </div>
+  <div id="go-to-next-group-container">
+    <button (click)="GoToNextGroupPage()">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
+    </button>
+  </div>
+</div>
+<app-footer></app-footer>

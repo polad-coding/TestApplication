@@ -29,6 +29,18 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "CsvHelper/26.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/CsvHelper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/CsvHelper.dll": {}
+        }
+      },
       "IdentityModel/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -3100,6 +3112,28 @@
         "automapper.extensions.microsoft.dependencyinjection.nuspec",
         "icon.png",
         "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
+      ]
+    },
+    "CsvHelper/26.1.0": {
+      "sha512": "bcyX9U6OYwx2P5pSgyiULEpGPVu8m+SMnC4atB9W8Srp+jQbsvAwgZ1PxSNfhM4CULhShYTDz22ABroCaxEpOQ==",
+      "type": "package",
+      "path": "csvhelper/26.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.26.1.0.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net45/CsvHelper.dll",
+        "lib/net45/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net5.0/CsvHelper.dll",
+        "lib/net5.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
       ]
     },
     "IdentityModel/4.0.0": {
@@ -9629,6 +9663,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.1.1",
+      "CsvHelper >= 26.1.0",
       "Microsoft.AspNetCore.ApiAuthorization.IdentityServer >= 3.1.8",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 3.1.8",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.8",
@@ -9684,6 +9719,10 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": {
             "target": "Package",
             "version": "[8.1.1, )"
+          },
+          "CsvHelper": {
+            "target": "Package",
+            "version": "[26.1.0, )"
           },
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
             "target": "Package",
@@ -9748,7 +9787,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

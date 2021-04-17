@@ -30,6 +30,11 @@ namespace KPProject.Services
             _dbContext = dbContext;
         }
 
+        public List<ValueModel> GetAllValues()
+        {
+            return _dbContext.Values.ToList();
+        }
+
         public async Task<UserViewModel> ChangeUserPersonalDataAsync(UserViewModel userViewModel)
         {
             var oldUser = await _userManager.FindByIdAsync(userViewModel.Id);

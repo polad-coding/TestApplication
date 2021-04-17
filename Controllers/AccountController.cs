@@ -1,4 +1,5 @@
 ﻿using KPProject.Interfaces;
+using KPProject.Models;
 using KPProject.Services;
 using KPProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -78,13 +79,6 @@ namespace KPProject.Controllers
             var isRegistered = await _accountService.ProfessionalEmailIsRegisteredAsync(professionalEmail);
 
             return Ok(isRegistered);
-        }
-
-        [HttpGet("TestRequest")]
-        [AllowAnonymous]
-        public ActionResult TestRequest()
-        {
-            return Ok("We rock!!!");
         }
 
         [HttpPost]

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="CsvHelper" Version="26.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.8" />
@@ -47,16 +48,28 @@
     <Compile Remove="Migrations\20210312184746_Added_New_Relationships.Designer.cs" />
     <Compile Remove="Migrations\20210322145415_Added_Profile_Image_Field_To_Application_User_Entity.cs" />
     <Compile Remove="Migrations\20210322145415_Added_Profile_Image_Field_To_Application_User_Entity.Designer.cs" />
+    <Compile Remove="Migrations\20210331104609_Added_Value_Table_To_The_DB.cs" />
+    <Compile Remove="Migrations\20210331104609_Added_Value_Table_To_The_DB.Designer.cs" />
+    <Compile Remove="Migrations\20210331105040_Added_Value_And_Perspective_Tables_To_The_DB.cs" />
+    <Compile Remove="Migrations\20210331105040_Added_Value_And_Perspective_Tables_To_The_DB.Designer.cs" />
+    <Compile Remove="Migrations\20210416092435_Removed_First_Stage_List_Field_From_Survey_Entity.cs" />
+    <Compile Remove="Migrations\20210416092435_Removed_First_Stage_List_Field_From_Survey_Entity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\src\app-services\authentication-service.ts" />
+    <None Remove="ClientApp\src\app-services\data-service.ts" />
+    <None Remove="ClientApp\src\app-services\survey-service.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
     <None Remove="ClientApp\src\view-models\language-view-model.ts" />
     <None Remove="ClientApp\src\view-models\region-view-model.ts" />
     <None Remove="ClientApp\src\view-models\register-view-model.ts" />
     <None Remove="ClientApp\src\view-models\signin-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\survey-first-stage-save-request-model.ts" />
+    <None Remove="ClientApp\src\view-models\survey-second-stage-save-request-model.ts" />
+    <None Remove="ClientApp\src\view-models\survey-third-stage-save-request-model.ts" />
     <None Remove="ClientApp\src\view-models\user-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\value-view-model.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,12 +99,18 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app-services\authentication-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app-services\data-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\language-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\signin-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\register-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\survey-first-stage-save-request-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\survey-second-stage-save-request-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\survey-third-stage-save-request-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\user-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\value-view-model.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

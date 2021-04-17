@@ -24,9 +24,48 @@ body {
   /*overflow-x:hidden;*/
 }
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #006F91 white;
+}
+
+button{
+    background:transparent;
+    border:none;
+}
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: white;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 5px;
+    background-color: #9AC7EC;
+    border: 3px solid white;
+    background-clip: padding-box;
+  }
+
 @font-face{
     font-family:barlowSemiCondensedMedium;
     src:url('../../wwwroot/Fonts/BarlowSemiCondensed-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: kp102ValSans;
+  src: url('../../wwwroot/Fonts/KP102ValSans.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: kp102ValSq;
+  src: url('../../wwwroot/Fonts/KP102ValSq.ttf') format('truetype');
 }
 
 @font-face {
@@ -59,3 +98,6 @@ body {
   font-family: barlowSemiCondensedLightItalic;
   src: url('../../wwwroot/Fonts/BarlowSemiCondensed-LightItalic.ttf') format('truetype');
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

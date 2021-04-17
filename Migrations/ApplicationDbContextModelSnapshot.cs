@@ -229,6 +229,17 @@ namespace KPProject.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("KPProject.Models.PerspectiveModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Perspectives");
+                });
+
             modelBuilder.Entity("KPProject.Models.RegionModel", b =>
                 {
                     b.Property<int>("Id")
@@ -241,6 +252,93 @@ namespace KPProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Regions");
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveyFirstStageModel", b =>
+                {
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SurveyId", "ValueId");
+
+                    b.HasIndex("ValueId");
+
+                    b.ToTable("SurveyFirstStages");
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveyModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("FinishedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("FirstStagePassed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("PractitionerUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("SecondStagePassed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("Seed")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SurveyTakerUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<bool>("ThirdStagePassed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PractitionerUserId");
+
+                    b.HasIndex("SurveyTakerUserId");
+
+                    b.ToTable("Surveys");
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveySecondStageModel", b =>
+                {
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SurveyId", "ValueId");
+
+                    b.HasIndex("ValueId");
+
+                    b.ToTable("SurveySecondStages");
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveyThirdStageModel", b =>
+                {
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ValuePriority")
+                        .HasColumnType("int");
+
+                    b.HasKey("SurveyId", "ValueId");
+
+                    b.HasIndex("ValueId");
+
+                    b.ToTable("SurveyThirdStages");
                 });
 
             modelBuilder.Entity("KPProject.Models.UserLanguage", b =>
@@ -271,6 +369,29 @@ namespace KPProject.Migrations
                     b.HasIndex("RegionId");
 
                     b.ToTable("UserRegions");
+                });
+
+            modelBuilder.Entity("KPProject.Models.ValueModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ASCIIValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Character")
+                        .IsRequired()
+                        .HasColumnType("varchar(1) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("PerspectiveId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PerspectiveId");
+
+                    b.ToTable("Values");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -410,6 +531,62 @@ namespace KPProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("KPProject.Models.SurveyFirstStageModel", b =>
+                {
+                    b.HasOne("KPProject.Models.SurveyModel", "Survey")
+                        .WithMany("surveyFirstStageModels")
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPProject.Models.ValueModel", "Value")
+                        .WithMany()
+                        .HasForeignKey("ValueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveyModel", b =>
+                {
+                    b.HasOne("KPProject.Models.ApplicationUser", "PractitionerUser")
+                        .WithMany()
+                        .HasForeignKey("PractitionerUserId");
+
+                    b.HasOne("KPProject.Models.ApplicationUser", "SurveyTakerUser")
+                        .WithMany()
+                        .HasForeignKey("SurveyTakerUserId");
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveySecondStageModel", b =>
+                {
+                    b.HasOne("KPProject.Models.SurveyModel", "Survey")
+                        .WithMany()
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPProject.Models.ValueModel", "Value")
+                        .WithMany()
+                        .HasForeignKey("ValueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KPProject.Models.SurveyThirdStageModel", b =>
+                {
+                    b.HasOne("KPProject.Models.SurveyModel", "Survey")
+                        .WithMany()
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPProject.Models.ValueModel", "Value")
+                        .WithMany()
+                        .HasForeignKey("ValueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("KPProject.Models.UserLanguage", b =>
                 {
                     b.HasOne("KPProject.Models.ApplicationUser", "User")
@@ -436,6 +613,15 @@ namespace KPProject.Migrations
                     b.HasOne("KPProject.Models.RegionModel", "Region")
                         .WithMany("UserRegion")
                         .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KPProject.Models.ValueModel", b =>
+                {
+                    b.HasOne("KPProject.Models.PerspectiveModel", "perspective")
+                        .WithMany()
+                        .HasForeignKey("PerspectiveId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
