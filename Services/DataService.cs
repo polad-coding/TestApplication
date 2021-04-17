@@ -35,7 +35,7 @@ namespace KPProject.Services
                 return;
             }
 
-            using (var reader = new StreamReader(".\\ClientApp\\src\\assets\\Files\\values.csv"))
+            using (var reader = new StreamReader("ClientApp/src/assets/Files/values.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Context.RegisterClassMap<ValueMap>();
