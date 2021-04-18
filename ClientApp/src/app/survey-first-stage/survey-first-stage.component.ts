@@ -65,7 +65,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this.numberOfValuesQualifiedAsImportant -= 1;
     }
 
-    console.log(event.container.element);
   }
 
   public MarkValueAsLessImportant(event: MouseEvent) {
@@ -110,7 +109,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       });
     }
     this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
-    console.log(this.valueContainers.first);
 
   }
 
@@ -133,7 +131,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       }
       //Add element to the lessImportantValues list
       this.lessImportantValues.push(this.valueContainers.find(el => el.nativeElement.dataset.id == this.currentIndex));
-      console.log(this.lessImportantValues);
       //Change the style of the element
       this._renderer2.addClass(this.lessImportantValues[this.lessImportantValues.length - 1].nativeElement.firstChild, 'value-is-not-important');
       this._renderer2.removeClass(this.lessImportantValues[this.lessImportantValues.length - 1].nativeElement.firstChild, 'value-is-important');
@@ -154,7 +151,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this.numberOfValuesQualifiedAsImportant += 1;
       //Add element to the lessImportantValues list
       this.importantValues.push(this.valueContainers.find(el => el.nativeElement.dataset.id == this.currentIndex));
-      console.log(this.importantValues);
       //Change the style of the element
       this._renderer2.addClass(this.importantValues[this.importantValues.length - 1].nativeElement.firstChild, 'value-is-important');
       this._renderer2.removeClass(this.importantValues[this.importantValues.length - 1].nativeElement.firstChild, 'value-is-not-important');

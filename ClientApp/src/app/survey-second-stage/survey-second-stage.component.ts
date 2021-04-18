@@ -43,6 +43,8 @@ export class SurveySecondStageComponent implements OnInit {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.values = _router.getCurrentNavigation().extras.state.values;
     }
+
+
     this.GroupValues(this.values);
 
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
@@ -58,9 +60,8 @@ export class SurveySecondStageComponent implements OnInit {
       this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
     });
 
-
-
-
+    console.log(this.valuesGroupedByPerspectives);
+    console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
 
     this.MarkAsImportantGroupsWithLessThanFourItems();
     this.valuesGroupedByPerspectives.forEach((vl, k) => {
@@ -97,14 +98,22 @@ export class SurveySecondStageComponent implements OnInit {
   }
 
   private CheckIfStepIsFilledCorrectly() {
-    for (var i = 1; i <= AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
-      if (this.valuesMarkedAsImportantGroupedByPerspectives.get(i).length < 3) {
-        this.stepIsFilledCorrectly = false;
-        return;
+
+    let notEnoughtElements: boolean = false;
+
+    for (var i = 1; i <= 6; i++) {
+      if (this.valuesMarkedAsImportantGroupedByPerspectives.has(i) && this.valuesMarkedAsImportantGroupedByPerspectives.get(i).length < 3) {
+        notEnoughtElements = true;
       }
     }
 
-    this.stepIsFilledCorrectly = true;
+    if (!notEnoughtElements) {
+      this.stepIsFilledCorrectly = true;
+    }
+    else {
+      this.stepIsFilledCorrectly = false;
+    }
+
     console.log(this.stepIsFilledCorrectly);
 
   }
@@ -185,8 +194,6 @@ export class SurveySecondStageComponent implements OnInit {
         event.currentIndex);
     }
     this.CheckIfStepIsFilledCorrectly();
-    console.log(`li: ${this.valuesGroupedByPerspectives}`);
-    console.log(`i: ${this.valuesMarkedAsImportantGroupedByPerspectives}`);
   }
 
   public EnableDescriptiveMode(event: MouseEvent) {
@@ -273,13 +280,15 @@ export class SurveySecondStageComponent implements OnInit {
 
   private GroupValues(values: Array<ValueViewModel>) {
 
-    for (var i = 1; i <= AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
-      this.valuesGroupedByPerspectives.set(i, new Array<ValueViewModel>());
+    for (var i = 0; i <= values.length; i++) {
+      this.valuesGroupedByPerspectives.set(values[i].perspectiveId, new Array<ValueViewModel>());
     }
 
     values.forEach(value => {
       this.valuesGroupedByPerspectives.get(value.perspectiveId).push(value);
     })
+
+    console.log(this.valuesGroupedByPerspectives);
   }
 
 }

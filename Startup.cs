@@ -159,8 +159,8 @@ namespace KPProject
 
             //CreateRoles(serviceProvider).Wait();
             //CreateUsers(serviceProvider).Wait();
-            CreatePerspectives(serviceProvider).Wait();
-            CreateValues(serviceProvider).Wait();
+            //CreatePerspectives(serviceProvider).Wait();
+            //CreateValues(serviceProvider).Wait();
             //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
             //CreateValuesLanguageFiles(serviceProvider).Wait();
         }
