@@ -1,0 +1,69 @@
+/*#title-section {
+  display: flex;
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#order-container {
+  display: flex;
+  justify-content: center;
+  background-color: #9AC7EC;
+  color:#006F91;
+  flex-flow:column;
+}
+
+.column {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  margin-right:10px;
+}
+
+#type-of-code-title{
+    flex-flow:column;
+    text-align:center;
+}
+
+.type-of-code-field{
+    background-color:white;
+    padding:10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#discount-coupon-container {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.number-of-codes-field {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orders-list {
+  display: flex;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.column-title {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+#code-options-drop-down{
+    display:none;
+}
+*/

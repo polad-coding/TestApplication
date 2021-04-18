@@ -62,6 +62,7 @@
     <None Remove="ClientApp\src\app-services\survey-service.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
     <None Remove="ClientApp\src\view-models\language-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\order-view-model.ts" />
     <None Remove="ClientApp\src\view-models\region-view-model.ts" />
     <None Remove="ClientApp\src\view-models\register-view-model.ts" />
     <None Remove="ClientApp\src\view-models\signin-view-model.ts" />
@@ -103,6 +104,7 @@
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\language-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\order-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\signin-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\register-view-model.ts" />

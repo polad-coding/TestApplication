@@ -317,11 +317,15 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   }
 
   public SelectPrevValue(event: MouseEvent) {
-    this.SelectNewValue(event, this.currentIndex - 1);
+    if (this.currentIndex >= 1) {
+      this.SelectNewValue(event, this.currentIndex - 1);
+    }
   }
 
   public SelectNextValue(event: MouseEvent) {
-    this.SelectNewValue(event, this.currentIndex + 1);
+    if (this.currentIndex < this.values.length - 1) {
+      this.SelectNewValue(event, this.currentIndex + 1);
+    }
   }
 
   private SelectNewValue(mouseEvent: MouseEvent, valueId) {

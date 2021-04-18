@@ -29,6 +29,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SurveySecondStageComponent } from './survey-second-stage/survey-second-stage.component';
 import { AppSettingsService } from '../app-services/app-settings.service';
 import { SurveyThirdStageComponent } from './survey-third-stage/survey-third-stage.component';
+import { GetCodesComponent } from './get-codes/get-codes.component';
+import { OrderViewModel } from '../view-models/order-view-model';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -53,7 +55,8 @@ export function tokenGetter() {
     TestComponent,
     SurveyFirstStageComponent,
     SurveySecondStageComponent,
-    SurveyThirdStageComponent
+    SurveyThirdStageComponent,
+    GetCodesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -80,6 +83,7 @@ export function tokenGetter() {
       { path: 'surveySecondStage', component: SurveySecondStageComponent },
       { path: 'surveyThirdStage', component: SurveyThirdStageComponent },
       { path: 'success', component: TestComponent },
+      { path: 'order', component: GetCodesComponent }
     ]),
     JwtModule.forRoot({
       config: {

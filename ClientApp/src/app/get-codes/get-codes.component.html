@@ -1,0 +1,67 @@
+<div id="order-container">
+  <!--<div id="title-section">
+    <div class="column-title" id="type-of-code-title">
+      <p>Type of code</p>
+      <p>Choose the type of code (mono / multi)</p>
+      <button class="info-button"></button>
+    </div>
+    <div class="column-title">
+      <p>
+        Entern the number
+        of code(s)
+      </p>
+    </div>
+    <div class="column-title">
+      <p>
+        Nbr of
+        Survey(s)
+      </p>
+    </div>
+    <div class="column-title">
+      <p>
+        Price /
+        survey
+      </p>
+    </div>
+    <div class="column-title">
+      <p>Discount coupon</p>
+      <button class="info-button"></button>
+    </div>
+    <div class="column-title">
+      <p>Total</p>
+    </div>
+  </div>
+  <div class="orders-list" *ngFor="let order of listOfOrders;index as i" >
+    <div class="column type-of-code-field" (click)="DisplayCodesOptionsDropDown($event, order)">
+      <span>Monosurvey code</span>
+      <span>(default)</span>
+      <img />
+    </div>
+    <div id="code-options-drop-down">
+      <p>Monosurvey code</p>
+      <p>Multisurvey code 5 surveys</p>
+      <p>Multisurvey code 10 surveys</p>
+    </div>
+    <div class="column number-of-codes-field" id="number-of-codes-container">
+      <span>{{order.numberOfCodes}}</span>
+    </div>
+    <div class="column" id="number-of-surveys">
+      <span>{{order.numberOfSurveys}}</span>
+    </div>
+    <div class="column" id="survey-price">
+      <span>{{order.pricePerUnit | currency}}</span>
+    </div>
+    <div class="column" id="discount-coupon-container"></div>
+    <div class="column" id="total-sum">
+      <span>{{order.pricePerUnit * order.numberOfSurveys | currency}}</span>
+    </div>
+  </div>
+  <div id="add-new-element-button">
+    <button (click)="AddNewOrder($event)">Add</button>
+  </div>-->
+  <form>
+    <label for="amount">Enter amount:</label>
+    <input name="amount" #amountField="ngModel" [(ngModel)]="value" type="number" />
+    <div id="paypalButtons"></div>
+  </form>
+</div>
