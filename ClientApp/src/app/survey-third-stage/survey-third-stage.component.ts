@@ -24,12 +24,9 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   public isValidationStage: boolean = false;
 
   constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
-    //if (_router.getCurrentNavigation().extras.state != null) {
-    //  this.values = _router.getCurrentNavigation().extras.state.values;
-    //}
-    this._dataService.GetAllValues(3).subscribe((r: any) => {
-      this.values = r.body;
-    });
+    if (_router.getCurrentNavigation().extras.state != null) {
+      this.values = _router.getCurrentNavigation().extras.state.values;
+    }
   }
 
   public UploadSurveyResults() {

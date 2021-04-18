@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { AfterViewInit, Component, ElementRef, Injector, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Route, Router } from '@angular/router';
+import { count } from 'console';
 import { AppSettingsService } from '../../app-services/app-settings.service';
 import { DataService } from '../../app-services/data-service';
 import { SurveySecondStageSaveRequestModel } from '../../view-models/survey-second-stage-save-request-model';
@@ -76,11 +77,25 @@ export class SurveySecondStageComponent implements OnInit {
     this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
     this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
 
+    this.CalculateCurrentPage();
+
     console.log(this.valuesGroupedByPerspectives);
     console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
     console.log(this.currentValuesGroup);
     console.log(this.currentImportantValuesGroup);
     console.log(this.currentGroupId);
+  }
+
+  private CalculateCurrentPage() {
+    let counter = 1;
+    this.valuesGroupedByPerspectives.forEach((vl, k) => {
+      if (k == this.currentGroupId) {
+        this.currentPageIndex = counter;
+      }
+      else {
+        counter += 1;
+      }
+    });
   }
 
   private CalculateCurrentGroupId() {
@@ -102,9 +117,13 @@ export class SurveySecondStageComponent implements OnInit {
     let notEnoughtElements: boolean = false;
 
     for (var i = 1; i <= 6; i++) {
-      if (this.valuesMarkedAsImportantGroupedByPerspectives.has(i) && this.valuesMarkedAsImportantGroupedByPerspectives.get(i).length < 3) {
+      if (!this.valuesGroupedByPerspectives.has(i)) {
+        continue;
+      }
+      if (this.valuesMarkedAsImportantGroupedByPerspectives.get(i).length < 3) {
         notEnoughtElements = true;
       }
+
     }
 
     if (!notEnoughtElements) {
@@ -280,7 +299,7 @@ export class SurveySecondStageComponent implements OnInit {
 
   private GroupValues(values: Array<ValueViewModel>) {
 
-    for (var i = 0; i <= values.length; i++) {
+    for (var i = 0; i < values.length; i++) {
       this.valuesGroupedByPerspectives.set(values[i].perspectiveId, new Array<ValueViewModel>());
     }
 
