@@ -21,17 +21,20 @@
 </div>
 <div id="personal-account-container">
   <div id="personal-account-sections">
-    <div class="personal-account-section section-selected selected-section" id="my-account-section">
+    <div class="personal-account-section section-selected" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
       <p>My account</p>
     </div>
-    <div class="personal-account-section section-not-selected middle-section" id="servey-results-and-reports-section">
+    <div class="personal-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
       <p>My survey results and reports</p>
     </div>
-    <div class="personal-account-section section-not-selected side-section" id="get-codes-section">
+    <div class="personal-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)"  id="get-codes-section">
       <p>Get codes</p>
     </div>
   </div>
-  <div id="personal-account-form-container">
+  <div id="get-codes-container" *ngIf="selectedTab == 'get-codes-section'">
+    <app-get-codes></app-get-codes>
+  </div>
+  <div id="personal-account-form-container" *ngIf="selectedTab == 'my-account-section'">
     <div id="personal-account-form">
       <form id="personal-information-form" #personalInformationForm="ngForm" autocomplete="off">
         <div class="input-section">

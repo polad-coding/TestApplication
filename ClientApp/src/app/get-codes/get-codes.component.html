@@ -1,5 +1,5 @@
 <div id="order-container">
-  <!--<div id="title-section">
+  <div id="title-section">
     <div class="column-title" id="type-of-code-title">
       <p>Type of code</p>
       <p>Choose the type of code (mono / multi)</p>
@@ -31,37 +31,46 @@
       <p>Total</p>
     </div>
   </div>
-  <div class="orders-list" *ngFor="let order of listOfOrders;index as i" >
-    <div class="column type-of-code-field" (click)="DisplayCodesOptionsDropDown($event, order)">
-      <span>Monosurvey code</span>
-      <span>(default)</span>
-      <img />
-    </div>
-    <div id="code-options-drop-down">
-      <p>Monosurvey code</p>
-      <p>Multisurvey code 5 surveys</p>
-      <p>Multisurvey code 10 surveys</p>
-    </div>
-    <div class="column number-of-codes-field" id="number-of-codes-container">
-      <span>{{order.numberOfCodes}}</span>
-    </div>
-    <div class="column" id="number-of-surveys">
-      <span>{{order.numberOfSurveys}}</span>
-    </div>
-    <div class="column" id="survey-price">
-      <span>{{order.pricePerUnit | currency}}</span>
-    </div>
-    <div class="column" id="discount-coupon-container"></div>
-    <div class="column" id="total-sum">
-      <span>{{order.pricePerUnit * order.numberOfSurveys | currency}}</span>
+  <div id="orders-list-container">
+    <div class="order-row" #orderRow *ngFor="let order of listOfOrders;index as i">
+      <select id="survey-options">
+        <option value="monosurveyCode" (click)="SelectMonosurveyOption(order)">Monosurvey code</option>
+        <option value="multisurveyCodeFiveSurveys" (click)="SelectMultisurveyFiveUsagesOption(order)">Multisurvey code 5 surveys</option>
+        <option value="multisurveyCodeTenSurveys" (click)="SelectMultisurveyTenUsagesOption(order)">Multisurvey code 10 surveys</option>
+      </select>
+      <div class="column">
+        <input class="number-of-codes-field" id="number-of-codes-container" type="number" (keyup)="NumberOfCodesChanged($event,order)" [(ngModel)]="order.numberOfCodes" />
+      </div>
+      <div class="column" id="number-of-surveys">
+        <span>{{order.numberOfSurveys}}</span>
+      </div>
+      <div class="column" id="survey-price">
+        <span>{{order.pricePerUnit | currency}}</span>
+      </div>
+      <div class="column">
+        <input id="discount-field" placeholder="insert your code" />
+      </div>
+      <div class="column total-sum">
+        <span>{{order.totalPrice | currency}}</span>
+      </div>
     </div>
   </div>
   <div id="add-new-element-button">
-    <button (click)="AddNewOrder($event)">Add</button>
-  </div>-->
-  <form>
-    <label for="amount">Enter amount:</label>
-    <input name="amount" #amountField="ngModel" [(ngModel)]="value" type="number" />
-    <div id="paypalButtons"></div>
-  </form>
+    <button (click)="AddNewOrder($event)">Add more code</button>
+  </div>
+  <div id="grand-total-sum-container">
+    <span>Grand total</span>
+    <span> (incl.VAT)</span>
+    <span>{{grandTotalSum | currency}}</span>
+  </div>
+  <div id="bottom-section">
+    <div id="bottom-section-texts">
+      <p>Once you have validated your order, you will be invited to proceed with payment via PayPal (e.g.).</p>
+      <p>
+        Your personal account will then be credited with the number of surveys ordered and you will receive
+        confirmation of this by email.
+      </p>
+    </div>
+    <div id="paypalContainer" ></div>
+  </div>
 </div>

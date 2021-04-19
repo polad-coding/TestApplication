@@ -1,8 +1,9 @@
-/*#title-section {
+#title-section {
   display: flex;
   width:90%;
   margin-left:auto;
   margin-right:auto;
+  margin-top:30px;
 }
 
 #order-container {
@@ -11,13 +12,35 @@
   background-color: #9AC7EC;
   color:#006F91;
   flex-flow:column;
+  font-family:barlowSemiCondensedLight;
+}
+
+#survey-options {
+  color: #006F91;
+  font-size: 0.9rem;
+  min-width:210px;
+}
+
+#number-of-codes-container {
+  border: none;
+  color: #006F91;
+  max-width: 130px;
+  display:flex;
+  justify-content:center;
+  text-align:center;
+}
+
+#discount-field {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: #006F91;
 }
 
 .column {
   width: 15%;
   display: flex;
   justify-content: center;
-  margin-right:10px;
 }
 
 #type-of-code-title{
@@ -49,21 +72,86 @@
   align-items: center;
 }
 
-.orders-list {
+#add-new-element-button {
+    display:inline;
+}
+
+#grand-total-sum-container span{
+    color:#006F91;
+    margin-right:10px;
+}
+
+#paypalContainer{
+    margin-left:auto;
+    margin-right:30px;
+}
+
+#grand-total-sum-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-right:50px;
+}
+
+#bottom-section{
+    display:flex;
+    width:100%;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+#bottom-section button{
+    padding:10px;
+    background-color:#006F91;
+    color:white;
+    margin-left:auto;
+    margin-right:30px;
+}
+
+#bottom-section-texts{
+    color:#006F91;
+    margin-left:30px;
+    line-height:1.8;
+}
+
+#add-new-element-button button {
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 3px #006F91;
+  color: #006F91;
+  margin-left: 110px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+    #add-new-element-button button:hover {
+      background-color: #006F91;
+      color:white;
+    }
+    
+.order-row {
   display: flex;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+#orders-list-container{
+    width:100%;
+    max-height:200px;
+    min-height:200px;
+    overflow-y:auto;
 }
 
 .column-title {
   width: 15%;
   display: flex;
   justify-content: center;
-  margin-right: 10px;
+  text-align: center;
 }
 
 #code-options-drop-down{
     display:none;
 }
-*/
+

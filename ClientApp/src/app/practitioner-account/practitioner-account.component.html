@@ -214,4 +214,7 @@
 </div>-->
 <ng-container *ngIf="selectedTab == 'my-account-section'"><app-practitioner-my-account-section [user]="user"></app-practitioner-my-account-section></ng-container>
 <ng-container *ngIf="selectedTab == 'pro-details-section'"><app-practitioner-pro-details-section [user]="user"></app-practitioner-pro-details-section></ng-container>
+<div id="get-codes-container" *ngIf="selectedTab == 'get-codes-and-support-section'">
+  <app-get-codes></app-get-codes>
+</div>
 <app-footer></app-footer>

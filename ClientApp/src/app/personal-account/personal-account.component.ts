@@ -14,7 +14,7 @@ import { LanguageViewModel } from '../../view-models/language-view-model';
   styleUrls: ['./personal-account.component.css'],
   providers: [AccountService]
 })
-export class PersonalAccountComponent implements OnInit {
+export class PersonalAccountComponent implements OnInit, AfterViewInit {
 
   public user: UserViewModel;
   @ViewChildren('inputField')
@@ -26,12 +26,19 @@ export class PersonalAccountComponent implements OnInit {
   public errorMessage: string = '';
   public selectedTab: string = 'my-account-section';
   public formHasError: boolean = false;
+  @ViewChildren('accountSectionTab', { read: ElementRef })
+  public accountSectionTabs: QueryList<ElementRef>;
+  public currentSelectedTabIndex: number;
 
   constructor(private _router: Router, private accountService: AccountService, private renderer2: Renderer2, private renderer: Renderer) {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.user = _router.getCurrentNavigation().extras.state.user;
     }
   }
+    ngAfterViewInit(): void {
+      this.AdjustZIndexes();
+
+    }
 
   ngOnInit() {
     if (this.user == null || this.user == undefined) {
@@ -39,6 +46,55 @@ export class PersonalAccountComponent implements OnInit {
         this.user = response.body;
         console.log(this.user);
       });
+    }
+  }
+
+  public SelectTab(event: any) {
+
+    this.accountSectionTabs.forEach((el) => {
+      this.renderer2.removeClass(el.nativeElement, 'section-selected');
+      this.renderer2.addClass(el.nativeElement, 'section-not-selected');
+    });
+    if (event.target.localName === 'p') {
+      this.selectedTab = event.target.parentElement.id;
+      this.renderer2.removeClass(event.target.parentElement, 'section-not-selected');
+      this.renderer2.addClass(event.target.parentElement, 'section-selected');
+    }
+    else {
+      this.selectedTab = event.target.id;
+      this.renderer2.removeClass(event.target, 'section-not-selected');
+      this.renderer2.addClass(event.target, 'section-selected');
+    }
+
+    this.AdjustZIndexes();
+
+  }
+
+
+  private AdjustZIndexes() {
+    //adjust z-indexes
+    this.accountSectionTabs.forEach((el, index) => {
+      if (el.nativeElement.className === 'personal-account-section section-selected') {
+        this.currentSelectedTabIndex = index;
+      }
+    });
+
+    for (var i = this.currentSelectedTabIndex; i >= 0; i--) {
+      if (this.currentSelectedTabIndex != i) {
+        this.renderer2.setStyle(this.accountSectionTabs.toArray()[i].nativeElement, 'z-index', `${i}`);
+      }
+      else {
+        this.renderer2.setStyle(this.accountSectionTabs.toArray()[i].nativeElement, 'z-index', `${500}`);
+      }
+    }
+
+    for (var i = this.currentSelectedTabIndex; i < this.accountSectionTabs.length; i++) {
+      if (this.currentSelectedTabIndex != i) {
+        this.renderer2.setStyle(this.accountSectionTabs.toArray()[i].nativeElement, 'z-index', `${this.accountSectionTabs.length - i}`);
+      }
+      else {
+        this.renderer2.setStyle(this.accountSectionTabs.toArray()[i].nativeElement, 'z-index', `${500}`);
+      }
     }
   }
 

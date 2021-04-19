@@ -18,6 +18,16 @@
     z-index: 1000;
   }
 
+#get-codes-container {
+  z-index: 1000;
+  box-shadow: 1px 3px 3px rgba(0,0,0,0.4), -4px 3px 3px rgba(0,0,0,0.3);
+  width:95%;
+  margin-left:auto;
+  margin-right:auto;
+  position:relative;
+  margin-bottom:30px;
+}
+
 .section-selected {
   background-color: #9AC7EC;
   color: #006F91;

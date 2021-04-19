@@ -16,6 +16,11 @@
   height: 50px;
 }
 
+#get-codes-container {
+  z-index: 1000;
+  box-shadow: 1px 3px 3px rgba(0,0,0,0.4), -4px 3px 3px rgba(0,0,0,0.3);
+}
+
 
 .personal-account-section {
   width: 34%;
@@ -32,13 +37,13 @@
 .section-selected {
   background-color: #9AC7EC;
   color: #006F91;
-  box-shadow: 3px 0px 3px rgba(0,0,0,0.3);
+  box-shadow: 4px 0px 3px rgba(0,0,0,0.3), -4px 0px 3px rgba(0,0,0,0.3);
 }
 
 .section-not-selected {
   background-color: white;
   color: #006F91;
-  box-shadow: 3px 0px 3px rgba(0,0,0,0.3);
+  box-shadow: 3px 0px 3px rgba(0,0,0,0.3), -3px 0px 3px rgba(0,0,0,0.3);
 }
 
 .selected-section {
@@ -58,7 +63,7 @@
   background-color: #9AC7EC;
   z-index: 1500;
   min-height: 200px;
-  box-shadow: 1px 3px 3px rgba(0,0,0,0.4), 3px 4px 3px rgba(0,0,0,0.4);
+  box-shadow: 1px 3px 3px rgba(0,0,0,0.4), -4px 3px 3px rgba(0,0,0,0.3);
 }
 
 #personal-account-form {
