@@ -260,5 +260,57 @@ namespace KPProject.Services
 
             return true;
         }
+
+        public async Task<List<double>> GetTheRelativeWeightOfThePerspectivesAsync(int surveyId)
+        {
+            //Calculate v for each perspective
+
+            var vOfEachPerspective = ((await _applicationDbContext.Values.ToListAsync()).GroupBy((v) => v.PerspectiveId));
+
+            //Calcualate c for each perspective
+
+            var cOfEachPerspective = (await _applicationDbContext.SurveyFirstStages.Where(sfm => sfm.SurveyId == surveyId).Select(v => v.Value).ToListAsync()).GroupBy(v => v.PerspectiveId);
+
+            //Calculate t for each perspective
+
+            var numberOfValuesSelectedAtSecondStepForEachPerspective = (await _applicationDbContext.SurveySecondStages.Where(sst => sst.SurveyId == surveyId).Select(v => v.Value).ToListAsync()).GroupBy(v => v.PerspectiveId);
+
+            var rankingOfValuesAtTheThirdStageOfASurvey = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => new { priority = sts.ValuePriority, value = sts.Value }).ToListAsync()).OrderBy(v => v.value.PerspectiveId);
+
+            var tOfEachPerspective = new List<double>() { 0,0,0,0,0,0 };
+            var WOfEachPerspective = new List<double>() { 0,0,0,0,0,0 };
+
+            for (int i = 0; i < tOfEachPerspective.Count; i++)
+            {
+                tOfEachPerspective[i] = cOfEachPerspective.First(e => e.Key == i + 1).ToList().Count +
+                    (numberOfValuesSelectedAtSecondStepForEachPerspective.First(e => e.Key == i + 1).ToList().Count * 2) +
+                    rankingOfValuesAtTheThirdStageOfASurvey.Where(e => e.value.PerspectiveId == i + 1).Sum(e => 10 - e.priority);
+
+                var a = (Convert.ToDouble(tOfEachPerspective[i]) / Convert.ToDouble(vOfEachPerspective.First(e => e.Key == i + 1).ToList().Count));
+                var b = (Convert.ToDouble(cOfEachPerspective.First(e => e.Key == i + 1).ToList().Count) / Convert.ToDouble(vOfEachPerspective.First(e => e.Key == i + 1).ToList().Count));
+
+                WOfEachPerspective[i] = a * b;
+
+            }
+
+            var ROfEachPerspective = new List<double>() { 0, 0, 0, 0, 0, 0 };
+
+            for (int i = 0; i < WOfEachPerspective.Count; i++)
+            {
+                ROfEachPerspective[i] = (WOfEachPerspective[i] / WOfEachPerspective.Sum(e => e)) * 100;
+            }
+
+
+            return ROfEachPerspective;
+        }
+
+        public async Task<List<ValueModel>> GetSurveyThirdStageResultsAsync(int surveyId)
+        {
+            var values = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => new { priority = sts.ValuePriority, value = sts.Value }).ToListAsync()).OrderBy(v => v.value.PerspectiveId).Select(v => v.value).ToList();
+
+            //var values = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).ToListAsync()).OrderBy(e => e.ValuePriority).Select(v => v.Value).ToList();
+
+            return values;
+        }
     }
 }

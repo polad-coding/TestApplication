@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -31,6 +32,7 @@ import { AppSettingsService } from '../app-services/app-settings.service';
 import { SurveyThirdStageComponent } from './survey-third-stage/survey-third-stage.component';
 import { GetCodesComponent } from './get-codes/get-codes.component';
 import { OrderViewModel } from '../view-models/order-view-model';
+import { WrapUpComponent } from './wrap-up/wrap-up.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -56,7 +58,8 @@ export function tokenGetter() {
     SurveyFirstStageComponent,
     SurveySecondStageComponent,
     SurveyThirdStageComponent,
-    GetCodesComponent
+    GetCodesComponent,
+    WrapUpComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -65,6 +68,7 @@ export function tokenGetter() {
     FormsModule,
     DragDropModule,
     SimplebarAngularModule,
+    ChartsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -83,7 +87,8 @@ export function tokenGetter() {
       { path: 'surveySecondStage', component: SurveySecondStageComponent },
       { path: 'surveyThirdStage', component: SurveyThirdStageComponent },
       { path: 'success', component: TestComponent },
-      { path: 'order', component: GetCodesComponent }
+      { path: 'order', component: GetCodesComponent },
+      { path: 'wrap-up', component: WrapUpComponent }
     ]),
     JwtModule.forRoot({
       config: {

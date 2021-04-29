@@ -1,0 +1,112 @@
+<app-navigation-bar></app-navigation-bar>
+<app-page-title titleText="The survey"></app-page-title>
+<div id="wrap-up-container">
+  <div id="brief-results-section">
+    <img src="../../assets/Images/KP-Perspectives-Pie.png"/>
+    <div id="brief-results-section-texts">
+      <p>{{'Survey.WrapUp.WrapUpSectionTexts.Title' | translate}}</p>
+      <p>{{'Survey.WrapUp.WrapUpSectionTexts.MainContent' | translate}}</p>
+    </div>
+  </div>
+  <div id="your-profile-section">
+    <div id="your-profile-section-texts">
+      <p>{{'Survey.WrapUp.YourProfileSectionTexts.Title' | translate}}</p>
+      <p>{{'Survey.WrapUp.YourProfileSectionTexts.FirstParagraph' | translate}}</p>
+      <p>{{'Survey.WrapUp.YourProfileSectionTexts.SecondParagraph' | translate}}</p>
+      <p>{{'Survey.WrapUp.YourProfileSectionTexts.ThirdParagraph' | translate}}</p>
+    </div>
+    <img src="../../assets/Images/notepad-with-perspectives-wheel.png"/>
+  </div>
+  <div id="perspectives-wheel-section">
+    <div id="selected-perspectives-section">
+      <div>
+        <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.FirstParagraph' | translate}}</p> <br />
+        <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.CorePerspective' | translate}}</p>
+        <span id="primary-perspective-span"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png"/> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}</span>
+        <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.SecondPerspective' | translate}}</p>
+        <span id="secondary-perspective-span"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png"/> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}</span><br />
+      </div>
+      <div id="your-highest-priority-values-container">
+        <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.SecondParagraph' | translate}}</p>
+        <div id="highest-priority-values-container">
+          <div *ngFor="let value of valuesFromThirdStage; index as i" class="value-container">
+            <span>{{i + 1}}</span>
+            <span class="perspective-with-index-{{value.perspectiveId}}"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-045-f.png" /> </span>
+            <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="perspectives-pie-diagram">
+      <canvas id="myChart" style="height:100%;" >
+      </canvas>
+      <div id="pie-image-container">
+        <img id="pie-image" src="../../assets/KP-logotype/KP-logotype-006F91-chip.png" />
+      </div>
+    </div>
+  </div>
+  <div id="perspectives-table-section">
+    <div class="perspective-container">
+      <div [ngClass]="{'perspective-container-title':true}" style="background-color:#E30513; color:white;">
+        {{'Perspectives.1.Title' | translate}}
+      </div>
+      <div class="perspective-container-content" >
+        <p>{{'Perspectives.1.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      </div>
+    </div>
+    <div class="perspective-container">
+      <div class="perspective-container-title" style="background-color:#ED7102; color:#006F91;">
+        {{'Perspectives.2.Title' | translate}}
+      </div>
+      <div class="perspective-container-content">
+        <p>{{'Perspectives.2.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      </div>
+    </div>
+    <div class="perspective-container">
+      <div class="perspective-container-title" style="background-color:#FFCC00; color:#006F91;">
+        {{'Perspectives.3.Title' | translate}}
+      </div>
+      <div class="perspective-container-content">
+        <p>{{'Perspectives.3.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      </div>
+    </div>
+    <div class="perspective-container">
+      <div class="perspective-container-title" style="background-color:#009640; color:white;">
+        {{'Perspectives.4.Title' | translate}}
+      </div>
+      <div class="perspective-container-content">
+        <p>{{'Perspectives.4.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      </div>
+    </div>
+    <div class="perspective-container">
+      <div class="perspective-container-title" style="background-color:#009EE3; color:#006F91;">
+        {{'Perspectives.5.Title' | translate}}
+      </div>
+      <div class="perspective-container-content">
+        <p>{{'Perspectives.5.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      </div>
+    </div>
+    <div class="perspective-container">
+      <div class="perspective-container-title" style="background-color:#544595; color:white;">
+        {{'Perspectives.6.Title' | translate}}
+      </div>
+      <div class="perspective-container-content">
+        <p>{{'Perspectives.6.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      </div>
+    </div>
+  </div>
+  <div id="actions-buttons-section">
+    <button>Download your personal report <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
+    <button>Access your personal account <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
+  </div>
+  <div id="whats-next-section">
+    <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" />
+    <div id="whats-next-section-texts-section">
+      <p>{{'Survey.WrapUp.WhatsNextSectionTexts.Title' | translate}}</p>
+      <p>{{'Survey.WrapUp.WhatsNextSectionTexts.FirstParagraph' | translate}}</p>
+      <p>{{'Survey.WrapUp.WhatsNextSectionTexts.SecondParagraph' | translate}}</p>
+      <button>Choose a practitioner <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

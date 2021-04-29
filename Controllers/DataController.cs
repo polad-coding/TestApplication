@@ -35,6 +35,34 @@ namespace KPProject.Controllers
             return Ok(values);
         }
 
+        [HttpGet]
+        [Route("GetTheRelativeWeightOfThePerspectives")]
+        public async Task<ActionResult<List<double>>> GetTheRelativeWeightOfThePerspectives([FromQuery]int surveyId)
+        {
+            var values = await _dataService.GetTheRelativeWeightOfThePerspectivesAsync(surveyId);
+
+            if (values == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(values);
+        }
+
+        [HttpGet]
+        [Route("GetSurveyThirdStageResults")]
+        public async Task<ActionResult<List<double>>> GetSurveyThirdStageResultsAsync([FromQuery]int surveyId)
+        {
+            var values = await _dataService.GetSurveyThirdStageResultsAsync(surveyId);
+
+            if (values == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(values);
+        }
+
         [HttpPost]
         [Route("SaveFirstStageResults")]
         public async Task<ActionResult> SaveFirstStageResultsAsync(SurveyFirstStageSaveRequestViewModel surveyFirstStageSaveRequestViewModel)

@@ -7,7 +7,7 @@ import { ValueViewModel } from "../view-models/value-view-model";
 
 @Injectable()
 export class DataService {
-  private url: string = 'somefreedomain.ml';
+  private url: string = 'localhost:5001';
 
 
   constructor(private http: HttpClient) { }
@@ -31,6 +31,14 @@ export class DataService {
 
   public SaveThirdStageResults(surveyThirdStageSaveRequestModel: SurveyThirdStageSaveRequestModel) {
     return this.http.post(`https://${this.url}/Data/SaveThirdStageResults`, surveyThirdStageSaveRequestModel, { observe: 'response' });
+  }
+
+  public GetTheRelativeWeightOfThePerspectives(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetTheRelativeWeightOfThePerspectives?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
+  public GetSurveyThirdStageResults(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetSurveyThirdStageResults?surveyId=${surveyId}`, { observe: 'response' });
   }
 
 }
