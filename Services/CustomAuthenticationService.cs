@@ -60,7 +60,7 @@ namespace KPProject.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(Convert.ToInt32("3"));
+            var expires = DateTime.Now.AddHours(3);
 
             var tokenTemplate = new JwtSecurityToken(
                 "somefreedomain.ml",

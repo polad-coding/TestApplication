@@ -4,6 +4,7 @@ using KPProject.Interfaces;
 using KPProject.Maps;
 using KPProject.Models;
 using KPProject.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -20,12 +21,13 @@ namespace KPProject.Services
     {
 
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly List<string> _languages = new List<string>() { "EN" };
 
-        public DataService(ApplicationDbContext applicationDbContext)
+        public DataService(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
         {
             _applicationDbContext = applicationDbContext;
-
+            _userManager = userManager;
         }
 
         public async Task PopulateDBWithValuesAsync()
@@ -192,6 +194,7 @@ namespace KPProject.Services
 
             var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
             survey.FirstStagePassed = true;
+            survey.TakenOn = DateTime.Now;
 
             _applicationDbContext.Surveys.Update(survey);
 
@@ -221,6 +224,8 @@ namespace KPProject.Services
 
             var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
             survey.SecondStagePassed = true;
+            survey.TakenOn = DateTime.Now;
+
 
             _applicationDbContext.Surveys.Update(survey);
 
@@ -250,6 +255,8 @@ namespace KPProject.Services
 
             var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
             survey.ThirdStagePassed = true;
+            survey.TakenOn = DateTime.Now;
+
 
             _applicationDbContext.Surveys.Update(survey);
 
@@ -277,8 +284,8 @@ namespace KPProject.Services
 
             var rankingOfValuesAtTheThirdStageOfASurvey = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => new { priority = sts.ValuePriority, value = sts.Value }).ToListAsync()).OrderBy(v => v.value.PerspectiveId);
 
-            var tOfEachPerspective = new List<double>() { 0,0,0,0,0,0 };
-            var WOfEachPerspective = new List<double>() { 0,0,0,0,0,0 };
+            var tOfEachPerspective = new List<double>() { 0, 0, 0, 0, 0, 0 };
+            var WOfEachPerspective = new List<double>() { 0, 0, 0, 0, 0, 0 };
 
             for (int i = 0; i < tOfEachPerspective.Count; i++)
             {
@@ -311,6 +318,145 @@ namespace KPProject.Services
             //var values = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).ToListAsync()).OrderBy(e => e.ValuePriority).Select(v => v.Value).ToList();
 
             return values;
+        }
+
+        public async Task<bool> GenerateCodesAsync(List<OrderViewModel> ordersList, string userId)
+        {
+            //Generate code
+            var generatedCode = "";
+            //Create entry in DB
+            ordersList.ForEach(async order =>
+            {
+                for (int i = 0; i < order.NumberOfSurveys / order.DefaultNumberOfUsages; i++)
+                {
+                    generatedCode = await this.GenerateNewCode();
+                    await this._applicationDbContext.Orders.AddAsync(new OrderModel { NumberOfUsages = order.DefaultNumberOfUsages, UserId = userId, CodeBody = generatedCode });
+                }
+            });
+
+            if (await _applicationDbContext.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private async Task<string> GenerateNewCode()
+        {
+            var codesLength = 9;
+            var code = new StringBuilder();
+            var randomSequence = Guid.NewGuid().ToString();
+            var randomGenerator = new Random();
+
+            for (int i = 0; i < codesLength; i++)
+            {
+                var character = randomSequence[randomGenerator.Next(randomSequence.Length)].ToString().ToUpper();
+                code.Append(character);
+            }
+
+            return code.ToString();
+        }
+
+        public async Task<List<SurveyResultViewModel>> GetSurveyResultsAsync(string userId)
+        {
+            var surveysTaken = await _applicationDbContext.Surveys.Where(survey => survey.SurveyTakerUserId == userId || survey.PractitionerUserId == userId).ToListAsync();
+            var surveyResults = new List<SurveyResultViewModel>();
+
+            surveysTaken.ForEach(survey =>
+            {
+                var practitioner = survey.PractitionerUser;
+                var practitionerFullName = practitioner == null ? "" : practitioner.FirstName + " " + practitioner.LastName.ToUpper();
+                var surveyTaker =  _userManager.FindByIdAsync(survey.SurveyTakerUserId).Result;
+                var surveyTakerEmail = surveyTaker.Email;
+
+                surveyResults.Add(new SurveyResultViewModel()
+                {
+                    Code = survey.Code,
+                    IsCompleated = survey.ThirdStagePassed,
+                    SurveyId = survey.Id,
+                    TakenOn = survey.TakenOn.ToString(),
+                    PractitionerId = survey.PractitionerUserId,
+                    PractitionerFullName = practitionerFullName,
+                    TakersEmail = surveyTakerEmail
+                });
+            });
+
+            await _applicationDbContext.Orders.Where(order => order.UserId == userId).ForEachAsync(order =>
+            {
+                for (int i = 0; i < order.NumberOfUsages; i++)
+                {
+                    surveyResults.Add(new SurveyResultViewModel()
+                    {
+                        Code = order.CodeBody,
+                        IsCompleated = false
+                    });
+
+                }
+            });
+
+            return surveyResults;
+        }
+
+        public async Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId)
+        {
+            //TODO - implement method
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+            var values = new List<ValueModel>();
+
+            if (survey.ThirdStagePassed)
+            {
+                var elements = await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => sts.Value).ToListAsync();
+
+                elements.ForEach(e =>
+                {
+                    values.Add(e);
+                });
+            }
+            else if (survey.SecondStagePassed)
+            {
+                var elements = await _applicationDbContext.SurveySecondStages.Where(sss => sss.SurveyId == surveyId).Select(sss => sss.Value).ToListAsync();
+
+                elements.ForEach(e =>
+                {
+                    values.Add(e);
+                });
+            }
+            else if (survey.FirstStagePassed)
+            {
+                var elements = await _applicationDbContext.SurveyFirstStages.Where(sfs => sfs.SurveyId == surveyId).Select(sfs => sfs.Value).ToListAsync();
+
+                elements.ForEach(e =>
+                {
+                    values.Add(e);
+                });
+            }
+            else
+            {
+                values = await _applicationDbContext.Values.ToListAsync();
+            }
+
+            return values;
+        }
+
+        public async Task<string> DecideToWhichStageToTransferAsync(int surveyId)
+        {
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+
+            if (survey.ThirdStagePassed)
+            {
+                return "wrap-up";
+            }
+            else if (survey.SecondStagePassed)
+            {
+                return "surveyThirdStage";
+            }
+            else if (survey.FirstStagePassed)
+            {
+                return "surveySecondStage";
+            }
+
+            return "surveyFirstStage";
         }
     }
 }

@@ -229,6 +229,28 @@ namespace KPProject.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("KPProject.Models.OrderModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodeBody")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("NumberOfUsages")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("KPProject.Models.PerspectiveModel", b =>
                 {
                     b.Property<int>("Id")
@@ -278,9 +300,6 @@ namespace KPProject.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("FinishedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<bool>("FirstStagePassed")
                         .HasColumnType("tinyint(1)");
 
@@ -295,6 +314,9 @@ namespace KPProject.Migrations
 
                     b.Property<string>("SurveyTakerUserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("TakenOn")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("ThirdStagePassed")
                         .HasColumnType("tinyint(1)");
@@ -531,10 +553,17 @@ namespace KPProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("KPProject.Models.OrderModel", b =>
+                {
+                    b.HasOne("KPProject.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("KPProject.Models.SurveyFirstStageModel", b =>
                 {
                     b.HasOne("KPProject.Models.SurveyModel", "Survey")
-                        .WithMany("surveyFirstStageModels")
+                        .WithMany()
                         .HasForeignKey("SurveyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

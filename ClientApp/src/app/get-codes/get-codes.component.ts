@@ -2,11 +2,14 @@ import { AfterViewInit, Component, ElementRef, OnChanges, OnInit, QueryList, Ren
 import { render, paypal } from 'creditcardpayments/creditCardPayments';
 import { OrderViewModel } from '../../view-models/order-view-model';
 import { NgModel } from '@angular/forms';
+import { DataService } from '../../app-services/data-service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-get-codes',
   templateUrl: './get-codes.component.html',
-  styleUrls: ['./get-codes.component.css']
+  styleUrls: ['./get-codes.component.css'],
+  providers: [DataService]
 })
 export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
@@ -20,7 +23,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChildren('orderRow')
   public orders: QueryList<ElementRef>;
 
-  constructor(private _renderer2: Renderer2) {
+  constructor(private _renderer2: Renderer2, private _dataService: DataService) {
 
   }
     ngOnChanges(changes: SimpleChanges): void {
@@ -43,7 +46,12 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
       currency: "USD",
       value: `${this.grandTotalSum}`,
       onApprove: (details) => {
-        alert('success');
+        this._dataService.GenerateCodesForTheUser(this.listOfOrders).subscribe(response => {
+          alert('Success, you can find your codes in \'My survey results and reports\' tab.')
+          this.listOfOrders = new Array<OrderViewModel>();
+        }, error => {
+            alert('We had a problem processing your request, please try again!');
+        })
       }
     })
   }

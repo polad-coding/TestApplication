@@ -27,12 +27,13 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.values = _router.getCurrentNavigation().extras.state.values;
     }
+    //TODO - here add values from the local storage when extras are null
   }
 
   public UploadSurveyResults() {
     console.log(this.selectedValues);
     this._dataService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, Number.parseInt(localStorage.getItem('surveyId')))).subscribe(response => {
-      this._router.navigate(['success']);
+      this._router.navigate(['wrap-up']);
     });
   }
 
@@ -52,6 +53,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     this.isSelectionStage = false;
     this.isDescriptionStage = false;
     this.isValidationStage = true;
+    this.selectedValues = this.selectedValues.sort((a, b) => a.priority - b.priority);
   }
 
     ngAfterViewInit(): void {
@@ -91,7 +93,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   private ReplaceValueFromTableWithValueFromList(event) {
     //get value from selected values
     let oldValue = null;
-    let priority = 0;
+    let priority: any;
 
     //replace the values and remove the new value from list, add new value to the selected values
     if (event.target.nodeName == 'P') {
@@ -121,7 +123,11 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     this.values.push(new ValueViewModel(Number.parseInt(oldValue.id), oldValue.character, undefined, undefined, false, undefined));
     this.values = this.values.sort((a, b) => a.id - b.id);
 
-    this.selectedValues.push(new ValueViewModel(Number.parseInt(event.dataTransfer.getData("id")), event.dataTransfer.getData("character"), undefined, undefined, false, Number.parseInt(priority.toString())));
+    console.log('priority' + ' ' + priority);
+
+    priority = Number.parseInt(priority);
+
+    this.selectedValues.push(new ValueViewModel(Number.parseInt(event.dataTransfer.getData("id")), event.dataTransfer.getData("character"), undefined, undefined, false, priority));
     //add old value to the list
 
     console.log(this.values);
@@ -248,7 +254,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     }
 
     else {
-      let priority = 0;
+      let priority :any;
       if (event.target.nodeName == 'P') {
         console.log('here');
         //this.values.push(new ValueViewModel(event.target.))
@@ -277,9 +283,11 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
       let elements = document.getElementsByClassName('value-container');
 
       this.values = this.values.filter(v => v.id != event.dataTransfer.getData("id"));
+      priority = Number.parseInt(priority);
 
+      console.log('priority' + ' ' + priority);
 
-      this.selectedValues.push(new ValueViewModel(Number.parseInt(event.dataTransfer.getData("id")), event.dataTransfer.getData("character"), undefined, undefined, false, Number.parseInt(priority.toString())));
+      this.selectedValues.push(new ValueViewModel(Number.parseInt(event.dataTransfer.getData("id")), event.dataTransfer.getData("character"), undefined, undefined, false, priority));
       this.selectedValues = this.selectedValues.sort(v => v.priority);
     }
 
@@ -304,7 +312,10 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
     for (var i = 0; i < tableCells.length; i++) {
       if ((<any>tableCells[i]).dataset.id != undefined) {
-        this.selectedValues.push(new ValueViewModel((<any>tableCells[i]).dataset.id, (<any>tableCells[i]).dataset.character, undefined, undefined, false, Number.parseInt((<any>tableCells[i]).dataset.priority)))
+        let s = Number.parseInt((<any>tableCells[i]).dataset.priority);
+        console.log('priority' + ' ' + s);
+
+        this.selectedValues.push(new ValueViewModel((<any>tableCells[i]).dataset.id, (<any>tableCells[i]).dataset.character, undefined, undefined, false, s));
       }
     }
   }

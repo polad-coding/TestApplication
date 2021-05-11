@@ -24,17 +24,14 @@ export class WrapUpComponent implements OnInit {
 
   ngOnInit() {
 
-    //let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
-    let surveyId = 46;
+    let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
     this._dataService.GetTheRelativeWeightOfThePerspectives(surveyId).subscribe((response: any) => {
       if (response.ok) {
-        console.log(response.body)
         this.relativeWeightOfThePerspectives = response.body;
         this._dataService.GetSurveyThirdStageResults(surveyId).subscribe((thirdStageResults: any) => {
           if (thirdStageResults.ok) {
             this.valuesFromThirdStage = thirdStageResults.body;
-            console.log(thirdStageResults.body);
             let maxGraphSliceValue = 0;
             this.relativeWeightOfThePerspectives.forEach(v => {
               if (v > maxGraphSliceValue) {
@@ -51,15 +48,11 @@ export class WrapUpComponent implements OnInit {
 
             temp = temp.sort((a, b) => a - b);
 
-            console.log(temp);
-            console.log(this.relativeWeightOfThePerspectives);
-
             this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
             this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
 
             maxGraphSliceValue += 1;
             maxGraphSliceValue = Math.round(maxGraphSliceValue);
-            console.log(maxGraphSliceValue);
 
             var myChart = new Chart('myChart', {
               type: 'polarArea',
@@ -112,9 +105,5 @@ export class WrapUpComponent implements OnInit {
         });
       }
     });
-
-
-
   }
-
 }

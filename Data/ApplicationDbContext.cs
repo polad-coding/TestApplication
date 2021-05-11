@@ -23,6 +23,7 @@ namespace KPProject.Data
         public DbSet<SurveyFirstStageModel> SurveyFirstStages { get; set; }
         public DbSet<SurveySecondStageModel> SurveySecondStages { get; set; }
         public DbSet<SurveyThirdStageModel> SurveyThirdStages { get; set; }
+        public DbSet<OrderModel> Orders { get; set; }
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)

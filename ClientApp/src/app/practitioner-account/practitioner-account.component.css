@@ -5,6 +5,18 @@
   margin:auto;
 }
 
+#survey-results-and-reports-container {
+  background-color: #9AC7EC;
+  width: 95%;
+  margin: auto;
+  z-index: 1000;
+  position: relative;
+  box-shadow: 1px 3px 3px rgba(0,0,0,0.4), -4px 3px 3px rgba(0,0,0,0.3);
+  padding-top:30px;
+  padding-bottom:30px;
+  margin-bottom:30px;
+  min-height:510px;
+}
 
 .practitioner-account-section {
   width: 20%;

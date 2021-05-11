@@ -26,7 +26,7 @@ namespace KPProject.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet]
+        [HttpGet("GetCurrentUser")]
         public async Task<ActionResult> GetCurrentUserAsync()
         {
             var user = await _accountService.GetCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));

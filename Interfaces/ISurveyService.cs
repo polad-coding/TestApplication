@@ -8,6 +8,6 @@ namespace KPProject.Interfaces
 {
     public interface ISurveyService
     {
-        Task<SurveyModel> CreateSurveyAsync(string code, string userId);
+        Task<SurveyModel> CreateSurveyAsync(string code, string userId, string surveyPractitionerId);
     }
 }

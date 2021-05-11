@@ -10,7 +10,7 @@ export class AccountService {
   constructor(private http: HttpClient) { }
 
   public GetCurrentUser() {
-    return this.http.get(`https://${this.url}/Account/`, { observe: 'response' });
+    return this.http.get(`https://${this.url}/Account/GetCurrentUser`, { observe: 'response' });
   }
 
   public GetAllRegions() {

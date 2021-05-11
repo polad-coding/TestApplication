@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KPProject.Controllers
@@ -48,6 +49,21 @@ namespace KPProject.Controllers
 
             return Ok(values);
         }
+
+        [HttpPost]
+        [Route("GenerateCodes")]
+        public async Task<ActionResult> GenerateCodesAsync(List<OrderViewModel> ordersList)
+        {
+            var operationIsSuccessful = await _dataService.GenerateCodesAsync(ordersList, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (operationIsSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
 
         [HttpGet]
         [Route("GetSurveyThirdStageResults")]
@@ -103,6 +119,43 @@ namespace KPProject.Controllers
             }
 
             return StatusCode(500);
+        }
+
+        [HttpGet]
+        [Route("GetSurveyResults")]
+        public async Task<ActionResult<List<SurveyResultViewModel>>> GetSurveyResultsAsync()
+        {
+            var data = await _dataService.GetSurveyResultsAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(data);
+        }
+
+        [HttpGet]
+        [Route("GetTheCurrentStageValues")]
+        public async Task<ActionResult<List<ValueModel>>> GetTheCurrentStageValuesAsync(int surveyId)
+        {
+            var data = await _dataService.GetTheCurrentStageValuesAsync(surveyId);
+
+            if (data != null)
+            {
+                return Ok(data);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("DecideToWhichStageToTransfer")]
+        public async Task<ActionResult<string>> DecideToWhichStageToTransferAsync(int surveyId)
+        {
+            var stageName = await _dataService.DecideToWhichStageToTransferAsync(surveyId);
+
+            if (stageName != null)
+            {
+                return Ok(stageName);
+            }
+
+            return BadRequest();
         }
 
         //[HttpGet("{surveyId}")]

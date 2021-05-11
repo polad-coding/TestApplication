@@ -33,6 +33,9 @@ import { SurveyThirdStageComponent } from './survey-third-stage/survey-third-sta
 import { GetCodesComponent } from './get-codes/get-codes.component';
 import { OrderViewModel } from '../view-models/order-view-model';
 import { WrapUpComponent } from './wrap-up/wrap-up.component';
+import { PersonalSurveyResultsAndReportsComponent } from './personal-survey-results-and-reports/personal-survey-results-and-reports.component';
+import { PractitionerSurveyResultsAndReportsComponent } from './practitioner-survey-results-and-reports/practitioner-survey-results-and-reports.component';
+import { EnterCodePageComponent } from './enter-code-page/enter-code-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -59,7 +62,10 @@ export function tokenGetter() {
     SurveySecondStageComponent,
     SurveyThirdStageComponent,
     GetCodesComponent,
-    WrapUpComponent
+    WrapUpComponent,
+    PersonalSurveyResultsAndReportsComponent,
+    PractitionerSurveyResultsAndReportsComponent,
+    EnterCodePageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -93,7 +99,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['somefreedomain.ml', 'localhost:5000'],
+        whitelistedDomains: ['somefreedomain.ml', 'localhost:5001', 'localhost:5000'],
         blacklistedRoutes: []
       }
     })

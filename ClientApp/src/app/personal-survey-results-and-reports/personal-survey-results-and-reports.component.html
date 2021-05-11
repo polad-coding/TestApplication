@@ -1,0 +1,55 @@
+<div id="survey-results-and-reports-table-container">
+  <div id="survey-results-and-reports-titles">
+    <div class="title">
+      <p>Code</p>
+    </div>
+    <div class="title">
+      <p>Taken on</p>
+    </div>
+    <div class="title">
+      <p>Practitioner</p>
+    </div>
+    <div class="title">
+      <p>Get your report</p>
+    </div>
+    <div class="title">
+      <p></p>
+    </div>
+  </div>
+  <div id="survey-results-and-reports-surveys">
+    <div class="survey-result-row" *ngFor="let surveyResult of surveysResults">
+      <div class="survey-result-row-white-cell">
+        <p>{{surveyResult.code}}</p>
+      </div>
+      <div class="survey-result-row-white-cell">
+        <p>{{surveyResult.takenOn}}</p>
+      </div>
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
+        <p>{{surveyResult.practitionerFullName}}</p>
+        <button (click)="SendEmail(surveyResult.practitionerId)"><span>@</span></button>
+      </div>
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName == null || surveyResult.practitionerFullName == ''">
+        <p>Choose a practitioner</p>
+      </div>
+      <button *ngIf="surveyResult.isCompleated" class="survey-result-row-blue-cell" (click)="GenerateIndividualReport(surveyResult.surveyId)">
+        Download your individual report
+      </button>
+      <button *ngIf="surveyResult.isCompleated" class="survey-result-row-blue-cell" (click)="TransferToSynthesisPage(surveyResult.surveyId)">
+        See synthesis
+      </button>
+      <button *ngIf="!surveyResult.isCompleated" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId, surveyResult.code)">
+        Resume survey
+      </button>
+      <div *ngIf="!surveyResult.isCompleated" class="survey-result-empty-cell">
+
+      </div>
+    </div>
+  </div>
+</div>
+<div id="get-code-section">
+  <button>Get a code</button>
+  <div id="see-policy-container">
+    <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+    <a>See privacy policy</a>
+  </div>
+</div>

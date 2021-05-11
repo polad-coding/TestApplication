@@ -20,5 +20,9 @@ namespace KPProject.Interfaces
         Task<bool> SaveThirdStageResultsAsync(List<PrioritizedValueViewModel> values, int surveyId);
         Task<List<double>> GetTheRelativeWeightOfThePerspectivesAsync(int surveyId);
         Task<List<ValueModel>> GetSurveyThirdStageResultsAsync(int surveyId);
+        Task<bool> GenerateCodesAsync(List<OrderViewModel> ordersList, string userId);
+        Task<List<SurveyResultViewModel>> GetSurveyResultsAsync(string userId);
+        Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId);
+        Task<string> DecideToWhichStageToTransferAsync(int surveyId);
     }
 }

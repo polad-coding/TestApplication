@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { OrderViewModel } from "../view-models/order-view-model";
 import { SurveyFirstStageSaveRequestModel } from "../view-models/survey-first-stage-save-request-model";
 import { SurveySecondStageSaveRequestModel } from "../view-models/survey-second-stage-save-request-model";
 import { SurveyThirdStageSaveRequestModel } from "../view-models/survey-third-stage-save-request-model";
@@ -7,7 +8,7 @@ import { ValueViewModel } from "../view-models/value-view-model";
 
 @Injectable()
 export class DataService {
-  private url: string = 'localhost:5001';
+  private url: string = 'somefreedomain.ml';
 
 
   constructor(private http: HttpClient) { }
@@ -30,6 +31,8 @@ export class DataService {
   }
 
   public SaveThirdStageResults(surveyThirdStageSaveRequestModel: SurveyThirdStageSaveRequestModel) {
+    console.log('here');
+    console.log(surveyThirdStageSaveRequestModel);
     return this.http.post(`https://${this.url}/Data/SaveThirdStageResults`, surveyThirdStageSaveRequestModel, { observe: 'response' });
   }
 
@@ -39,6 +42,22 @@ export class DataService {
 
   public GetSurveyThirdStageResults(surveyId: number) {
     return this.http.get(`https://${this.url}/Data/GetSurveyThirdStageResults?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
+  public GenerateCodesForTheUser(codesList: Array<OrderViewModel>) {
+    return this.http.post(`https://${this.url}/Data/GenerateCodes`, codesList, { observe: 'response' });
+  }
+
+  public GetSurveyResults() {
+    return this.http.get(`https://${this.url}/Data/GetSurveyResults`, { observe: 'response' });
+  }
+
+  public GetTheCurrentStageValues(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetTheCurrentStageValues?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
+  public DecideToWhichStageToTransfer(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/DecideToWhichStageToTransfer?surveyId=${surveyId}`, { observe: 'response', responseType:'text' });
   }
 
 }

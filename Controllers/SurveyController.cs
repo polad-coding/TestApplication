@@ -1,5 +1,6 @@
 ﻿using KPProject.Interfaces;
 using KPProject.Models;
+using KPProject.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,9 +23,9 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("CreateSurvey")]
-        public async Task<ActionResult<SurveyModel>> CreateSurveyAsync([FromBody]string code)
+        public async Task<ActionResult<SurveyModel>> CreateSurveyAsync([FromBody]CreateSurveyViewModel createSurveyViewModel)
         {
-            var survey = await _surveyService.CreateSurveyAsync(code, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var survey = await _surveyService.CreateSurveyAsync(createSurveyViewModel.Code, User.FindFirstValue(ClaimTypes.NameIdentifier), createSurveyViewModel.SurveyPractitionerId);
 
             if (survey == null)
             {

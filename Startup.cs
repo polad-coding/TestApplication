@@ -37,7 +37,7 @@ namespace KPProject
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
-                    "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
+                    "Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>

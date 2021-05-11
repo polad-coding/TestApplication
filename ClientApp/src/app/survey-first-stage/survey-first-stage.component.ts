@@ -15,6 +15,8 @@ import { NavigationExtras, Router } from '@angular/router';
 export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   public values: Array<ValueViewModel>;
+  public surveyCode: string = 'SOMECODE123';
+  public surveyPractitionerId: string;
   public lessImportantValues: Array<ElementRef> = new Array<ElementRef>();
   public importantValues: Array<ElementRef> = new Array<ElementRef>();
   public numberOfValuesQualified: number = 0;
@@ -36,7 +38,9 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   public isStepDescriptionPage: boolean = true;
   private surveyId: number; 
 
-  constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) { }
+  constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) {
+    this.values = _router.getCurrentNavigation().extras.state.values;
+  }
 
   public ProccedToSelectionStage(event) {
     this.isStepDescriptionPage = false;
@@ -209,23 +213,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     //TODO - place the survey creation process in other place after testing
-    let code: string = 'AKL982';
-    this._surveyService.CreateSurvey(code).subscribe((response: any) => {
-      this.surveyId = response.body.id;
-      this._dataService.GetAllValues(response.body.id).subscribe((response: any) => {
-        this.values = response.body;
-      });
-    });
-
-    this.values.forEach(v => {
-      if (v.isSelected) {
-        this.numberOfValuesQualifiedAsImportant += 1;
-        this.numberOfValuesQualified += 1;
-      }
-      else if (!v.isSelected) {
-        this.numberOfValuesQualified += 1;
-      }
-    });
   }
 
   public SaveFirstStageResults(event) {
@@ -235,8 +222,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       valuesToSave.push(this.values[v.nativeElement.dataset.id]);
     });
 
-    this._dataService.SaveFirstStageResults(new SurveyFirstStageSaveRequestModel(valuesToSave, this.surveyId)).subscribe(response => {
-      localStorage.setItem('surveyId', this.surveyId.toString());
+    this._dataService.SaveFirstStageResults(new SurveyFirstStageSaveRequestModel(valuesToSave, Number.parseInt(localStorage.getItem('surveyId')))).subscribe(response => {
 
       let ne: NavigationExtras = {
         state: {

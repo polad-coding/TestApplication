@@ -8,11 +8,8 @@ export class SurveyService {
 
   constructor(private http: HttpClient) { }
 
-  public CreateSurvey(code: string) {
-    console.log(code);
-    let body = new HttpParams();
-    body = body.set('code', code);
-    return this.http.post(`https://${this.url}/Survey/CreateSurvey`, `\"${code}\"`, {
+  public CreateSurvey(code: string, surveyPractitionerId: string) {
+    return this.http.post(`https://${this.url}/Survey/CreateSurvey`, { code: code, surveyPractitionerId: surveyPractitionerId }, {
       observe: 'response', headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }) });
