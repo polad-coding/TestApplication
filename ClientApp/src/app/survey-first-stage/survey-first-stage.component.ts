@@ -15,7 +15,6 @@ import { NavigationExtras, Router } from '@angular/router';
 export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   public values: Array<ValueViewModel>;
-  public surveyCode: string = 'SOMECODE123';
   public surveyPractitionerId: string;
   public lessImportantValues: Array<ElementRef> = new Array<ElementRef>();
   public importantValues: Array<ElementRef> = new Array<ElementRef>();
@@ -39,7 +38,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   private surveyId: number; 
 
   constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) {
-    this.values = _router.getCurrentNavigation().extras.state.values;
+
   }
 
   public ProccedToSelectionStage(event) {
@@ -213,6 +212,12 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     //TODO - place the survey creation process in other place after testing
+      let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+      this._dataService.GetTheCurrentStageValues(surveyId).subscribe((response: any) => {
+        if (response.ok) {
+          this.values = response.body;
+        }
+      });
   }
 
   public SaveFirstStageResults(event) {

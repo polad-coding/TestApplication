@@ -4,6 +4,12 @@ html * {
   box-sizing: border-box;
 }
 
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
 html{
     width:100%;
     /*overflow-x:hidden;*/
@@ -21,6 +27,7 @@ input[type=number] {
 
 body {
   width: 100%;
+  font-family:barlowSemiCondensedLight;
   /*overflow-x:hidden;*/
 }
 
@@ -99,5 +106,3 @@ button{
   src: url('../../wwwroot/Fonts/BarlowSemiCondensed-LightItalic.ttf') format('truetype');
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegionViewModel = void 0;
 var RegionViewModel = /** @class */ (function () {
-    function RegionViewModel() {
+    function RegionViewModel(id, regionName) {
+        this.id = id;
+        this.regionName = regionName;
     }
     return RegionViewModel;
 }());

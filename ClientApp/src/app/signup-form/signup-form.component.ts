@@ -16,7 +16,7 @@ import { error } from 'protractor';
 })
 export class SignupFormComponent implements OnInit {
 
-  public surveyCode: string = 'ASJNK78';
+  public surveyCode: string;
   public formIsInvalid: boolean = false;
   public errorMessage = "";
   public registerViewModel: RegisterViewModel = new RegisterViewModel();
@@ -25,6 +25,9 @@ export class SignupFormComponent implements OnInit {
   constructor(private _authService: AuthenticationService, private _router: Router) { }
 
   ngOnInit() {
+    if (localStorage.getItem('surveyCode') != null) {
+      this.surveyCode = localStorage.getItem('surveyCode');
+    }
   }
 
 
@@ -36,7 +39,12 @@ export class SignupFormComponent implements OnInit {
       this._authService.SignInUser(svw).subscribe(res => {
         this.user = res.body;
         localStorage.setItem("jwt", this.user.accessToken);
-        this._router.navigate(['/personalAccount']);
+        if (this.surveyCode == null) {
+          this._router.navigate(['personalAccount']);
+        }
+        else {
+          this._router.navigate(['enterSurveyAccount']);
+        }
       },
         error => {
           this.formIsInvalid = true;

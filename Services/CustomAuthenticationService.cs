@@ -113,6 +113,8 @@ namespace KPProject.Services
                     Region = _dbContext.Regions.First(reg => reg.Id == ur.RegionId)
                 }).ToList();
 
+            userAttemptingToSignIn.Gender = await _dbContext.Gender.FirstAsync(g => g.Id == userAttemptingToSignIn.GenderId);
+
             var signIn = await _signInManager.PasswordSignInAsync(userAttemptingToSignIn, signInViewModel.Password, false, false);
 
             if (!signIn.Succeeded)
@@ -135,6 +137,7 @@ namespace KPProject.Services
 
         public async Task<UserViewModel> RegisterUserAsync(RegisterViewModel registerViewModel)
         {
+
             var newUser = new ApplicationUser()
             {
                 FirstName = registerViewModel.FirstName,
@@ -147,6 +150,7 @@ namespace KPProject.Services
             var userCreation = await _userManager.CreateAsync(newUser, registerViewModel.Password);
 
             await _userManager.AddToRoleAsync(newUser, "User");
+
             if (!userCreation.Succeeded)
             {
                 return null;

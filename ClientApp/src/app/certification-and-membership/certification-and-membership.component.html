@@ -1,0 +1,201 @@
+<div id="paypal-modal" [ngClass]="{'modalIsVisible':paypalModalIsVisible == true, 'modalIsHidden':paypalModalIsVisible == false}">
+  <div id="paypal-modal-container" (click)="PreventEventPropagation($event)">
+    <p>Choose payment method</p>
+    <div id="paypalContainer">
+
+    </div>
+  </div>
+</div>
+<div id="desktop-container" *ngIf="desktopVersion">
+  <div id="title-section">
+    <p></p>
+    <p>Certification level</p>
+    <p>Certification</p>
+    <p></p>
+    <p>Validated</p>
+  </div>
+  <div id="main-section">
+    <div id="left-part">
+      <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+      <p>Certified practitioner</p>
+      <p>Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+      <!--<p>Membership {{}}</p>-->
+    </div>
+    <div id="right-part">
+      <div id="levels-container">
+        <div class="level" *ngFor="let certification of certifications; index as i">
+          <p>Level {{i + 1}}</p>
+        </div>
+      </div>
+      <div id="certification-types-container">
+        <div class="certification-type" *ngFor="let certification of certifications; index as i">
+          <p>{{certification.certificationType}}</p>
+        </div>
+      </div>
+      <div id="status-drop-container">
+        <div class="status-drop">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[0] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[0] != undefined" />
+        </div>
+        <div class="status-drop">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[1] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[1] != undefined" />
+
+        </div>
+        <div class="status-drop">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[2] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[2] != undefined" />
+        </div>
+        <div class="status-drop">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[3] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[3] != undefined" />
+        </div>
+      </div>
+      <div id="certification-status-container">
+        <div class="certification-status">
+          <p *ngIf="practitionersCertifications[0] != undefined">{{practitionersCertifications[0].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications[0] == undefined">Ongoing</p>
+        </div>
+        <div class="certification-status">
+          <p *ngIf="practitionersCertifications[1] != undefined">{{practitionersCertifications[1].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications[1] == undefined && practitionersCertifications[0] != undefinded">Ongoing</p>
+        </div>
+        <div class="certification-status">
+          <p *ngIf="practitionersCertifications[2] != undefined">{{practitionersCertifications[2].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications[2] == undefined && practitionersCertifications[1] != undefinded">Ongoing</p>
+        </div>
+        <div class="certification-status">
+          <p *ngIf="practitionersCertifications[3] != undefined">{{practitionersCertifications[3].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications[3] == undefined && practitionersCertifications[2] != undefinded">Ongoing</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="actions-section">
+    <div id="membership-status-left-part">
+      <p *ngIf="membership != null">Membership OK</p>
+      <p *ngIf="membership == null">Membership needs the renewal</p>
+    </div>
+    <div id="membership-status-right-part">
+      <div>
+        <p>Membership status</p>
+      </div>
+      <div>
+        <p *ngIf="membership != null">OK</p>
+        <p *ngIf="membership == null">Overdue</p>
+      </div>
+      <div>
+        <p *ngIf="membership != null">{{membership.validTill | date:'d LLLL y'}}</p>
+        <p *ngIf="membership == null">...</p>
+      </div>
+      <div>
+        <button (click)="ShowPayPalModal($event)">Renew</button>
+      </div>
+    </div>
+  </div>
+  <div id="bottom-section">
+    <div></div>
+    <div id="description-section">
+      <p>
+        Being a member of Kairios Praxis allows you to benefit from additional discounts on the purchase of
+        codes and on certain services. In addition, more complete information will be posted in the Practitioner
+        Directory, allowing those taking the survey, and who need support, to identify you even better.
+      </p>
+      <div id="lock-section">
+        <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+        <p>See privacy policy</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="certification-membership-container-mobile" *ngIf="!desktopVersion">
+  <div id="image-section-mobile">
+    <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+    <p>Certified practitioner</p>
+    <p>Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+    <p *ngIf="membership != null">Membership OK</p>
+    <p *ngIf="membership == null">Membership needs the renewal</p>
+  </div>
+  <div id="title-section-mobile">
+    <p>Certification level</p>
+    <p>Certification</p>
+    <p></p>
+    <p>Validated</p>
+  </div>
+  <div id="main-section-mobile">
+    <div id="levels-container-mobile">
+      <div class="level-mobile" *ngFor="let certification of certifications; index as i">
+        <p>Level {{i + 1}}</p>
+      </div>
+    </div>
+    <div id="certification-types-container-mobile">
+      <div class="certification-type-mobile" *ngFor="let certification of certifications; index as i">
+        <p>{{certification.certificationType}}</p>
+      </div>
+    </div>
+    <div id="status-drop-container-mobile">
+      <div class="status-drop-mobile">
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[0] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[0] != undefined" />
+      </div>
+      <div class="status-drop-mobile">
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[1] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[1] != undefined" />
+
+      </div>
+      <div class="status-drop-mobile">
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[2] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[2] != undefined" />
+      </div>
+      <div class="status-drop-mobile">
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[3] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[3] != undefined" />
+      </div>
+    </div>
+    <div id="certification-status-container-mobile">
+      <div class="certification-status-mobile">
+        <p *ngIf="practitionersCertifications[0] != undefined">{{practitionersCertifications[0].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications[0] == undefined">Ongoing</p>
+      </div>
+      <div class="certification-status-mobile">
+        <p *ngIf="practitionersCertifications[1] != undefined">{{practitionersCertifications[1].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications[1] == undefined && practitionersCertifications[0] != undefinded">Ongoing</p>
+      </div>
+      <div class="certification-status-mobile">
+        <p *ngIf="practitionersCertifications[2] != undefined">{{practitionersCertifications[2].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications[2] == undefined && practitionersCertifications[1] != undefinded">Ongoing</p>
+      </div>
+      <div class="certification-status-mobile">
+        <p *ngIf="practitionersCertifications[3] != undefined">{{practitionersCertifications[3].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications[3] == undefined && practitionersCertifications[2] != undefinded">Ongoing</p>
+      </div>
+    </div>
+  </div>
+  <div id="actions-section-mobile">
+    <div>
+      <p>Membership status</p>
+    </div>
+    <div>
+      <p *ngIf="membership != null">OK</p>
+      <p *ngIf="membership == null">Overdue</p>
+    </div>
+    <div>
+      <p *ngIf="membership != null">{{membership.validTill | date:'d LLLL y'}}</p>
+      <p *ngIf="membership == null">...</p>
+    </div>
+    <div>
+      <button (click)="ShowPayPalModal($event)">Renew</button>
+    </div>
+  </div>
+  <div id="bottom-section-mobile">
+    <p>
+      Being a member of Kairios Praxis allows you to benefit from additional discounts on the purchase of
+      codes and on certain services. In addition, more complete information will be posted in the Practitioner
+      Directory, allowing those taking the survey, and who need support, to identify you even better.
+    </p>
+    <div id="lock-section-mobile">
+      <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+      <p>See privacy policy</p>
+    </div>
+  </div>
+</div>

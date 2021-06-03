@@ -17,7 +17,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class SigninFormComponent implements OnInit {
 
-  public surveyCode: string = "AVKSI78";
+  public surveyCode: string;
   public signInViewModel: SignInViewModel = new SignInViewModel();
   public formIsInvalid: boolean = false;
   public errorMessage = "";
@@ -31,6 +31,9 @@ export class SigninFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('surveyCode') != null) {
+        this.surveyCode = localStorage.getItem('surveyCode');
+    }
   }
 
   public SubmitSignInForm(signInForm: NgForm) {
@@ -39,11 +42,16 @@ export class SigninFormComponent implements OnInit {
         //Assign value to user variable and set token
         this.user = response.body;
         localStorage.setItem("jwt", this.user.accessToken);
-        if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
-          this._router.navigate(['/personalAccount'], { state: { user: this.user } });
+        if (this.surveyCode == null) {
+          if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+            this._router.navigate(['/personalAccount'], { state: { user: this.user } });
+          }
+          else if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+            this._router.navigate(['/practitionerAccount']);
+          }
         }
-        else if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
-          this._router.navigate(['/practitionerAccount']);
+        else {
+          this._router.navigate(['enterSurveyAccount']);
         }
       },
         error => {

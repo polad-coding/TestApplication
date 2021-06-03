@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LanguageViewModel = void 0;
 var LanguageViewModel = /** @class */ (function () {
-    function LanguageViewModel() {
+    function LanguageViewModel(id, languageName) {
+        this.id = id;
+        this.languageName = languageName;
     }
     return LanguageViewModel;
 }());

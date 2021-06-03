@@ -7,5 +7,6 @@ namespace KPProject.Models
         public int Id { get; set; }
         public string RegionName { get; set; }
         public virtual List<UserRegion> UserRegion { get; set; }
+        public List<AnonymisedUserRegion> anonymisedUserRegions { get; set; }
     }
 }

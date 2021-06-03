@@ -48,6 +48,10 @@
               "target": "Package",
               "version": "[26.1.0, )"
             },
+            "DinkToPdf": {
+              "target": "Package",
+              "version": "[1.0.8, )"
+            },
             "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
               "target": "Package",
               "version": "[3.1.8, )"
@@ -61,6 +65,10 @@
               "version": "[3.1.8, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[3.1.8, )"
             },

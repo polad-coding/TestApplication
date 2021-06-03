@@ -99,6 +99,52 @@ namespace KPProject.Migrations
                     b.ToTable("PersistedGrants");
                 });
 
+            modelBuilder.Entity("KPProject.Models.AnonymisedUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("GenderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MyerBriggsCode")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("SectorOfActivity")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenderId");
+
+                    b.ToTable("AnonymisedUsers");
+                });
+
+            modelBuilder.Entity("KPProject.Models.AnonymisedUserRegion", b =>
+                {
+                    b.Property<int>("AnonymisedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AnonymisedUserId", "RegionId");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("AnonymisedUserRegions");
+                });
+
             modelBuilder.Entity("KPProject.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -201,6 +247,41 @@ namespace KPProject.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("KPProject.Models.ApplicationUserCertification", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("CertificationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ValidatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ApplicationUserId", "CertificationId");
+
+                    b.HasIndex("CertificationId");
+
+                    b.ToTable("ApplicationUserCertifications");
+                });
+
+            modelBuilder.Entity("KPProject.Models.Certification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CertificationType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Certifications");
+                });
+
             modelBuilder.Entity("KPProject.Models.Gender", b =>
                 {
                     b.Property<int>("Id")
@@ -227,6 +308,25 @@ namespace KPProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Languages");
+                });
+
+            modelBuilder.Entity("KPProject.Models.Membership", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("ValidTill")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("KPProject.Models.OrderModel", b =>
@@ -297,6 +397,9 @@ namespace KPProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("AnonymisedUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Code")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -322,6 +425,8 @@ namespace KPProject.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnonymisedUserId");
 
                     b.HasIndex("PractitionerUserId");
 
@@ -544,6 +649,28 @@ namespace KPProject.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("KPProject.Models.AnonymisedUser", b =>
+                {
+                    b.HasOne("KPProject.Models.Gender", "Gender")
+                        .WithMany()
+                        .HasForeignKey("GenderId");
+                });
+
+            modelBuilder.Entity("KPProject.Models.AnonymisedUserRegion", b =>
+                {
+                    b.HasOne("KPProject.Models.AnonymisedUser", "AnonymisedUser")
+                        .WithMany("AnonymisedUserRegions")
+                        .HasForeignKey("AnonymisedUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPProject.Models.RegionModel", "Region")
+                        .WithMany("anonymisedUserRegions")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("KPProject.Models.ApplicationUser", b =>
                 {
                     b.HasOne("KPProject.Models.Gender", "Gender")
@@ -551,6 +678,28 @@ namespace KPProject.Migrations
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("KPProject.Models.ApplicationUserCertification", b =>
+                {
+                    b.HasOne("KPProject.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("ApplicationUserCertifications")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPProject.Models.Certification", "Certification")
+                        .WithMany("ApplicationUserCertifications")
+                        .HasForeignKey("CertificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KPProject.Models.Membership", b =>
+                {
+                    b.HasOne("KPProject.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("KPProject.Models.OrderModel", b =>
@@ -577,6 +726,12 @@ namespace KPProject.Migrations
 
             modelBuilder.Entity("KPProject.Models.SurveyModel", b =>
                 {
+                    b.HasOne("KPProject.Models.AnonymisedUser", "AnonymisedUser")
+                        .WithMany()
+                        .HasForeignKey("AnonymisedUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("KPProject.Models.ApplicationUser", "PractitionerUser")
                         .WithMany()
                         .HasForeignKey("PractitionerUserId");

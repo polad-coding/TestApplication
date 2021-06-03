@@ -35,13 +35,18 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
     console.log(surveyId);
 
     if (surveyId === 0) {
-      this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
-        this.surveyId = response.body.id;
-        localStorage.setItem('surveyId', this.surveyId.toString());
-        this._dataService.GetAllValues(response.body.id).subscribe((response: any) => {
-          this._router.navigate(['surveyFirstStage'], { state: { values: response.body } });
-        });
-      });
+      //this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
+      //  this.surveyId = response.body.id;
+      //  localStorage.setItem('surveyId', this.surveyId.toString());
+      //  this._dataService.GetAllValues(response.body.id).subscribe((response: any) => {
+      //    this._router.navigate(['surveyFirstStage'], { state: { values: response.body } });
+      //  });
+      //});
+
+      localStorage.setItem('surveyCode', code);
+
+      this._router.navigate(['enterSurveyAccount']);
+
 
       //this.values.forEach(v => {
       //  if (v.isSelected) {

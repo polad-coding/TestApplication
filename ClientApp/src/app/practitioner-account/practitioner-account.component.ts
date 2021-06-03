@@ -31,7 +31,7 @@ export class PractitionerAccountComponent   {
 
   constructor(private renderer2: Renderer2, private accountService: AccountService) {
 
-}
+  }
 
   ngOnInit() {
 

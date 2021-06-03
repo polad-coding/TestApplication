@@ -24,5 +24,13 @@ namespace KPProject.Interfaces
         Task<List<SurveyResultViewModel>> GetSurveyResultsAsync(string userId);
         Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId);
         Task<string> DecideToWhichStageToTransferAsync(int surveyId);
+        Task<bool> CheckIfCodeIsValidAsync(string code);
+        Task PopulateDBWithCertificationsAsync();
+        Task<List<Certification>> GetAllCertificationsAsync();
+        Task<List<ApplicationUserCertification>> GetPractitionersCertificationsAsync(string userId);
+        Task<Membership> GetMembershipStatusAsync(string userId);
+        Task<bool> RenewMembershipAsync(string userId);
+        Task<List<UserViewModel>> GetPractitionersForDirectoryAsync(PractitionersSearchFilterViewModel practitionersSearchFilterViewModel);
+        Task<int> ReturnNumberOfPractitionersAsync();
     }
 }

@@ -1,0 +1,363 @@
+#personal-account-form {
+  width: 90%;
+  background-color: #9AC7EC;
+  margin:auto;
+  padding:10px;
+  margin-bottom:20px;
+}
+
+#personal-account-form-top-section {
+  display: flex;
+  align-items: center;
+}
+
+#lock-image img{
+    height:100px;
+}
+
+#top-section-texts{
+    text-align:right;
+    color:#006F91;
+    width:70%;
+}
+
+#email-section{
+    display:flex;
+    color:#006F91;
+    margin-bottom:5px;
+}
+
+#email-section div:first-child{
+    width:25%;
+    text-align:right;
+}
+
+  #email-section div:last-child {
+    width: 70%;
+    text-align:center;
+  }
+
+#survey-code-section {
+  background-color: #90BFC5;
+  color:white;
+  padding:60px;
+  text-align:center;
+  box-shadow:0px 0px  3px #006F91;
+  margin-left:auto;
+}
+
+.input-section{
+    display:flex;
+    background-color:white;
+    margin-bottom:5px;
+    align-items:center;
+}
+
+.edit-button-section button img{
+    height:40px;
+    width:40px;
+}
+
+#personal-account-form-main-section{
+    width:80%;
+    margin:auto;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.label-section{
+    width:25%;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    color:#006F91;
+}
+
+.input-field-section{
+    width:70%;
+}
+
+.input-field-section input{
+    border:none;
+    background-color:transparent;
+    height:100%;
+    width:100%;
+    text-align:center;
+}
+
+#gender-radio-buttons-section{
+    display:flex;
+    justify-content:space-around;
+    color:#006F91;
+}
+
+.gender-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  .gender-option p {
+    margin-left: 10px;
+  }
+
+#regions-modal-container {
+  display: none;
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 2000;
+}
+
+#regions-modal {
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  background-color: white;
+  color: #006F91;
+  border-radius: 3px;
+}
+
+#modal-header {
+  height: 40px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #006F91;
+  color: white;
+  padding: 30px;
+  font-family: barlowSemiCondensedMedium;
+}
+
+#modal-form {
+  height: 100%;
+  padding: 10px;
+  overflow-y: auto;
+  font-family: barlowSemiCondensedLight;
+}
+
+.region-checkbox-container {
+  display: flex;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+  .region-checkbox-container input {
+    border: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+.is-not-selected {
+  width: 100%;
+  color: #006F91;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #9AC7EC;
+}
+
+.input-field-section input{
+    color:#006F91;
+}
+
+.is-selected {
+  width: 100%;
+  color: white;
+  background-color: #006F91;
+  text-align: center;
+  padding: 10px;
+}
+
+.regions-row {
+  display: flex;
+}
+
+#submit-button {
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 3px #006F91;
+  color: #006F91;
+  margin:auto;
+  margin-top:20px;
+}
+
+#submit-button-container {
+  display: flex;
+  flex-flow:column;
+  color:#006F91;
+  align-items:center;
+}
+
+  #submit-button-container p {
+    margin: 10px;
+  }
+
+  #submit-button-container p a{
+      text-decoration:underline;
+      cursor:pointer;
+  }
+
+  #submit-button img {
+    height: 40px;
+    width: 40px;
+    filter: invert(23%) sepia(98%) saturate(1832%) hue-rotate(173deg) brightness(93%) contrast(101%);
+  }
+
+  #region-modal-submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  #region-modal-submit-button button {
+    border: 1px solid #006F91;
+    padding: 10px;
+    color: #006F91;
+    font-family: barlowSemiCondensedLight;
+    text-align: center;
+    background-color: transparent;
+  }
+
+.region-container {
+  padding: 5px;
+  background-color: #006F91;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+    #region-modal-submit-button button:hover {
+      border: none;
+      color: white;
+      background-color: #006F91;
+    }
+
+@media only screen and (min-width:1150px) and (max-width:1330px) {
+
+    #top-section-texts{
+        width:65%;
+    }
+
+}
+
+@media only screen and (min-width:1000px) and (max-width:1150px) {
+  #top-section-texts {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width:900px) and (max-width:1000px) {
+  #top-section-texts {
+    width: 55%;
+  }
+}
+
+@media only screen and (min-width:750px) and (max-width:900px) {
+  #top-section-texts {
+    width: 60%;
+  }
+
+  #lock-image{
+      display:none;
+  }
+
+}
+
+@media only screen and (min-width:330px) and (max-width:750px) {
+  #lock-image {
+    display: none;
+  }
+
+  #survey-code-section{
+      margin-right:auto;
+      padding:10px;
+      width:90%;
+  }
+
+  #personal-account-form-top-section{
+      flex-flow:column-reverse;
+  }
+
+  #top-section-texts {
+    width: 90%;
+    text-align:center;
+  }
+
+    #top-section-texts h1 {
+      font-size: 1.9rem;
+    }
+
+    #top-section-texts p {
+      font-size: 0.8rem;
+    }
+}
+
+
+@media only screen and (min-width:470px) and (max-width:600px) {
+
+    .input-section{
+        height:70px;
+    }
+
+  .label-section {
+    text-align: right;
+  }
+
+  #email-section{
+      align-items:center;
+      height:70px;
+  }
+
+  #personal-account-form-main-section{
+      width:95%;
+  }
+
+
+
+}
+
+@media only screen and (min-width:330px) and (max-width:470px) {
+
+  .input-section {
+    height: 70px;
+  }
+
+  .label-section {
+    text-align: right;
+  }
+
+  #email-section {
+    align-items: center;
+    height: 70px;
+  }
+
+  #personal-account-form-main-section {
+    width: 95%;
+  }
+
+  #personal-account-form {
+    font-size: 0.8rem;
+  }
+
+  .edit-button-section button img{
+      height:30px;
+      width:30px;
+  }
+}
+
+@media only screen and (min-width:330px) and (max-width:380px) {
+
+  #personal-account-form {
+    font-size: 0.7rem;
+  }
+}

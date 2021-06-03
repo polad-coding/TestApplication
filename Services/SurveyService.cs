@@ -1,6 +1,7 @@
 ﻿using KPProject.Data;
 using KPProject.Interfaces;
 using KPProject.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace KPProject.Services
     {
 
         private readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SurveyService(ApplicationDbContext dbContext)
+        public SurveyService(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
         }
 
         private int GenerateRandomSeed()
@@ -30,7 +33,32 @@ namespace KPProject.Services
         public async Task<SurveyModel> CreateSurveyAsync(string code, string userId, string surveyPractitionerId)
         {
             var seed = this.GenerateRandomSeed();
-            var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId, TakenOn = DateTime.UtcNow, Seed = seed };
+            var user = await _userManager.FindByIdAsync(userId);
+            var anonymisedUser = new AnonymisedUser {
+                Gender = user.Gender,
+                Age = user.Age,
+                Education = user.Education,
+                MyerBriggsCode = user.MyerBriggsCode,
+                Position = user.Position,
+                SectorOfActivity = user.SectorOfActivity
+            };
+
+            await _dbContext.AnonymisedUsers.AddAsync(anonymisedUser);
+
+            await _dbContext.SaveChangesAsync();
+
+            var anonimysedUserRegions = new List<AnonymisedUserRegion>();
+
+            _dbContext.UserRegions
+                .Where(ur => ur.ApplicationUserId == userId)
+                .Select(ur => ur.RegionId).ToList()
+                .ForEach(id => anonimysedUserRegions.Add(new AnonymisedUserRegion { AnonymisedUserId = anonymisedUser.Id, RegionId = id }));
+
+            await _dbContext.AnonymisedUserRegions.AddRangeAsync(anonimysedUserRegions);
+
+            await _dbContext.SaveChangesAsync();
+
+            var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId, AnonymisedUserId = anonymisedUser.Id, TakenOn = DateTime.UtcNow, Seed = seed };
 
             await _dbContext.Surveys.AddAsync(survey);
 

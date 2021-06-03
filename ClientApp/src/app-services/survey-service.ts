@@ -10,8 +10,6 @@ export class SurveyService {
 
   public CreateSurvey(code: string, surveyPractitionerId: string) {
     return this.http.post(`https://${this.url}/Survey/CreateSurvey`, { code: code, surveyPractitionerId: surveyPractitionerId }, {
-      observe: 'response', headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }) });
+      observe: 'response' });
   }
 }

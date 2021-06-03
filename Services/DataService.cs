@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using AutoMapper;
+using CsvHelper;
 using KPProject.Data;
 using KPProject.Interfaces;
 using KPProject.Maps;
@@ -22,12 +23,16 @@ namespace KPProject.Services
 
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly List<string> _languages = new List<string>() { "EN" };
+        private readonly IMapper _mapper;
 
-        public DataService(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
+        public DataService(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
+            _roleManager = roleManager;
+            _mapper = mapper;
         }
 
         public async Task PopulateDBWithValuesAsync()
@@ -144,9 +149,9 @@ namespace KPProject.Services
             var values = new List<ValueModel>();
 
             entries.ForEach(e => values.Add(e.Value));
-            //var seed = await _applicationDbContext.Surveys.FirstAsync(survey => survey.SurveyTakerUserId);
+            var seed = (await _applicationDbContext.Surveys.FirstAsync(survey => survey.Id == surveyId)).Seed;
 
-            //this.Shuffle(values);
+            this.Shuffle(values, seed);
 
             return values;
         }
@@ -367,7 +372,7 @@ namespace KPProject.Services
             {
                 var practitioner = survey.PractitionerUser;
                 var practitionerFullName = practitioner == null ? "" : practitioner.FirstName + " " + practitioner.LastName.ToUpper();
-                var surveyTaker =  _userManager.FindByIdAsync(survey.SurveyTakerUserId).Result;
+                var surveyTaker = _userManager.FindByIdAsync(survey.SurveyTakerUserId).Result;
                 var surveyTakerEmail = surveyTaker.Email;
 
                 surveyResults.Add(new SurveyResultViewModel()
@@ -400,7 +405,6 @@ namespace KPProject.Services
 
         public async Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId)
         {
-            //TODO - implement method
             var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
             var values = new List<ValueModel>();
 
@@ -434,6 +438,7 @@ namespace KPProject.Services
             else
             {
                 values = await _applicationDbContext.Values.ToListAsync();
+                this.Shuffle(values, survey.Seed);
             }
 
             return values;
@@ -457,6 +462,231 @@ namespace KPProject.Services
             }
 
             return "surveyFirstStage";
+        }
+
+        public async Task<bool> CheckIfCodeIsValidAsync(string code)
+        {
+            var dbCode = await _applicationDbContext.Orders.FirstOrDefaultAsync((order) => order.CodeBody == code);
+
+            if (dbCode != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task PopulateDBWithCertificationsAsync()
+        {
+            if (_applicationDbContext.Certifications.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Certifications.AddAsync(new Certification { CertificationType = "Individual assessment", Level = 1 });
+            await _applicationDbContext.Certifications.AddAsync(new Certification { CertificationType = "Group assessment", Level = 2 });
+            await _applicationDbContext.Certifications.AddAsync(new Certification { CertificationType = "Individual assessment Certifier", Level = 3 });
+            await _applicationDbContext.Certifications.AddAsync(new Certification { CertificationType = "Group assessment Certifier", Level = 4 });
+
+            await _applicationDbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<List<Certification>> GetAllCertificationsAsync()
+        {
+            var certifications = await _applicationDbContext.Certifications.ToListAsync();
+
+            return certifications;
+        }
+
+        public async Task<List<ApplicationUserCertification>> GetPractitionersCertificationsAsync(string userId)
+        {
+            var userCertifications = await _applicationDbContext.ApplicationUserCertifications.Where(auc => auc.ApplicationUserId == userId).ToListAsync();
+
+            userCertifications.ForEach(uc =>
+            {
+                uc.Certification = _applicationDbContext.Certifications.Find(uc.CertificationId);
+            });
+
+            return userCertifications;
+        }
+
+        public async Task<Membership> GetMembershipStatusAsync(string userId)
+        {
+            var membership = await _applicationDbContext.Memberships.FirstOrDefaultAsync(m => m.UserId == userId);
+
+            if (membership == null)
+            {
+                return null;
+            }
+
+            //Check if date is passed
+            if (DateTime.Compare(membership.ValidTill.Date, DateTime.Now.Date) < 0)
+            {
+                _applicationDbContext.Remove(membership);
+                await _applicationDbContext.SaveChangesAsync();
+
+                return null;
+            }
+
+            return membership;
+        }
+
+        public async Task<bool> RenewMembershipAsync(string userId)
+        {
+            var membershipEntry = await _applicationDbContext.Memberships.FirstOrDefaultAsync(m => m.UserId == userId);
+
+            if (membershipEntry == null)
+            {
+                await _applicationDbContext.Memberships.AddAsync(new Membership { UserId = userId, ValidTill = DateTime.Now.AddYears(1) });
+            }
+            else
+            {
+                membershipEntry.ValidTill = membershipEntry.ValidTill.AddYears(1);
+                _applicationDbContext.Memberships.Update(membershipEntry);
+            }
+
+            var rowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (rowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<List<UserViewModel>> GetPractitionersForDirectoryAsync(PractitionersSearchFilterViewModel practitionersSearchFilterViewModel)
+        {
+            //var practitioners = await _applicationDbContext.Users.Where(u => _userManager.IsInRoleAsync(u, "PRACTITIONER").Result == true).ToListAsync();
+            var users = await _applicationDbContext.Users.ToListAsync();
+            var practitioners = new List<ApplicationUser>();
+
+            users.ForEach(u =>
+            {
+                if (_userManager.IsInRoleAsync(u, "Practitioner").Result)
+                {
+                    practitioners.Add(u);
+                }
+            });
+
+            //filter the practitioners
+            practitioners = await this.FilterPractitionersOnRegionsAsync(practitioners, practitionersSearchFilterViewModel.GeographicalLocationsSelected);
+            practitioners = await this.FilterPractitionersOnLanguagesAsync(practitioners, practitionersSearchFilterViewModel.LanguagesSelected);
+            practitioners = await this.FilterPractitionersOnGendersAsync(practitioners, practitionersSearchFilterViewModel.GenderSelected);
+            //take the required amount
+
+            if (practitionersSearchFilterViewModel.StartingIndex >= practitioners.Count)
+            {
+                practitionersSearchFilterViewModel.EndingIndex = practitionersSearchFilterViewModel.EndingIndex - practitionersSearchFilterViewModel.StartingIndex;
+                practitionersSearchFilterViewModel.StartingIndex = 0;
+            }
+
+            practitioners = practitioners.Skip(practitionersSearchFilterViewModel.StartingIndex).TakeWhile((p,i) => i + practitionersSearchFilterViewModel.StartingIndex < practitionersSearchFilterViewModel.EndingIndex).ToList();
+
+            practitioners.ForEach(p =>
+            {
+                p.Languages = _applicationDbContext.UserLanguages.Where(ul => ul.ApplicationUserId == p.Id).ToList();
+            });
+
+            practitioners.ForEach(p =>
+            {
+                p.Regions = _applicationDbContext.UserRegions.Where(ur => ur.ApplicationUserId == p.Id).ToList();
+            });
+
+            practitioners.ForEach(p =>
+            {
+                p.Languages.ForEach(l =>
+                {
+                    l.Language = _applicationDbContext.Languages.Find(l.LanguageId);
+                });
+            });
+
+            practitioners.ForEach(p =>
+            {
+                p.Regions.ForEach(r =>
+                {
+                    r.Region = _applicationDbContext.Regions.Find(r.RegionId);
+                });
+            });
+
+            var practitionersViewModel = _mapper.Map<List<UserViewModel>>(practitioners);
+
+            return practitionersViewModel;
+        }
+
+        private async Task<List<ApplicationUser>> FilterPractitionersOnGendersAsync(List<ApplicationUser> practitioners, Gender gender)
+        {
+            //TODO - here implement gender method
+            if (gender == null)
+            {
+                return practitioners;
+            }
+
+            practitioners.ForEach(p =>
+            {
+                p.Gender = _applicationDbContext.Gender.First(g => g.Id == p.GenderId);
+            });
+
+
+            practitioners = practitioners.Where(p => p.Gender.GenderName == gender.GenderName).ToList();
+
+            return practitioners;
+        }
+
+        private async Task<List<ApplicationUser>> FilterPractitionersOnRegionsAsync(List<ApplicationUser> practitioners, List<RegionModel> regions)
+        {
+            if (regions == null || regions.Count == 0)
+            {
+                return practitioners;
+            }
+
+            practitioners.ForEach(p =>
+            {
+                p.Regions = _applicationDbContext.UserRegions.Where(ur => ur.ApplicationUserId == p.Id).ToList();
+            });
+
+
+            practitioners = practitioners.Where(p => p.Regions.Where(pr => regions.Any(r => pr.RegionId == r.Id)).Count() > 0).ToList();
+
+            return practitioners;
+
+        }
+
+        private async Task<List<ApplicationUser>> FilterPractitionersOnLanguagesAsync(List<ApplicationUser> practitioners, List<LanguageModel> languages)
+        {
+            if (languages == null || languages.Count == 0)
+            {
+                return practitioners;
+            }
+
+            practitioners.ForEach(p =>
+            {
+                p.Languages = _applicationDbContext.UserLanguages.Where(ul => ul.ApplicationUserId == p.Id).ToList();
+            });
+
+
+            practitioners = practitioners.Where(p => p.Languages.Where(pl => languages.Any(l => pl.LanguageId == l.Id)).Count() > 0).ToList();
+
+            //practitioners.ForEach(p => p.Languages.ForEach(pl =>
+            //{
+            //    if (!languages.Any(l => pl.LanguageId == l.Id))
+            //    {
+            //        practitioners.Remove(p);
+            //    }
+            //}));
+
+            return practitioners;
+        }
+
+        public async Task<int> ReturnNumberOfPractitionersAsync()
+        {
+            var users = await _applicationDbContext.Users.ToListAsync();
+
+            users = users.Where(u => _userManager.IsInRoleAsync(u, "Practitioner").Result == true).ToList();
+
+            return users.Count;
+
         }
     }
 }

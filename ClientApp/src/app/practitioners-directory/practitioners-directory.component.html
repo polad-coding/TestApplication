@@ -1,0 +1,160 @@
+<div class="modal-container" *ngIf="languagesModalIsVisible" id="languages-modal-container">
+  <div id="languages-modal" (click)="PreventEventPropagation($event)">
+    <p>Choose the languages</p>
+    <div id="languages-container">
+      <div class="modal-unit modal-unit-is-not-selected" id="language-number-{{language.id}}" [attr.data-languagename]="language.languageName"  (click)="LanguageClicked($event)" *ngFor="let language of languages">
+        {{language.languageName}}
+      </div>
+    </div>
+    <div class="confirm-button">
+      <button (click)="ChooseLanguages()">Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="modal-container" *ngIf="regionsModalIsVisible" id="regions-modal-container">
+  <div id="regions-modal" (click)="PreventEventPropagation($event)">
+    <p>Choose the regions</p>
+    <div id="regions-container">
+      <div class="modal-unit modal-unit-is-not-selected" id="region-number-{{region.id}}" [attr.data-regionname]="region.regionName" (click)="RegionClicked($event)" *ngFor="let region of geographicalLocations">
+        {{region.regionName}}
+      </div>
+    </div>
+    <div class="confirm-button">
+      <button (click)="ChooseRegions()">Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="modal-container" *ngIf="gendersModalIsVisible" id="languages-modal-container">
+  <div id="genders-modal" (click)="PreventEventPropagation($event)">
+    <p>Choose the gender</p>
+    <div id="genders-container">
+      <div class="modal-unit modal-unit-is-not-selected" (click)="GenderClicked($event)">Male</div>
+      <div class="modal-unit modal-unit-is-not-selected" (click)="GenderClicked($event)">Female</div>
+      <div class="modal-unit modal-unit-is-not-selected" (click)="GenderClicked($event)">Other</div>
+    </div>
+    <div class="confirm-button">
+      <button (click)="ChooseGenders()">Confirm</button>
+    </div>
+  </div>
+</div>
+<app-navigation-bar></app-navigation-bar>
+<app-page-title titleText="Values Practitioner"></app-page-title>
+<div id="practitioners-directory-container">
+  <div id="filters-row">
+    <div id="languages-filters-container" (click)="ShowLanguagesModal($event)">
+      <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.languagesSelected.length == 0">
+        <p>{{selectedLanguagesText}}</p>
+        <div class="arrowhead-image-container">
+          <img src="../../assets/Images/arrowhead-down.svg" />
+        </div>
+      </div>
+      <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.languagesSelected.length > 0">
+        <p>{{selectedLanguagesText}}</p>
+        <div class="arrowhead-image-container">
+          <img src="../../assets/Images/arrowhead-down.svg" />
+        </div>
+      </div>
+    </div>
+    <div id="geographical-filters-container" (click)="ShowRegionsModal($event)">
+      <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.geographicalLocationsSelected.length == 0">
+        <p>{{selectedRegionsText}}</p>
+        <div class="arrowhead-image-container">
+          <img src="../../assets/Images/arrowhead-down.svg" />
+        </div>
+      </div>
+      <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.geographicalLocationsSelected.length > 0">
+        <p>{{selectedRegionsText}}</p>
+        <div class="arrowhead-image-container">
+          <img src="../../assets/Images/arrowhead-down.svg" />
+        </div>
+      </div>
+    </div>
+    <div id="gender-filters-container" (click)="ShowGendersModal($event)">
+      <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.genderSelected == undefined">
+        <p>No gender preference</p>
+        <div class="arrowhead-image-container">
+          <img src="../../assets/Images/arrowhead-down.svg" />
+        </div>
+      </div>
+      <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.genderSelected != undefined">
+        <p>{{selectedGendersText}}</p>
+        <div class="arrowhead-image-container">
+          <img src="../../assets/Images/arrowhead-down.svg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="practitioners-row">
+    <div (click)="GoToPreviousPractitioner()" id="previous-practitioner-button">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png"/>
+    </div>
+    <div id="practitioners-images-section">
+      <div (click)="SelectPractitioner($event)" *ngFor="let practitioner of currentPractitioners; index as i">
+        <img [ngClass]="{'practitioner':true, 'current-practitioner': i == 0}" id="practitioner-{{i}}" *ngIf="practitioner.profileImageName == undefined && practitioner.profileImageName == null"  src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
+        <img [ngClass]="{'practitioner':true, 'current-practitioner': i == 0}" id="practitioner-{{i}}" *ngIf="practitioner.profileImageName != undefined || practitioner.profileImageName != null"  src="../../assets/Profile-Images/{{practitioner.profileImageName}}.png" />
+      </div>
+    </div>
+    <div (click)="GoToNextPractitioner()" id="next-practitioner-button">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
+    </div>
+  </div>
+  <div id="practitioners-information-section" *ngIf="currentPractitioners.length > 0">
+    <div class="information-row">
+      <div class="information-row-title">
+        <p>Certification(s):</p>
+      </div>
+      <div class="information-row-content">
+        <p *ngFor="let certification of practitionersCertifications[currentPractitionerIndex]">
+          {{certification.certification.certificationType}}
+        </p>
+      </div>
+    </div>
+    <div class="information-row">
+      <div class="information-row-title">
+        <p>Language(s):</p>
+      </div>
+      <div id="languages-row" class="information-row-content">
+        <p class="language-container" *ngFor="let language of currentPractitioners[currentPractitionerIndex].languages">
+          {{language.languageName}}
+        </p>
+      </div>
+    </div>
+    <div class="information-row">
+      <div class="information-row-title">
+        <p>Region(s):</p>
+      </div>
+      <div id="regions-row" class="information-row-content">
+        <p class="region-container" *ngFor="let region of currentPractitioners[currentPractitionerIndex].regions">
+          {{region.regionName}}
+        </p>
+      </div>
+    </div>
+    <div class="information-row">
+      <div class="information-row-title">
+        <p>Send a mail:</p>
+      </div>
+      <div class="information-row-content">
+        <button id="send-email-button">
+          @
+        </button>
+      </div>
+    </div>
+    <div class="information-row">
+      <div class="information-row-title">
+        <p>Web site:</p>
+      </div>
+      <div class="information-row-content">
+        <p>{{currentPractitioners[currentPractitionerIndex].website}}</p>
+      </div>
+    </div>
+    <div class="information-row">
+      <div class="information-row-title">
+        <p>Bio:</p>
+      </div>
+      <div class="information-row-content">
+        <p>{{currentPractitioners[currentPractitionerIndex].bio}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

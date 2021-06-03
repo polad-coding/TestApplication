@@ -20,6 +20,8 @@ using KPProject.Services;
 using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.HttpOverrides;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 namespace KPProject
 {
@@ -87,8 +89,10 @@ namespace KPProject
                     };
                 });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
             services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IDataService, DataService>();
@@ -163,6 +167,7 @@ namespace KPProject
             //CreateValues(serviceProvider).Wait();
             //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
             //CreateValuesLanguageFiles(serviceProvider).Wait();
+            CreateCertifications(serviceProvider).Wait();
         }
 
         public async Task CreateValues(IServiceProvider serviceProvider)
@@ -171,6 +176,13 @@ namespace KPProject
 
             await dataService.PopulateDBWithValuesAsync();
 
+        }
+
+        public async Task CreateCertifications(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithCertificationsAsync();
         }
 
         public async Task CreatePerspectivesLanguageFiles(IServiceProvider serviceProvider)
@@ -210,16 +222,85 @@ namespace KPProject
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            if (await userManager.FindByEmailAsync("polad20178@gmail.com") == null)
-            {
                 await userManager.CreateAsync(new ApplicationUser
                 {
-                    FirstName = "Polad",
-                    LastName = "Safaraliyev",
-                    Email = "polad20178@gmail.com",
-                    UserName = "polad20178@gmail.com",
-                }, "plamf12345"); ;
-            }
+                    FirstName = "Aasd",
+                    LastName = "asd",
+                    Email = "asdad@gmail.com",
+                    UserName = "asdad@gmail.com",
+                    Website = "asdadsad",
+                    Bio = "asdadasdasd",
+                }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "fghj",
+                LastName = "fgj",
+                Email = "fgj@gmail.com",
+                UserName = "fgj@gmail.com",
+                Website = "fghj",
+                Bio = "fghj",
+            }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "gf",
+                LastName = "sdfg",
+                Email = "sdf@gmail.com",
+                UserName = "sdf@gmail.com",
+                Website = "dsfg",
+                Bio = "sdfg",
+            }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "sdfg",
+                LastName = "sdg",
+                Email = "sdgt@gmail.com",
+                UserName = "sdgt@gmail.com",
+                Website = "revs",
+                Bio = "vwre",
+            }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "d qwd  ",
+                LastName = "ADSa",
+                Email = "ASD@gmail.com",
+                UserName = "ASD@gmail.com",
+                Website = "ASFSAFD",
+                Bio = "ASDVBS",
+            }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "JYRG",
+                LastName = "RTYJH",
+                Email = "JKL@gmail.com",
+                UserName = "JKL@gmail.com",
+                Website = "NGHNBF",
+                Bio = "CVBDG",
+            }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "YIKIY",
+                LastName = "UKHR",
+                Email = "RTY@gmail.com",
+                UserName = "RTY@gmail.com",
+                Website = "GHVDDA",
+                Bio = "SDCA WQ",
+            }, "plamf12345");
+
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "CXVBCV",
+                LastName = "XVCBSD",
+                Email = "CVB@gmail.com",
+                UserName = "CVB@gmail.com",
+                Website = "ASDFSADF",
+                Bio = "asdADW",
+            }, "plamf12345");
 
         }
     }

@@ -63,7 +63,7 @@ namespace KPProject.Services
             oldUser.UserName = userViewModel.Email;
             oldUser.FirstName = userViewModel.FirstName;
             oldUser.LastName = userViewModel.LastName;
-            oldUser.Gender = userViewModel.Gender;
+            oldUser.Gender = await _dbContext.Gender.FirstAsync(g => g.GenderName == userViewModel.Gender.GenderName);
             oldUser.Regions = newUserRegions;
             oldUser.Languages = newUserLanguages;
             oldUser.Education = userViewModel.Education;
@@ -191,21 +191,23 @@ namespace KPProject.Services
 
             data = data.Split(",")[1];
 
-            //if (updateResult.Succeeded)
-            //{
-            //    var dataBytes = Convert.FromBase64String(data);
+            //TODO - comment then to work on linux
 
-            //    using (MemoryStream ms = new MemoryStream(dataBytes))
-            //    {
-            //        Image pic = Image.FromStream(ms);
+            if (updateResult.Succeeded)
+            {
+                var dataBytes = Convert.FromBase64String(data);
 
-            //        string path = Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{user.ProfileImageName}.png");
+                using (MemoryStream ms = new MemoryStream(dataBytes))
+                {
+                    Image pic = Image.FromStream(ms);
 
-            //        File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldImageName}.png"));
+                    string path = Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{user.ProfileImageName}.png");
 
-            //        pic.Save(path, ImageFormat.Png);
-            //    }
-            //}
+                    File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldImageName}.png"));
+
+                    pic.Save(path, ImageFormat.Png);
+                }
+            }
 
             return user.ProfileImageName;
         }

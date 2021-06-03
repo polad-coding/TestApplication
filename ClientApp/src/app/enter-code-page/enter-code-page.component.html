@@ -1,19 +1,29 @@
-<div>
-  <div id="enter-code-field">
+<app-navigation-bar></app-navigation-bar>
+<app-page-title titleText="The survey"></app-page-title>
+<div id="enter-code-container">
+  <div tabindex="1" id="error-section-placeholder">
 
   </div>
+  <div id="error-section" #errorSection tabindex="1" *ngIf="errorMessage != null">
+    <p>{{errorMessage}}</p>
+  </div>
+  <div id="enter-code-field">
+    <p>{{'Survey.EnterCodePage.CodeEnterFieldText' | translate}}:</p>
+    <input [(ngModel)]="codeEntered" type="text" placeholder="Enter code" />
+  </div>
   <div id="enter-codes-texts">
-    <p>{{'Survey.EnterCodePage.FirstParagraph' | translate}}</p>
-    <p>{{'Survey.EnterCodePage.SecondParagraph' | translate}}</p>
-    <p>{{'Survey.EnterCodePage.ThirdParagraph' | translate}}</p>
-    <p>{{'Survey.EnterCodePage.FourthParagraph' | translate}}</p>
-    <p>{{'Survey.EnterCodePage.FifthParagraph' | translate}}</p>
-    <div>
-      <input type="radio" />
-      <p>{{'Survey.EnterCodePage.SixthParagraph' | translate}}</p>
+    <p>{{'Survey.EnterCodePage.FirstParagraph' | translate}}</p><br />
+    <p>{{'Survey.EnterCodePage.SecondParagraph' | translate}}</p><br />
+    <p>{{'Survey.EnterCodePage.ThirdParagraph' | translate}}</p><br />
+    <p>{{'Survey.EnterCodePage.FourthParagraph' | translate}}</p><br />
+    <p>{{'Survey.EnterCodePage.FifthParagraph' | translate}}</p><br />
+    <div id="i-agree-radio-section">
+      <input type="radio" value="userAgreedWithTheClause" [(ngModel)]="userAgreedWithTheClause" [checked]="userAgreedWithTheClause" />
+      <p>  {{'Survey.EnterCodePage.SixthParagraph' | translate}}</p>
     </div>
   </div>
-  <div>
-    <button>Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png"/></button>
+  <div [ngClass]="{'proceed-to-the-next-step-button-section':true,'button-is-active':userAgreedWithTheClause, 'button-is-inactive':!userAgreedWithTheClause}">
+    <button (click)="ProceedToTheNextStage($event)">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
   </div>
 </div>
+<app-footer></app-footer>

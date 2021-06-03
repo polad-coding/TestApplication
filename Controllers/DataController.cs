@@ -1,4 +1,6 @@
-﻿using KPProject.Interfaces;
+﻿using DinkToPdf;
+using DinkToPdf.Contracts;
+using KPProject.Interfaces;
 using KPProject.Models;
 using KPProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +14,21 @@ namespace KPProject.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class DataController: ControllerBase
+    public class DataController : ControllerBase
     {
 
         private readonly IDataService _dataService;
+        private readonly IConverter _converter;
 
-        public DataController(IDataService dataService)
+        public DataController(IDataService dataService, IConverter converter)
         {
             _dataService = dataService;
+            _converter = converter;
         }
 
         [HttpGet]
         [Route("GetAllValues")]
-        public async Task<ActionResult<List<ValueModel>>> GetAllValuesAsync([FromQuery]int surveyId)
+        public async Task<ActionResult<List<ValueModel>>> GetAllValuesAsync([FromQuery] int surveyId)
         {
             var values = await _dataService.GetAllValuesAsync(surveyId);
 
@@ -37,8 +41,22 @@ namespace KPProject.Controllers
         }
 
         [HttpGet]
+        [Route("CheckIfCodeIsValid")]
+        public async Task<ActionResult<bool>> CheckIfCodeIsValidAsync(string code)
+        {
+            var isValid = await _dataService.CheckIfCodeIsValidAsync(code);
+
+            if (isValid)
+            {
+                return Ok(true);
+            }
+
+            return Ok(false);
+        }
+
+        [HttpGet]
         [Route("GetTheRelativeWeightOfThePerspectives")]
-        public async Task<ActionResult<List<double>>> GetTheRelativeWeightOfThePerspectives([FromQuery]int surveyId)
+        public async Task<ActionResult<List<double>>> GetTheRelativeWeightOfThePerspectives([FromQuery] int surveyId)
         {
             var values = await _dataService.GetTheRelativeWeightOfThePerspectivesAsync(surveyId);
 
@@ -67,7 +85,7 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("GetSurveyThirdStageResults")]
-        public async Task<ActionResult<List<double>>> GetSurveyThirdStageResultsAsync([FromQuery]int surveyId)
+        public async Task<ActionResult<List<double>>> GetSurveyThirdStageResultsAsync([FromQuery] int surveyId)
         {
             var values = await _dataService.GetSurveyThirdStageResultsAsync(surveyId);
 
@@ -156,6 +174,119 @@ namespace KPProject.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GeneratePdf")]
+        public IActionResult GeneratePdf(string html)
+        {
+            var globalSettings = new GlobalSettings
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Portrait,
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings { Top = 10 },
+                DocumentTitle = "PDF Report"
+            };
+            var objectSettings = new ObjectSettings
+            {
+                PagesCount = true,
+                //Page = "https://code-maze.com/",
+                HtmlContent = html,
+                WebSettings = { DefaultEncoding = "utf-8" },
+                HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
+                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
+            };
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = globalSettings,
+                Objects = { objectSettings }
+            };
+            var file = _converter.Convert(pdf);
+            return File(file, "application/pdf");
+        }
+
+        [HttpGet]
+        [Route("GetAllCertifications")]
+        public async Task<ActionResult<List<Certification>>> GetAllCertificationsAsync()
+        {
+            var certifications = await _dataService.GetAllCertificationsAsync();
+
+            if (certifications == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(certifications);
+        }
+
+        [HttpGet]
+        [Route("GetPractitionersCertifications")]
+        public async Task<ActionResult<List<ApplicationUserCertification>>> GetPractitionersCertificationsAsync(string userId)
+        {
+            var practitionersCertifications = new List<ApplicationUserCertification>();
+
+            if (userId == null)
+            {
+                practitionersCertifications = await _dataService.GetPractitionersCertificationsAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+            else
+            {
+                practitionersCertifications = await _dataService.GetPractitionersCertificationsAsync(userId);
+            }
+
+            if (practitionersCertifications == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(practitionersCertifications);
+        }
+
+        [HttpGet]
+        [Route("GetMembershipStatus")]
+        public async Task<ActionResult<Membership>> GetMembershipStatusAsync()
+        {
+            var membership = await _dataService.GetMembershipStatusAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(membership);
+        }
+
+        [HttpGet]
+        [Route("RenewMembership")]
+        public async Task<ActionResult> RenewMembershipAsync()
+        {
+            var requestIsSuccessful = await _dataService.RenewMembershipAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (requestIsSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("GetPractitionersForDirectory")]
+        public async Task<ActionResult<List<UserViewModel>>> GetPractitionersForDirectoryAsync(PractitionersSearchFilterViewModel practitionersSearchFilterViewModel)
+        {
+            var practitioners = await _dataService.GetPractitionersForDirectoryAsync(practitionersSearchFilterViewModel);
+
+            if (practitioners != null)
+            {
+                return Ok(practitioners);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("ReturnNumberOfPractitioners")]
+        public async Task<int> ReturnNumberOfPractitionersAsync()
+        {
+            var numberOfPractitioners = await _dataService.ReturnNumberOfPractitionersAsync();
+
+            return numberOfPractitioners;
         }
 
         //[HttpGet("{surveyId}")]

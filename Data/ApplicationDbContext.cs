@@ -24,6 +24,13 @@ namespace KPProject.Data
         public DbSet<SurveySecondStageModel> SurveySecondStages { get; set; }
         public DbSet<SurveyThirdStageModel> SurveyThirdStages { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<AnonymisedUser> AnonymisedUsers { get; set; }
+        public DbSet<AnonymisedUserRegion> AnonymisedUserRegions { get; set; }
+        public DbSet<ApplicationUserCertification> ApplicationUserCertifications { get; set; }
+        public DbSet<Certification> Certifications { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
+
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -35,6 +42,8 @@ namespace KPProject.Data
             base.OnModelCreating(builder);
             builder.Entity<UserLanguage>().HasKey(ul => new { ul.ApplicationUserId, ul.LanguageId });
             builder.Entity<UserRegion>().HasKey(ur => new { ur.ApplicationUserId, ur.RegionId });
+            builder.Entity<AnonymisedUserRegion>().HasKey(aur => new { aur.AnonymisedUserId, aur.RegionId });
+            builder.Entity<ApplicationUserCertification>().HasKey(aus => new { aus.ApplicationUserId, aus.CertificationId });
             builder.Entity<SurveyFirstStageModel>().HasKey(sft => new { sft.SurveyId, sft.ValueId });
             builder.Entity<SurveySecondStageModel>().HasKey(sss => new { sss.SurveyId, sss.ValueId });
             builder.Entity<SurveyThirdStageModel>().HasKey(sts => new { sts.SurveyId, sts.ValueId });

@@ -3,7 +3,6 @@ import { SingleDataSet, Label } from 'ng2-charts';
 import { Chart } from 'chart.js';
 import { ValueViewModel } from '../../view-models/value-view-model';
 import { DataService } from '../../app-services/data-service';
-import { fstat } from 'fs';
 
 @Component({
   selector: 'app-wrap-up',

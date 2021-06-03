@@ -36,6 +36,9 @@ import { WrapUpComponent } from './wrap-up/wrap-up.component';
 import { PersonalSurveyResultsAndReportsComponent } from './personal-survey-results-and-reports/personal-survey-results-and-reports.component';
 import { PractitionerSurveyResultsAndReportsComponent } from './practitioner-survey-results-and-reports/practitioner-survey-results-and-reports.component';
 import { EnterCodePageComponent } from './enter-code-page/enter-code-page.component';
+import { EnterSurveyAccountFormComponent } from './enter-survey-account-form/enter-survey-account-form.component';
+import { CertificationAndMembershipComponent } from './certification-and-membership/certification-and-membership.component';
+import { PractitionersDirectoryComponent } from './practitioners-directory/practitioners-directory.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -65,7 +68,10 @@ export function tokenGetter() {
     WrapUpComponent,
     PersonalSurveyResultsAndReportsComponent,
     PractitionerSurveyResultsAndReportsComponent,
-    EnterCodePageComponent
+    EnterCodePageComponent,
+    EnterSurveyAccountFormComponent,
+    CertificationAndMembershipComponent,
+    PractitionersDirectoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -94,7 +100,10 @@ export function tokenGetter() {
       { path: 'surveyThirdStage', component: SurveyThirdStageComponent },
       { path: 'success', component: TestComponent },
       { path: 'order', component: GetCodesComponent },
-      { path: 'wrap-up', component: WrapUpComponent }
+      { path: 'wrap-up', component: WrapUpComponent },
+      { path: 'enterCode', component: EnterCodePageComponent },
+      { path: 'enterSurveyAccount', component: EnterSurveyAccountFormComponent },
+      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent }
     ]),
     JwtModule.forRoot({
       config: {

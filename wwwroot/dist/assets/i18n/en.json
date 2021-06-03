@@ -43,12 +43,18 @@
       }
     },
     "EnterCodePage": {
+      "CodeEnterFieldText": "Please enter your code",
       "FirstParagraph": "The results of the survey (online profile and perspectives, downloading personal Values Perspective Report) are private and confidential. You can access these using your personal account.",
       "SecondParagraph": "If you haven’t finished a survey, you’ll be able to go back to it from your personal account.",
       "ThirdParagraph": "If you haven’t yet a personal account you will be invited to create one. If you have already a personal account, you’ll be able to update it before taking a survey, if necessary.",
       "FourthParagraph": "Once completed, in order to further explore and have insights and teachings from the results, they can be shared with the practitioner who gave you your code or, if you got the code by yourself, with the practitioner you choose from the list proposed by Kairios Praxis.",
       "FifthParagraph": "For a single anonymous statistical use only, the data from your survey (excluding name, email andpassword) will be stored and kept by Kairios Praxis in compliance with the European GDPR regulation. You can refuse by unticking the button below.",
       "SixthParagraph": "I agree that the anonymized survey data will be stored by Kairios Praxis for statistical uses only."
+    },
+    "EnterSurveyAccountFormPage": {
+      "HeadSectionTitle": "My personal account",
+      "HeadSectionTexts": "The results of the survey are the property of the person who takes it. He or she can choose to share them with a values practitioner who has given him or her the code or whom he or she chooses to develop and have insights and teachings from the results. The data will be kept anonymously for statistical purposes only. Once you complete the survey, you’ll be able anytime using your email and Password to get your online profile and perspectives and download your personal Values Perspective Report.",
+      "SurveyCodeSectionText": "Your Survey code is"
     }
   },
   "Perspectives": {

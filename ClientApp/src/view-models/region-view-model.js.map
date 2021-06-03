@@ -1,1 +1,1 @@
-{"version":3,"file":"region-view-model.js","sourceRoot":"","sources":["region-view-model.ts"],"names":[],"mappings":";;;AAAA;IAAA;IAGA,CAAC;IAAD,sBAAC;AAAD,CAAC,AAHD,IAGC;AAHY,0CAAe"}
+{"version":3,"file":"region-view-model.js","sourceRoot":"","sources":["region-view-model.ts"],"names":[],"mappings":";;;AAAA;IAIE,yBAAY,EAAU,EAAE,UAAkB;QACxC,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;IAC/B,CAAC;IACH,sBAAC;AAAD,CAAC,AARD,IAQC;AARY,0CAAe"}
