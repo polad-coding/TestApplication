@@ -63,6 +63,12 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
   }
 
   ngOnInit() {
+    if (window.innerWidth <= 850) {
+      this.desktopVersion = false;
+    }
+    else if (window.innerWidth > 850) {
+      this.desktopVersion = true;
+    }
     this._accountService.GetCurrentUser().subscribe((response: any) => {
       this.user = response.body;
       this._dataService.GetAllCertifications().subscribe((response: any) => {

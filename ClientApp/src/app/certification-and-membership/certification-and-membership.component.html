@@ -112,7 +112,7 @@
   <div id="image-section-mobile">
     <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
     <p>Certified practitioner</p>
-    <p>Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+    <p *ngIf="practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
     <p *ngIf="membership != null">Membership OK</p>
     <p *ngIf="membership == null">Membership needs the renewal</p>
   </div>

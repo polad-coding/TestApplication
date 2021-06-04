@@ -15,8 +15,12 @@ import { Chart } from 'chart.js';
 })
 export class TestComponent implements OnInit, AfterViewInit {
 
-  constructor(private _ds: DataService) {
+  public myChart: any;
+  public imageString: string;
+  public filePath: string = '/var/www/somefreedomain/TestApplication/wwwroot/dist/assets/Downut/KP-Downut-GB-HumanEnergy.svg';
 
+  constructor(private _ds: DataService) {
+    console.debug(this.filePath);
   }
   ngAfterViewInit(): void {
 
@@ -27,9 +31,12 @@ export class TestComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
-    var myChart = new Chart('myChart', {
+    this.myChart = new Chart('myChart', {
       type: 'polarArea',
       options: {
+        animation: {
+          onComplete: () => this.imageString = this.myChart.toBase64Image()
+        },
         legend: {
           //display: false,
           position: 'bottom',
@@ -74,6 +81,7 @@ export class TestComponent implements OnInit, AfterViewInit {
         }]
       }
     });
+    
   }
 
 }

@@ -165,9 +165,9 @@ namespace KPProject
             //CreateUsers(serviceProvider).Wait();
             //CreatePerspectives(serviceProvider).Wait();
             //CreateValues(serviceProvider).Wait();
-            //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
-            //CreateValuesLanguageFiles(serviceProvider).Wait();
-            CreateCertifications(serviceProvider).Wait();
+            ////CreatePerspectivesLanguageFiles(serviceProvider).Wait();
+            ////CreateValuesLanguageFiles(serviceProvider).Wait();
+            //CreateCertifications(serviceProvider).Wait();
         }
 
         public async Task CreateValues(IServiceProvider serviceProvider)

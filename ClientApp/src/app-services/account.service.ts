@@ -5,7 +5,7 @@ import { UserViewModel } from '../view-models/user-view-model';
 @Injectable()
 export class AccountService {
 
-  private url: string = 'somefreedomain.ml';
+  private url: string = 'localhost:5001';
 
   constructor(private http: HttpClient) { }
 
