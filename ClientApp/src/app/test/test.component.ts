@@ -35,7 +35,10 @@ export class TestComponent implements OnInit, AfterViewInit {
       type: 'polarArea',
       options: {
         animation: {
-          onComplete: () => this.imageString = this.myChart.toBase64Image()
+          onComplete: () => {
+            this.imageString = this.myChart.toBase64Image();
+            console.log(this.imageString);
+          }
         },
         legend: {
           //display: false,

@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class SurveyService {
-  private url: string = 'localhost:5001';
+  private url: string = 'somefreedomain.ml';
 
 
   constructor(private http: HttpClient) { }

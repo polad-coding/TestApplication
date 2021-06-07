@@ -7,7 +7,7 @@ import { SignInViewModel } from "../view-models/signin-view-model";
 @Injectable()
 export class AuthenticationService {
 
-  private url: string = 'localhost:5001';
+  private url: string = 'somefreedomain.ml';
 
 
   constructor(private http: HttpClient) {
