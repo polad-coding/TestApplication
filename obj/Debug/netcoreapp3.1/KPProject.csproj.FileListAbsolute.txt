@@ -177,3 +177,6 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\KPProject.ru
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\KPProject.runtimeconfig.dev.json
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\KPProject.pdb
 C:\Users\polad\source\repos\TestApplication\obj\Debug\netcoreapp3.1\KPProject.genruntimeconfig.cache
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\libwkhtmltox.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\libwkhtmltox.dylib
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\libwkhtmltox.so

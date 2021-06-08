@@ -1,3 +1,6 @@
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\libwkhtmltox.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\libwkhtmltox.dylib
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\libwkhtmltox.so
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\KPProject.exe
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\favicon.ico
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\wwwroot\Fonts\BarlowSemiCondensed-Black.ttf
