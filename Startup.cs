@@ -43,7 +43,7 @@ namespace KPProject
             //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
 
             var context = new CustomAssemblyLoadContext();
-            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "libwkhtmltox.so"));
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "libwkhtmltox.dll"));
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(
