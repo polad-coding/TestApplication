@@ -16,11 +16,10 @@ import { Chart } from 'chart.js';
 export class TestComponent implements OnInit, AfterViewInit {
 
   public myChart: any;
-  public imageString: string;
-  public filePath: string = '/var/www/somefreedomain/TestApplication/wwwroot/dist/assets/Downut/KP-Downut-GB-HumanEnergy.svg';
+  //public imageString: string;
+  //public filePath: string = '/var/www/somefreedomain/TestApplication/wwwroot/dist/assets/Downut/KP-Downut-GB-HumanEnergy.svg';
 
   constructor(private _ds: DataService) {
-    console.debug(this.filePath);
   }
 
 
@@ -33,59 +32,59 @@ export class TestComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
-    this.myChart = new Chart('myChart', {
-      type: 'polarArea',
-      options: {
-        animation: {
-          onComplete: () => {
-            this.imageString = this.myChart.toBase64Image();
-            console.log(this.imageString);
-          }
-        },
-        legend: {
-          //display: false,
-          position: 'bottom',
-          labels: {
-            fontColor: '#006F91',
-            fontFamily: 'barlowSemiCondensedLight',
-            boxWidth: 10,
-            padding: 20
-          },
-          fullWidth: false
-        },
-        scale: {
-          gridLines: {
-            display: false
-          },
-          ticks: {
-            display: false,
-            max: 10,
-            min: 0
-          }
-        }
-      },
-      data: {
-        labels: [
-          'Expansion',
-          'Systems',
-          'Relational',
-          'Management',
-          'Family',
-          'Grounding'
-        ],
-        datasets: [{
-          data: [5, 3, 2, 6, 9, 4],
-          backgroundColor: [
-            '#544595',
-            '#009EE3',
-            '#009640',
-            '#FFCC00',
-            '#ED7102',
-            '#E30513'
-          ]
-        }]
-      }
-    });
+    //this.myChart = new Chart('myChart', {
+    //  type: 'polarArea',
+    //  options: {
+    //    animation: {
+    //      onComplete: () => {
+    //        this.imageString = this.myChart.toBase64Image();
+    //        console.log(this.imageString);
+    //      }
+    //    },
+    //    legend: {
+    //      //display: false,
+    //      position: 'bottom',
+    //      labels: {
+    //        fontColor: '#006F91',
+    //        fontFamily: 'barlowSemiCondensedLight',
+    //        boxWidth: 10,
+    //        padding: 20
+    //      },
+    //      fullWidth: false
+    //    },
+    //    scale: {
+    //      gridLines: {
+    //        display: false
+    //      },
+    //      ticks: {
+    //        display: false,
+    //        max: 10,
+    //        min: 0
+    //      }
+    //    }
+    //  },
+    //  data: {
+    //    labels: [
+    //      'Expansion',
+    //      'Systems',
+    //      'Relational',
+    //      'Management',
+    //      'Family',
+    //      'Grounding'
+    //    ],
+    //    datasets: [{
+    //      data: [5, 3, 2, 6, 9, 4],
+    //      backgroundColor: [
+    //        '#544595',
+    //        '#009EE3',
+    //        '#009640',
+    //        '#FFCC00',
+    //        '#ED7102',
+    //        '#E30513'
+    //      ]
+    //    }]
+    //  }
+    //});
     
   }
 
