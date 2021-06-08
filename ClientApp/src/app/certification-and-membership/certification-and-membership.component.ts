@@ -25,7 +25,9 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
   public desktopVersion: boolean = true;
   public paypalModalIsVisible: boolean = false;
 
-  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router) { }
+  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router) {
+    this.LoadScript();
+  }
 
   ngAfterViewInit(): void {
     if (window.innerWidth <= 850) {
@@ -37,6 +39,17 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
 
 
   }
+
+  private LoadScript() {
+    let script = document.createElement('script');
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AQf-UPTlE9mFmveSuPSTXNNlpYzbN5GcUbSaY4V_Xr0EpyYaOBCsgdJj2rwLLQ52a5gagRy3AHotD8aP';
+    script.type = 'text/javascript';
+    script.async = true;
+    script.charset = 'utf-8';
+    script.id = 'paypal-script';
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
 
   @HostListener('document:click', ['$event'])
   public OnDocumentClicked(event) {

@@ -37,10 +37,13 @@ namespace KPProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
-                    "Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseMySql(
+            //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(
+        "Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -84,6 +87,8 @@ namespace KPProject
                     {
                         ValidIssuer = "somefreedomain.ml",
                         ValidAudience = "somefreedomain.ml",
+                        //ValidIssuer = "localhost:5001",
+                        //ValidAudience = "localhost:5001",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc")),
                         ClockSkew = TimeSpan.Zero
                     };
@@ -191,8 +196,8 @@ namespace KPProject
 
             await dataService.CreatePerspectivesLanguageFilesAsync();
 
-        }        
-        
+        }
+
         public async Task CreateValuesLanguageFiles(IServiceProvider serviceProvider)
         {
             var dataService = serviceProvider.GetRequiredService<IDataService>();
@@ -222,15 +227,15 @@ namespace KPProject
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-                await userManager.CreateAsync(new ApplicationUser
-                {
-                    FirstName = "Aasd",
-                    LastName = "asd",
-                    Email = "asdad@gmail.com",
-                    UserName = "asdad@gmail.com",
-                    Website = "asdadsad",
-                    Bio = "asdadasdasd",
-                }, "plamf12345");
+            await userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "Aasd",
+                LastName = "asd",
+                Email = "asdad@gmail.com",
+                UserName = "asdad@gmail.com",
+                Website = "asdadsad",
+                Bio = "asdadasdasd",
+            }, "plamf12345");
 
             await userManager.CreateAsync(new ApplicationUser
             {

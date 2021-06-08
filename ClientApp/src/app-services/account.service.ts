@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserViewModel } from '../view-models/user-view-model';
+import { AppSettingsService } from './app-settings.service';
 
 @Injectable()
 export class AccountService {
 
-  private url: string = 'somefreedomain.ml';
+  private url: string = AppSettingsService.CURRENT_DOMAIN;
 
   constructor(private http: HttpClient) { }
 

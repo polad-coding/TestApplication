@@ -22,6 +22,8 @@ export class TestComponent implements OnInit, AfterViewInit {
   constructor(private _ds: DataService) {
     console.debug(this.filePath);
   }
+
+
   ngAfterViewInit(): void {
 
     this._ds.GeneratePdf(document.getElementById('report-content').innerHTML).subscribe((response: Blob) => {

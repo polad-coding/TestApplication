@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AppSettingsService } from "./app-settings.service";
 
 @Injectable()
 export class SurveyService {
-  private url: string = 'somefreedomain.ml';
+  private url: string = AppSettingsService.CURRENT_DOMAIN;
 
 
   constructor(private http: HttpClient) { }

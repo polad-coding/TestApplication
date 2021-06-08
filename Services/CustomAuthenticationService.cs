@@ -63,6 +63,8 @@ namespace KPProject.Services
             var expires = DateTime.Now.AddHours(3);
 
             var tokenTemplate = new JwtSecurityToken(
+                //"localhost:5001",
+                //"localhost:5001",
                 "somefreedomain.ml",
                 "somefreedomain.ml",
                 claims,

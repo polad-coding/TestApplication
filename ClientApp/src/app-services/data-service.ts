@@ -9,11 +9,12 @@ import { SurveyFirstStageSaveRequestModel } from "../view-models/survey-first-st
 import { SurveySecondStageSaveRequestModel } from "../view-models/survey-second-stage-save-request-model";
 import { SurveyThirdStageSaveRequestModel } from "../view-models/survey-third-stage-save-request-model";
 import { ValueViewModel } from "../view-models/value-view-model";
+import { AppSettingsService } from "./app-settings.service";
 
 @Injectable()
 export class DataService {
 
-  private url: string = 'somefreedomain.ml';
+  private url: string = AppSettingsService.CURRENT_DOMAIN;
 
 
   constructor(private http: HttpClient) { }

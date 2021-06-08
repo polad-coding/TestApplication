@@ -24,7 +24,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public orders: QueryList<ElementRef>;
 
   constructor(private _renderer2: Renderer2, private _dataService: DataService) {
-
+    this.LoadScript();
   }
     ngOnChanges(changes: SimpleChanges): void {
 
@@ -35,6 +35,16 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
 
+  }
+  
+  private LoadScript() {
+    let script = document.createElement('script');
+    script.src = 'https://www.paypal.com/sdk/js?client-id=AQf-UPTlE9mFmveSuPSTXNNlpYzbN5GcUbSaY4V_Xr0EpyYaOBCsgdJj2rwLLQ52a5gagRy3AHotD8aP';
+    script.type = 'text/javascript';
+    script.async = true;
+    script.charset = 'utf-8';
+    script.id = 'paypal-script';
+    document.getElementsByTagName('head')[0].appendChild(script);
   }
 
   private RenderPaypal() {
