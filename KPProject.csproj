@@ -112,10 +112,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enumerators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app-services\authentication-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\data-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />

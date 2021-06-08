@@ -22,6 +22,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.HttpOverrides;
 using DinkToPdf.Contracts;
 using DinkToPdf;
+using System.IO;
 
 namespace KPProject
 {
@@ -41,9 +42,12 @@ namespace KPProject
             //    options.UseMySql(
             //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
 
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "libwkhtmltox.dll"));
+
             services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(
-        "Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
+            options.UseMySql(
+            "Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
