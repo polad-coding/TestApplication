@@ -136,7 +136,7 @@ namespace KPProject
             }
 
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
