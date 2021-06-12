@@ -21,7 +21,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   public numberOfValuesQualified: number = 0;
   public numberOfValuesQualifiedAsImportant: number = 0;
   public currentIndex = 0;
-  public descriptiveModeIsOn = false;
+  public descriptiveModeIsOn = true;
   @ViewChild('valueIdeogram', { read: ElementRef, static: false })
   public valueIdeogram: ElementRef;
   @ViewChild('valueModalIdeogram', { read: ElementRef, static: false })
@@ -41,10 +41,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   }
 
-  public ProccedToSelectionStage(event) {
-    this.isStepDescriptionPage = false;
-    this.isSelectionStage = true;
-  }
 
   public ProceedToDescriptionStage(event) {
     this.isStepDescriptionPage = true;
@@ -106,12 +102,12 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.descriptiveModeIsOn) {
-      this.valueContainers.forEach(vc => {
-        this._renderer2.setStyle(vc.nativeElement, 'margin-right', '50px');
-      });
-    }
-    this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
+    //if (this.descriptiveModeIsOn) {
+    //  this.valueContainers.forEach(vc => {
+    //    this._renderer2.setStyle(vc.nativeElement, 'margin-right', '50px');
+    //  });
+    //}
+    //this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
 
   }
 
@@ -182,9 +178,15 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     this.isValidationStage = true;
   }
 
-  public ProceedToSelectionStage(event: MouseEvent) {
+  public ProccedToSelectionStage(event: MouseEvent) {
     this.isValidationStage = false;
+    this.isStepDescriptionPage = false;
     this.isSelectionStage = true;
+
+    this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
+
+    console.log(this.valueContainers);
+
   }
 
   public SelectNewValue(mouseEvent: MouseEvent, valueId) {
@@ -218,6 +220,8 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
           this.values = response.body;
         }
       });
+
+
   }
 
   public SaveFirstStageResults(event) {

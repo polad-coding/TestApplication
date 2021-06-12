@@ -5,6 +5,7 @@ import { render } from 'creditcardpayments/creditCardPayments';
 import { DataService } from '../../app-services/data-service';
 import { SingleDataSet, Label } from 'ng2-charts';
 import { Chart } from 'chart.js';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   //public imageString: string;
   //public filePath: string = '/var/www/somefreedomain/TestApplication/wwwroot/dist/assets/Downut/KP-Downut-GB-HumanEnergy.svg';
 
-  constructor(private _ds: DataService) {
+  constructor(private _ds: DataService, private router: Router) {
   }
 
 

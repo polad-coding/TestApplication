@@ -42,8 +42,8 @@ namespace KPProject
             //    options.UseMySql(
             //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
 
-            //var context = new CustomAssemblyLoadContext();
-            //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(),"bin","Debug", "netcoreapp3.1","publish", "libwkhtmltox.so"));
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(

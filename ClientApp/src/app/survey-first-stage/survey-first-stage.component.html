@@ -63,20 +63,16 @@
   </div>
   <div id="bottom-section" *ngIf="isSelectionStage">
     <div class="values-display-options">
-      <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="TurnOffDescriptiveMode()" />
-      <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="TurnOnDescriptiveMode()"/>
     </div>
     <div id="values-list-section">
       <div id="values-bar">
           <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-id]="i" class="value-container">
             <p>{{value.character}}</p>
-            <p *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</p>
+            <p>{{'Values.' + value.character + '.Title' | translate}}</p>
           </div>
       </div>
     </div>
     <div class="values-display-options">
-      <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="TurnOffDescriptiveMode()" />
-      <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="TurnOnDescriptiveMode()" />
     </div>
   </div>
   <div *ngIf="isValidationStage" id="validation-stage">
