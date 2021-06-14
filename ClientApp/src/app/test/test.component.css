@@ -1,7 +1,38 @@
-#value-icon {
-  font-family: kp102ValSans;
-  font-size: 120px;
-  display: inline;
-  border: 4px solid #13708F;
-  color: #13708F;
+#title-page {
+  page-break-after: always;
+  display:flex;
+  flex-flow:column;
+  align-items:center;
+  text-align:center;
+  position:relative;
+}
+
+#title-page > h1{
+    color:#006F91;
+    font-size:4.5rem;
+    margin-bottom:20px;
+}
+
+#title-page > img:first-child{
+    height:700px;
+    width:700px;
+}
+
+  #title-page > img:last-child {
+    height: 100px;
+    width: 100px;
+    position:absolute;
+    bottom:0;
+    right:0;
+  }
+
+
+#title-page > p{
+    font-size:2rem;
+    color:#006F91;
+}
+
+#survey-results-page{
+    page-break-after:always;
+    font-family:barlowSemiCondensed;
 }

@@ -6,6 +6,7 @@ using KPProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -176,26 +177,27 @@ namespace KPProject.Controllers
             return BadRequest();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GeneratePdf")]
-        public IActionResult GeneratePdf(string html)
+        public IActionResult GeneratePdf([FromBody]string html)
         {
             var globalSettings = new GlobalSettings
             {
                 ColorMode = ColorMode.Color,
-                Orientation = Orientation.Portrait,
-                PaperSize = PaperKind.A4,
+                Orientation = Orientation.Landscape,
+                PaperSize = PaperKind.Letter,
                 Margins = new MarginSettings { Top = 10 },
                 DocumentTitle = "PDF Report"
             };
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp","src","assets", "practitioner-report.css");
+
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
                 //Page = "https://code-maze.com/",
                 HtmlContent = html,
-                WebSettings = { DefaultEncoding = "utf-8" },
-                HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path }
             };
             var pdf = new HtmlToPdfDocument()
             {

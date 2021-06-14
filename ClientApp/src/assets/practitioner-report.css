@@ -1,0 +1,72 @@
+@font-face {
+  font-family: barlowSemiCondensedMedium;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: kp102ValSans;
+  src: url('../../../wwwroot/Fonts/KP102ValSans.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: kp102ValSq;
+  src: url('../../../wwwroot/Fonts/KP102ValSq.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensedRegular;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensed;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Black.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensedThin;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Thin.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: barlowSemiCondensedBold;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensedLight;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: barlowSemiCondensedLightItalic;
+  src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-LightItalic.ttf') format('truetype');
+}
+
+#title-page {
+  page-break-after: always;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  text-align: center;
+  font-family: barlowSemiCondensedLight;
+  position: relative;
+}
+
+  #title-page > h1 {
+    color: #006F91;
+    font-size: 4rem;
+    margin-bottom: 20px;
+  }
+
+  #title-page > img {
+    height: 600px;
+    width: 600px;
+  }
+
+
+  #title-page > p {
+    font-size: 2rem;
+    color: #006F91;
+  }

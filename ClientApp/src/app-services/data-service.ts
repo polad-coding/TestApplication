@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GenderViewModel } from "../view-models/gender-view-model";
 import { LanguageViewModel } from "../view-models/language-view-model";
@@ -20,7 +20,7 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   public GeneratePdf(html: string) {
-    return this.http.get(`https://${this.url}/Data/GeneratePdf?html=${html}`, { observe: 'body', responseType: 'blob' });
+    return this.http.post(`https://${this.url}/Data/GeneratePdf`, `\'${html}\'`, { observe: 'body', responseType: 'blob', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
   public GetAllValues(surveyId: number) {
