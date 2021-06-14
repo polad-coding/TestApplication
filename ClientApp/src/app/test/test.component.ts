@@ -51,38 +51,38 @@ export class TestComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this._as.GetCurrentUser().subscribe((response: any) => {
-      this.user = response.body;
+    //this._as.GetCurrentUser().subscribe((response: any) => {
+    //  this.user = response.body;
 
-      let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+      //let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
-      this._ds.GetTheRelativeWeightOfThePerspectives(1).subscribe((response: any) => {
-        if (response.ok) {
-          this.relativeWeightOfThePerspectives = response.body;
-          this._ds.GetSurveyThirdStageResults(1).subscribe((thirdStageResults: any) => {
-            if (thirdStageResults.ok) {
-              this.valuesFromThirdStage = thirdStageResults.body;
-              console.debug(this.valuesFromThirdStage);
+      //this._ds.GetTheRelativeWeightOfThePerspectives(1).subscribe((response: any) => {
+      //  if (response.ok) {
+      //    this.relativeWeightOfThePerspectives = response.body;
+      //    this._ds.GetSurveyThirdStageResults(1).subscribe((thirdStageResults: any) => {
+      //      if (thirdStageResults.ok) {
+      //        this.valuesFromThirdStage = thirdStageResults.body;
+      //        console.debug(this.valuesFromThirdStage);
 
-              let maxGraphSliceValue = 0;
-              this.relativeWeightOfThePerspectives.forEach(v => {
-                if (v > maxGraphSliceValue) {
-                  console.log(v);
-                  maxGraphSliceValue = v;
-                }
-              });
+      //        let maxGraphSliceValue = 0;
+      //        this.relativeWeightOfThePerspectives.forEach(v => {
+      //          if (v > maxGraphSliceValue) {
+      //            console.log(v);
+      //            maxGraphSliceValue = v;
+      //          }
+      //        });
 
-              //Get the biggest values
+      //        //Get the biggest values
 
-              let temp = new Array<number>();
+      //        let temp = new Array<number>();
 
-              this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
+      //        this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
 
-              temp = temp.sort((a, b) => a - b);
+      //        temp = temp.sort((a, b) => a - b);
 
-              this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
-              this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
-            }
+      //        this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
+      //        this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
+      //      }
 
             this.myChart = new Chart('myChart', {
               type: 'polarArea',
@@ -143,15 +143,15 @@ export class TestComponent implements OnInit, AfterViewInit {
               }
             });
 
-          });
+          //});
         }
 
-      });
+      //});
 
-    });
+    //});
 
     
     
   }
 
-}
+
