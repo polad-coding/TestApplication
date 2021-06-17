@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { error } from 'protractor';
 import { DataService } from '../../app-services/data-service';
 import { SurveyService } from '../../app-services/survey-service';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
@@ -20,10 +21,13 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._dataService.GetSurveyResults().subscribe((response:any)=> {
+    this._dataService.GetSurveyResults().subscribe((response: any) => {
       this.surveysResults = response.body;
       console.log(this.surveysResults);
-    });
+    }),
+      error => {
+        console.log(error);
+      };
   }
 
   public TransferToSynthesisPage(surveyId: number) {
