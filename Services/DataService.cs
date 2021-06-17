@@ -318,7 +318,7 @@ namespace KPProject.Services
 
         public async Task<List<ValueModel>> GetSurveyThirdStageResultsAsync(int surveyId)
         {
-            var values = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => new { priority = sts.ValuePriority, value = sts.Value }).ToListAsync()).OrderBy(v => v.value.PerspectiveId).Select(v => v.value).ToList();
+            var values = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => new { priority = sts.ValuePriority, value = sts.Value }).ToListAsync()).OrderBy(v => v.priority).Select(v => v.value).ToList();
 
             //var values = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).ToListAsync()).OrderBy(e => e.ValuePriority).Select(v => v.Value).ToList();
 
@@ -582,7 +582,7 @@ namespace KPProject.Services
                 practitionersSearchFilterViewModel.StartingIndex = 0;
             }
 
-            practitioners = practitioners.Skip(practitionersSearchFilterViewModel.StartingIndex).TakeWhile((p,i) => i + practitionersSearchFilterViewModel.StartingIndex < practitionersSearchFilterViewModel.EndingIndex).ToList();
+            practitioners = practitioners.Skip(practitionersSearchFilterViewModel.StartingIndex).TakeWhile((p, i) => i + practitionersSearchFilterViewModel.StartingIndex < practitionersSearchFilterViewModel.EndingIndex).ToList();
 
             practitioners.ForEach(p =>
             {
@@ -687,6 +687,44 @@ namespace KPProject.Services
 
             return users.Count;
 
+        }
+
+        public async Task<List<List<ReportTableValueViewModel>>> GetValuesSelectionsAtDifferentSurveyStagesAsync(int surveyId)
+        {
+            var values = new List<ReportTableValueViewModel>();
+
+            await _applicationDbContext.Values.ForEachAsync(v =>
+            {
+                values.Add(new ReportTableValueViewModel { ValueId = v.Id, PerspectiveId = v.PerspectiveId, ValueCharacter = v.Character });
+            });
+
+            values.ForEach(v =>
+            {
+                if (_applicationDbContext.SurveyFirstStages.FirstOrDefault(sfs => sfs.SurveyId == surveyId && sfs.ValueId == v.ValueId) != null)
+                {
+                    v.SelectedAtFirstStage = true;
+                }
+
+                if (_applicationDbContext.SurveySecondStages.FirstOrDefault(sss => sss.SurveyId == surveyId && sss.ValueId == v.ValueId) != null)
+                {
+                    v.SelectedAtSecondStage = true;
+                }
+
+                var thirdStageValuePriority = _applicationDbContext.SurveyThirdStages.FirstOrDefault(sts => sts.SurveyId == surveyId && sts.ValueId == v.ValueId);
+
+                if (thirdStageValuePriority != null)
+                {
+                    v.ThirdStagePriority = thirdStageValuePriority.ValuePriority;
+                }
+            });
+
+            var groupedValues = new List<List<ReportTableValueViewModel>>();
+
+            values.GroupBy(v => v.PerspectiveId).ToList().ForEach(vg => groupedValues.Add(vg.ToList()));
+
+            groupedValues = groupedValues.OrderBy(gv => gv[0].PerspectiveId).ToList();
+
+            return groupedValues;
         }
     }
 }

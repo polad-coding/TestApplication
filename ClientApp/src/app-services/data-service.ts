@@ -103,4 +103,9 @@ export class DataService {
     return this.http.get(`https://${this.url}/Data/ReturnNumberOfPractitioners`, { observe: 'response' });
   }
 
+
+  public GetValuesSelectionsAtDifferentSurveyStages(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetValuesSelectionsAtDifferentSurveyStages?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
 }

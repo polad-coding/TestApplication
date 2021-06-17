@@ -32,5 +32,6 @@ namespace KPProject.Interfaces
         Task<bool> RenewMembershipAsync(string userId);
         Task<List<UserViewModel>> GetPractitionersForDirectoryAsync(PractitionersSearchFilterViewModel practitionersSearchFilterViewModel);
         Task<int> ReturnNumberOfPractitionersAsync();
+        Task<List<List<ReportTableValueViewModel>>> GetValuesSelectionsAtDifferentSurveyStagesAsync(int surveyId);
     }
 }

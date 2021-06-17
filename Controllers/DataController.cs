@@ -291,6 +291,20 @@ namespace KPProject.Controllers
             return numberOfPractitioners;
         }
 
+        [HttpGet]
+        [Route("GetValuesSelectionsAtDifferentSurveyStages")]
+        public async Task<ActionResult<List<List<ReportTableValueViewModel>>>> GetValuesSelectionsAtDifferentSurveyStagesAsync([FromQuery] int surveyId)
+        {
+            var data = await _dataService.GetValuesSelectionsAtDifferentSurveyStagesAsync(surveyId);
+
+            if (data != null)
+            {
+                return Ok(data);
+            }
+
+            return BadRequest();
+        }
+
         //[HttpGet("{surveyId}")]
         //[Route("GetAllValuesFromTheFirstStage")]
         //public async Task<ActionResult<List<ValueModel>>> GetAllValuesFromTheFirstStageAsync(int surveyId)

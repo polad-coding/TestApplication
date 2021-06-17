@@ -7,27 +7,32 @@ import { SingleDataSet, Label } from 'ng2-charts';
 import { Chart } from 'chart.js';
 import { Router } from '@angular/router';
 import { UserViewModel } from '../../view-models/user-view-model';
+import { groupBy } from 'rxjs/internal/operators/groupBy';
+import { ReportTableValueViewModel } from '../../view-models/report-table-value-view-model';
 
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css'],
-  providers: [AccountService, DataService] 
+  providers: [AccountService, DataService]
 })
 export class TestComponent implements OnInit, AfterViewInit {
 
   public imageString: string;
+  public textFilePerspectiveIndexes: Array<number> = [1, 2, 3, 4, 5, 6];
   public myChart: any;
+  public maxGraphSliceValue: number;
   public user: UserViewModel;
   public corePerspectiveId: number;
   public secondaryPerspectiveId: number;
   public valuesFromThirdStage: Array<ValueViewModel> = new Array<ValueViewModel>();
-  private relativeWeightOfThePerspectives: Array<number> = new Array<number>();
+  public relativeWeightOfThePerspectives: Array<number> = new Array<number>();
+  public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
   //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router) {
-
+    
   }
 
 
@@ -54,35 +59,35 @@ export class TestComponent implements OnInit, AfterViewInit {
     //this._as.GetCurrentUser().subscribe((response: any) => {
     //  this.user = response.body;
 
-      //let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+      let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
-      //this._ds.GetTheRelativeWeightOfThePerspectives(1).subscribe((response: any) => {
-      //  if (response.ok) {
-      //    this.relativeWeightOfThePerspectives = response.body;
-      //    this._ds.GetSurveyThirdStageResults(1).subscribe((thirdStageResults: any) => {
-      //      if (thirdStageResults.ok) {
-      //        this.valuesFromThirdStage = thirdStageResults.body;
-      //        console.debug(this.valuesFromThirdStage);
+      this._ds.GetTheRelativeWeightOfThePerspectives(1).subscribe((response: any) => {
+        if (response.ok) {
+          this.relativeWeightOfThePerspectives = response.body;
+          this._ds.GetSurveyThirdStageResults(1).subscribe((thirdStageResults: any) => {
+            if (thirdStageResults.ok) {
+              this.valuesFromThirdStage = thirdStageResults.body;
+              console.debug(this.valuesFromThirdStage);
 
-      //        let maxGraphSliceValue = 0;
-      //        this.relativeWeightOfThePerspectives.forEach(v => {
-      //          if (v > maxGraphSliceValue) {
-      //            console.log(v);
-      //            maxGraphSliceValue = v;
-      //          }
-      //        });
+              this.maxGraphSliceValue = 0;
+              this.relativeWeightOfThePerspectives.forEach(v => {
+                if (v > this.maxGraphSliceValue) {
+                  console.log(v);
+                  this.maxGraphSliceValue = v;
+                }
+              });
 
-      //        //Get the biggest values
+              //Get the biggest values
 
-      //        let temp = new Array<number>();
+              let temp = new Array<number>();
 
-      //        this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
+              this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
 
-      //        temp = temp.sort((a, b) => a - b);
+              temp = temp.sort((a, b) => a - b);
 
-      //        this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
-      //        this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
-      //      }
+              this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
+              this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
+            }
 
             this.myChart = new Chart('myChart', {
               type: 'polarArea',
@@ -91,11 +96,11 @@ export class TestComponent implements OnInit, AfterViewInit {
                   onComplete: () => {
                     this.imageString = this.myChart.toBase64Image();
                     setTimeout(() => {
-                      this._ds.GeneratePdf(document.getElementById('report').outerHTML).subscribe((response: Blob) => {
+                      this._ds.GeneratePdf(document.getElementById('report').innerHTML).subscribe((response: Blob) => {
                         const fileUrl = window.URL.createObjectURL(response);
                         const showWindow = window.open(fileUrl);
                       });
-                    }, 3000);
+                    }, 1);
                   }
                 },
                 legend: {
@@ -115,7 +120,7 @@ export class TestComponent implements OnInit, AfterViewInit {
                   },
                   ticks: {
                     display: false,
-                    max: 10,
+                    max: this.maxGraphSliceValue ,
                     min: 0
                   }
                 }
@@ -130,7 +135,7 @@ export class TestComponent implements OnInit, AfterViewInit {
                   'Grounding'
                 ],
                 datasets: [{
-                  data: [5, 3, 2, 6, 9, 4],
+                  data: this.relativeWeightOfThePerspectives.reverse(),
                   backgroundColor: [
                     '#544595',
                     '#009EE3',
@@ -143,15 +148,34 @@ export class TestComponent implements OnInit, AfterViewInit {
               }
             });
 
-          //});
+          });
         }
 
-      //});
+        //Get values and set find the selections at different survey stages
+        this._ds.GetValuesSelectionsAtDifferentSurveyStages(1).subscribe((response:any) => {
+          this.reportTableValues = response.body;
+          this.BalanceTableValuesAmounts();
+          console.log(this.reportTableValues);
+        })
+
+      });
 
     //});
 
-    
-    
+
+
   }
 
+  private BalanceTableValuesAmounts() {
+    let maxNumberOfValuesInPerspective = 22;
 
+    for (var i = 0; i < this.reportTableValues.length; i++) {
+      let arrayLength = maxNumberOfValuesInPerspective - this.reportTableValues[i].length;
+      for (var a = 0; a < arrayLength; a++) {
+        this.reportTableValues[i].push(null);
+      }
+    }
+
+  }
+
+}
