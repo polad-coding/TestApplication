@@ -1,33 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { error } from 'protractor';
+import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { SurveyService } from '../../app-services/survey-service';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
+import { UserViewModel } from '../../view-models/user-view-model';
 
 @Component({
   selector: 'app-personal-survey-results-and-reports',
   templateUrl: './personal-survey-results-and-reports.component.html',
   styleUrls: ['./personal-survey-results-and-reports.component.css'],
-  providers: [DataService, SurveyService]
+  providers: [DataService, SurveyService, AccountService]
 })
 export class PersonalSurveyResultsAndReportsComponent implements OnInit {
 
+  public user: UserViewModel;
   public surveysResults: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
   public surveyId: number;
 
-  constructor(private _router: Router, private _dataService: DataService, private _surveyService: SurveyService) {
+  constructor(private _router: Router, private _dataService: DataService, private _accountService: AccountService, private _surveyService: SurveyService) {
 
   }
 
   ngOnInit() {
-    this._dataService.GetSurveyResults().subscribe((response: any) => {
-      this.surveysResults = response.body;
-      console.log(this.surveysResults);
-    }),
-      error => {
-        console.log(error);
-      };
+    this._accountService.GetCurrentUser().subscribe((getCurrentUserResponse:any) => {
+      this.user = getCurrentUserResponse.body;
+      this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
+        this.surveysResults = response.body;
+        console.log(this.surveysResults);
+      }),
+        error => {
+          console.log(error);
+        };
+    });
   }
 
   public TransferToSynthesisPage(surveyId: number) {

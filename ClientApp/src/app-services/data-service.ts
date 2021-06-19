@@ -58,8 +58,8 @@ export class DataService {
     return this.http.post(`https://${this.url}/Data/GenerateCodes`, codesList, { observe: 'response' });
   }
 
-  public GetSurveyResults() {
-    return this.http.get(`https://${this.url}/Data/GetSurveyResults`, { observe: 'response' });
+  public GetSurveyResults(userId: string) {
+    return this.http.get(`https://${this.url}/Data/GetSurveyResults?userId=${userId}`, { observe: 'response' });
   }
 
   public GetTheCurrentStageValues(surveyId: number) {

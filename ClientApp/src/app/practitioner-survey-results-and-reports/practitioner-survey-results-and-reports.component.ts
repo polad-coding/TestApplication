@@ -19,7 +19,7 @@ export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
   constructor(private _dataService: DataService) { }
 
   ngOnInit() {
-    this._dataService.GetSurveyResults().subscribe((response: any) => {
+    this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
       this.surveysResults = response.body;
       console.log(this.surveysResults);
     });

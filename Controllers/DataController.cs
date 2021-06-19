@@ -142,9 +142,9 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("GetSurveyResults")]
-        public async Task<ActionResult<List<SurveyResultViewModel>>> GetSurveyResultsAsync()
+        public async Task<ActionResult<List<SurveyResultViewModel>>> GetSurveyResultsAsync([FromQuery]string userId)
         {
-            var data = await _dataService.GetSurveyResultsAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var data = await _dataService.GetSurveyResultsAsync(userId);
 
             return Ok(data);
         }
