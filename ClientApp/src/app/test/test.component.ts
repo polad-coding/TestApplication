@@ -23,6 +23,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   public textFilePerspectiveIndexes: Array<number> = [1, 2, 3, 4, 5, 6];
   public myChart: any;
   public maxGraphSliceValue: number;
+  public minGraphSliceValue: number;
   public user: UserViewModel;
   public corePerspectiveId: number;
   public secondaryPerspectiveId: number;
@@ -77,6 +78,14 @@ export class TestComponent implements OnInit, AfterViewInit {
                 }
               });
 
+              this.minGraphSliceValue = Number.MAX_VALUE;
+              this.relativeWeightOfThePerspectives.forEach(v => {
+                if (v < this.minGraphSliceValue) {
+                  console.log(v);
+                  this.minGraphSliceValue = v;
+                }
+              });
+
               //Get the biggest values
 
               let temp = new Array<number>();
@@ -92,6 +101,10 @@ export class TestComponent implements OnInit, AfterViewInit {
             this.myChart = new Chart('myChart', {
               type: 'polarArea',
               options: {
+                maintainAspectRatio: false,
+                aspectRatio:1,
+                layout: {
+                },
                 animation: {
                   onComplete: () => {
                     this.imageString = this.myChart.toBase64Image();
@@ -100,7 +113,7 @@ export class TestComponent implements OnInit, AfterViewInit {
                         const fileUrl = window.URL.createObjectURL(response);
                         const showWindow = window.open(fileUrl);
                       });
-                    }, 1);
+                    }, 3);
                   }
                 },
                 legend: {
@@ -120,8 +133,8 @@ export class TestComponent implements OnInit, AfterViewInit {
                   },
                   ticks: {
                     display: false,
-                    max: this.maxGraphSliceValue ,
-                    min: 0
+                    //max: this.maxGraphSliceValue,
+                    //min: 0
                   }
                 }
               },

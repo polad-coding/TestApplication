@@ -146,7 +146,9 @@
 
 #survey-results-page-main-content-right-part {
   display: -webkit-box;
+  align-items:center;
   color: #006F91;
+  padding-top:200px;
 }
 
 #values-table-page {
