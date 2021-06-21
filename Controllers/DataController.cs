@@ -305,6 +305,20 @@ namespace KPProject.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("GetParticularSurveyResults")]
+        public async Task<ActionResult<SurveyResultViewModel>> GetParticularSurveyResultsAsync([FromQuery]int surveyId)
+        {
+            var result = await _dataService.GetParticularSurveyResultsAsync(surveyId);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
+        }
+
         //[HttpGet("{surveyId}")]
         //[Route("GetAllValuesFromTheFirstStage")]
         //public async Task<ActionResult<List<ValueModel>>> GetAllValuesFromTheFirstStageAsync(int surveyId)

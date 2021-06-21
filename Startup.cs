@@ -170,13 +170,13 @@ namespace KPProject
                 }
             });
 
-            CreateRoles(serviceProvider).Wait();
-            CreateUsers(serviceProvider).Wait();
-            CreatePerspectives(serviceProvider).Wait();
-            CreateValues(serviceProvider).Wait();
-            ////CreatePerspectivesLanguageFiles(serviceProvider).Wait();
-            ////CreateValuesLanguageFiles(serviceProvider).Wait();
-            CreateCertifications(serviceProvider).Wait();
+            //CreateRoles(serviceProvider).Wait();
+            //CreateUsers(serviceProvider).Wait();
+            //CreatePerspectives(serviceProvider).Wait();
+            //CreateValues(serviceProvider).Wait();
+            //////CreatePerspectivesLanguageFiles(serviceProvider).Wait();
+            //////CreateValuesLanguageFiles(serviceProvider).Wait();
+            //CreateCertifications(serviceProvider).Wait();
         }
 
         public async Task CreateValues(IServiceProvider serviceProvider)

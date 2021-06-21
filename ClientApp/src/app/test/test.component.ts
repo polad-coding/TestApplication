@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { UserViewModel } from '../../view-models/user-view-model';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { ReportTableValueViewModel } from '../../view-models/report-table-value-view-model';
+import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   public valuesFromThirdStage: Array<ValueViewModel> = new Array<ValueViewModel>();
   public relativeWeightOfThePerspectives: Array<number> = new Array<number>();
   public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
+  public surveyResults: SurveyResultViewModel;
   //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router) {
@@ -57,125 +59,129 @@ export class TestComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    //this._as.GetCurrentUser().subscribe((response: any) => {
-    //  this.user = response.body;
+    this._as.GetCurrentUser().subscribe((response: any) => {
+      this.user = response.body;
 
       let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
-      this._ds.GetTheRelativeWeightOfThePerspectives(1).subscribe((response: any) => {
-        if (response.ok) {
-          this.relativeWeightOfThePerspectives = response.body;
-          this._ds.GetSurveyThirdStageResults(1).subscribe((thirdStageResults: any) => {
-            if (thirdStageResults.ok) {
-              this.valuesFromThirdStage = thirdStageResults.body;
-              console.debug(this.valuesFromThirdStage);
+      this._ds.GetParticularSurveyResults(surveyId).subscribe((surveyResultResponse: any) => {
 
-              this.maxGraphSliceValue = 0;
-              this.relativeWeightOfThePerspectives.forEach(v => {
-                if (v > this.maxGraphSliceValue) {
-                  console.log(v);
-                  this.maxGraphSliceValue = v;
-                }
-              });
+        this.surveyResults = surveyResultResponse.body;
 
-              this.minGraphSliceValue = Number.MAX_VALUE;
-              this.relativeWeightOfThePerspectives.forEach(v => {
-                if (v < this.minGraphSliceValue) {
-                  console.log(v);
-                  this.minGraphSliceValue = v;
-                }
-              });
+        this._ds.GetTheRelativeWeightOfThePerspectives(surveyId).subscribe((response: any) => {
+          if (response.ok) {
+            this.relativeWeightOfThePerspectives = response.body;
+            this._ds.GetSurveyThirdStageResults(surveyId).subscribe((thirdStageResults: any) => {
+              if (thirdStageResults.ok) {
+                this.valuesFromThirdStage = thirdStageResults.body;
+                console.debug(this.valuesFromThirdStage);
 
-              //Get the biggest values
-
-              let temp = new Array<number>();
-
-              this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
-
-              temp = temp.sort((a, b) => a - b);
-
-              this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
-              this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
-            }
-
-            this.myChart = new Chart('myChart', {
-              type: 'polarArea',
-              options: {
-                maintainAspectRatio: false,
-                aspectRatio:1,
-                layout: {
-                },
-                animation: {
-                  onComplete: () => {
-                    this.imageString = this.myChart.toBase64Image();
-                    setTimeout(() => {
-                      this._ds.GeneratePdf(document.getElementById('report').innerHTML).subscribe((response: Blob) => {
-                        const fileUrl = window.URL.createObjectURL(response);
-                        const showWindow = window.open(fileUrl);
-                      });
-                    }, 3);
+                this.maxGraphSliceValue = 0;
+                this.relativeWeightOfThePerspectives.forEach(v => {
+                  if (v > this.maxGraphSliceValue) {
+                    console.log(v);
+                    this.maxGraphSliceValue = v;
                   }
-                },
-                legend: {
-                  //display: false,
-                  position: 'bottom',
-                  labels: {
-                    fontColor: '#006F91',
-                    fontFamily: 'barlowSemiCondensedLight',
-                    boxWidth: 10,
-                    padding: 20
-                  },
-                  fullWidth: false
-                },
-                scale: {
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    display: false,
-                    //max: this.maxGraphSliceValue,
-                    //min: 0
+                });
+
+                this.minGraphSliceValue = Number.MAX_VALUE;
+                this.relativeWeightOfThePerspectives.forEach(v => {
+                  if (v < this.minGraphSliceValue) {
+                    console.log(v);
+                    this.minGraphSliceValue = v;
                   }
-                }
-              },
-              data: {
-                labels: [
-                  'Expansion',
-                  'Systems',
-                  'Relational',
-                  'Management',
-                  'Family',
-                  'Grounding'
-                ],
-                datasets: [{
-                  data: this.relativeWeightOfThePerspectives.reverse(),
-                  backgroundColor: [
-                    '#544595',
-                    '#009EE3',
-                    '#009640',
-                    '#FFCC00',
-                    '#ED7102',
-                    '#E30513'
-                  ]
-                }]
+                });
+
+                //Get the biggest values
+
+                let temp = new Array<number>();
+
+                this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
+
+                temp = temp.sort((a, b) => a - b);
+
+                this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
+                this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
               }
+
+              this.myChart = new Chart('myChart', {
+                type: 'polarArea',
+                options: {
+                  maintainAspectRatio: false,
+                  aspectRatio: 1,
+                  layout: {
+                  },
+                  animation: {
+                    onComplete: () => {
+                      this.imageString = this.myChart.toBase64Image();
+                      setTimeout(() => {
+                        this._ds.GeneratePdf(document.getElementById('report').innerHTML).subscribe((response: Blob) => {
+                          const fileUrl = window.URL.createObjectURL(response);
+                          const showWindow = window.open(fileUrl);
+                        });
+                      }, 3);
+                    }
+                  },
+                  legend: {
+                    //display: false,
+                    position: 'bottom',
+                    labels: {
+                      fontColor: '#006F91',
+                      fontFamily: 'barlowSemiCondensedLight',
+                      boxWidth: 10,
+                      padding: 20
+                    },
+                    fullWidth: false
+                  },
+                  scale: {
+                    gridLines: {
+                      display: false
+                    },
+                    ticks: {
+                      display: false,
+                      //max: this.maxGraphSliceValue,
+                      //min: 0
+                    }
+                  }
+                },
+                data: {
+                  labels: [
+                    'Expansion',
+                    'Systems',
+                    'Relational',
+                    'Management',
+                    'Family',
+                    'Grounding'
+                  ],
+                  datasets: [{
+                    data: this.relativeWeightOfThePerspectives.reverse(),
+                    backgroundColor: [
+                      '#544595',
+                      '#009EE3',
+                      '#009640',
+                      '#FFCC00',
+                      '#ED7102',
+                      '#E30513'
+                    ]
+                  }]
+                }
+              });
+
             });
+          }
 
-          });
-        }
+          //Get values and set find the selections at different survey stages
+          this._ds.GetValuesSelectionsAtDifferentSurveyStages(surveyId).subscribe((response: any) => {
+            this.reportTableValues = response.body;
+            this.BalanceTableValuesAmounts();
+            console.log(this.reportTableValues);
+          })
 
-        //Get values and set find the selections at different survey stages
-        this._ds.GetValuesSelectionsAtDifferentSurveyStages(1).subscribe((response:any) => {
-          this.reportTableValues = response.body;
-          this.BalanceTableValuesAmounts();
-          console.log(this.reportTableValues);
-        })
+        });
 
       });
 
-    //});
-
-
+      });
 
   }
 

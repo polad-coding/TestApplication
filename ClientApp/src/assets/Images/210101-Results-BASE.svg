@@ -1,116 +1,340 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="595.28px" height="595.28px" viewBox="0 0 595.28 595.28" enable-background="new 0 0 595.28 595.28" xml:space="preserve">
-<g id="Fondfond" display="none">
-	<rect x="58.034" y="28.324" display="inline" fill="#FFFFFF" width="479.212" height="479.213"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="995.28px"
+   height="995.28px"
+   viewBox="0 0 595.28 595.28"
+   xml:space="preserve"
+   id="svg92"
+   sodipodi:docname="210101-Results-BASE.svg"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"><metadata
+   id="metadata98"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs96" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="1"
+   inkscape:pageshadow="2"
+   inkscape:window-width="600"
+   inkscape:window-height="600"
+   id="namedview94"
+   showgrid="false"
+   inkscape:zoom="2.4312592"
+   inkscape:cx="297.64001"
+   inkscape:cy="297.64001"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg92" />
+<g
+   id="Fondfond"
+   display="none">
+	<rect
+   x="58.034"
+   y="28.324"
+   display="inline"
+   fill="#FFFFFF"
+   width="479.212"
+   height="479.213"
+   id="rect2" />
 </g>
-<g id="Fondfond_resseré">
-	<rect x="120.247" y="120.478" fill="#FFFFFF" width="355.073" height="355.073"/>
+<g
+   id="Fondfond_resseré"
+   transform="matrix(1.0188229,0,0,1.0188392,22.493965,-31.316951)">
+	<rect
+   x="120.247"
+   y="120.478"
+   fill="#ffffff"
+   width="355.073"
+   height="355.073"
+   id="rect5" />
 </g>
-<g id="Rond" display="none">
-	<path display="inline" opacity="0.2" fill="#ED1C24" d="M297.669,298.333v-151.85c-0.006,0-0.01,0-0.014,0
-		c-56.197,0-105.229,30.553-131.488,75.93L297.669,298.333L297.669,298.333z"/>
-	<path display="inline" opacity="0.2" fill="#F7941E" d="M166.167,222.414c-12.926,22.338-20.361,48.254-20.361,75.92
-		c0,27.67,7.436,53.584,20.361,75.924l131.502-75.924L166.167,222.414z"/>
-	<path display="inline" opacity="0.2" fill="#FFF200" d="M297.669,298.333l-131.502,75.924c26.26,45.377,75.291,75.93,131.488,75.93
-		c0.004,0,0.008,0,0.014,0V298.335V298.333z"/>
-	<path display="inline" opacity="0.2" fill="#00A651" d="M297.669,450.188c56.197-0.006,105.225-30.561,131.482-75.941
-		l-131.482-75.911V450.188z"/>
-	<path display="inline" opacity="0.2" fill="#00AEEF" d="M429.151,222.425l-131.482,75.908v0.002l131.482,75.911
-		c12.92-22.338,20.355-48.248,20.355-75.913C449.507,270.673,442.071,244.761,429.151,222.425z"/>
-	<path display="inline" opacity="0.2" fill="#2E3192" d="M429.151,222.425c-26.258-45.381-75.285-75.936-131.482-75.941v151.85
-		L429.151,222.425z"/>
-	<path fill="none" stroke="#00708F" stroke-miterlimit="10" d="M449.521,298.332c0,83.863-67.984,151.852-151.855,151.852
-		c-83.857,0-151.846-67.988-151.846-151.852c0-83.865,67.988-151.85,151.846-151.85
-		C381.536,146.482,449.521,214.467,449.521,298.332z"/>
+<g
+   id="Rond"
+   display="none">
+	<path
+   display="inline"
+   opacity="0.2"
+   fill="#ED1C24"
+   d="M297.669,298.333v-151.85c-0.006,0-0.01,0-0.014,0   c-56.197,0-105.229,30.553-131.488,75.93L297.669,298.333L297.669,298.333z"
+   id="path8" />
+	<path
+   display="inline"
+   opacity="0.2"
+   fill="#F7941E"
+   d="M166.167,222.414c-12.926,22.338-20.361,48.254-20.361,75.92   c0,27.67,7.436,53.584,20.361,75.924l131.502-75.924L166.167,222.414z"
+   id="path10" />
+	<path
+   display="inline"
+   opacity="0.2"
+   fill="#FFF200"
+   d="M297.669,298.333l-131.502,75.924c26.26,45.377,75.291,75.93,131.488,75.93   c0.004,0,0.008,0,0.014,0V298.335V298.333z"
+   id="path12" />
+	<path
+   display="inline"
+   opacity="0.2"
+   fill="#00A651"
+   d="M297.669,450.188c56.197-0.006,105.225-30.561,131.482-75.941   l-131.482-75.911V450.188z"
+   id="path14" />
+	<path
+   display="inline"
+   opacity="0.2"
+   fill="#00AEEF"
+   d="M429.151,222.425l-131.482,75.908v0.002l131.482,75.911   c12.92-22.338,20.355-48.248,20.355-75.913C449.507,270.673,442.071,244.761,429.151,222.425z"
+   id="path16" />
+	<path
+   display="inline"
+   opacity="0.2"
+   fill="#2E3192"
+   d="M429.151,222.425c-26.258-45.381-75.285-75.936-131.482-75.941v151.85   L429.151,222.425z"
+   id="path18" />
+	<path
+   fill="none"
+   stroke="#00708F"
+   stroke-miterlimit="10"
+   d="M449.521,298.332c0,83.863-67.984,151.852-151.855,151.852   c-83.857,0-151.846-67.988-151.846-151.852c0-83.865,67.988-151.85,151.846-151.85   C381.536,146.482,449.521,214.467,449.521,298.332z"
+   id="path20" />
 </g>
-<g id="Camemberts">
-	<g id="Fondamentaux">
-		<path fill="#ED1C24" d="M297.669,298.333v-151.85c-0.006,0-0.01,0-0.014,0c-56.197,0-105.229,30.553-131.488,75.93
-			L297.669,298.333L297.669,298.333z"/>
-		<rect id="Square_5_" x="120.247" y="120.478" fill="none" width="355.073" height="355.073"/>
+<g
+   id="Camemberts"
+   transform="translate(1.959,-2.984)">
+	<g
+   id="Fondamentaux">
+		<path
+   fill="#ed1c24"
+   d="m 297.669,298.333 v -151.85 c -0.006,0 -0.01,0 -0.014,0 -56.197,0 -105.229,30.553 -131.488,75.93 z"
+   id="path23" />
+		<rect
+   id="Square_5_"
+   x="120.247"
+   y="120.478"
+   fill="none"
+   width="355.073"
+   height="355.073" />
 	</g>
-	<g id="Famille">
-		<path fill="#F47920" d="M166.167,222.414c-12.926,22.338-20.361,48.254-20.361,75.92c0,27.67,7.436,53.584,20.361,75.924
-			l131.502-75.924L166.167,222.414z"/>
-		<rect id="Square_4_" x="120.247" y="120.478" fill="none" width="355.073" height="355.073"/>
+	<g
+   id="Famille">
+		<path
+   fill="#f47920"
+   d="m 166.167,222.414 c -12.926,22.338 -20.361,48.254 -20.361,75.92 0,27.67 7.436,53.584 20.361,75.924 l 131.502,-75.924 z"
+   id="path27" />
+		<rect
+   id="Square_4_"
+   x="120.247"
+   y="120.478"
+   fill="none"
+   width="355.073"
+   height="355.073" />
 	</g>
-	<g id="Management">
-		<path fill="#FFCB05" d="M297.669,298.333l-131.502,75.924c26.26,45.377,75.291,75.93,131.488,75.93c0.004,0,0.008,0,0.014,0
-			V298.335V298.333z"/>
-		<rect id="Square_3_" x="120.247" y="120.478" fill="none" width="355.073" height="355.073"/>
+	<g
+   id="Management">
+		<path
+   fill="#ffcb05"
+   d="m 297.669,298.333 -131.502,75.924 c 26.26,45.377 75.291,75.93 131.488,75.93 0.004,0 0.008,0 0.014,0 V 298.335 Z"
+   id="path31" />
+		<rect
+   id="Square_3_"
+   x="120.247"
+   y="120.478"
+   fill="none"
+   width="355.073"
+   height="355.073" />
 	</g>
-	<g id="relationnel">
-		<path fill="#00A14B" d="M297.669,450.188c56.197-0.006,105.225-30.561,131.482-75.941l-131.482-75.911V450.188z"/>
-		<rect id="Square_2_" x="120.247" y="120.478" fill="none" width="355.073" height="355.073"/>
+	<g
+   id="relationnel">
+		<path
+   fill="#00a14b"
+   d="m 297.669,450.188 c 56.197,-0.006 105.225,-30.561 131.482,-75.941 L 297.669,298.336 Z"
+   id="path35" />
+		<rect
+   id="Square_2_"
+   x="120.247"
+   y="120.478"
+   fill="none"
+   width="355.073"
+   height="355.073" />
 	</g>
-	<g id="Systems">
-		<path fill="#00AEEF" d="M429.151,222.425l-131.482,75.908v0.002l131.482,75.911c12.92-22.338,20.355-48.248,20.355-75.913
-			C449.507,270.673,442.071,244.761,429.151,222.425z"/>
-		<rect id="Square_1_" x="120.247" y="120.478" fill="none" width="355.073" height="355.073"/>
+	<g
+   id="Systems">
+		<path
+   fill="#00aeef"
+   d="m 429.151,222.425 -131.482,75.908 v 0.002 l 131.482,75.911 c 12.92,-22.338 20.355,-48.248 20.355,-75.913 0.001,-27.66 -7.435,-53.572 -20.355,-75.908 z"
+   id="path39" />
+		<rect
+   id="Square_1_"
+   x="120.247"
+   y="120.478"
+   fill="none"
+   width="355.073"
+   height="355.073" />
 	</g>
-	<g id="Expansion">
-		<path fill="#524FA1" d="M429.151,222.425c-26.258-45.381-75.285-75.936-131.482-75.941v151.85L429.151,222.425z"/>
-		<rect id="Square_6_" x="120.247" y="120.478" fill="none" width="355.073" height="355.073"/>
+	<g
+   id="Expansion">
+		<path
+   fill="#524fa1"
+   d="M 429.151,222.425 C 402.893,177.044 353.866,146.489 297.669,146.484 v 151.85 z"
+   id="path43" />
+		<rect
+   id="Square_6_"
+   x="120.247"
+   y="120.478"
+   fill="none"
+   width="355.073"
+   height="355.073" />
 	</g>
 </g>
-<g id="Nom" display="none">
+<g
+   id="Nom"
+   display="none">
 	
-		<text transform="matrix(1 0 0 1 275.2822 72.3477)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="24">AAA</text>
-	<g display="inline">
-		<text transform="matrix(1 0 0 1 250.7949 103.5073)" font-family="'BarlowSemiCondensed-SemiBold'" font-size="20">Date. 2020</text>
+		<text
+   transform="matrix(1 0 0 1 275.2822 72.3477)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="24"
+   id="text48">AAA</text>
+	<g
+   display="inline"
+   id="g52">
+		<text
+   transform="matrix(1 0 0 1 250.7949 103.5073)"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="20"
+   id="text50">Date. 2020</text>
 	</g>
 </g>
-<g id="bloc_txt_Fr" display="none">
+<g
+   id="bloc_txt_Fr"
+   display="none">
 	
-		<text transform="matrix(0.866 -0.5 0.5 0.866 170.6494 189.792)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">FONDAMENTAUX</text>
+		<text
+   transform="matrix(0.866 -0.5 0.5 0.866 170.6494 189.792)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text55">FONDAMENTAUX</text>
 	
-		<text transform="matrix(0 -1 1 0 141.9375 327.8135)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">FAMILLE</text>
+		<text
+   transform="matrix(0 -1 1 0 141.9375 327.8135)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text57">FAMILLE</text>
 	
-		<text transform="matrix(0.866 0.5 -0.5 0.866 173.1772 421.3662)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">MANAGEMENT</text>
+		<text
+   transform="matrix(0.866 0.5 -0.5 0.866 173.1772 421.3662)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text59">MANAGEMENT</text>
 	
-		<text transform="matrix(0.866 -0.5 0.5 0.866 341.6992 468.6084)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">RELATIONNEL</text>
+		<text
+   transform="matrix(0.866 -0.5 0.5 0.866 341.6992 468.6084)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text61">RELATIONNEL</text>
 	
-		<text transform="matrix(0 1 -1 0 454.959 263.0464)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">SYSTÈMES</text>
+		<text
+   transform="matrix(0 1 -1 0 454.959 263.0464)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text63">SYSTÈMES</text>
 	
-		<text transform="matrix(0.866 0.5 -0.5 0.866 346.6709 145.2695)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">EXPANSION</text>
+		<text
+   transform="matrix(0.866 0.5 -0.5 0.866 346.6709 145.2695)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text65">EXPANSION</text>
 </g>
-<g id="bloc_txt_GB" display="none">
+<g
+   id="bloc_txt_GB"
+   display="none">
 	
-		<text transform="matrix(0.866 -0.5 0.5 0.866 184.5615 181.7598)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">GROUNDING</text>
+		<text
+   transform="matrix(0.866 -0.5 0.5 0.866 184.5615 181.7598)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text68">GROUNDING</text>
 	
-		<text transform="matrix(0 -1 1 0 141.9375 323.7891)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">FAMILY</text>
+		<text
+   transform="matrix(0 -1 1 0 141.9375 323.7891)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text70">FAMILY</text>
 	
-		<text transform="matrix(0.866 0.5 -0.5 0.866 173.1772 421.3662)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">MANAGEMENT</text>
+		<text
+   transform="matrix(0.866 0.5 -0.5 0.866 173.1772 421.3662)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text72">MANAGEMENT</text>
 	
-		<text transform="matrix(0.866 -0.5 0.5 0.866 345.6758 466.3125)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">RELATIONAL</text>
+		<text
+   transform="matrix(0.866 -0.5 0.5 0.866 345.6758 466.3125)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text74">RELATIONAL</text>
 	
-		<text transform="matrix(0 1 -1 0 454.959 267.3501)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">SYSTEMS</text>
+		<text
+   transform="matrix(0 1 -1 0 454.959 267.3501)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text76">SYSTEMS</text>
 	
-		<text transform="matrix(0.866 0.5 -0.5 0.866 346.6709 145.2695)" display="inline" font-family="'BarlowSemiCondensed-SemiBold'" font-size="16">EXPANSION</text>
+		<text
+   transform="matrix(0.866 0.5 -0.5 0.866 346.6709 145.2695)"
+   display="inline"
+   font-family="'BarlowSemiCondensed-SemiBold'"
+   font-size="16"
+   id="text78">EXPANSION</text>
 </g>
-<g id="bloc_central">
-	<circle fill="#FFFFFF" stroke="#00708F" stroke-miterlimit="10" cx="297.668" cy="298.333" r="45.499"/>
-	<circle fill="#00708F" cx="297.669" cy="298.333" r="21.264"/>
-	<g>
-		<path fill="#FFFFFF" d="M311.454,289.991c0-4.561-3.713-8.274-8.273-8.274s-8.271,3.713-8.271,8.274
-			c0,1.198,0.257,2.333,0.718,3.358c-1.402,0.364-2.689,1.097-3.746,2.153c-2.916,2.917-5.372,14.472-5.641,15.78l-0.299,1.445
-			l1.445-0.298c0.667-0.14,3.99-0.844,7.476-1.888v2.149h1.943v-2.763c0.51-0.172,1.018-0.35,1.511-0.536v3.299h1.938v-4.098
-			c1.246-0.568,2.284-1.178,2.914-1.807c1.531-1.532,2.388-3.56,2.407-5.706c0.013-1.057-0.178-2.079-0.555-3.028
-			C308.702,297.217,311.454,293.92,311.454,289.991z M301.795,305.416c-1.866,1.865-9.265,3.86-13.336,4.791
-			c0.935-4.066,2.928-11.465,4.795-13.333c0.951-0.951,2.145-1.558,3.436-1.764c0.326-0.053,0.652-0.079,0.985-0.079
-			c1.604,0,3.106,0.617,4.226,1.738c0.444,0.441,0.805,0.945,1.086,1.487c0.436,0.857,0.664,1.81,0.653,2.803
-			C303.62,302.696,302.966,304.244,301.795,305.416z M304.024,296.268c-0.227-0.306-0.478-0.597-0.751-0.87
-			c-1.487-1.485-3.476-2.309-5.599-2.309c-0.006,0-0.008,0-0.01,0c-0.518-0.915-0.815-1.973-0.815-3.098
-			c0-3.491,2.841-6.332,6.331-6.332c3.492,0,6.333,2.841,6.333,6.332C309.514,293.198,307.118,295.853,304.024,296.268z"/>
-		<path fill="#FFFFFF" d="M305.083,286.302c-0.692,0-1.364,0.241-1.902,0.68c-0.538-0.439-1.208-0.68-1.902-0.68
-			c-1.689,0-3.063,1.415-3.063,3.152c0,1.74,1.374,3.155,3.063,3.155c0.694,0,1.364-0.243,1.902-0.68
-			c0.538,0.437,1.21,0.68,1.902,0.68c1.689,0,3.065-1.415,3.065-3.155C308.148,287.717,306.772,286.302,305.083,286.302z
-			 M305.083,291.64c-0.581,0-1.142-0.257-1.538-0.702l-0.364-0.409l-0.362,0.409c-0.395,0.445-0.957,0.702-1.54,0.702
-			c-1.153,0-2.094-0.979-2.094-2.186c0-1.204,0.94-2.185,2.094-2.185c0.583,0,1.146,0.259,1.54,0.704l0.362,0.409l0.364-0.409
-			c0.396-0.445,0.957-0.704,1.538-0.704c1.155,0,2.096,0.981,2.096,2.185C307.179,290.661,306.238,291.64,305.083,291.64z"/>
+<g
+   id="bloc_central">
+	<circle
+   fill="#FFFFFF"
+   stroke="#00708F"
+   stroke-miterlimit="10"
+   cx="297.668"
+   cy="298.333"
+   r="45.499"
+   id="circle81" />
+	<circle
+   fill="#00708F"
+   cx="297.669"
+   cy="298.333"
+   r="21.264"
+   id="circle83" />
+	<g
+   id="g89">
+		<path
+   fill="#FFFFFF"
+   d="M311.454,289.991c0-4.561-3.713-8.274-8.273-8.274s-8.271,3.713-8.271,8.274    c0,1.198,0.257,2.333,0.718,3.358c-1.402,0.364-2.689,1.097-3.746,2.153c-2.916,2.917-5.372,14.472-5.641,15.78l-0.299,1.445    l1.445-0.298c0.667-0.14,3.99-0.844,7.476-1.888v2.149h1.943v-2.763c0.51-0.172,1.018-0.35,1.511-0.536v3.299h1.938v-4.098    c1.246-0.568,2.284-1.178,2.914-1.807c1.531-1.532,2.388-3.56,2.407-5.706c0.013-1.057-0.178-2.079-0.555-3.028    C308.702,297.217,311.454,293.92,311.454,289.991z M301.795,305.416c-1.866,1.865-9.265,3.86-13.336,4.791    c0.935-4.066,2.928-11.465,4.795-13.333c0.951-0.951,2.145-1.558,3.436-1.764c0.326-0.053,0.652-0.079,0.985-0.079    c1.604,0,3.106,0.617,4.226,1.738c0.444,0.441,0.805,0.945,1.086,1.487c0.436,0.857,0.664,1.81,0.653,2.803    C303.62,302.696,302.966,304.244,301.795,305.416z M304.024,296.268c-0.227-0.306-0.478-0.597-0.751-0.87    c-1.487-1.485-3.476-2.309-5.599-2.309c-0.006,0-0.008,0-0.01,0c-0.518-0.915-0.815-1.973-0.815-3.098    c0-3.491,2.841-6.332,6.331-6.332c3.492,0,6.333,2.841,6.333,6.332C309.514,293.198,307.118,295.853,304.024,296.268z"
+   id="path85" />
+		<path
+   fill="#FFFFFF"
+   d="M305.083,286.302c-0.692,0-1.364,0.241-1.902,0.68c-0.538-0.439-1.208-0.68-1.902-0.68    c-1.689,0-3.063,1.415-3.063,3.152c0,1.74,1.374,3.155,3.063,3.155c0.694,0,1.364-0.243,1.902-0.68    c0.538,0.437,1.21,0.68,1.902,0.68c1.689,0,3.065-1.415,3.065-3.155C308.148,287.717,306.772,286.302,305.083,286.302z     M305.083,291.64c-0.581,0-1.142-0.257-1.538-0.702l-0.364-0.409l-0.362,0.409c-0.395,0.445-0.957,0.702-1.54,0.702    c-1.153,0-2.094-0.979-2.094-2.186c0-1.204,0.94-2.185,2.094-2.185c0.583,0,1.146,0.259,1.54,0.704l0.362,0.409l0.364-0.409    c0.396-0.445,0.957-0.704,1.538-0.704c1.155,0,2.096,0.981,2.096,2.185C307.179,290.661,306.238,291.64,305.083,291.64z"
+   id="path87" />
 	</g>
 </g>
 </svg>

@@ -1,14 +1,13 @@
-
+<div style="height:500px;width:500px;visibility:hidden;">
+  <canvas style="display:none; height:100%; width:100%;" id="myChart">
+  </canvas>
+</div>
 <div id="report">
-  <div style="height:500px;width:500px;">
-    <canvas style="display:none; height:100%; width:100%;" id="myChart">
-    </canvas>
-  </div>
   <div id="title-page">
     <h1>Value Practitioner Report</h1>
-    <img src="http://somefreedomain.ml/assets/Images/210101-Results-BASE.svg" />
-    <p>Peter Jackson</p>
-    <p><span>JLMKL89</span> - <span>2021-00-00</span></p>
+    <img src="http://somefreedomain.ml/assets/Images/210101-Results-BASE-cropped.svg" />
+    <p>{{user.firstName}} {{user.lastName}}</p>
+    <p><span>{{surveyResults.code}}</span> — <span>{{surveyResults.takenOn | date:'yyyy-MMMM-d'}}</span></p>
   </div>
   <div id="survey-results-page">
     <div id="survey-results-page-title">
@@ -21,33 +20,34 @@
       </div>
       <div id="survey-results-page-main-content-right-part" style="margin-left:-200px;font-size:2.1rem;">
         <div style="margin-right:80px; max-height:830px; line-height:1.2;">
-          <h3 style="font-weight:bold;font-size:30px;">Perspectives</h3>
+          <h3 style="font-family:barlowSemiCondensed;font-size:30px;">Perspectives</h3>
           <p style="margin-bottom:-1px;">{{'Survey.WrapUp.PerspectivesWheelSectionTexts.CorePerspective' | translate}}</p>
           <span id="primary-perspective-span">
-          <img *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-          <img *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
-          <img *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-          <img *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-          <img *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-          <img *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-          {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}</span>
+            <img *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+            {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+          </span>
           <p style="margin-bottom:-1px;">{{'Survey.WrapUp.PerspectivesWheelSectionTexts.SecondPerspective' | translate}}</p>
           <span id="secondary-perspective-span">
             <img *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-            <img *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
-            <img *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
             <img *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-            <img *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-            <img *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
             {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
           </span><br /> <br />
           <div style="display:-webkit-box;" *ngFor="let rwop of relativeWeightOfThePerspectives.reverse(); let i = index;">
             <img *ngIf="i == 0" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="i == 1" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
-            <img *ngIf="i == 2" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="i == 1" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="i == 2" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
             <img *ngIf="i == 3" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="i == 4" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="i == 5" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="i == 4" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="i == 5" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
             <div style="">
               <span>{{'Perspectives.' + textFilePerspectiveIndexes[i] + '.Title' | translate}}  </span>
               <span>{{rwop | number: '1.0-2'}}%</span>
@@ -55,18 +55,18 @@
           </div>
         </div>
         <div id="your-highest-priority-values-container">
-          <p style="font-weight:bold;font-size:30px;">Top 9 values</p>
+          <p style="font-family:barlowSemiCondensed;font-size:30px;">Top 9 values</p>
           <div id="highest-priority-values-container">
             <div *ngFor="let value of valuesFromThirdStage; index as i" class="value-container">
               <div style="display:-webkit-box; margin-bottom:10px;">
                 <span>{{i + 1}}</span>
                 <div>
                   <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-                  <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
-                  <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                  <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                  <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
                   <img *ngIf="value.perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-                  <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-                  <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                  <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                  <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
                 </div>
                 <span>{{'Values.' + value.character + '.Title' | translate}}</span>
               </div>
@@ -77,53 +77,58 @@
     </div>
   </div>
   <div id="values-table-page">
-    <div id="grounding-column">
-      <p class="table-cell" id="grounding-column-title">Grounding</p>
-      <div *ngFor="let groundingValue of reportTableValues[0]">
-        <p class="table-cell" *ngIf="groundingValue == null"><span></span> <span></span> <span></span></p>
-        <p class="table-cell" *ngIf="groundingValue != null"><span>{{groundingValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{groundingValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{groundingValue.thirdStagePriority == 0 ? '0': groundingValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': groundingValue.selectedAtFirstStage ? (groundingValue.selectedAtSecondStage ? (groundingValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + groundingValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': groundingValue.selectedAtFirstStage ? (groundingValue.selectedAtSecondStage ? (groundingValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{groundingValue.thirdStagePriority == 0 ? '': '(' + groundingValue.thirdStagePriority + ')'}}</span></p>
-      </div>
-      <p class="table-cell" id="grounding-column-footer">{{relativeWeightOfThePerspectives[0] | number: '1.0-2'}}%</p>
+    <div id="values-table-page-title">
+      <img id="values-table-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
-    <div id="family-column">
-      <p class="table-cell" id="family-column-title">Family</p>
-      <div *ngFor="let familyValue of reportTableValues[1]">
-        <p class="table-cell" *ngIf="familyValue == null"><span></span> <span></span> <span></span></p>
-        <p class="table-cell" *ngIf="familyValue != null"><span>{{familyValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{familyValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{familyValue.thirdStagePriority == 0 ? '0': familyValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': familyValue.selectedAtFirstStage ? (familyValue.selectedAtSecondStage ? (familyValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + familyValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': familyValue.selectedAtFirstStage ? (familyValue.selectedAtSecondStage ? (familyValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{familyValue.thirdStagePriority == 0 ? '': '(' + familyValue.thirdStagePriority + ')'}}</span></p>
+    <div id="values-table">
+      <div id="grounding-column">
+        <p class="table-cell" id="grounding-column-title">Grounding</p>
+        <div *ngFor="let groundingValue of reportTableValues[0]">
+          <p class="table-cell" *ngIf="groundingValue == null"><span></span> <span></span> <span></span></p>
+          <p class="table-cell" *ngIf="groundingValue != null"><span>{{groundingValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{groundingValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{groundingValue.thirdStagePriority == 0 ? '0': groundingValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': groundingValue.selectedAtFirstStage ? (groundingValue.selectedAtSecondStage ? (groundingValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + groundingValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': groundingValue.selectedAtFirstStage ? (groundingValue.selectedAtSecondStage ? (groundingValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{groundingValue.thirdStagePriority == 0 ? '': '(' + groundingValue.thirdStagePriority + ')'}}</span></p>
+        </div>
+        <p class="table-cell" id="grounding-column-footer">{{relativeWeightOfThePerspectives[0] | number: '1.0-2'}}%</p>
       </div>
-      <p class="table-cell" id="family-column-footer">{{relativeWeightOfThePerspectives[1] | number: '1.0-2'}}%</p>
-    </div>
-    <div id="management-column">
-      <p class="table-cell" id="management-column-title">Management</p>
-      <div *ngFor="let managementValue of reportTableValues[2]">
-        <p class="table-cell" *ngIf="managementValue == null"><span></span> <span></span> <span></span></p>
-        <p class="table-cell" *ngIf="managementValue != null"><span>{{managementValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{managementValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{managementValue.thirdStagePriority == 0 ? '0': managementValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': managementValue.selectedAtFirstStage ? (managementValue.selectedAtSecondStage ? (managementValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + managementValue.valueCharacter + '.Title' | translate}} </span> <span [ngStyle]="{'color': managementValue.selectedAtFirstStage ? (managementValue.selectedAtSecondStage ? (managementValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{managementValue.thirdStagePriority == 0 ? '': '(' + managementValue.thirdStagePriority + ')'}}</span></p>
+      <div id="family-column">
+        <p class="table-cell" id="family-column-title">Family</p>
+        <div *ngFor="let familyValue of reportTableValues[1]">
+          <p class="table-cell" *ngIf="familyValue == null"><span></span> <span></span> <span></span></p>
+          <p class="table-cell" *ngIf="familyValue != null"><span>{{familyValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{familyValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{familyValue.thirdStagePriority == 0 ? '0': familyValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': familyValue.selectedAtFirstStage ? (familyValue.selectedAtSecondStage ? (familyValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + familyValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': familyValue.selectedAtFirstStage ? (familyValue.selectedAtSecondStage ? (familyValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{familyValue.thirdStagePriority == 0 ? '': '(' + familyValue.thirdStagePriority + ')'}}</span></p>
+        </div>
+        <p class="table-cell" id="family-column-footer">{{relativeWeightOfThePerspectives[1] | number: '1.0-2'}}%</p>
       </div>
-      <p class="table-cell" id="management-column-footer">{{relativeWeightOfThePerspectives[2] | number: '1.0-2'}}%</p>
-    </div>
-    <div id="relational-column">
-      <p class="table-cell" id="relational-column-title">Relational</p>
-      <div *ngFor="let relationalValue of reportTableValues[3]">
-        <p class="table-cell" *ngIf="relationalValue == null"><span></span> <span></span> <span></span></p>
-        <p class="table-cell" *ngIf="relationalValue != null"><span>{{relationalValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{relationalValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{relationalValue.thirdStagePriority == 0 ? '0': relationalValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': relationalValue.selectedAtFirstStage ? (relationalValue.selectedAtSecondStage ? (relationalValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + relationalValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': relationalValue.selectedAtFirstStage ? (relationalValue.selectedAtSecondStage ? (relationalValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{relationalValue.thirdStagePriority == 0 ? '': '(' + relationalValue.thirdStagePriority + ')'}}</span></p>
+      <div id="management-column">
+        <p class="table-cell" id="management-column-title">Management</p>
+        <div *ngFor="let managementValue of reportTableValues[2]">
+          <p class="table-cell" *ngIf="managementValue == null"><span></span> <span></span> <span></span></p>
+          <p class="table-cell" *ngIf="managementValue != null"><span>{{managementValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{managementValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{managementValue.thirdStagePriority == 0 ? '0': managementValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': managementValue.selectedAtFirstStage ? (managementValue.selectedAtSecondStage ? (managementValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + managementValue.valueCharacter + '.Title' | translate}} </span> <span [ngStyle]="{'color': managementValue.selectedAtFirstStage ? (managementValue.selectedAtSecondStage ? (managementValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{managementValue.thirdStagePriority == 0 ? '': '(' + managementValue.thirdStagePriority + ')'}}</span></p>
+        </div>
+        <p class="table-cell" id="management-column-footer">{{relativeWeightOfThePerspectives[2] | number: '1.0-2'}}%</p>
       </div>
-      <p class="table-cell" id="relational-column-footer">{{relativeWeightOfThePerspectives[3] | number: '1.0-2'}}%</p>
-    </div>
-    <div id="systems-column">
-      <p class="table-cell" id="systems-column-title">Systems</p>
-      <div *ngFor="let systemsValue of reportTableValues[4]">
-        <p class="table-cell" *ngIf="systemsValue == null"><span></span> <span></span> <span></span></p>
-        <p class="table-cell" *ngIf="systemsValue != null"><span>{{systemsValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{systemsValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{systemsValue.thirdStagePriority == 0 ? '0': systemsValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': systemsValue.selectedAtFirstStage ? (systemsValue.selectedAtSecondStage ? (systemsValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + systemsValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': systemsValue.selectedAtFirstStage ? (systemsValue.selectedAtSecondStage ? (systemsValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{systemsValue.thirdStagePriority == 0 ? '': '(' + systemsValue.thirdStagePriority + ')'}}</span></p>
+      <div id="relational-column">
+        <p class="table-cell" id="relational-column-title">Relational</p>
+        <div *ngFor="let relationalValue of reportTableValues[3]">
+          <p class="table-cell" *ngIf="relationalValue == null"><span></span> <span></span> <span></span></p>
+          <p class="table-cell" *ngIf="relationalValue != null"><span>{{relationalValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{relationalValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{relationalValue.thirdStagePriority == 0 ? '0': relationalValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': relationalValue.selectedAtFirstStage ? (relationalValue.selectedAtSecondStage ? (relationalValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + relationalValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': relationalValue.selectedAtFirstStage ? (relationalValue.selectedAtSecondStage ? (relationalValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{relationalValue.thirdStagePriority == 0 ? '': '(' + relationalValue.thirdStagePriority + ')'}}</span></p>
+        </div>
+        <p class="table-cell" id="relational-column-footer">{{relativeWeightOfThePerspectives[3] | number: '1.0-2'}}%</p>
       </div>
-      <p class="table-cell" id="systems-column-footer">{{relativeWeightOfThePerspectives[4] | number: '1.0-2'}}%</p>
-    </div>
-    <div id="expansion-column">
-      <p class="table-cell" id="expansion-column-title">Expansion</p>
-      <div *ngFor="let expansionValue of reportTableValues[5]">
-        <p class="table-cell" *ngIf="expansionValue == null"><span></span> <span></span> <span></span></p>
-        <p class="table-cell" *ngIf="expansionValue != null"><span>{{expansionValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{expansionValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{expansionValue.thirdStagePriority == 0 ? '0': expansionValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': expansionValue.selectedAtFirstStage ? (expansionValue.selectedAtSecondStage ? (expansionValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + expansionValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': expansionValue.selectedAtFirstStage ? (expansionValue.selectedAtSecondStage ? (expansionValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{expansionValue.thirdStagePriority == 0 ? '': '(' + expansionValue.thirdStagePriority + ')'}}</span></p>
+      <div id="systems-column">
+        <p class="table-cell" id="systems-column-title">Systems</p>
+        <div *ngFor="let systemsValue of reportTableValues[4]">
+          <p class="table-cell" *ngIf="systemsValue == null"><span></span> <span></span> <span></span></p>
+          <p class="table-cell" *ngIf="systemsValue != null"><span>{{systemsValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{systemsValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{systemsValue.thirdStagePriority == 0 ? '0': systemsValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': systemsValue.selectedAtFirstStage ? (systemsValue.selectedAtSecondStage ? (systemsValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + systemsValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': systemsValue.selectedAtFirstStage ? (systemsValue.selectedAtSecondStage ? (systemsValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{systemsValue.thirdStagePriority == 0 ? '': '(' + systemsValue.thirdStagePriority + ')'}}</span></p>
+        </div>
+        <p class="table-cell" id="systems-column-footer">{{relativeWeightOfThePerspectives[4] | number: '1.0-2'}}%</p>
       </div>
-      <p class="table-cell" id="expansion-column-footer">{{relativeWeightOfThePerspectives[5] | number: '1.0-2'}}%</p>
+      <div id="expansion-column">
+        <p class="table-cell" id="expansion-column-title">Expansion</p>
+        <div *ngFor="let expansionValue of reportTableValues[5]">
+          <p class="table-cell" *ngIf="expansionValue == null"><span></span> <span></span> <span></span></p>
+          <p class="table-cell" *ngIf="expansionValue != null"><span>{{expansionValue.selectedAtFirstStage ? '1': '0'}}</span>  <span>{{expansionValue.selectedAtSecondStage ? '1': '0'}}</span> <span style="color:red;"> {{expansionValue.thirdStagePriority == 0 ? '0': expansionValue.thirdStagePriority}}</span> <span [ngStyle]="{'color': expansionValue.selectedAtFirstStage ? (expansionValue.selectedAtSecondStage ? (expansionValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{'Values.' + expansionValue.valueCharacter + '.Title' | translate}}</span> <span [ngStyle]="{'color': expansionValue.selectedAtFirstStage ? (expansionValue.selectedAtSecondStage ? (expansionValue.thirdStagePriority > 0 ? 'red' : 'blue') : '#006F91') : 'gray'}">{{expansionValue.thirdStagePriority == 0 ? '': '(' + expansionValue.thirdStagePriority + ')'}}</span></p>
+        </div>
+        <p class="table-cell" id="expansion-column-footer">{{relativeWeightOfThePerspectives[5] | number: '1.0-2'}}%</p>
+      </div>
     </div>
   </div>
   <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1">

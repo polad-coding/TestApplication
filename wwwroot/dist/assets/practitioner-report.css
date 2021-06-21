@@ -78,7 +78,17 @@
   color: #006F91;
 }
 
+#values-table-page-title {
+  text-align: center;
+  color: #006F91;
+}
+
 #survey-results-page-title-image {
+  height: 150px;
+  width: 120px;
+}
+
+#values-table-page-title-image {
   height: 150px;
   width: 120px;
 }
@@ -152,18 +162,19 @@
 }
 
 #values-table-page {
-  display: flex;
-  display: -webkit-box;
   font-family:barlowSemiCondensedLight;
   page-break-after:always;
 }
 
+#values-table{
+    display:-webkit-box;
+}
 
 .table-cell {
-  height: 50px;
+  height: 45px;
   width: 300px;
   border: 1px solid black;
-  line-height: 50px;
+  line-height: 45px;
   margin-bottom:-15px;
 }
 

@@ -33,5 +33,6 @@ namespace KPProject.Interfaces
         Task<List<UserViewModel>> GetPractitionersForDirectoryAsync(PractitionersSearchFilterViewModel practitionersSearchFilterViewModel);
         Task<int> ReturnNumberOfPractitionersAsync();
         Task<List<List<ReportTableValueViewModel>>> GetValuesSelectionsAtDifferentSurveyStagesAsync(int surveyId);
+        Task<SurveyResultViewModel> GetParticularSurveyResultsAsync(int surveyId);
     }
 }

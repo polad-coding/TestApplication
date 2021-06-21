@@ -108,4 +108,8 @@ export class DataService {
     return this.http.get(`https://${this.url}/Data/GetValuesSelectionsAtDifferentSurveyStages?surveyId=${surveyId}`, { observe: 'response' });
   }
 
+  public GetParticularSurveyResults(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetParticularSurveyResults?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
 }

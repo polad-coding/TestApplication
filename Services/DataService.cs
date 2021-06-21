@@ -726,5 +726,14 @@ namespace KPProject.Services
 
             return groupedValues;
         }
+
+        public async Task<SurveyResultViewModel> GetParticularSurveyResultsAsync(int surveyId)
+        {
+            var surveyResults = await _applicationDbContext.Surveys.FindAsync(surveyId);
+
+            var surveyResultViewModel = _mapper.Map<SurveyModel, SurveyResultViewModel>(surveyResults);
+
+            return surveyResultViewModel;
+        }
     }
 }
