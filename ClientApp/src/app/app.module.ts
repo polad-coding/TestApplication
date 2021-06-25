@@ -39,6 +39,8 @@ import { EnterCodePageComponent } from './enter-code-page/enter-code-page.compon
 import { EnterSurveyAccountFormComponent } from './enter-survey-account-form/enter-survey-account-form.component';
 import { CertificationAndMembershipComponent } from './certification-and-membership/certification-and-membership.component';
 import { PractitionersDirectoryComponent } from './practitioners-directory/practitioners-directory.component';
+import { PersonalReportComponent } from './personal-report/personal-report.component';
+import { PractitionerReportComponent } from './practitioner-report/practitioner-report.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -71,7 +73,9 @@ export function tokenGetter() {
     EnterCodePageComponent,
     EnterSurveyAccountFormComponent,
     CertificationAndMembershipComponent,
-    PractitionersDirectoryComponent
+    PractitionersDirectoryComponent,
+    PersonalReportComponent,
+    PractitionerReportComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -98,7 +102,8 @@ export function tokenGetter() {
       { path: 'surveyFirstStage', component: SurveyFirstStageComponent },
       { path: 'surveySecondStage', component: SurveySecondStageComponent },
       { path: 'surveyThirdStage', component: SurveyThirdStageComponent },
-      { path: 'success', component: TestComponent },
+      { path: 'personalReport', component: PersonalReportComponent },
+      { path: 'practitionerReport', component: PractitionerReportComponent },
       { path: 'order', component: GetCodesComponent },
       { path: 'wrap-up', component: WrapUpComponent },
       { path: 'enterCode', component: EnterCodePageComponent },

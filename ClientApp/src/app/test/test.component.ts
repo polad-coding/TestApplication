@@ -10,6 +10,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { ReportTableValueViewModel } from '../../view-models/report-table-value-view-model';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
+import { ReportHTMLContentViewModel } from '../../view-models/report-html-content-view-model';
 
 
 @Component({
@@ -59,14 +60,16 @@ export class TestComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this._as.GetCurrentUser().subscribe((response: any) => {
-      this.user = response.body;
-
       let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
       this._ds.GetParticularSurveyResults(surveyId).subscribe((surveyResultResponse: any) => {
 
         this.surveyResults = surveyResultResponse.body;
+
+        this.user = this.surveyResults.surveyTakerUser;
+
+        console.debug(this.surveyResults);
+        console.debug(this.user);
 
         this._ds.GetTheRelativeWeightOfThePerspectives(surveyId).subscribe((response: any) => {
           if (response.ok) {
@@ -115,7 +118,10 @@ export class TestComponent implements OnInit, AfterViewInit {
                     onComplete: () => {
                       this.imageString = this.myChart.toBase64Image();
                       setTimeout(() => {
-                        this._ds.GeneratePdf(document.getElementById('report').innerHTML).subscribe((response: Blob) => {
+                        let obj = new ReportHTMLContentViewModel();
+                        obj.html = document.getElementById('report').innerHTML;
+
+                        this._ds.GeneratePdf(obj).subscribe((response: Blob) => {
                           const fileUrl = window.URL.createObjectURL(response);
                           const showWindow = window.open(fileUrl);
                         });
@@ -180,9 +186,6 @@ export class TestComponent implements OnInit, AfterViewInit {
         });
 
       });
-
-      });
-
   }
 
   private BalanceTableValuesAmounts() {

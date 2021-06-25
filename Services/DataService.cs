@@ -97,7 +97,7 @@ namespace KPProject.Services
 
                 foreach (var item in data)
                 {
-                    text.AppendLine($"\"{item.Character}\" : {JsonConvert.SerializeObject(item)},");
+                    text.AppendLine($"\"{item.Character}\" : {JsonConvert.SerializeObject(item).Replace("'","\'")},");
                 }
 
                 text.AppendLine("}}");
@@ -133,7 +133,7 @@ namespace KPProject.Services
 
                 foreach (var item in data)
                 {
-                    text.AppendLine($"\"{item.Id}\" : {JsonConvert.SerializeObject(item)},");
+                    text.AppendLine($"\"{item.Id}\" : {JsonConvert.SerializeObject(item).Replace("'", "\'")},");
                 }
 
                 text.AppendLine("}}");
@@ -730,6 +730,8 @@ namespace KPProject.Services
         public async Task<SurveyResultViewModel> GetParticularSurveyResultsAsync(int surveyId)
         {
             var surveyResults = await _applicationDbContext.Surveys.FindAsync(surveyId);
+
+            surveyResults.SurveyTakerUser = await _applicationDbContext.Users.FindAsync(surveyResults.SurveyTakerUserId);
 
             var surveyResultViewModel = _mapper.Map<SurveyModel, SurveyResultViewModel>(surveyResults);
 

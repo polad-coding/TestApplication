@@ -38,7 +38,7 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
 
   public GenerateIndividualReport(surveyId: number) {
     localStorage.setItem('surveyId', surveyId.toString());
-    this._router.navigate(['success']);
+    this._router.navigate(['personalReport']);
   }
 
   public TransferToSynthesisPage(surveyId: number) {

@@ -5,6 +5,7 @@ import { LanguageViewModel } from "../view-models/language-view-model";
 import { OrderViewModel } from "../view-models/order-view-model";
 import { PractitionersSearchFilterViewModel } from "../view-models/practitioners-search-filter-view-model";
 import { RegionViewModel } from "../view-models/region-view-model";
+import { ReportHTMLContentViewModel } from "../view-models/report-html-content-view-model";
 import { SurveyFirstStageSaveRequestModel } from "../view-models/survey-first-stage-save-request-model";
 import { SurveySecondStageSaveRequestModel } from "../view-models/survey-second-stage-save-request-model";
 import { SurveyThirdStageSaveRequestModel } from "../view-models/survey-third-stage-save-request-model";
@@ -19,8 +20,12 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  public GeneratePdf(html: string) {
-    return this.http.post(`https://${this.url}/Data/GeneratePdf`, `\'${html}\'`, { observe: 'body', responseType: 'blob', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  public GeneratePdf(content: ReportHTMLContentViewModel) {
+    return this.http.post(`https://${this.url}/Data/GeneratePdf`, content, { observe: 'body', responseType: 'blob', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
+
+  public GenerateIndividualPdfReport(content: ReportHTMLContentViewModel) {
+    return this.http.post(`https://${this.url}/Data/GenerateIndividualPdfReport`, content, { observe: 'body', responseType: 'blob', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
   public GetAllValues(surveyId: number) {

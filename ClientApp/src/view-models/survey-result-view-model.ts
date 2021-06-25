@@ -1,3 +1,5 @@
+import { UserViewModel } from "./user-view-model";
+
 export class SurveyResultViewModel {
   public code: string;
   public takenOn: string;
@@ -6,6 +8,7 @@ export class SurveyResultViewModel {
   public practitionerId: string;
   public isCompleated: boolean;
   public takersEmail: string;
+  public surveyTakerUser: UserViewModel;
 
   constructor(code, takenOn, surveyId, practitionerFullName, practitionerId, isCompleated, takersEmail) {
     this.code = code;

@@ -14,5 +14,6 @@ namespace KPProject.ViewModels
         public string TakersEmail { get; set; }
         public string PractitionerId { get; set; }
         public bool IsCompleated { get; set; }
+        public UserViewModel SurveyTakerUser { get; set; }
     }
 }

@@ -1,0 +1,792 @@
+<div style="height:500px;width:500px;visibility:hidden;">
+  <canvas style="display:none; height:100%; width:100%;" id="myChart">
+  </canvas>
+</div>
+<div id="report" style="display:none;">
+  <div id="title-page">
+    <img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    <h1>Value Perspective Report</h1>
+    <img style="height:1000px; width:2000px;margin-left:-250px;" src="http://somefreedomain.ml/assets/Images/210101-Results-BASE-cropped.svg" />
+    <p>{{user.firstName}} {{user.lastName}}</p>
+    <p><span>{{surveyResults.code}}</span> — <span>{{surveyResults.takenOn | date:'yyyy-MMMM-d'}}</span></p>
+  </div>
+  <div id="survey-results-page">
+    <div id="survey-results-page-title">
+      <img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <h1 style="font-size:80px;" id="survey-results-page-title-text">Value Perspective Report</h1>
+    </div>
+    <div id="survey-results-page-texts">
+      <p>
+        Together, all of the choices you made during the three-stage process of prioritizing among the 102 values in the
+        Values Perspectives survey result in a simple “snapshot” of two aspects of your values energy: the top nine values you
+        prioritized as being most important to you, and the most likely “core” values perspective.
+      </p>
+      <p>
+        Your core perspective represents the highest proportion of total values “energy” expressed in your values choices. Your
+        secondary perspective represents the second highest proportion. While your core perspective likely describes your
+        basic values worldview, your secondary perspective also strongly influences how you interpret your most-important
+        values, and your general values worldview.
+      </p>
+      <p>
+        As you read the following descriptions, we invite you to reflect on them and decide to what degree, and how, you think
+        they reflect your highest values priorities. The two perspectives are determined by a simple algorithm. However, if
+        you feel another perspective better describes you, that is your choice. You can find more information on the six Values
+        Perspectives kairiospraxis.com (https://kairiospraxis.com/en/perspectives).
+      </p>
+      <h1>
+        What’s next?
+      </h1>
+      <p>
+        It is very interesting to continue the process in the company of a “certified practitioner”. You will then know more
+        about how values operate and what useful and effective lessons you can learn from the survey...
+      </p>
+      <p>
+        If you do not already have a values practitioner to continue with, you can choose one from the list below. You are given
+        the choice between a 45-minute debriefing or an in-depth interview to further explore and understand your own value
+        system. Choose here a Certified Values Practitionner.
+      </p>
+    </div>
+    <div id="survey-results-page-main-content-title-texts">
+      <h1>Here are the results from your survey</h1>
+      <p>The Prospects that you value most energetically are:</p>
+      <div style="display:-webkit-box; text-align:center; align-items:center; height:50px; justify-content:center;padding-left:180px;">
+        <div style="width:33%;"></div>
+        <div style="display:-webkit-box; width:33%;">
+          <div>
+            <img *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+          </div>
+          <div style="line-height:50px;"><span style="font-family:barlowSemiCondensed;"> {{'Perspectives.' + corePerspectiveId + '.Title' | translate}}   </span> </div>
+          <div style="line-height:50px;"><span>  and</span></div>
+          <div style="padding-top:-50px;">
+            <img *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+          </div>
+          <div style="line-height:50px;"><span style="font-family: barlowSemiCondensed; "> {{'Perspectives.' + secondaryPerspectiveId + '.Title' | translate}}</span></div>
+        </div>
+        <div style="width:33%;"></div>
+      </div>
+    </div>
+    <div id="survey-results-page-main-content">
+
+      <div style="height:900px; width:900px; margin-left:-50px; margin-right:400px;" id="survey-results-page-main-content-left-part">
+        <img style="height:100%; width:100%;" src="{{imageString}}" />
+      </div>
+      <div id="survey-results-page-main-content-right-part" style="margin-left:-200px;font-size:2.1rem;">
+        <div id="your-highest-priority-values-container">
+          <h1 style="font-family:barlowSemiCondensedLight; font-size:1.5rem;">Your Highest-Priority Values:</h1>
+          <div id="highest-priority-values-container">
+            <div *ngFor="let value of valuesFromThirdStage; index as i" class="value-container">
+              <div style="display:-webkit-box; margin-bottom:10px;">
+                <span>{{i + 1}}</span>
+                <div>
+                  <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+                  <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                  <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+                  <img *ngIf="value.perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+                  <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                  <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+                </div>
+                <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="human-energy-wheel-page" style="page-break-after:always; font-family:barlowSemiCondensedLight; color:#006F91;">
+    <div id="human-energy-wheel-page-title" style="text-align:center;">
+      <img id="human-energy-wheel-page-title-image" style="height:200px; width:150px;" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <h1 style="font-size:80px;" id="survey-results-page-title-text">The Values Perspectives</h1>
+    </div>
+    <p style="font-size:1.5rem;">
+      All of us, as individuals or together in groups, hold one Perspective more strongly than others. Each Perspective
+      suggests particular characteristics, and each has unique advantages and challenges associated with it. It is important
+      to note that no Perspective is better than any other. As life conditions and demands change, you may be challenged to
+      assess your Core Perspective in regard to the way you live and the work you do, and decide if changes should be made
+      in how you are directing your attention and energy—or not. It is entirely up to you and your best judgment about how
+      to best live your life in a way that honors the values that are most important to you.
+    </p>
+    <div style="text-align:center;">
+      <img style="height:750px;width:750px" src="http://somefreedomain.ml/assets/Downut/KP-Downut-GB-HumanEnergy.svg" />
+    </div>
+    <div class="perspectives-table">
+      <div class="perspectives-table-titles" style="display:-webkit-box;">
+        <div class="perspectives-table-title" style="color:white; background-color:#ed2026">Grounding</div>
+        <div class="perspectives-table-title" style="color:black; background-color:#f47a21">Family</div>
+        <div class="perspectives-table-title" style="color:black; background-color:#fdcb0d">Management</div>
+        <div class="perspectives-table-title" style="color:white; background-color:#1fa750">Relational</div>
+        <div class="perspectives-table-title" style="color:black; background-color:#28abe1">Systems</div>
+        <div class="perspectives-table-title" style="color:white; background-color:#5050a1">Expansion</div>
+      </div>
+      <div class="perspectives-table-explanations" style="display:-webkit-box;">
+        <div class="perspectives-table-explanation" style="background-color:#fcd2c0;">
+          <p>
+            These values
+            ensure survival
+            and the
+            fulfillment of
+            our basic needs.
+            This is our most
+            fundamental
+            view toward
+            the world and
+            is necessary
+            for solid life
+            foundation.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#fde0c7;">
+          <p>
+            Values in this
+            Perspective
+            reflect kinship
+            and social
+            affiliation, and
+            our most basic
+            relationship to
+            others in our
+            world
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#fef3d2;">
+          <p>
+            These values
+            are necessary
+            for establishing
+            and maintaining
+            stability, and
+            influencing
+            within structures
+            of legitimate
+            authority in
+            order to achieve
+            success.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#cbe6d3;">
+          <p>
+            These values
+            emphasize
+            individual
+            responsibility for
+            developing one’s
+            own potential,
+            as well as the
+            awareness of the
+            quality of one’s
+            relationships
+            with others.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#c6eafa;">
+          <p>
+            These values
+            address our
+            interaction
+            within dynamic
+            groups, networks
+            and larger
+            systems, and
+            influencing
+            beyond our
+            individual scope.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#d0cee6;">
+          <p>
+            Values in this
+            Perspective act
+            as guides to the
+            future, our goals
+            and aspirations
+            These values
+            “pull” us toward
+            globally-oriented
+            vision.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div id="your-values-perspectives-section">
+    <div style="text-align:center;">
+      <img id="values-table-page-title-image" style="height:180px; width:150px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <h1 style="font-size:30px; color:#006F91; font-family:barlowSemiCondensedLight;">Your Values Perspectives</h1>
+    </div>
+    <p style="font-size:2rem;">Through the Value Perspectives survey, you have chosen as Core and Second Perspectives:</p><br /><br />
+    <div>
+      <div style="width:33%;"></div>
+      <div style="width: 33%;">
+        <p style="font-size:1.3rem;">Core perspective:</p>
+        <div>
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+        </div>
+        <div style="line-height:50px;"><span style="font-family:barlowSemiCondensed;"> {{'Perspectives.' + corePerspectiveId + '.Title' | translate}}   </span> </div>
+        <div>
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+        </div>
+        <p>Secondary Perspective</p>
+      </div>
+      <div style="width: 33%;"></div>
+    </div>
+  </div>-->
+  <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <div class="reminder-title-text">
+        <p>Grounding,</p>
+        <p>as your Core Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.1.MainPerspectiveText' | translate}}
+      </p>
+      <p>Grounding as a your Core Perspective</p>
+      <p>
+        {{'Perspectives.1.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="family-reminder" *ngIf="corePerspectiveId == 2 || secondaryPerspectiveId == 2">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <div class="reminder-title-text">
+        <p>Family,</p>
+        <p>as your Core Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.2.MainPerspectiveText' | translate}}
+      </p>
+      <p>Family as a your Core Perspective</p>
+      <p>
+        {{'Perspectives.2.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="management-reminder" *ngIf="corePerspectiveId == 3 || secondaryPerspectiveId == 3">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <div class="reminder-title-text">
+        <p>Management,</p>
+        <p>as your Core Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.3.MainPerspectiveText' | translate}}
+      </p>
+      <p>Management as a your Core Perspective</p>
+      <p>
+        {{'Perspectives.3.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="relational-reminder" *ngIf="corePerspectiveId == 4 || secondaryPerspectiveId == 4">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <div class="reminder-title-text">
+        <p>Relational,</p>
+        <p>as your Core Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.4.MainPerspectiveText' | translate}}
+      </p>
+      <p>Relational as a your Core Perspective</p>
+      <p>
+        {{'Perspectives.4.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="systems-reminder" *ngIf="corePerspectiveId == 5 || secondaryPerspectiveId == 5">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <div class="reminder-title-text">
+        <p>Systems,</p>
+        <p>as your Core Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.5.MainPerspectiveText' | translate}}
+      </p>
+      <p>Systems as a your Core Perspective</p>
+      <p>
+        {{'Perspectives.5.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="expansion-reminder" *ngIf="corePerspectiveId == 6 || secondaryPerspectiveId == 6">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <div class="reminder-title-text">
+        <p>Expansion,</p>
+        <p>as your Core Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.6.MainPerspectiveText' | translate}}
+      </p>
+      <p>Expansion as a your Core Perspective</p>
+      <p>
+        {{'Perspectives.6.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div id="questions-to-consider-page">
+    <div id="questions-to-consider-page-header" style="text-align:center;">
+      <img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <h1 style="color:#006F91; font-size:5rem;">Questions to consider on Perspectives</h1>
+    </div>
+    <p style="font-size:1.8rem;">Use these questions to reflect your Core and Second Values Perspectives</p>
+    <div id="kp-perspectives-table-title-images">
+      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+    </div>
+    <div class="perspectives-table">
+      <div class="perspectives-table-titles" style="display:-webkit-box;">
+        <div class="perspectives-table-title" style="color:white; background-color:#ed2026">Grounding</div>
+        <div class="perspectives-table-title" style="color:black; background-color:#f47a21">Family</div>
+        <div class="perspectives-table-title" style="color:black; background-color:#fdcb0d">Management</div>
+        <div class="perspectives-table-title" style="color:white; background-color:#1fa750">Relational</div>
+        <div class="perspectives-table-title" style="color:black; background-color:#28abe1">Systems</div>
+        <div class="perspectives-table-title" style="color:white; background-color:#5050a1">Expansion</div>
+      </div>
+      <div class="perspectives-table-explanations" style="display:-webkit-box;">
+        <div class="perspectives-table-explanation" style="background-color:#fcd2c0;">
+          <p>
+            These values
+            ensure survival
+            and the
+            fulfillment of
+            our basic needs.
+            This is our most
+            fundamental
+            view toward
+            the world and
+            is necessary
+            for solid life
+            foundation.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#fde0c7;">
+          <p>
+            Values in this
+            Perspective
+            reflect kinship
+            and social
+            affiliation, and
+            our most basic
+            relationship to
+            others in our
+            world
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#fef3d2;">
+          <p>
+            These values
+            are necessary
+            for establishing
+            and maintaining
+            stability, and
+            influencing
+            within structures
+            of legitimate
+            authority in
+            order to achieve
+            success.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#cbe6d3;">
+          <p>
+            These values
+            emphasize
+            individual
+            responsibility for
+            developing one’s
+            own potential,
+            as well as the
+            awareness of the
+            quality of one’s
+            relationships
+            with others.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#c6eafa;">
+          <p>
+            These values
+            address our
+            interaction
+            within dynamic
+            groups, networks
+            and larger
+            systems, and
+            influencing
+            beyond our
+            individual scope.
+          </p>
+        </div>
+        <div class="perspectives-table-explanation" style="background-color:#d0cee6;">
+          <p>
+            Values in this
+            Perspective act
+            as guides to the
+            future, our goals
+            and aspirations
+            These values
+            “pull” us toward
+            globally-oriented
+            vision.
+          </p>
+        </div>
+      </div>
+      <div id="questions-to-consider-page-questions">
+        <ol>
+          <li class="ol-item">
+            <p>
+              As you look at the brief descriptions of the Perspectives given above, does your Core and Second ones ‘fit’ you
+              as an overall description of your general values outlook on life and word? If so, how?
+            </p>
+            <ul>
+              <li class="ul-item">
+                <span>
+                  Is there language that you tend or like to use that expressive of your Core and Second values Perspectives?
+                  By what language or actions would other people recognize these perspectives as yours?
+                </span>
+              </li>
+              <li class="ul-item">
+                <span>
+                  What kind of actions and language do you use to influence others people? In what ways are these actions or
+                  language an expression of your major Perspectives?
+                </span>
+              </li>
+              <li class="ul-item">
+                <span>
+                  By what language and actions can other people most persuasively influence you? In what ways are these
+                  actions or language an expression of the Core and Second Perspectives of yours?
+                </span>
+              </li>
+            </ul>
+          </li>
+          <li class="ol-item">
+            <p>
+              Based on the brief Perspective description above, can you recognize potential differences between your Core
+              Perspective, your Second Perspective an that others you may know or work with?
+            </p>
+            <ul>
+              <li class="ul-item">
+                <span>
+                  Have you experienced misunderstandings or conflicts that may be expressions of differences in Core and
+                  Second Perspectives? How?
+                </span>
+              </li>
+              <li class="ul-item">
+                <span>
+                  In what ways might you adjust your verbal or written expression to communicate with or positively influence
+                  people you have reason to think may have major perspectives different to yours?
+                </span>
+              </li>
+            </ul>
+          </li>
+          <li class="ol-item">
+            <p>
+              Your Core and Second Perspectives are not limiting description, merely a reflexion of the sum of the choices
+              you made taking the Value_perspective survey. If you feel this Perspectives do not fit you, what other on do you
+              believe describes you more accurately? Why?
+            </p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div id="your-highest-priority-values-page" style="font-family:barlowSemiCondensedLight;page-break-after:always;">
+    <div id="your-highest-priority-values-page-header" style="text-align:center;">
+      <img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <h1 style="color:#006F91; font-size:5rem;">Your Highest-Priority values</h1>
+    </div>
+    <p style="font-size:2rem;">Your Highest-Priority values are:</p>
+
+    <div style="display:-webkit-box; height:300px; text-align:left;">
+      <div style="width:33%;">
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>1</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[0].character + '.Title' | translate}}</span>
+        </div>
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>2</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[1].character + '.Title' | translate}}</span>
+        </div>
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>3</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[2].character + '.Title' | translate}}</span>
+        </div>
+      </div>
+      <div style="width:33%;">
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>4</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[3].character + '.Title' | translate}}</span>
+        </div>
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>5</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[4].character + '.Title' | translate}}</span>
+        </div>
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>6</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[5].character + '.Title' | translate}}</span>
+        </div>
+      </div>
+      <div style="width:33%;">
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>7</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[6].character + '.Title' | translate}}</span>
+        </div>
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>8</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[7].character + '.Title' | translate}}</span>
+        </div>
+        <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
+          <span>9</span>
+          <div>
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+          </div>
+          <span>{{'Values.' + valuesFromThirdStage[8].character + '.Title' | translate}}</span>
+        </div>
+      </div>
+    </div>
+    <div id="middle-texts-section">
+      <p style="font-size:1.8rem;">
+        Your highest ranked priority values are those values you tend to draw on or turn your attention to most often. Generally,
+        the values you have ranked highest tend to dominate your awareness. Lower ranked values can act in support of
+        higher ranked values, or act alone, depending on the requirements of a specific situation. The exact rank-order is
+        never rigid, but rather, tends to be dynamic. As you work with these values you will be able to observe with increasing
+        awareness when each is being called upon.
+      </p>
+      <p style="font-size:1.8rem;">
+        These values may represent your natural talents and preferences, or they may represent areas you recognize as
+        needing more of your attention. In the first case you will likely have skills to support these values. In the second case,
+        you may need to develop skills to support specific values. Note too, that it is the nature of values that least some of
+        your highest-priority value choices are likely to remain important and hold energy for you for years to come; some
+        even for a lifetime.
+      </p>
+    </div>
+    <h1 style="color:#006F91; font-size:4rem;text-align:center;">Questions to consider on your Highest-Priority values</h1>
+    <div id="bottom-texts-section">
+      <p style="font-size:1.8rem;">How To Use The Questions Below:</p>
+      <ul>
+        <li class="ul-item">
+          <span>
+            On the following pages are the values you selected as most important to you, in highestpriority order. As
+            you read the definition and consider the questions for each value, remember also that how you define and
+            live each of your values is influenced by your Core Perspective. Accordingly, you may want to refine the
+            definition of the value to best express what it means for you.
+          </span>
+        </li>
+        <li class="ul-item">
+          <span>
+            Not all of the many questions pertaining to your highest-priority values will be relevant to your present
+            situation or interests. We suggest you choose only a few questions relevant to your highest-priority values-
+            --focusing only the ones that interest, intrigue, or challenge you the most---and reflect on them.
+          </span>
+        </li>
+        <li class="ul-item">
+          <span>
+            Other questions that appear below may become more relevant in the future, so be sure to save this Report
+            for future use.
+          </span>
+        </li>
+        <li class="ul-item"><span>If an important value in your life is missing from this list, add it.</span></li>
+        <li class="ul-item">
+          <span>
+            Make notes on your reflections, discuss them with a friend, trusted confidante, counselor or coach, and use
+            them to make some decisions about how you will live your values.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="values-questions-pages">
+    <div id="values-questions-pages-header" style="text-align:center;">
+      <img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+    </div>
+    <div class="values-questions-container" *ngFor="let value of valuesFromThirdStage; index as i">
+      <div class="value-container-header">
+        <div style="font-family:KP102ValSans; width:15%;"><span [ngStyle]="{'font-size':'200px','margin-left':'5px' , 'color': value.perspectiveId == 1 ? '#E30513' : value.perspectiveId == 2 ? '#ED7102': value.perspectiveId == 3 ? '#FFCC00': value.perspectiveId == 4 ? '#009640': value.perspectiveId == 5 ? '#009EE3': '#544595'}">{{value.character}}</span></div>
+        <div style="text-align:center;width:20%; height:100vh;">
+          <div style="text-align:center;display:-webkit-flex;-webkit-flex-flow:row; justify-content:center; height:50px;line-height:50px;font-family:barlowSemiCondensedBold; width:100%;padding-left:130px; padding-top:40px;">
+            <div style="display:-webkit-box;width:100px;text-align:center;">
+              <span style="align-self:center;">{{i + 1}}</span>
+              <div style="align-self:center;">
+                <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+                <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+                <img *ngIf="value.perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+                <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+              </div>
+            </div>
+          </div>
+          <div style="color:#006F91; font-family:barlowSemiCondensedBold; font-size:2rem;">{{'Values.' + value.character + '.Title' | translate}}</div>
+        </div>
+        <div style="padding-top:65px;font-size:2rem;text-align:center;width:65%;align-self:center;display:-webkit-flex; height:100vh; line-height:100vh; -webkit-align-items:center;">
+          <span style="align-self:center;font-family:barlowSemiCondensedLight; height:33%;">{{'Values.' + value.character + '.Definition' | translate}}</span>
+        </div>
+      </div>
+      <div id="value-container-questions" class="value-container-questions" style="padding:20px;">
+        <div style="white-space:pre-line;">{{'Values.' + value.character + '.Questions' | translate}}</div>
+      </div>
+    </div>
+  </div>
+  <div id="ending-texts-section" style="margin-top:30px; font-family:barlowSemiCondensedLight; font-size:2rem;">
+    <h1 style="text-align:center; color:#006F91; font-size:4rem;">
+      Learn more on Values and how they work with you <br /> <span style="text-decoration:underline">kairiospraxis.com</span>
+    </h1>
+    <p>
+      To learn more on the Values Perspectives, please visit <a style="text-decoration:underline; color:#006F91;">kairiospraxis.com</a>. There you will find valuable additional
+      information on how values work for you as an individual and in a group.
+    </p>
+    <p>
+      If you don’t already have one to help you further understand the results of your survey and to take the process further,
+      you can choose a Certified Values Practitioner on this website.
+    </p>
+    <p>
+      You will also find in the list of proposed works the reference book which gives complete information on the theory of
+      Values Perspectives: <a style="text-decoration:underline; color:#006F91;">What’s Important: Understanding and Working with Values Perspectives</a>, written by the founder
+      of the Kairios theory of Values Perspectives, Kenton Hyatt, Ph.D. and Cheryl De Ciantis, Ph.D. (Kairios Press, Reedition
+      2021)
+    </p>
+  </div>
+</div>

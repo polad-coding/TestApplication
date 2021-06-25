@@ -178,8 +178,39 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
+        [Route("GenerateIndividualPdfReport")]
+        public IActionResult GenerateIndividualPdfReport([FromBody] ReportHTMLContentViewModel content)
+        {
+            var globalSettings = new GlobalSettings
+            {
+                ColorMode = ColorMode.Color,
+                Orientation = Orientation.Portrait,
+                PaperSize = PaperKind.Letter,
+                Margins = new MarginSettings { Top = 10 },
+                DocumentTitle = "PDF Report"
+            };
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "individual-report.css");
+
+            var objectSettings = new ObjectSettings
+            {
+                PagesCount = true,
+                //Page = "https://code-maze.com/",
+                HtmlContent = content.Html,
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path }
+            };
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = globalSettings,
+                Objects = { objectSettings }
+            };
+            var file = _converter.Convert(pdf);
+            return File(file, "application/pdf", "Report.pdf");
+        }
+
+        [HttpPost]
         [Route("GeneratePdf")]
-        public IActionResult GeneratePdf([FromBody]string html)
+        public IActionResult GeneratePdf([FromBody]ReportHTMLContentViewModel content)
         {
             var globalSettings = new GlobalSettings
             {
@@ -196,7 +227,7 @@ namespace KPProject.Controllers
             {
                 PagesCount = true,
                 //Page = "https://code-maze.com/",
-                HtmlContent = html,
+                HtmlContent = content.Html,
                 WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path }
             };
             var pdf = new HtmlToPdfDocument()
