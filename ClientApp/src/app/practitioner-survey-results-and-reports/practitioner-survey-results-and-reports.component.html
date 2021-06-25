@@ -29,8 +29,8 @@
         <!--<button (click)="SendEmail(surveyResult.practitionerId)"><span>@</span></button>-->
       </div>
       <div class="reports-cell-buttons" *ngIf="surveyResult.isCompleated">
-        <button class="survey-result-row-blue-cell">IR</button>
-        <button class="survey-result-row-blue-cell">CR</button>
+        <button class="survey-result-row-blue-cell" (click)="GenerateIndividualReport(surveyResult.surveyId)">IR</button>
+        <button class="survey-result-row-blue-cell" (click)="GeneratePractitionerReport(surveyResult.surveyId)">CR</button>
       </div>
       <div class="reports-cell-buttons" *ngIf="!surveyResult.isCompleated && surveyResult.takenOn != null">
         <button class="survey-result-row-white-cell-disabled-button">IR</button>

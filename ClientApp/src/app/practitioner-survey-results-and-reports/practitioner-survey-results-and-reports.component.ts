@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { DataService } from '../../app-services/data-service';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
@@ -16,13 +17,25 @@ export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
   public surveysResults: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
   public surveyId: number;
 
-  constructor(private _dataService: DataService) { }
+  constructor(private _dataService: DataService, private _router: Router) { }
 
   ngOnInit() {
     this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
       this.surveysResults = response.body;
       console.log(this.surveysResults);
     });
+  }
+
+  public GenerateIndividualReport(surveyId: string) {
+    localStorage.setItem('surveyId', surveyId);
+
+    this._router.navigate(['personalReport']);
+  }
+
+  public GeneratePractitionerReport(surveyId: string) {
+    localStorage.setItem('surveyId', surveyId);
+
+    this._router.navigate(['practitionerReport']);
   }
 
 }
