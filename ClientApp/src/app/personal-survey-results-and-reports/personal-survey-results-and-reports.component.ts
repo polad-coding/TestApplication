@@ -36,6 +36,11 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
     });
   }
 
+  public ChangeToGetCodesTab() {
+    localStorage.setItem('currentTabName', 'get-codes-section');
+    window.location.reload();
+  }
+
   public GenerateIndividualReport(surveyId: number) {
     localStorage.setItem('surveyId', surveyId.toString());
     this._router.navigate(['personalReport']);

@@ -28,7 +28,7 @@ export class SurveySecondStageComponent implements OnInit {
   public valueModalIsVisible: boolean = false;
   public currentClickedValueCharacter: string;
   public currentClickedValueImportance: string = '';
-  public descriptiveModeIsOn: boolean = false;
+  public descriptiveModeIsOn: boolean = true;
   @ViewChild('unselectedValuesContainer', { static: false })
   public lessImportantValuesList: ElementRef;
   public isSelectionStage: boolean = false;
@@ -185,6 +185,9 @@ export class SurveySecondStageComponent implements OnInit {
   public ProceedToSelection(event) {
     this.isSelectionStage = true;
     this.isDescriptionStage = false;
+    setTimeout(() => {
+      this.MarkCompleatedPages();
+    }, 100)
   }
 
   public MarkValueAsImportant(event: MouseEvent) {
@@ -213,6 +216,20 @@ export class SurveySecondStageComponent implements OnInit {
         event.currentIndex);
     }
     this.CheckIfStepIsFilledCorrectly();
+    this.MarkCompleatedPages();
+  }
+
+  public MarkCompleatedPages() {
+
+    this.valuesPageButtons.forEach((vpb: any) => {
+      if (this.valuesMarkedAsImportantGroupedByPerspectives.get(Number.parseInt(vpb.nativeElement.dataset.id)).length >= 3) {
+        this._renderer2.addClass(vpb.nativeElement.firstChild, 'page-is-compleated');
+      }
+      else {
+        this._renderer2.removeClass(vpb.nativeElement.firstChild, 'page-is-compleated');
+      }
+    }); 
+
   }
 
   public EnableDescriptiveMode(event: MouseEvent) {

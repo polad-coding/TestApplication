@@ -44,7 +44,13 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     if (this.user == null || this.user == undefined) {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
-        console.log(this.user);
+        let currentTab = localStorage.getItem('currentTabName');
+        if (currentTab == null) {
+          this.selectedTab = 'my-account-section';
+        }
+        else {
+          this.selectedTab = currentTab;
+        }
       });
     }
   }
@@ -57,11 +63,13 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     });
     if (event.target.localName === 'p') {
       this.selectedTab = event.target.parentElement.id;
+      localStorage.setItem('currentTabName', this.selectedTab);
       this.renderer2.removeClass(event.target.parentElement, 'section-not-selected');
       this.renderer2.addClass(event.target.parentElement, 'section-selected');
     }
     else {
       this.selectedTab = event.target.id;
+      localStorage.setItem('currentTabName', this.selectedTab);
       this.renderer2.removeClass(event.target, 'section-not-selected');
       this.renderer2.addClass(event.target, 'section-selected');
     }
@@ -130,7 +138,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
       //TODO - check if email and Myer code are correct
       if (personalInformationForm.controls['email'].pristine) {
         this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-          this._router.navigate(['/personalAccount']);
+          window.location.reload();
         });
       }
       else {
@@ -141,7 +149,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
           }
           else {
             this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-              this._router.navigate(['/personalAccount']);
+              window.location.reload();
             });
           }
         });

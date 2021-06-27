@@ -75,6 +75,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
       this._ds.GetTheRelativeWeightOfThePerspectives(surveyId).subscribe((response: any) => {
         if (response.ok) {
           this.relativeWeightOfThePerspectives = response.body;
+          console.debug(this.relativeWeightOfThePerspectives);
+
           this._ds.GetSurveyThirdStageResults(surveyId).subscribe((thirdStageResults: any) => {
             if (thirdStageResults.ok) {
               this.valuesFromThirdStage = thirdStageResults.body;

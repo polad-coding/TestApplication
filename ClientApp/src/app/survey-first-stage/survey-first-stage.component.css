@@ -11,10 +11,34 @@
   justify-content: flex-end;
 }
 
-.prev-step-button-container {
-  margin-right: auto;
-  margin-left: 30px;
+.not-important-button-style {
+  padding: 5px;
+  border: none;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 4px #006F91;
+  color: white;
+  background-color: #9ac7ec;
 }
+
+.important-button-style {
+  padding: 5px;
+  border: none;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 4px #006F91;
+  color: white;
+  background-color: #006F91;
+}
+
+  .prev-step-button-container {
+    margin-right: auto;
+    margin-left: 30px;
+  }
 
   .prev-step-button-container button img {
     width: 40px;
@@ -367,6 +391,7 @@
   display: flex;
   flex-flow: column;
   color: white;
+  margin-right:10px;
 }
 
 .title {
@@ -405,6 +430,7 @@
   display: flex;
   flex-flow: column;
   color: #006F91;
+  margin-left:10px;
 }
 
 .to-selection-button{

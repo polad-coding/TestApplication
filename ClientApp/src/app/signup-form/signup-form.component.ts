@@ -21,6 +21,7 @@ export class SignupFormComponent implements OnInit {
   public errorMessage = "";
   public registerViewModel: RegisterViewModel = new RegisterViewModel();
   public user: UserViewModel;
+  public agreeToTermsRadioChecked: boolean = false;
 
   constructor(private _authService: AuthenticationService, private _router: Router) { }
 
@@ -30,6 +31,9 @@ export class SignupFormComponent implements OnInit {
     }
   }
 
+  public CheckAgreeToTermRadio() {
+    this.agreeToTermsRadioChecked = true;
+  }
 
   public SubmitSignUpForm(registerForm: NgForm) {
     this._authService.RegisterUser(this.registerViewModel).subscribe(response => {

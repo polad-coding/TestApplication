@@ -3,6 +3,7 @@ import { SingleDataSet, Label } from 'ng2-charts';
 import { Chart } from 'chart.js';
 import { ValueViewModel } from '../../view-models/value-view-model';
 import { DataService } from '../../app-services/data-service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-wrap-up',
@@ -17,8 +18,21 @@ export class WrapUpComponent implements OnInit {
   public valuesFromThirdStage: Array<ValueViewModel> = new Array<ValueViewModel>();
   private relativeWeightOfThePerspectives: Array<number> = new Array<number>();
 
-  constructor(private _dataService: DataService) {
+  constructor(private _dataService: DataService, private _router: Router) {
 
+  }
+
+  public DownloadYourPersonalReport() {
+    this._router.navigate(['personalReport']);
+  }
+
+  public TransferToPersonalAccountPage() {
+    localStorage.setItem('currentTabName', 'my-account-section');
+    this._router.navigate(['personalAccount']);
+  }
+
+  public TransferToPractitionersDirectory() {
+    this._router.navigate(['practitionersDirectory']);
   }
 
   ngOnInit() {

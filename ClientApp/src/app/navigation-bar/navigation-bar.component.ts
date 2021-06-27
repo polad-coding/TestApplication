@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -14,7 +15,7 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   public actionsSideBarIsVisible: boolean = false;
   public languagesSideBarIsVisible: boolean = false;
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngAfterViewInit(): void {
     if (window.innerWidth < 768) {
@@ -32,6 +33,10 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
     else {
       this.isMobile = false;
     }
+  }
+
+  public RedirectToPractitionersDirectory() {
+    this._router.navigate(['practitionersDirectory']);
   }
 
   public DocumentClicked() {

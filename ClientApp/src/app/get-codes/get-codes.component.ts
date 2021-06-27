@@ -57,8 +57,9 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
       value: `${this.grandTotalSum}`,
       onApprove: (details) => {
         this._dataService.GenerateCodesForTheUser(this.listOfOrders).subscribe(response => {
-          alert('Success, you can find your codes in \'My survey results and reports\' tab.')
+          localStorage.setItem('currentTabName', 'servey-results-and-reports-section');
           this.listOfOrders = new Array<OrderViewModel>();
+          window.location.reload();
         }, error => {
             alert('We had a problem processing your request, please try again!');
         })

@@ -21,13 +21,13 @@
 </div>
 <div id="personal-account-container">
   <div id="personal-account-sections">
-    <div class="personal-account-section section-selected" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
+    <div [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'my-account-section', 'section-not-selected': selectedTab != 'my-account-section'}" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
       <p>My account</p>
     </div>
-    <div class="personal-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
+    <div [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'servey-results-and-reports-section', 'section-not-selected': selectedTab != 'servey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
       <p>My survey results and reports</p>
     </div>
-    <div class="personal-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)"  id="get-codes-section">
+    <div [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'get-codes-section', 'section-not-selected': selectedTab != 'get-codes-section'}" #accountSectionTab (click)="SelectTab($event)"  id="get-codes-section">
       <p>Get codes</p>
     </div>
   </div>

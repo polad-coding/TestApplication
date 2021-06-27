@@ -45,8 +45,7 @@
       </div>
     </div>
     <div id="display-option">
-      <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="DisableDescriptiveMode($event)" />
-      <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="EnableDescriptiveMode($event)" />
+
     </div>
     <div id="selected-values">
       <p>Selected Values</p>
@@ -59,18 +58,8 @@
     </div>
     <div id="value-modal" *ngIf="valueModalIsVisible">
       <div id="value-modal-ideogram-section">
-        <div>
-          <button *ngIf="currentClickedValueImportance == 'important'" (click)="MarkValueAsLessImportant($event)">
-            <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
-          </button>
-        </div>
         <div #valueModalIdeogram id="value-modal-ideogram" [ngClass]="{'value-is-important':currentClickedValueImportance == 'important'}">
           {{currentClickedValueCharacter | translate}}
-        </div>
-        <div>
-          <button *ngIf="currentClickedValueImportance == ''" (click)="MarkValueAsImportant($event)">
-            <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
-          </button>
         </div>
       </div>
       <p id="value-modal-title">

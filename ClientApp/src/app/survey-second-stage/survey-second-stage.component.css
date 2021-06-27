@@ -197,6 +197,10 @@
   align-items: center;
 }
 
+.page-is-compleated{
+    border:3px solid #006F91;
+}
+
 #value-modal {
   min-height: 150px;
   width: 230px;
@@ -235,6 +239,8 @@
     min-width: 40px;
     display: flex;
     align-items: center;
+    margin-left:auto;
+    margin-right:auto;
   }
 
 #close-modal-icon {

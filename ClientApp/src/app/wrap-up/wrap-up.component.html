@@ -50,23 +50,23 @@
       <div [ngClass]="{'perspective-container-title':true}" style="background-color:#E30513; color:white;">
         {{'Perspectives.1.Title' | translate}}
       </div>
-      <div class="perspective-container-content" >
-        <p>{{'Perspectives.1.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      <div [ngStyle]="{'background-color': corePerspectiveId == 1 || secondaryPerspectiveId == 1 ? '#fcd2c0' : 'white'}" class="perspective-container-content" >
+        <p >{{'Perspectives.1.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
     <div class="perspective-container">
       <div class="perspective-container-title" style="background-color:#ED7102; color:#006F91;">
         {{'Perspectives.2.Title' | translate}}
       </div>
-      <div class="perspective-container-content">
+      <div [ngStyle]="{'background-color': corePerspectiveId == 2 || secondaryPerspectiveId == 2 ? '#fde0c7' : 'white'}" class="perspective-container-content">
         <p>{{'Perspectives.2.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
     <div class="perspective-container">
-      <div class="perspective-container-title" style="background-color:#FFCC00; color:#006F91;">
+      <div  class="perspective-container-title" style="background-color:#FFCC00; color:#006F91;">
         {{'Perspectives.3.Title' | translate}}
       </div>
-      <div class="perspective-container-content">
+      <div [ngStyle]="{'background-color': corePerspectiveId == 3 || secondaryPerspectiveId == 3 ? '#fef3d2' : 'white'}" class="perspective-container-content">
         <p>{{'Perspectives.3.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
@@ -74,7 +74,7 @@
       <div class="perspective-container-title" style="background-color:#009640; color:white;">
         {{'Perspectives.4.Title' | translate}}
       </div>
-      <div class="perspective-container-content">
+      <div [ngStyle]="{'background-color': corePerspectiveId == 4 || secondaryPerspectiveId == 4 ? '#cbe6d3' : 'white'}" class="perspective-container-content">
         <p>{{'Perspectives.4.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
@@ -82,7 +82,7 @@
       <div class="perspective-container-title" style="background-color:#009EE3; color:#006F91;">
         {{'Perspectives.5.Title' | translate}}
       </div>
-      <div class="perspective-container-content">
+      <div [ngStyle]="{'background-color': corePerspectiveId == 5 || secondaryPerspectiveId == 5 ? '#c6eafa' : 'white'}" class="perspective-container-content">
         <p>{{'Perspectives.5.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
@@ -90,14 +90,14 @@
       <div class="perspective-container-title" style="background-color:#544595; color:white;">
         {{'Perspectives.6.Title' | translate}}
       </div>
-      <div class="perspective-container-content">
+      <div [ngStyle]="{'background-color': corePerspectiveId == 6 || secondaryPerspectiveId == 6 ? '#d0cee6' : 'white'}" class="perspective-container-content">
         <p>{{'Perspectives.6.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
   </div>
   <div id="actions-buttons-section">
-    <button>Download your personal report <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
-    <button>Access your personal account <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
+    <button (click)="DownloadYourPersonalReport()">Download your personal report <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
+    <button (click)="TransferToPersonalAccountPage()">Access your personal account <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
   </div>
   <div id="whats-next-section">
     <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" />
@@ -105,7 +105,7 @@
       <p>{{'Survey.WrapUp.WhatsNextSectionTexts.Title' | translate}}</p>
       <p>{{'Survey.WrapUp.WhatsNextSectionTexts.FirstParagraph' | translate}}</p>
       <p>{{'Survey.WrapUp.WhatsNextSectionTexts.SecondParagraph' | translate}}</p>
-      <button>Choose a practitioner <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
+      <button (click)="TransferToPractitionersDirectory()">Choose a practitioner <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /> </button>
     </div>
   </div>
 </div>

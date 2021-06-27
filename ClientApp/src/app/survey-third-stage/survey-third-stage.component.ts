@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DataService } from '../../app-services/data-service';
 import { SurveyThirdStageSaveRequestModel } from '../../view-models/survey-third-stage-save-request-model';
 import { ValueViewModel } from '../../view-models/value-view-model';
+import { CdkDragDrop, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-survey-third-stage',
@@ -13,6 +14,15 @@ import { ValueViewModel } from '../../view-models/value-view-model';
 export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
   public values: Array<ValueViewModel> = new Array<ValueViewModel>();
+  public firstRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public secondRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public thirdRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public fourthRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public fifthRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public sixthRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public seventhRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public eighthRowArray: Array<ElementRef> = new Array<ElementRef>();
+  public ninethRowArray: Array<ElementRef> = new Array<ElementRef>();
   public currentIndex: number = 0;
   //public currentClickedValueCharacter: string;
   public descriptiveModeIsOn: boolean = false;
@@ -22,12 +32,12 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   public isDescriptionStage: boolean = true;
   public isSelectionStage: boolean = false;
   public isValidationStage: boolean = false;
+  public numberOfValuesSelected: number = 0;
 
   constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.values = _router.getCurrentNavigation().extras.state.values;
     }
-    //TODO - here add values from the local storage when extras are null
   }
 
   public UploadSurveyResults() {
@@ -35,6 +45,50 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     this._dataService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, Number.parseInt(localStorage.getItem('surveyId')))).subscribe(response => {
       this._router.navigate(['wrap-up']);
     });
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      console.debug('1');
+    } else {
+      if (event.container.id == 'important-values-box' && event.previousContainer.id != 'important-values-box') {
+        let prevData = new Array<any>(event.previousContainer.data[0]);
+        event.previousContainer.data.pop();
+        console.info(prevData[0]);
+        event.container.data.push(prevData[0]);
+        this.numberOfValuesSelected -= 1;
+      }
+      else if (event.container.data.length > 0) {
+        let prevData = new Array<any>([event.container.data[0]]);
+        event.container.data.pop();
+        console.debug('2');
+        console.debug(prevData);
+        transferArrayItem(event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex);
+
+        transferArrayItem(prevData[0],
+          event.previousContainer.data,
+          event.previousIndex,
+          event.currentIndex);
+      }
+      else {
+
+        transferArrayItem(event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex);
+
+        if (event.previousContainer.id == 'important-values-box' && event.container.id != 'important-values-box') {
+          this.numberOfValuesSelected += 1;
+        }
+
+      }
+    }
+
+
   }
 
   public GoToSelectionStage() {
@@ -53,7 +107,18 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     this.isSelectionStage = false;
     this.isDescriptionStage = false;
     this.isValidationStage = true;
-    this.selectedValues = this.selectedValues.sort((a, b) => a.priority - b.priority);
+    this.selectedValues = new Array<ValueViewModel>();
+    this.selectedValues.push(new ValueViewModel((<any>this.firstRowArray[0]).id,  (<any>this.firstRowArray[0]).character, 0, 0, null, 1));
+    this.selectedValues.push(new ValueViewModel((<any>this.secondRowArray[0]).id, (<any>this.secondRowArray[0]).character, 0, 0, null, 2));
+    this.selectedValues.push(new ValueViewModel((<any>this.thirdRowArray[0]).id,  (<any>this.thirdRowArray[0]).character, 0, 0, null, 3));
+    this.selectedValues.push(new ValueViewModel((<any>this.fourthRowArray[0]).id, (<any>this.fourthRowArray[0]).character, 0, 0, null, 4));
+    this.selectedValues.push(new ValueViewModel((<any>this.fifthRowArray[0]).id,  (<any>this.fifthRowArray[0]).character, 0, 0, null, 5));
+    this.selectedValues.push(new ValueViewModel((<any>this.sixthRowArray[0]).id,  (<any>this.sixthRowArray[0]).character, 0, 0, null, 6));
+    this.selectedValues.push(new ValueViewModel((<any>this.seventhRowArray[0]).id,(<any>this.seventhRowArray[0]).character, 0, 0, null, 7));
+    this.selectedValues.push(new ValueViewModel((<any>this.eighthRowArray[0]).id, (<any>this.eighthRowArray[0]).character, 0, 0, null, 8));
+    this.selectedValues.push(new ValueViewModel((<any>this.ninethRowArray[0]).id, (<any>this.ninethRowArray[0]).character, 0, 0, null, 9));
+    console.log(this.selectedValues);
+
   }
 
     ngAfterViewInit(): void {
@@ -63,9 +128,12 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
-    //this._dataService.GetAllValues(2).subscribe((response:any) => {
-    //  this.values = response.body;
-    //})
+    if (this.values.length == 0) {
+      this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
+        this.values = response.body;
+        console.log(this.values);
+      });
+    }
   }
 
 
@@ -291,8 +359,8 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
       this.selectedValues = this.selectedValues.sort(v => v.priority);
     }
 
-    console.log(this.selectedValues);
-    console.log(this.values);
+    console.debug(this.selectedValues);
+    console.debug(this.values);
   }
 
   private CheckIfCellHasAValue(event): boolean {

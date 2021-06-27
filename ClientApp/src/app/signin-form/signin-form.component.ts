@@ -36,6 +36,10 @@ export class SigninFormComponent implements OnInit {
     }
   }
 
+  public RedirectToRegistrationForm() {
+    this._router.navigate(['signup']);
+  }
+
   public SubmitSignInForm(signInForm: NgForm) {
     if (signInForm.valid) {
       this._authService.SignInUser(this.signInViewModel).subscribe(response => {

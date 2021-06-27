@@ -34,6 +34,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   public valueModalIsVisible: boolean = false;
   public currentValueClickedAtValidationStep: ElementRef;
   public currentValueClickedAtValidationImportance: string;
+  public currentValueClickedAtSelectionImportance: string;
   public isStepDescriptionPage: boolean = true;
   private surveyId: number; 
 
@@ -55,14 +56,16 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+
+      if (event.container.element.nativeElement.parentElement.parentElement.id == 'important-values-container') {
+        this.numberOfValuesQualifiedAsImportant += 1;
+      }
+      else {
+        this.numberOfValuesQualifiedAsImportant -= 1;
+      }
     }
 
-    if (event.container.element.nativeElement.parentElement.parentElement.id == 'important-values-container') {
-      this.numberOfValuesQualifiedAsImportant += 1;
-    }
-    else {
-      this.numberOfValuesQualifiedAsImportant -= 1;
-    }
+
 
   }
 
@@ -135,7 +138,20 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this._renderer2.removeClass(this.lessImportantValues[this.lessImportantValues.length - 1].nativeElement.firstChild, 'value-is-important');
       this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-important');
+      this.SelectNextValue(null);
     }
+  }
+
+  private ResetValuesImportance() {
+    this.valueContainers.forEach((vc: any) => {
+      //Check if element is important
+      if (this.lessImportantValues.find(el => el.nativeElement.dataset.id == vc.nativeElement.dataset.id) != undefined) {
+        this._renderer2.addClass(vc.nativeElement.firstChild, 'value-is-not-important');
+      }
+      else if (this.importantValues.find(el => el.nativeElement.dataset.id == vc.nativeElement.dataset.id) != undefined) {
+        this._renderer2.addClass(vc.nativeElement.firstChild, 'value-is-important');
+      }
+    })
   }
 
   public MarkAsImportant(event: MouseEvent) {
@@ -155,6 +171,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this._renderer2.removeClass(this.importantValues[this.importantValues.length - 1].nativeElement.firstChild, 'value-is-not-important');
       this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
+      this.SelectNextValue(null);
     }
   }
 
@@ -183,13 +200,27 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     this.isStepDescriptionPage = false;
     this.isSelectionStage = true;
 
-    this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
+    this.currentIndex = 0;
+    setTimeout(() => {
+      this.SelectNewValue(null, 0);
+      this.ResetValuesImportance();
+    }, 100)
+
+    //this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
 
     console.log(this.valueContainers);
 
   }
 
   public SelectNewValue(mouseEvent: MouseEvent, valueId) {
+    if (valueId > 101) {
+      this.currentIndex = 101;
+      valueId = 101;
+    }
+    else if (valueId < 0) {
+      this.currentIndex = 0;
+      valueId = 0;
+    }
     //get old value element and remove borders
     this._renderer2.setStyle(this.valueContainers.find(el => el.nativeElement.dataset.id == this.currentIndex).nativeElement, 'border', 'none');
     //Focus new element
@@ -201,14 +232,17 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     if (this.lessImportantValues.find(el => el.nativeElement.dataset.id == valueId) != null) {
       this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-important');
+      this.currentValueClickedAtSelectionImportance = 'not-important';
     }
     else if (this.importantValues.find(el => el.nativeElement.dataset.id == valueId) != null) {
       this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
+      this.currentValueClickedAtSelectionImportance = 'important';
     }
     else {
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-important');
+      this.currentValueClickedAtSelectionImportance = null;
     }
   }
 

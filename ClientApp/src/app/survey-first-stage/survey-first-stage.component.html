@@ -4,7 +4,7 @@
   <div id="title-section">
     <div class="prev-step-button-container">
       <button class="button-enabled" *ngIf="isSelectionStage || isStepDescriptionPage" (click)="ProceedToDescriptionStage($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
-      <button class="button-enabled" *ngIf="isValidationStage" (click)="ProceedToSelectionStage($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Selection </button>
+      <button class="button-enabled" *ngIf="isValidationStage" (click)="ProccedToSelectionStage($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Selection </button>
     </div>
     <div id="step-title-container">
       <p>
@@ -57,8 +57,8 @@
       </div>
     </div>
     <div id="importance-buttons-section">
-      <button class="decision-button" (click)="MarkAsLessImportant($event)">Less important</button>
-      <button class="decision-button" (click)="MarkAsImportant($event)">Important</button>
+      <button [ngClass]="{'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'important', 'not-important-button-style': currentValueClickedAtSelectionImportance == 'not-important'}" (click)="MarkAsLessImportant($event)">Less important</button>
+      <button [ngClass]="{'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'not-important', 'important-button-style': currentValueClickedAtSelectionImportance == 'important'}" (click)="MarkAsImportant($event)">Important</button>
     </div>
   </div>
   <div id="bottom-section" *ngIf="isSelectionStage">
@@ -95,12 +95,6 @@
         </ul>
       </div>
     </div>
-    <div id="actions-section">
-      <div class="values-display-options-validation-stage">
-        <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="TurnOffDescriptiveMode()" />
-        <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="TurnOnDescriptiveMode()" />
-      </div>
-    </div>
     <div id="important-values-container">
       <p class="title">Important</p>
       <div  [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}"> 
@@ -114,18 +108,8 @@
     </div>
     <div id="value-modal" *ngIf="valueModalIsVisible">
       <div id="value-modal-ideogram-section">
-        <div>
-          <button *ngIf="currentValueClickedAtValidationImportance == 'important'" (click)="MarkValueAsLessImportant($event)">
-            <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
-          </button>
-        </div>
         <div #valueModalIdeogram id="value-modal-ideogram" [ngClass]="{'value-is-important': currentValueClickedAtValidationImportance == 'important'}">
           {{values[currentValueClickedAtValidationStep.nativeElement.dataset.id].character | translate}}
-        </div>
-        <div>
-          <button *ngIf="currentValueClickedAtValidationImportance == 'less-important'" (click)="MarkValueAsImportant($event)">
-            <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
-          </button>
         </div>
       </div>
       <p id="value-modal-title">

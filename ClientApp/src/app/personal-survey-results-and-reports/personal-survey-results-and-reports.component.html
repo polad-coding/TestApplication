@@ -37,8 +37,11 @@
       <button *ngIf="surveyResult.isCompleated" class="survey-result-row-blue-cell" (click)="TransferToSynthesisPage(surveyResult.surveyId)">
         See synthesis
       </button>
-      <button *ngIf="!surveyResult.isCompleated" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId, surveyResult.code)">
+      <button *ngIf="!surveyResult.isCompleated && surveyResult.takenOn != undefined" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId, surveyResult.code)">
         Resume survey
+      </button>
+      <button *ngIf="!surveyResult.isCompleated && surveyResult.takenOn == undefined" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId, surveyResult.code)">
+        Take survey
       </button>
       <div *ngIf="!surveyResult.isCompleated" class="survey-result-empty-cell">
 
@@ -47,7 +50,7 @@
   </div>
 </div>
 <div id="get-code-section">
-  <button>Get a code</button>
+  <button (click)="ChangeToGetCodesTab()">Get a code</button>
   <div id="see-policy-container">
     <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
     <a>See privacy policy</a>

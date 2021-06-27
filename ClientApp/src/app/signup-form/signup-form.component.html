@@ -44,13 +44,13 @@
       <p>Password is too short.</p>
     </div>-->
     <div id="agree-to-terms-radio-button-section">
-      <input type="radio" id="agree-to-terms-radio-button" value="agree-to-terms" style="width:auto;" />
+      <input type="radio" id="agree-to-terms-radio-button" (click)="CheckAgreeToTermRadio()" value="agree-to-terms" style="width:auto;" />
       <label for="agree-to-terms">
         I agree that the anonymized survey data will be stored by Kairios Praxis for statistical uses only and
         I have read and understand the Terms & Conditions of this agreement and understand that some of
         the questions in the survey may refer to sensitive data.
       </label>
     </div>
-    <input id="submit-button" type="submit" value="Register" />
+    <input [ngStyle]="{'pointer-events': agreeToTermsRadioChecked ? 'auto' : 'none'}" id="submit-button" type="submit" value="Register" />
   </form>
 </div>

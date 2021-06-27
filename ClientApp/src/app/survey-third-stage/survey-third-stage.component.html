@@ -13,7 +13,7 @@
       <p>Among theses values, choose and rank your top 9</p>
     </div>
     <div class="step-validation-container">
-      <button [ngClass]="{'button-enabled':selectedValues.length == 9,'button-disabled':selectedValues.length < 9}" (click)="GoToValidationStage()" *ngIf="isSelectionStage">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button [ngClass]="{'button-enabled':numberOfValuesSelected == 9,'button-disabled':numberOfValuesSelected < 9}" (click)="GoToValidationStage()" *ngIf="isSelectionStage">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
       <button class="button-enabled" *ngIf="isDescriptionStage" (click)="GoToSelectionStage()">To selection <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
       <button id="button-invisible" *ngIf="isValidationStage"></button>
     </div>
@@ -54,23 +54,12 @@
     <button class="button-enabled" (click)="UploadSurveyResults()">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
   </div>
 </div>
-<div id="body-section" *ngIf="isSelectionStage">
-  <div id="value-ideogram-section">
-    <button id="prev-value-button" (click)="SelectPrevValue($event)">
-      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
-    </button>
-    <div id="value">
-      <div id="value-ideogram">
-        <p>{{values[currentIndex].character}}</p>
-      </div>
-      <div id="value-description">
-        <p>{{'Values.' + values[currentIndex].character + '.Title' | translate}}</p>
-        <p>{{'Values.' + values[currentIndex].character + '.Definition' | translate}}</p>
-      </div>
+<div id="body-section" *ngIf="isSelectionStage" cdkDropListGroup>
+  <div cdkDropList [cdkDropListData]="values" (cdkDropListDropped)="drop($event)" id="important-values-box">
+    <div  cdkDrag class="important-value" *ngFor="let value of values;index as i">
+      <span>{{value.character}}</span>
+      <span>{{'Values.' + value.character + '.Title' | translate}}</span>
     </div>
-    <button id="next-value-button" (click)="SelectNextValue($event)">
-      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
-    </button>
   </div>
   <div id="table-section">
     <div class="priorities-container">
@@ -81,28 +70,38 @@
         <span>4</span>
         <span>5</span>
       </div>
-      <ul>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="1">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="2">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="3">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="4">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="5">
-          <p></p>
-          <p></p>
-        </li>
-      </ul>
+      <div class="values-priorities-column-right-part">
+        <div cdkDropList [cdkDropListData]="firstRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="firstRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="1">
+            <p>{{firstRowArray[0].character}}</p>
+            <p>{{'Values.' + firstRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="secondRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="secondRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="2">
+            <p>{{secondRowArray[0].character}}</p>
+            <p>{{'Values.' + secondRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="thirdRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="thirdRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="3">
+            <p>{{thirdRowArray[0].character}}</p>
+            <p>{{'Values.' + thirdRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="fourthRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="fourthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="4">
+            <p>{{fourthRowArray[0].character}}</p>
+            <p>{{'Values.' + fourthRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="fifthRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="fifthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="5">
+            <p>{{fifthRowArray[0].character}}</p>
+            <p>{{'Values.' + fifthRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="priorities-container">
       <div class="values-priorities-column-second">
@@ -111,39 +110,33 @@
         <span>8</span>
         <span>9</span>
       </div>
-      <ul>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="6">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="7">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="8">
-          <p></p>
-          <p></p>
-        </li>
-        <li (drop)="Drop($event)" class="table-cell" (dragover)="DragOver($event)" (dragstart)="Drag($event)" draggable="true" [attr.data-priority]="9">
-          <p></p>
-          <p></p>
-        </li>
-      </ul>
+      <div class="values-priorities-column-right-part">
+        <div cdkDropList [cdkDropListData]="sixthRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="sixthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="6">
+            <p>{{sixthRowArray[0].character}}</p>
+            <p>{{'Values.' + sixthRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="seventhRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="seventhRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="7">
+            <p>{{seventhRowArray[0].character}}</p>
+            <p>{{'Values.' + seventhRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="eighthRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="eighthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="8">
+            <p>{{eighthRowArray[0].character}}</p>
+            <p>{{'Values.' + eighthRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+        <div cdkDropList [cdkDropListData]="ninethRowArray" (cdkDropListDropped)="drop($event)">
+          <div *ngIf="ninethRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="9">
+            <p>{{ninethRowArray[0].character}}</p>
+            <p>{{'Values.' + ninethRowArray[0].character + '.Title' | translate}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div id="bottom-section" *ngIf="isSelectionStage">
-  <div class="values-display-options">
-    <img src="../../assets/KP-logo-accessories--png/window-icon.jpg" (click)="TurnOffDescriptiveMode()" />
-    <img src="../../assets/KP-logo-accessories--png/list-icon.png" (click)="TurnOnDescriptiveMode()" />
-  </div>
-  <div id="values-list-section" *ngIf="isSelectionStage">
-    <ul id="values-bar" (drop)="Drop($event)" (dragover)="DragOver($event)">
-      <li #valueContainers *ngFor="let value of values; index as i;" (dragstart)="Drag($event)" (click)="SelectNewValue($event, i)" [attr.data-title]="'Values.' + value.character + '.Title' | translate" [attr.data-character]="value.character" [attr.data-index]="i" [attr.data-id]="value.id" class="value-container" draggable="true">
-        <p>{{value.character}}</p>
-        <p *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</p>
-      </li>
-    </ul>
   </div>
 </div>
 <app-footer></app-footer>
