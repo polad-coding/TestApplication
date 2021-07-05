@@ -34,5 +34,9 @@ namespace KPProject.Interfaces
         Task<int> ReturnNumberOfPractitionersAsync();
         Task<List<List<ReportTableValueViewModel>>> GetValuesSelectionsAtDifferentSurveyStagesAsync(int surveyId);
         Task<SurveyResultViewModel> GetParticularSurveyResultsAsync(int surveyId);
+        Task<bool> UserHasUnsignedSurveysAsync(string userId);
+        Task<bool> AssociateUserDataToTheSurveyAsync(string userId);
+        Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel);
+        Task<bool> GoToPreviousStageOfTheSurveyAsync(int surveyId);
     }
 }

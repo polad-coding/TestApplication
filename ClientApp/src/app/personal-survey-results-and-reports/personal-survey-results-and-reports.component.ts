@@ -24,7 +24,7 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._accountService.GetCurrentUser().subscribe((getCurrentUserResponse:any) => {
+    this._accountService.GetCurrentUser().subscribe((getCurrentUserResponse: any) => {
       this.user = getCurrentUserResponse.body;
       this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
         this.surveysResults = response.body;
@@ -55,28 +55,20 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
     console.log(surveyId);
 
     if (surveyId === 0) {
-      //this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
-      //  this.surveyId = response.body.id;
-      //  localStorage.setItem('surveyId', this.surveyId.toString());
-      //  this._dataService.GetAllValues(response.body.id).subscribe((response: any) => {
-      //    this._router.navigate(['surveyFirstStage'], { state: { values: response.body } });
-      //  });
-      //});
-
       localStorage.setItem('surveyCode', code);
 
-      this._router.navigate(['enterSurveyAccount']);
+      this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
+        console.log(response);
+        if (response.ok) {
+          localStorage.setItem('surveyId', response.body.id);
+          localStorage.removeItem('surveyCode');
+          this._router.navigate(['surveyFirstStage']);
+        }
+      },
+        error => {
+          console.log(error);
+        });
 
-
-      //this.values.forEach(v => {
-      //  if (v.isSelected) {
-      //    this.numberOfValuesQualifiedAsImportant += 1;
-      //    this.numberOfValuesQualified += 1;
-      //  }
-      //  else if (!v.isSelected) {
-      //    this.numberOfValuesQualified += 1;
-      //  }
-      //});
     }
     else {
       localStorage.setItem('surveyId', surveyId.toString());
@@ -89,7 +81,6 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
           this._router.navigate([stageTransferResponse.body], { state: { values: valuesToTransfer } });
 
         });
-        this._router.navigate(['wrap-up']);
       });
     }
 

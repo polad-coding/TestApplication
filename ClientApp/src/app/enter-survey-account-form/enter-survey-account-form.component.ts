@@ -48,7 +48,6 @@ export class EnterSurveyAccountFormComponent implements OnInit {
 
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
-    //TODO - deselect all regions
     if (this.regions === undefined) {
       this._accountService.GetAllRegions().subscribe((response: any) => {
         this.regions = response.body;
@@ -75,7 +74,6 @@ export class EnterSurveyAccountFormComponent implements OnInit {
     personalInformationForm.control.enable();
     if (personalInformationForm.errors === null) {
       this.formHasError = false;
-      //TODO - check if email and Myer code are correct
       if (personalInformationForm.controls['email'].pristine) {
         this._accountService.ChangeUserPersonalData(this.user).subscribe(response => {
           this._router.navigate(['/personalAccount']);

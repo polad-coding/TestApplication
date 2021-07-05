@@ -7,12 +7,13 @@ import { element } from 'protractor';
 import { GenderViewModel } from '../../view-models/gender-view-model';
 import { RegionViewModel } from '../../view-models/region-view-model';
 import { LanguageViewModel } from '../../view-models/language-view-model';
+import { DataService } from '../../app-services/data-service';
 
 @Component({
   selector: 'app-personal-account',
   templateUrl: './personal-account.component.html',
   styleUrls: ['./personal-account.component.css'],
-  providers: [AccountService]
+  providers: [AccountService, DataService]
 })
 export class PersonalAccountComponent implements OnInit, AfterViewInit {
 
@@ -29,8 +30,9 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
   @ViewChildren('accountSectionTab', { read: ElementRef })
   public accountSectionTabs: QueryList<ElementRef>;
   public currentSelectedTabIndex: number;
+  public userHasUnsignedSurveys: boolean = false;
 
-  constructor(private _router: Router, private accountService: AccountService, private renderer2: Renderer2, private renderer: Renderer) {
+  constructor(private _router: Router, private accountService: AccountService, private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer) {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.user = _router.getCurrentNavigation().extras.state.user;
     }
@@ -44,12 +46,44 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     if (this.user == null || this.user == undefined) {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
-        let currentTab = localStorage.getItem('currentTabName');
+        console.debug(this.user);
+        let currentTab = localStorage.getItem('personalAccountTabName');
         if (currentTab == null) {
-          this.selectedTab = 'my-account-section';
+          localStorage.setItem('personalAccountTabName', 'my-account-section');
+          this.selectedTab = localStorage.getItem('personalAccountTabName');
         }
         else {
           this.selectedTab = currentTab;
+        }
+
+        this._dataService.UserHasUnsignedSurveys(this.user.id).subscribe((response: any) => {
+          this.userHasUnsignedSurveys = response.body;
+          console.log(this.userHasUnsignedSurveys);
+        });
+
+      });
+    }
+    else {
+      if (localStorage.getItem('personalAccountTabName') == null) {
+        localStorage.setItem('personalAccountTabName', 'my-account-section');
+        this.selectedTab = localStorage.getItem('personalAccountTabName');
+      }
+
+      this._dataService.UserHasUnsignedSurveys(this.user.id).subscribe((response: any) => {
+        this.userHasUnsignedSurveys = response.body;
+        console.log(this.userHasUnsignedSurveys);
+      });
+    }
+
+  }
+
+  public AssociateUserDataToTheSurvey(personalInformationForm: NgForm) {
+    this.ChangeProfileData(null, personalInformationForm);
+
+    if (!this.formHasError) {
+      this._dataService.AssociateUserDataToTheSurvey(this.user.id).subscribe((response: any) => {
+        if (response.ok) {
+          this._router.navigate(['wrap-up']);
         }
       });
     }
@@ -63,13 +97,13 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     });
     if (event.target.localName === 'p') {
       this.selectedTab = event.target.parentElement.id;
-      localStorage.setItem('currentTabName', this.selectedTab);
+      localStorage.setItem('personalAccountTabName', this.selectedTab);
       this.renderer2.removeClass(event.target.parentElement, 'section-not-selected');
       this.renderer2.addClass(event.target.parentElement, 'section-selected');
     }
     else {
       this.selectedTab = event.target.id;
-      localStorage.setItem('currentTabName', this.selectedTab);
+      localStorage.setItem('personalAccountTabName', this.selectedTab);
       this.renderer2.removeClass(event.target, 'section-not-selected');
       this.renderer2.addClass(event.target, 'section-selected');
     }
@@ -138,7 +172,9 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
       //TODO - check if email and Myer code are correct
       if (personalInformationForm.controls['email'].pristine) {
         this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-          window.location.reload();
+          if (!this.userHasUnsignedSurveys) {
+            window.location.reload();
+          }
         });
       }
       else {
@@ -149,7 +185,9 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
           }
           else {
             this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-              window.location.reload();
+              if (!this.userHasUnsignedSurveys) {
+                window.location.reload();
+              }
             });
           }
         });

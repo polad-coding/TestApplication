@@ -41,49 +41,33 @@ export class SurveySecondStageComponent implements OnInit {
 
 
   constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
-    if (_router.getCurrentNavigation().extras.state != null) {
-      this.values = _router.getCurrentNavigation().extras.state.values;
-    }
+      this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
+        this.values = response.body;
+        this.GroupValues(this.values);
+
+        this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+        this.valuesGroupedByPerspectives.forEach((value, key) => {
+          this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+          this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+        });
 
 
-    this.GroupValues(this.values);
+        this.MarkAsImportantGroupsWithLessThanFourItems();
+        this.valuesGroupedByPerspectives.forEach((vl, k) => {
+          if (vl.length >= 4) {
+            this.arrayOfPages.push(k);
+          }
+        });
+        this.DecideHowManyPagesToShow();
 
-    this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+        this.CalculateCurrentGroupId();
 
-    //TODO - change then to different method
-    //this._dataService.GetAllValues(2).subscribe((response: any) => {
-    //this.values = response.body;
+        this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
+        this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
 
-
-
-    this.valuesGroupedByPerspectives.forEach((value, key) => {
-      this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
-      this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
-    });
-
-    console.log(this.valuesGroupedByPerspectives);
-    console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
-
-    this.MarkAsImportantGroupsWithLessThanFourItems();
-    this.valuesGroupedByPerspectives.forEach((vl, k) => {
-      if (vl.length >= 4) {
-        this.arrayOfPages.push(k);
-      }
-    });
-    this.DecideHowManyPagesToShow();
-
-    this.CalculateCurrentGroupId();
-
-    this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
-    this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
-
-    this.CalculateCurrentPage();
-
-    console.log(this.valuesGroupedByPerspectives);
-    console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
-    console.log(this.currentValuesGroup);
-    console.log(this.currentImportantValuesGroup);
-    console.log(this.currentGroupId);
+        this.CalculateCurrentPage();
+      });
   }
 
   private CalculateCurrentPage() {
@@ -108,8 +92,6 @@ export class SurveySecondStageComponent implements OnInit {
 
   ngOnInit() {
 
-
-    //});
   }
 
   private CheckIfStepIsFilledCorrectly() {

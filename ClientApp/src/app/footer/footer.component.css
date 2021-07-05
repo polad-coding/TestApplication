@@ -1,53 +1,74 @@
-#footer, #medium-footer, #mini-footer, #micro-footer {
-  height: 200px;
+#footer{
+  height: 100px;
   width: 100%;
   background-color: #006F91;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-  #footer img, #medium-footer img, #mini-footer img {
-    height: 140px;
-    width: 140px;
+  #footer > img {
+    height: 70px;
+    width: 70px;
     align-self: flex-end;
     filter: invert(100%) sepia(98%) saturate(0%) hue-rotate(11deg) brightness(102%) contrast(106%);
   }
 
+  #footer img:first-child {
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+
+  #footer img:last-child {
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+
+#social-media-images-container{
+    display:flex;
+    justify-content:space-evenly;
+}
+
+  #social-media-images-container img:last-child {
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(351deg) brightness(107%) contrast(106%);
+  }
+
+#social-media-images-container img {
+  height: 30px;
+  width: 30px;
+  cursor:pointer;
+  /*filter: invert(100%) sepia(98%) saturate(0%) hue-rotate(11deg) brightness(102%) contrast(106%);*/
+}
+
+#footer-middle-section {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 80%;
+  align-items: center;
+}
+
 .footer-section {
   display: flex;
+  flex-flow:column;
+  color:white;
+  text-align:center;
 }
 
-.footer-section-texts {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  color: white;
-  font-family: barlowSemiCondensedMedium;
+.footer-section a{
+    cursor:pointer;
+    text-decoration:underline;
 }
 
-#micro-footer{
-    justify-content:center;
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1304px) {
-  .footer-section-texts {
-    font-size: 0.9rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  #footer, #medium-footer, #mini-footer, #micro-footer {
-    height: 150px;
-  }
-
-    #footer img, #medium-footer img, #mini-footer img {
-      height: 100px;
-      width: 100px;
+@media only screen and (min-width: 320px) and (max-width: 600px) {
+    #footer > img{
+        display:none;
     }
-}
 
-.footer-section-texts p:hover {
-  text-decoration: underline;
-  cursor: pointer;
+    #footer-middle-section{
+        width:95%;
+        margin:auto;
+        font-size:0.8rem;
+    }
 }

@@ -1,6 +1,42 @@
 <app-navigation-bar></app-navigation-bar>
 <app-page-title titleText="The survey"></app-page-title>
-<div id="enter-code-container">
+<div id="how-does-it-work-page" *ngIf="!secondStage">
+  <h1>How does it work?</h1>
+  <p>
+    After being registered, you will be asked to complete your profile if necessary and then to enter a code to access the survey
+    itself.
+  </p><br />
+  <p>You will then be invited to enter your code. If you do not have one, you can purchase it through your personal area.</p><br />
+  <p>The survey it self has three steps during which you will be asked to make value choices.</p><br />
+  <p>
+    At the end of the survey you will be asked to verify your personal information and then you will get the results in a summary
+    online and in a detailed report to download or get in your personal area.
+  </p><br />
+  <p>If you haven’t finished a survey, you’ll be able to go back to it from your personal area.</p>
+  <p>
+    Once completed, in order to further explore and have insights and teachings from the results, they can be shared with the
+    practitioner who gave you your code or, if you got the code by yourself, with the practitioner you choose from the list
+    proposed by Kairios Praxis.
+  </p><br />
+  <p>
+    For a single anonymous statistical use only, the data from your survey (excluding name, email and password) will be stored and
+    kept by Kairios Praxis in compliance with the <a>European GDPR regulation</a>. You can refuse by unticking the button below.
+  </p><br />
+  <div id="agree-to-term-section">
+    <input type="radio" (click)="ChangeUserAgreementFlag()" />
+    <span>I agree that the anonymized survey data will be stored by Kairios Praxis for statistical uses only.</span>
+  </div>
+  <button (click)="NextPageButtonClicked()" [ngClass]="{'active-button': userAgreedWithTheClause, 'disabled-button': !userAgreedWithTheClause, 'next-button':true}">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg"/></button>
+</div>
+<div id="sign-in-register-page" *ngIf="secondStage && !userIsAuthorized">
+  <div id="signin-form">
+    <app-signin-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetOperationResult($event)"></app-signin-form>
+  </div>
+  <div id="signun-form">
+    <app-signup-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetOperationResult($event)"></app-signup-form>
+  </div>
+</div>
+<div id="enter-code-container" *ngIf="userAgreedWithTheClause && userIsAuthorized && secondStage == true">
   <div tabindex="1" id="error-section-placeholder">
 
   </div>
@@ -8,22 +44,13 @@
     <p>{{errorMessage}}</p>
   </div>
   <div id="enter-code-field">
-    <p>{{'Survey.EnterCodePage.CodeEnterFieldText' | translate}}:</p>
+    <p>
+      If you have already a code
+      Please enter it here:
+    </p>
     <input [(ngModel)]="codeEntered" type="text" placeholder="Enter code" />
+    <button (click)="ProceedToTheNextStage($event)" [ngClass]="{'button-is-active': codeEntered != null && codeEntered != '', 'button-is-disabled':codeEntered == null || codeEntered == ''}">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
   </div>
-  <div id="enter-codes-texts">
-    <p>{{'Survey.EnterCodePage.FirstParagraph' | translate}}</p><br />
-    <p>{{'Survey.EnterCodePage.SecondParagraph' | translate}}</p><br />
-    <p>{{'Survey.EnterCodePage.ThirdParagraph' | translate}}</p><br />
-    <p>{{'Survey.EnterCodePage.FourthParagraph' | translate}}</p><br />
-    <p>{{'Survey.EnterCodePage.FifthParagraph' | translate}}</p><br />
-    <div id="i-agree-radio-section">
-      <input type="radio" value="userAgreedWithTheClause" [(ngModel)]="userAgreedWithTheClause" [checked]="userAgreedWithTheClause" />
-      <p>  {{'Survey.EnterCodePage.SixthParagraph' | translate}}</p>
-    </div>
-  </div>
-  <div [ngClass]="{'proceed-to-the-next-step-button-section':true,'button-is-active':userAgreedWithTheClause, 'button-is-inactive':!userAgreedWithTheClause}">
-    <button (click)="ProceedToTheNextStage($event)">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
-  </div>
+  <button (click)="RedirectToGetCodeTab()">Get a code <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
 </div>
 <app-footer></app-footer>

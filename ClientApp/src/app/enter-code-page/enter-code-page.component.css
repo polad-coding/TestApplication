@@ -10,9 +10,83 @@
   font-family: barlowSemiCondensedLight;
 }
 
-#error-section-placeholder{
-    height:10px;
-    width:10px;
+#sign-in-register-page {
+  display: flex;
+  justify-content: space-evenly;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.active-button{
+    padding:10px;
+    background-color:#006F91;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+  .active-button img {
+    filter: invert(99%) sepia(6%) saturate(0%) hue-rotate(6deg) brightness(108%) contrast(100%);
+  }
+
+.disabled-button img {
+  filter: invert(26%) sepia(30%) saturate(5594%) hue-rotate(174deg) brightness(92%) contrast(101%);
+}
+
+.disabled-button {
+  padding: 5px;
+  background-color: white;
+  color: #006F91;
+  border:0.5px solid #006F91;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  pointer-events:none;
+}
+
+.next-button {
+  min-width: 150px;
+  height:40px;
+  padding-left:10px;
+  margin-top:20px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.next-button img {
+  height: 40px;
+  width: 40px;
+}
+
+#agree-to-term-section input{
+    margin-right:20px;
+    cursor:pointer;
+}
+
+#agree-to-term-section span{
+    font-family:barlowSemiCondensedLightItalic;
+}
+
+#how-does-it-work-page {
+  width: 60%;
+  margin: auto;
+  color: #006F91;
+  margin-bottom:20px;
+}
+
+#how-does-it-work-page h1{
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:20px;
+    font-family:barlowSemiCondensedMedium;
+}
+
+#error-section-placeholder {
+  height: 10px;
+  width: 10px;
 }
 
 #regions-modal-container {
@@ -164,11 +238,59 @@
   text-align: center;
   margin-bottom: 20px;
   box-shadow: 0px 0px 3px #006F91;
+
 }
 
-  #enter-code-field > p {
-    margin-bottom: 10px;
+#enter-code-container > button{
+    background-color:#006F91;
+    color:white;
+    box-shadow:0px 0px 3px #006F91;
+    min-width:200px;
+    margin-top:50px;
+    margin-bottom:50px;
+}
+
+  #enter-code-container > button img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(144deg) brightness(104%) contrast(107%);
+    height: 50px;
+    width: 50px;
   }
+
+.button-is-active {
+  background-color: #9AC7EC;
+  color: white;
+}
+
+  .button-is-active img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(144deg) brightness(104%) contrast(107%);
+  }
+
+.button-is-disabled {
+  pointer-events: none;
+  background-color: white;
+  color: #006F91;
+}
+
+  .button-is-disabled img {
+    filter: invert(26%) sepia(30%) saturate(5594%) hue-rotate(174deg) brightness(92%) contrast(101%);
+  }
+
+#enter-code-field button {
+  max-width: 200px;
+  margin: auto;
+  min-width: 200px;
+  margin-top: 10px;
+  line-height: 40px;
+}
+
+    #enter-code-field button img {
+      height:40px;
+      width:40px;
+    }
+
+    #enter-code-field > p {
+      margin-bottom: 10px;
+    }
 
   #enter-code-field > input {
     text-align: center;
@@ -206,7 +328,7 @@
   pointer-events: none;
 }
 
-.button-is-active {
+/*.button-is-active {
   box-shadow: 0px 0px 3px #006F91;
   background-color: #006F91;
 }
@@ -217,7 +339,18 @@
 
   .button-is-active > button {
     color: white;
+  }*/
+
+@media only screen and (min-width:320px) and (max-width:980px) {
+  #sign-in-register-page{
+      flex-flow:column;
   }
+
+  #signin-form{
+      margin-bottom:20px;
+      margin-top:20px;
+  }
+}
 
 @media only screen and (min-width:560px) and (max-width:900px) {
     #enter-code-container{

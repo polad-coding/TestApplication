@@ -27,6 +27,57 @@ namespace KPProject.Controllers
             _converter = converter;
         }
 
+        [HttpPost]
+        [Route("GoToPreviousStageOfTheSurvey")]
+        public async Task<ActionResult> GoToPreviousStageOfTheSurveyAsync([FromBody]int surveyId)
+        {
+            var isRequestSuccessful = await _dataService.GoToPreviousStageOfTheSurveyAsync(surveyId);
+
+            if (isRequestSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("TransferTheCode")]
+        public async Task<ActionResult> TransferTheCodeAsync([FromBody]TransferCodesViewModel transferCodesViewModel)
+        {
+            var isOperationSuccessful = await _dataService.TransferTheCodeAsync(transferCodesViewModel);
+
+            if (isOperationSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("AssociateUserDataToTheSurvey")]
+        public async Task<ActionResult> AssociateUserDataToTheSurveyAsync([FromBody]string userId)
+        {
+            var requestSucceded = await _dataService.AssociateUserDataToTheSurveyAsync(userId);
+
+            if (requestSucceded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("UserHasUnsignedSurveys")]
+        public async Task<ActionResult<bool>> UserHasUnsignedSurveysAsync([FromQuery]string userId)
+        {
+            var hasUnsignedSurvey = await _dataService.UserHasUnsignedSurveysAsync(userId);
+
+            return Ok(hasUnsignedSurvey);
+        }
+
         [HttpGet]
         [Route("GetAllValues")]
         public async Task<ActionResult<List<ValueModel>>> GetAllValuesAsync([FromQuery] int surveyId)

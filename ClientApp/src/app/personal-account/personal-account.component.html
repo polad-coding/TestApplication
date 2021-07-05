@@ -19,22 +19,25 @@
 <div id="error-message-container" *ngIf="formHasError">
   <p>{{errorMessage}}</p>
 </div>
+<div id="tip-container" *ngIf="userHasUnsignedSurveys">
+  <p>Check your profile before getting your survey result</p>
+</div>
 <div id="personal-account-container">
   <div id="personal-account-sections">
-    <div [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'my-account-section', 'section-not-selected': selectedTab != 'my-account-section'}" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
+    <div [ngStyle]="{'margin-left': userHasUnsignedSurveys ? 'auto':'none','margin-right': userHasUnsignedSurveys ? 'auto':'none'}" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'my-account-section', 'section-not-selected': selectedTab != 'my-account-section'}" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
       <p>My account</p>
     </div>
-    <div [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'servey-results-and-reports-section', 'section-not-selected': selectedTab != 'servey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
+    <div *ngIf="!userHasUnsignedSurveys" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'servey-results-and-reports-section', 'section-not-selected': selectedTab != 'servey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
       <p>My survey results and reports</p>
     </div>
-    <div [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'get-codes-section', 'section-not-selected': selectedTab != 'get-codes-section'}" #accountSectionTab (click)="SelectTab($event)"  id="get-codes-section">
+    <div *ngIf="!userHasUnsignedSurveys" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'get-codes-section', 'section-not-selected': selectedTab != 'get-codes-section'}" #accountSectionTab (click)="SelectTab($event)"  id="get-codes-section">
       <p>Get codes</p>
     </div>
   </div>
-  <div id="get-codes-container" *ngIf="selectedTab == 'get-codes-section'">
+  <div id="get-codes-container" *ngIf="selectedTab == 'get-codes-section' && !userHasUnsignedSurveys">
     <app-get-codes></app-get-codes>
   </div>
-  <div id="survey-results-and-reports-container" *ngIf="selectedTab == 'servey-results-and-reports-section'">
+  <div  id="survey-results-and-reports-container" *ngIf="selectedTab == 'servey-results-and-reports-section' && !userHasUnsignedSurveys">
     <app-personal-survey-results-and-reports></app-personal-survey-results-and-reports>
   </div>
   <div id="personal-account-form-container" *ngIf="selectedTab == 'my-account-section'">
@@ -190,8 +193,9 @@
       <div>
 
       </div>
-      <div id="valid-changes-section">
-        <button (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
+      <div id="valid-changes-section" >
+        <button *ngIf="!userHasUnsignedSurveys" (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
+        <button *ngIf="userHasUnsignedSurveys" (click)="AssociateUserDataToTheSurvey(personalInformationForm)">Get your survey result</button>
       </div>
       <div id="see-privacy-image-block">
         <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />

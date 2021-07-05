@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { from } from 'rxjs';
 import { RegisterViewModel } from '../../view-models/register-view-model';
 import { NgForm } from '@angular/forms';
@@ -22,6 +22,10 @@ export class SignupFormComponent implements OnInit {
   public registerViewModel: RegisterViewModel = new RegisterViewModel();
   public user: UserViewModel;
   public agreeToTermsRadioChecked: boolean = false;
+  @Input()
+  public redirectToAccountPage: boolean = true;
+  @Output()
+  public displayIfOperationSuccessful = new EventEmitter<boolean>();
 
   constructor(private _authService: AuthenticationService, private _router: Router) { }
 
@@ -31,34 +35,51 @@ export class SignupFormComponent implements OnInit {
     }
   }
 
+
+
   public CheckAgreeToTermRadio() {
     this.agreeToTermsRadioChecked = true;
   }
 
-  public SubmitSignUpForm(registerForm: NgForm) {
-    this._authService.RegisterUser(this.registerViewModel).subscribe(response => {
-      let svw = new SignInViewModel();
-      svw.email = this.registerViewModel.email;
-      svw.password = this.registerViewModel.password;
-      this._authService.SignInUser(svw).subscribe(res => {
-        this.user = res.body;
-        localStorage.setItem("jwt", this.user.accessToken);
-        if (this.surveyCode == null) {
-          this._router.navigate(['personalAccount']);
-        }
-        else {
-          this._router.navigate(['enterSurveyAccount']);
-        }
+  public SubmitSignUpForm(registerForm: NgForm)
+  {
+    if (this.registerViewModel.email != this.registerViewModel.confirmEmail) {
+      this.errorMessage = 'Please enter the same email addresses.';
+      this.formIsInvalid = true;
+    }
+    else if (this.registerViewModel.password != this.registerViewModel.confirmPassword) {
+      this.formIsInvalid = true;  
+      this.errorMessage = 'Please enter the same passwords.';
+    }
+    else {
+      this._authService.RegisterUser(this.registerViewModel).subscribe(response => {
+        let svw = new SignInViewModel();
+        svw.email = this.registerViewModel.email;
+        svw.password = this.registerViewModel.password;
+        this._authService.SignInUser(svw).subscribe(res => {
+          this.user = res.body;
+          localStorage.setItem("jwt", this.user.accessToken);
+          if (this.redirectToAccountPage == true) {
+              if (this.surveyCode == null) {
+              this._router.navigate(['personalAccount']);
+            }
+          }
+          else {
+            //TODO - implement event emitter
+            this.displayIfOperationSuccessful.emit(true);
+          }
+        },
+          error => {
+            this.formIsInvalid = true;
+            this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
+          })
       },
         error => {
           this.formIsInvalid = true;
           this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
-        })
-    },
-      error => {
-        this.formIsInvalid = true;
-        this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
-      });
+        });
+    }
+
   }
 
 

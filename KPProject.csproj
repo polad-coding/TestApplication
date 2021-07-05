@@ -88,6 +88,7 @@
     <None Remove="ClientApp\src\view-models\survey-result-view-model.ts" />
     <None Remove="ClientApp\src\view-models\survey-second-stage-save-request-model.ts" />
     <None Remove="ClientApp\src\view-models\survey-third-stage-save-request-model.ts" />
+    <None Remove="ClientApp\src\view-models\transfer-codes-view-model.ts" />
     <None Remove="ClientApp\src\view-models\user-view-model.ts" />
     <None Remove="ClientApp\src\view-models\value-view-model.ts" />
     <None Remove="libwkhtmltox.dll" />
@@ -145,6 +146,7 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\survey-result-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\survey-second-stage-save-request-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\survey-third-stage-save-request-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\transfer-codes-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\user-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\value-view-model.ts" />
   </ItemGroup>

@@ -3,6 +3,136 @@
   height: 100px;
 }
 
+#user-account-manipulation-container{
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+#user-authorization-operations-container-mobile button {
+  color: #006F91;
+}
+
+  #user-authorization-operations-container-mobile button:hover {
+    color: white;
+    background-color: #006F91;
+  }
+
+#user-authorization-operations-modal {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+#user-authorization-operations-container-mobile {
+  display: flex;
+  flex-flow: column;
+  background-color: #9ac7ec;
+  width: 150px;
+  height: max-content;
+  margin-top: 40px;
+}
+
+.current-tab {
+  background-color: #006F91;
+  color: white;
+  padding: 5px;
+}
+
+#sign-in-section{
+    min-width:max-content;
+    height:max-content;
+    margin-top:10px;
+    margin-right:10px;
+
+}
+
+#user-authorization-operations-container button {
+  color: #006F91;
+}
+
+#user-authorization-operations-container button:hover{
+  color: white;
+  background-color:#006F91;
+}
+
+#user-authorization-operations-container {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  background-color: #9ac7ec;
+  top: 40px;
+  right: 55px;
+  width: 150px;
+}
+
+.user-email-button {
+  text-decoration: underline;
+  color: #006F91;
+  margin-right: 10px;
+}
+
+.language-image {
+  height: 20px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#languages-modal-container {
+  height: max-content;
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  width: max-content;
+  right: 13px;
+  top: 50px;
+  background-color: #9ac7ec;
+  border: 2px solid #006F91;
+  padding: 5px;
+}
+
+#languages-modal-container img{
+    height:20px;
+    width:30px;
+    margin-bottom:5px;
+    margin-top:5px;
+}
+
+#languages-modal-container img:hover{
+    box-shadow:0px 0px 3px black;
+    cursor:pointer;
+}
+
+#arrow-image {
+  height: 20px;
+  width: 20px;
+  transform: rotate(-90deg);
+  filter: invert(30%) sepia(96%) saturate(588%) hue-rotate(152deg) brightness(94%) contrast(104%);
+}
+
+#sign-in-section img {
+  margin-right: 10px;
+}
+
+#sign-in-section > div{
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+}
+
+#navigation-bar-main-part-top-section{
+    display:flex;
+    justify-content:flex-end;
+}
+
+#signin-button {
+  text-decoration: underline;
+  color: #006F91;
+}
+
 #navigation-bar-kp-logo {
   width: 8%;
   height: 100%;

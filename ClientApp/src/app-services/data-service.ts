@@ -9,6 +9,7 @@ import { ReportHTMLContentViewModel } from "../view-models/report-html-content-v
 import { SurveyFirstStageSaveRequestModel } from "../view-models/survey-first-stage-save-request-model";
 import { SurveySecondStageSaveRequestModel } from "../view-models/survey-second-stage-save-request-model";
 import { SurveyThirdStageSaveRequestModel } from "../view-models/survey-third-stage-save-request-model";
+import { TransferCodesViewModel } from "../view-models/transfer-codes-view-model";
 import { ValueViewModel } from "../view-models/value-view-model";
 import { AppSettingsService } from "./app-settings.service";
 
@@ -20,8 +21,24 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
+  public GoToPreviousStageOfTheSurvey(surveyId: number) {
+    this.http.post(`https://${this.url}/Data/GoToPreviousStageOfTheSurvey`, surveyId, { observe: 'response' });
+  }
+
+  public TransferTheCode(transferCodesViewModel: TransferCodesViewModel) {
+    return this.http.post(`https://${this.url}/Data/TransferTheCode`, transferCodesViewModel, { observe: 'response' });
+  }
+
+  public UserHasUnsignedSurveys(userId: string) {
+    return this.http.get(`https://${this.url}/Data/UserHasUnsignedSurveys?userId=${userId}`, { observe: 'response' });
+  }
+
   public GeneratePdf(content: ReportHTMLContentViewModel) {
     return this.http.post(`https://${this.url}/Data/GeneratePdf`, content, { observe: 'body', responseType: 'blob', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
+
+  public AssociateUserDataToTheSurvey(userId: string) {
+    return this.http.post(`https://${this.url}/Data/AssociateUserDataToTheSurvey`, `\"${userId}\"`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type':'application/json'}) });
   }
 
   public GenerateIndividualPdfReport(content: ReportHTMLContentViewModel) {

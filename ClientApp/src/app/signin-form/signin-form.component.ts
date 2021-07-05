@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { from } from 'rxjs';
 import { SignInViewModel } from '../../view-models/signin-view-model'
 import { NgForm } from '@angular/forms';
@@ -22,6 +22,10 @@ export class SigninFormComponent implements OnInit {
   public formIsInvalid: boolean = false;
   public errorMessage = "";
   public user: UserViewModel = new UserViewModel();
+  @Input()
+  public redirectToAccountPage: boolean = true;
+  @Output()
+  public displayIfOperationSuccessful = new EventEmitter<boolean>();
 
   constructor(private _router: Router,
     private _authService: AuthenticationService,
@@ -32,9 +36,11 @@ export class SigninFormComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('surveyCode') != null) {
-        this.surveyCode = localStorage.getItem('surveyCode');
+      this.surveyCode = localStorage.getItem('surveyCode');
     }
   }
+
+
 
   public RedirectToRegistrationForm() {
     this._router.navigate(['signup']);
@@ -47,15 +53,17 @@ export class SigninFormComponent implements OnInit {
         this.user = response.body;
         localStorage.setItem("jwt", this.user.accessToken);
         if (this.surveyCode == null) {
-          if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
-            this._router.navigate(['/personalAccount'], { state: { user: this.user } });
+          if (this.redirectToAccountPage == true) {
+            if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+              this._router.navigate(['/personalAccount'], { state: { user: this.user } });
+            }
+            else if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+              this._router.navigate(['/practitionerAccount']);
+            }
           }
-          else if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
-            this._router.navigate(['/practitionerAccount']);
+          else {
+            this.displayIfOperationSuccessful.emit(true);
           }
-        }
-        else {
-          this._router.navigate(['enterSurveyAccount']);
         }
       },
         error => {

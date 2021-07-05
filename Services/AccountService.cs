@@ -191,7 +191,6 @@ namespace KPProject.Services
 
             data = data.Split(",")[1];
 
-            //TODO - comment then to work on linux
 
             if (updateResult.Succeeded)
             {

@@ -2,19 +2,19 @@
 <app-navigation-bar></app-navigation-bar>
 <app-page-title titleText="Practitioner account"></app-page-title>
 <div id="practitioner-account-sections">
-  <div class="practitioner-account-section section-selected" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
+  <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'my-account-section', 'section-not-selected': selectedTab != 'my-account-section'}" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
     <p>My account</p>
   </div>
-  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="pro-details-section">
+  <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'pro-details-section', 'section-not-selected': selectedTab != 'pro-details-section'}" #accountSectionTab (click)="SelectTab($event)" id="pro-details-section">
     <p>Pro details</p>
   </div>
-  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
+  <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'servey-results-and-reports-section', 'section-not-selected': selectedTab != 'servey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
     <p>Survey & Reports</p>
   </div>
-  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="certification-membership-section">
+  <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'certification-membership-section', 'section-not-selected': selectedTab != 'certification-membership-section'}" #accountSectionTab (click)="SelectTab($event)" id="certification-membership-section">
     <p>Certification / Membership</p>
   </div>
-  <div class="practitioner-account-section section-not-selected" #accountSectionTab (click)="SelectTab($event)" id="get-codes-and-support-section">
+  <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'get-codes-and-support-section', 'section-not-selected': selectedTab != 'get-codes-and-support-section'}" #accountSectionTab (click)="SelectTab($event)" id="get-codes-and-support-section">
     <p>Get codes and support</p>
   </div>
 </div>

@@ -39,8 +39,11 @@ export class PractitionerAccountComponent   {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
         console.log(this.user);
+        localStorage.setItem('currentTabName', 'prosAccess');
       });
     }
+
+    this.selectedTab = localStorage.getItem('personalAccountTabName');
   }
 
   public SelectTab(event: any) {

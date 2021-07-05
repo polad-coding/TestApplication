@@ -41,6 +41,7 @@ import { CertificationAndMembershipComponent } from './certification-and-members
 import { PractitionersDirectoryComponent } from './practitioners-directory/practitioners-directory.component';
 import { PersonalReportComponent } from './personal-report/personal-report.component';
 import { PractitionerReportComponent } from './practitioner-report/practitioner-report.component';
+import { AuthorizationPageComponent } from './authorization-page/authorization-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -75,7 +76,8 @@ export function tokenGetter() {
     CertificationAndMembershipComponent,
     PractitionersDirectoryComponent,
     PersonalReportComponent,
-    PractitionerReportComponent
+    PractitionerReportComponent,
+    AuthorizationPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -95,8 +97,7 @@ export function tokenGetter() {
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'survey', component: SurveyComponent },
-      { path: 'signin', component: SigninComponent },
-      { path: 'signup', component: SignupComponent },
+      { path: 'authorizationPage', component: AuthorizationPageComponent },
       { path: 'personalAccount', component: PersonalAccountComponent },
       { path: 'practitionerAccount', component: PractitionerAccountComponent },
       { path: 'surveyFirstStage', component: SurveyFirstStageComponent },

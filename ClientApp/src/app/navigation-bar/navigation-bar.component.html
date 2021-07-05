@@ -1,43 +1,84 @@
+  <div id="user-authorization-operations-container" *ngIf="user != undefined && userAuthorizationOperationsContainerIsVisible && !isMobile">
+    <button (click)="RedirectToPersonalAccount()">To personal account</button>
+    <button (click)="RedirectToPractitionerAccount()" *ngIf="userRole == 'practitioner'">To practitioner account</button>
+    <button (click)="LogOutUser()">Log out</button>
+  </div>
+  <div id="user-authorization-operations-modal" *ngIf="user != undefined && userAuthorizationOperationsContainerIsVisible && isMobile">
+    <div id="user-authorization-operations-container-mobile" *ngIf="user != undefined && userAuthorizationOperationsContainerIsVisible">
+      <button (click)="RedirectToPersonalAccount()">To personal account</button>
+      <button (click)="RedirectToPractitionerAccount()" *ngIf="userRole == 'practitioner'">To practitioner account</button>
+      <button (click)="LogOutUser()">Log out</button>
+    </div>
+  </div>
+<div id="languages-modal-container" *ngIf="languageModalIsVisible">
+  <img (click)="SelectLanguage($event)" id="english-language-image" class="language-image" src="../../assets/Flags/enFlag.jpg" />
+  <img (click)="SelectLanguage($event)" id="french-language-image"  class="language-image" src="../../assets/Flags/frFlag.png" />
+  <img (click)="SelectLanguage($event)" id="greek-language-image"  class="language-image" src="../../assets/Flags/grFlag.png" />
+  <img (click)="SelectLanguage($event)" id="german-language-image"  class="language-image" src="../../assets/Flags/gerFlag.png" />
+  <img (click)="SelectLanguage($event)" id="spanish-language-image" class="language-image" src="../../assets/Flags/spFlag.png" />
+  <img (click)="SelectLanguage($event)" id="italian-language-image" class="language-image" src="../../assets/Flags/itFlag.png" />
+  <img (click)="SelectLanguage($event)" id="russian-language-image" class="language-image" src="../../assets/Flags/ruFlag.png" />
+</div>
 <nav id="navigation-bar" *ngIf="!isMobile">
   <div id="navigation-bar-kp-logo">
-    <img src="../../assets/KP-logotype/KP-logotype-006F91-empty.png" />
+    <img (click)="RedirectToHomePage()" src="../../assets/KP-logotype/KP-logotype-006F91-empty.png" />
   </div>
   <div id="navigation-bar-main-part">
-    <div id="languages-container">
-      <ul>
-        <li>
-          <img src="../../assets/Flags/enFlag.jpg" />
-        </li>
-        <li>
-          <img src="../../assets/Flags/frFlag.png" />
-        </li>
-        <li>
-          <img src="../../assets/Flags/grFlag.png" />
-        </li>
-        <li>
-          <img src="../../assets/Flags/gerFlag.png" />
-        </li>
-        <li>
-          <img src="../../assets/Flags/spFlag.png" />
-        </li>
-        <li>
-          <img src="../../assets/Flags/itFlag.png" />
-        </li>
-        <li>
-          <img src="../../assets/Flags/ruFlag.png" />
-        </li>
-      </ul>
+    <div id="navigation-bar-main-part-top-section">
+      <div id="sign-in-section">
+        <div *ngIf="user">
+          <img src="../../assets/Images/profile-icon.png" height="30" width="30" />
+          <button (click)="DisplayUserAuthorizationManipulationModal($event)" class="user-email-button" *ngIf="user.professionalEmail == null">{{user.email}}</button>
+          <button (click)="DisplayUserAuthorizationManipulationModal($event)" class="user-email-button" *ngIf="user.professionalEmail != null">{{user.professionalEmail}}</button>
+        </div>
+        <div *ngIf="!user">
+          <img src="../../assets/Images/profile-icon.png" height="30" width="30" />
+          <button (click)="RedirectToSignInPage()" id="signin-button">Sign in</button>
+        </div>
+      </div>
+      <div id="languages-container">
+        <!--<ul>
+    <li>
+      <img src="../../assets/Flags/enFlag.jpg" />
+    </li>
+    <li>
+      <img src="../../assets/Flags/frFlag.png" />
+    </li>
+    <li>
+      <img src="../../assets/Flags/grFlag.png" />
+    </li>
+    <li>
+      <img src="../../assets/Flags/gerFlag.png" />
+    </li>
+    <li>
+      <img src="../../assets/Flags/spFlag.png" />
+    </li>
+    <li>
+      <img src="../../assets/Flags/itFlag.png" />
+    </li>
+    <li>
+      <img src="../../assets/Flags/ruFlag.png" />
+    </li>
+  </ul>-->
+        <img (click)="DisplayLanguageModal($event)"  class="language-image" *ngIf="languageSelected == 'english'" src="../../assets/Flags/enFlag.jpg" />
+        <img (click)="DisplayLanguageModal($event)"  class="language-image" *ngIf="languageSelected == 'french'" src="../../assets/Flags/frFlag.jpg" />
+        <img (click)="DisplayLanguageModal($event)" class="language-image" *ngIf="languageSelected == 'greek'" src="../../assets/Flags/grFlag.jpg" />
+        <img (click)="DisplayLanguageModal($event)" class="language-image" *ngIf="languageSelected == 'german'" src="../../assets/Flags/gerFlag.jpg" />
+        <img (click)="DisplayLanguageModal($event)"  class="language-image" *ngIf="languageSelected == 'spanish'" src="../../assets/Flags/spFlag.jpg" />
+        <img (click)="DisplayLanguageModal($event)"  class="language-image" *ngIf="languageSelected == 'italian'" src="../../assets/Flags/itFlag.jpg" />
+        <img (click)="DisplayLanguageModal($event)"  class="language-image" *ngIf="languageSelected == 'russian'" src="../../assets/Flags/ruFlag.jpg" />
+        <img id="arrow-image"  src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png"/>
+      </div>
     </div>
     <div id="navigation-bar-actions">
       <ul>
-        <li>THE SURVEY</li>
-        <li>VALUES?</li>
-        <li>THE METHOD</li>
-        <li>THE BLOG</li>
-        <li (click)="RedirectToPractitionersDirectory()">PRACTITIONERS</li>
-        <li>RESOURCES</li>
-        <li>SIGN IN</li>
-        <li>PROS-ACCESS</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'survey'}" (click)="RedirectToSurveyPage()">THE SURVEY</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'value'}">VALUES?</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'services'}">SERVICES</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'newsAndAgenda'}">NEWS / AGENDA</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'resources'}">RESOURCES</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'prosAccess'}">PROS-ACCESS</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'whoWeAre'}" (click)="RedirectToPractitionersDirectory()">WHO WE ARE?</li>
       </ul>
     </div>
   </div>
@@ -48,7 +89,18 @@
   <button id="actions-menu-button" (click)="DisplayActionsSideBar($event)">
     <img src="../../assets/Images/Side-menu-icon.png" />
   </button>
-    <img id="kp-logo" src="../../assets/KP-logotype/KP-logotype-006F91-empty.png" />
+    <!--<img id="kp-logo" src="../../assets/KP-logotype/KP-logotype-006F91-empty.png" />-->
+  <div id="user-account-manipulation-container">
+    <div *ngIf="user">
+      <img src="../../assets/Images/profile-icon.png" height="30" width="30" />
+      <button (click)="DisplayUserAuthorizationManipulationModal($event)" class="user-email-button" *ngIf="user.professionalEmail == null">{{user.email}}</button>
+      <button (click)="DisplayUserAuthorizationManipulationModal($event)" class="user-email-button" *ngIf="user.professionalEmail != null">{{user.professionalEmail}}</button>
+    </div>
+    <div *ngIf="!user">
+      <img src="../../assets/Images/profile-icon.png" height="30" width="30" />
+      <button (click)="RedirectToSignInPage()" id="signin-button">Sign in</button>
+    </div>
+  </div>
   <button id="languages-menu-button" (click)="DisplayLanguagesSideBar($event)">
     <img src="../../assets/Images/Globe-icon.png" />
   </button>

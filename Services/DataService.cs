@@ -617,7 +617,6 @@ namespace KPProject.Services
 
         private async Task<List<ApplicationUser>> FilterPractitionersOnGendersAsync(List<ApplicationUser> practitioners, Gender gender)
         {
-            //TODO - here implement gender method
             if (gender == null)
             {
                 return practitioners;
@@ -736,6 +735,110 @@ namespace KPProject.Services
             var surveyResultViewModel = _mapper.Map<SurveyModel, SurveyResultViewModel>(surveyResults);
 
             return surveyResultViewModel;
+        }
+
+        public async Task<bool> UserHasUnsignedSurveysAsync(string userId)
+        {
+            var unsignedSurvey = await _applicationDbContext.Surveys.FirstOrDefaultAsync((s) => s.SurveyTakerUserId == userId && s.ThirdStagePassed == true && s.AnonymisedUserId == null);
+
+            if (unsignedSurvey == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> AssociateUserDataToTheSurveyAsync(string userId)
+        {
+            var user = await _applicationDbContext.Users.FirstAsync((u) => u.Id == userId );
+            var userRegions = await _applicationDbContext.UserRegions.Where(ur => ur.ApplicationUserId == userId).ToListAsync();
+
+            var anonymisedUser = new AnonymisedUser() { Age = user.Age, Gender = user.Gender, Education = user.Education, Position = user.Position, MyerBriggsCode = user.MyerBriggsCode, SectorOfActivity = user.SectorOfActivity  };
+
+            await _applicationDbContext.AnonymisedUsers.AddAsync(anonymisedUser);
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            var anonymisedUserRegions = new List<AnonymisedUserRegion>();
+
+            userRegions.ForEach((ur) =>
+            {
+                anonymisedUserRegions.Add(new AnonymisedUserRegion() { AnonymisedUserId = anonymisedUser.Id, RegionId = ur.RegionId });
+            });
+
+            await _applicationDbContext.AnonymisedUserRegions.AddRangeAsync(anonymisedUserRegions);
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            var unsignedSurvey = await _applicationDbContext.Surveys.FirstAsync((s) => s.SurveyTakerUserId == userId && s.ThirdStagePassed == true && s.AnonymisedUserId == null);
+
+            unsignedSurvey.AnonymisedUserId = anonymisedUser.Id;
+
+            _applicationDbContext.Surveys.Update(unsignedSurvey);
+
+            if (await _applicationDbContext.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel)
+        {
+            var order = await _applicationDbContext.Orders.FirstAsync(o => o.CodeBody == transferCodesViewModel.Code);
+
+            await _applicationDbContext.Orders.AddAsync(new OrderModel { CodeBody = order.CodeBody, NumberOfUsages = 1, UserId = transferCodesViewModel.UserId });
+
+            order.NumberOfUsages -= 1;
+
+            if (order.NumberOfUsages == 0)
+            {
+                _applicationDbContext.Remove(order);
+            }
+            else
+            {
+                _applicationDbContext.Update(order);
+            }
+
+            var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> GoToPreviousStageOfTheSurveyAsync(int surveyId)
+        {
+            var currentSurvey = await _applicationDbContext.Surveys.FirstAsync(s => s.Id == surveyId);
+
+            if (currentSurvey.SecondStagePassed)
+            {
+                var rowsToDelete = await _applicationDbContext.SurveySecondStages.Where(sss => sss.SurveyId == surveyId).ToListAsync();
+                _applicationDbContext.SurveySecondStages.RemoveRange(rowsToDelete);
+                currentSurvey.SecondStagePassed = false;
+            }
+            else if (currentSurvey.FirstStagePassed)
+            {
+                var rowsToDelete = await _applicationDbContext.SurveyFirstStages.Where(sfs => sfs.SurveyId == surveyId).ToListAsync();
+                _applicationDbContext.SurveyFirstStages.RemoveRange(rowsToDelete);
+                currentSurvey.FirstStagePassed = false;
+            }
+
+            _applicationDbContext.Update(currentSurvey);
+
+            var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

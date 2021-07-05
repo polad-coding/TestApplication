@@ -43,7 +43,8 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   public UploadSurveyResults() {
     console.log(this.selectedValues);
     this._dataService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, Number.parseInt(localStorage.getItem('surveyId')))).subscribe(response => {
-      this._router.navigate(['wrap-up']);
+      localStorage.setItem('personalAccountTabName', 'my-account-section');
+      this._router.navigate(['personalAccount']);
     });
   }
 

@@ -34,37 +34,35 @@ namespace KPProject.Services
         {
             var seed = this.GenerateRandomSeed();
             var user = await _userManager.FindByIdAsync(userId);
-            var anonymisedUser = new AnonymisedUser {
-                Gender = user.Gender,
-                Age = user.Age,
-                Education = user.Education,
-                MyerBriggsCode = user.MyerBriggsCode,
-                Position = user.Position,
-                SectorOfActivity = user.SectorOfActivity
-            };
+            //var anonymisedUser = new AnonymisedUser {
+            //    Gender = user.Gender,
+            //    Age = user.Age,
+            //    Education = user.Education,
+            //    MyerBriggsCode = user.MyerBriggsCode,
+            //    Position = user.Position,
+            //    SectorOfActivity = user.SectorOfActivity
+            //};
 
-            await _dbContext.AnonymisedUsers.AddAsync(anonymisedUser);
+            //await _dbContext.AnonymisedUsers.AddAsync(anonymisedUser);
 
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
 
-            var anonimysedUserRegions = new List<AnonymisedUserRegion>();
+            //var anonimysedUserRegions = new List<AnonymisedUserRegion>();
 
-            _dbContext.UserRegions
-                .Where(ur => ur.ApplicationUserId == userId)
-                .Select(ur => ur.RegionId).ToList()
-                .ForEach(id => anonimysedUserRegions.Add(new AnonymisedUserRegion { AnonymisedUserId = anonymisedUser.Id, RegionId = id }));
+            //_dbContext.UserRegions
+            //    .Where(ur => ur.ApplicationUserId == userId)
+            //    .Select(ur => ur.RegionId).ToList()
+            //    .ForEach(id => anonimysedUserRegions.Add(new AnonymisedUserRegion { AnonymisedUserId = anonymisedUser.Id, RegionId = id }));
 
-            await _dbContext.AnonymisedUserRegions.AddRangeAsync(anonimysedUserRegions);
+            //await _dbContext.AnonymisedUserRegions.AddRangeAsync(anonimysedUserRegions);
 
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
 
-            var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId, AnonymisedUserId = anonymisedUser.Id, TakenOn = DateTime.UtcNow, Seed = seed };
+            var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId, TakenOn = DateTime.UtcNow, Seed = seed };
 
             await _dbContext.Surveys.AddAsync(survey);
 
             var numberOfRowsChanged = await _dbContext.SaveChangesAsync();
-
-
 
             if (numberOfRowsChanged > 0)
             {
@@ -73,7 +71,15 @@ namespace KPProject.Services
 
                 order.NumberOfUsages -= 1;
 
-                _dbContext.Update(order);
+                if (order.NumberOfUsages == 0)
+                {
+                    _dbContext.Remove(order);
+                }
+                else
+                {
+                    _dbContext.Update(order);
+                }
+
 
                 var rowsWithNumberOfUsagesChanged = await _dbContext.SaveChangesAsync();
 

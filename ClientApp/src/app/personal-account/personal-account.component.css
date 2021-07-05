@@ -10,6 +10,18 @@
   margin-bottom: 20px;
 }
 
+#tip-container {
+  width: 90%;
+  height: max-content;
+  background-color: #91c0c6;
+  color: white;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
 #personal-account-sections {
   display: flex;
   width: 100%;

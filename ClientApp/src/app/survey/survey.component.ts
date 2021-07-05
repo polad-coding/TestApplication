@@ -10,6 +10,7 @@ export class SurveyComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    localStorage.setItem('currentTabName', 'survey');
   }
 
 }

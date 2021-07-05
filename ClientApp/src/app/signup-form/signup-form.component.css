@@ -13,6 +13,17 @@
   font-size: 1.1rem;
 }
 
+#password-section{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:0px;
+}
+
+#password-description-container{
+    font-size:0.8rem;
+    font-family:barlowSemiCondensedLightItalic;
+}
+
 #error-section {
   height: auto;
   width: 300px;
@@ -113,6 +124,13 @@ input {
     color: white;
     background-color: #006F91;
   }
+
+
+.password-container {
+  display: flex;
+  flex-flow: column;
+  max-width: 45%;
+}
 
 @media only screen and (min-width: 300px) and (max-width: 630px) {
     #name-surname-section{

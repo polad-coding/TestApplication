@@ -38,6 +38,8 @@ export class PractitionersDirectoryComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.onResize(null);
 
+    localStorage.setItem('currentTabName', 'whoWeAre');
+
     this._accountService.GetAllLanguages().subscribe((response: any) => {
       this.languages = response.body;
     });
