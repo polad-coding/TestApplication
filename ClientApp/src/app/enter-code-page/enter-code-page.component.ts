@@ -47,7 +47,7 @@ export class EnterCodePageComponent implements OnInit {
   }
 
   public RedirectToGetCodeTab() {
-    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']) == 'User') {
+    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
       localStorage.setItem('personalAccountTabName', 'get-codes-section');
       this._router.navigate(['personalAccount']);
     }
@@ -65,7 +65,7 @@ export class EnterCodePageComponent implements OnInit {
           this.errorMessage = null;
           this._dataService.TransferTheCode(new TransferCodesViewModel(this.codeEntered, this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'])).subscribe((response: any) => {
             if (response.ok) {
-              if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']) == 'User') {
+              if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
                 localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                 this._router.navigate(['personalAccount']);
               }
@@ -74,6 +74,8 @@ export class EnterCodePageComponent implements OnInit {
                 this._router.navigate(['practitionerAccount']);
               }
             }
+          }, error => {
+              this.errorMessage = 'This code already connected with your account, please enter different code.';
           });
         }
         else {

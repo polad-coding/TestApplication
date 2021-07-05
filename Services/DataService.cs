@@ -787,7 +787,12 @@ namespace KPProject.Services
 
         public async Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel)
         {
-            var order = await _applicationDbContext.Orders.FirstAsync(o => o.CodeBody == transferCodesViewModel.Code);
+            var order = await _applicationDbContext.Orders.FirstOrDefaultAsync(o => o.CodeBody == transferCodesViewModel.Code && o.UserId != transferCodesViewModel.UserId);
+
+            if (order == null)
+            {
+                return false;
+            }
 
             await _applicationDbContext.Orders.AddAsync(new OrderModel { CodeBody = order.CodeBody, NumberOfUsages = 1, UserId = transferCodesViewModel.UserId });
 
