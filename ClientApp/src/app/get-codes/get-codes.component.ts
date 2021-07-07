@@ -212,7 +212,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   public NumberOfCodesChangedMobile(event) {
-    if (event.target.value >= 0) {
+    if (this.listOfOrders[0].numberOfCodes >= 0) {
       this.listOfOrders[0].numberOfSurveys = this.listOfOrders[0].defaultNumberOfUsages * this.listOfOrders[0].numberOfCodes;
       this.listOfOrders[0].totalPrice = this.listOfOrders[0].numberOfSurveys * this.listOfOrders[0].pricePerUnit - (this.listOfOrders[0].numberOfSurveys * this.listOfOrders[0].pricePerUnit * (this.listOfOrders[0].discountRate == null ? 0 : this.listOfOrders[0].discountRate) / 100);
       this.CalculateNewGrandTotalSum();
