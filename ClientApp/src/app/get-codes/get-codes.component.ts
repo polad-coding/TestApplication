@@ -178,6 +178,18 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   }
 
+  public ChangeTheCodeType(order: OrderViewModel, event) {
+    if (event.target.value == 'monosurveyCode') {
+      this.SelectMonosurveyOption(order);
+    }
+    else if (event.target.value == 'multisurveyCodeFiveSurveys') {
+      this.SelectMultisurveyFiveUsagesOption(order);
+    }
+    else {
+      this.SelectMultisurveyTenUsagesOption(order);
+    }
+  }
+
   public SelectMonosurveyOption(order: OrderViewModel) {
     console.info(order);
 

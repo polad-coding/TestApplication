@@ -87,10 +87,10 @@
   <div id="orders-list-container">
     <div class="order-row" #orderRow *ngFor="let order of listOfOrders;index as i" id="order-{{order.id}}">
       <div class="column">
-        <select>
-          <option value="monosurveyCode" (click)="SelectMonosurveyOption(order)">Monosurvey code</option>
-          <option value="multisurveyCodeFiveSurveys" (click)="SelectMultisurveyFiveUsagesOption(order)">Multisurvey code 5 surveys</option>
-          <option value="multisurveyCodeTenSurveys" (click)="SelectMultisurveyTenUsagesOption(order)">Multisurvey code 10 surveys</option>
+        <select (change)="ChangeTheCodeType(order, $event)">
+          <option value="monosurveyCode" >Monosurvey code</option>
+          <option value="multisurveyCodeFiveSurveys" >Multisurvey code 5 surveys</option>
+          <option value="multisurveyCodeTenSurveys">Multisurvey code 10 surveys</option>
         </select>
       </div>
       <div class="column">
@@ -148,10 +148,10 @@
         Choose the type of code (mono / multi)
         <img class="information-icon" (click)="DisplayInformationModal('firstInformationModal')" src="../../assets/Images/information-icon.svg" />
       </p>
-      <select>
-        <option value="monosurveyCode" (click)="SelectMonosurveyOption(listOfOrders[0])">Monosurvey code</option>
-        <option value="multisurveyCodeFiveSurveys" (click)="SelectMultisurveyFiveUsagesOption(listOfOrders[0])">Multisurvey code 5 surveys</option>
-        <option value="multisurveyCodeTenSurveys" (click)="SelectMultisurveyTenUsagesOption(listOfOrders[0])">Multisurvey code 10 surveys</option>
+      <select (change)="ChangeTheCodeType(listOfOrders[0], $event)">
+        <option value="monosurveyCode" >Monosurvey code</option>
+        <option value="multisurveyCodeFiveSurveys">Multisurvey code 5 surveys</option>
+        <option value="multisurveyCodeTenSurveys" >Multisurvey code 10 surveys</option>
       </select>
       <div *ngIf="firstInformationModalIsVisible" class="information-modal">
         <div class="information-modal-title">
