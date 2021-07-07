@@ -3,14 +3,16 @@ using System;
 using KPProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KPProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210706074347_Added_Field_To_Order_And_Made_Renaming_In_AC")]
+    partial class Added_Field_To_Order_And_Made_Renaming_In_AC
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,6 +396,9 @@ namespace KPProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CodeBody")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CouponBody")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("NumberOfUsages")

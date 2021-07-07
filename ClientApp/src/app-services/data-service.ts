@@ -21,6 +21,14 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
+  public CheckIfAllCouponsAreValid(listOfOrders: Array<OrderViewModel>) {
+    return this.http.post(`https://${this.url}/Data/CheckIfAllCouponsAreValid`, listOfOrders, { observe: 'response' });
+  }
+
+  public GetCoupon(couponBody: string) {
+    return this.http.get(`https://${this.url}/Data/GetCoupon?couponBody=${couponBody}`, { observe: 'response' });
+  }
+
   public GoToPreviousStageOfTheSurvey(surveyId: number) {
     this.http.post(`https://${this.url}/Data/GoToPreviousStageOfTheSurvey`, surveyId, { observe: 'response' });
   }

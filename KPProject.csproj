@@ -66,6 +66,8 @@
     <Compile Remove="Migrations\20210520095931_Added_Certification_Entity.Designer.cs" />
     <Compile Remove="Migrations\20210523092138_Added_Memebership_Entity_To_Database.cs" />
     <Compile Remove="Migrations\20210523092138_Added_Memebership_Entity_To_Database.Designer.cs" />
+    <Compile Remove="Migrations\20210706074200_Added_CouponBody_Field_To_Order_Entity_And_Changed_The_Name_Of_The_Field_In_AC_Entity.cs" />
+    <Compile Remove="Migrations\20210706074200_Added_CouponBody_Field_To_Order_Entity_And_Changed_The_Name_Of_The_Field_In_AC_Entity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -75,6 +77,7 @@
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
     <None Remove="ClientApp\src\view-models\language-view-model.ts" />
     <None Remove="ClientApp\src\view-models\membership-view-model.ts" />
     <None Remove="ClientApp\src\view-models\order-view-model.ts" />
@@ -133,6 +136,7 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\language-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\membership-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\order-view-model.ts" />

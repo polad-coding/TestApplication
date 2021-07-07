@@ -4,16 +4,17 @@ export class OrderViewModel {
   public numberOfCodes: number;
   public numberOfSurveys: number;
   public pricePerUnit: number;
-  public discountCoupon: string;
+  public couponBody: string;
   public totalPrice: number;
   public defaultNumberOfUsages: number;
+  public discountRate: number;
 
   constructor(id, numberOfCodes, numberOfSurveys, pricePerUnit, discoutCoupon, totalPrice, defaultNumberOfUsages) {
     this.id = id;
     this.numberOfCodes = numberOfCodes;
     this.numberOfSurveys = numberOfSurveys;
     this.pricePerUnit = pricePerUnit;
-    this.discountCoupon = discoutCoupon;
+    this.couponBody = discoutCoupon;
     this.totalPrice = totalPrice;
     this.defaultNumberOfUsages = defaultNumberOfUsages;
   }

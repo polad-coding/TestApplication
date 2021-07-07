@@ -29,6 +29,9 @@ namespace KPProject.Data
         public DbSet<ApplicationUserCertification> ApplicationUserCertifications { get; set; }
         public DbSet<Certification> Certifications { get; set; }
         public DbSet<Membership> Memberships { get; set; }
+        public DbSet<GeneralCoupon> GeneralCoupons { get; set; }
+        public DbSet<AssociatedCoupon> AssociatedCoupons { get; set; }
+        public DbSet<ApplicationUserAssociatedCoupon> ApplicationUserAssociatedCoupons { get; set; }
 
 
         public ApplicationDbContext(
@@ -43,10 +46,14 @@ namespace KPProject.Data
             builder.Entity<UserLanguage>().HasKey(ul => new { ul.ApplicationUserId, ul.LanguageId });
             builder.Entity<UserRegion>().HasKey(ur => new { ur.ApplicationUserId, ur.RegionId });
             builder.Entity<AnonymisedUserRegion>().HasKey(aur => new { aur.AnonymisedUserId, aur.RegionId });
+            builder.Entity<ApplicationUserAssociatedCoupon>().HasKey(auac => new { auac.ApplicationUserId, auac.AssociatedCouponId });
             builder.Entity<ApplicationUserCertification>().HasKey(aus => new { aus.ApplicationUserId, aus.CertificationId });
             builder.Entity<SurveyFirstStageModel>().HasKey(sft => new { sft.SurveyId, sft.ValueId });
             builder.Entity<SurveySecondStageModel>().HasKey(sss => new { sss.SurveyId, sss.ValueId });
             builder.Entity<SurveyThirdStageModel>().HasKey(sts => new { sts.SurveyId, sts.ValueId });
+
+            builder.Entity<GeneralCoupon>().HasIndex(gc => gc.CouponBody).IsUnique();
+            builder.Entity<AssociatedCoupon>().HasIndex(ac => ac.CouponBody).IsUnique();
         }
     }
 }

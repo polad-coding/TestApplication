@@ -24,5 +24,7 @@ namespace KPProject.Models
         public string MyerBriggsCode { get; set; }
         public string ProfileImageName { get; set; }
         public virtual List<ApplicationUserCertification> ApplicationUserCertifications { get; set; } = new List<ApplicationUserCertification>();
+        public List<ApplicationUserAssociatedCoupon> ApplicationUserAssociatedCoupons { get; set; }
+
     }
 }

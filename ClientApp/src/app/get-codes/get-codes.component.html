@@ -1,9 +1,43 @@
-<div id="order-container">
+<div id="order-container" *ngIf="!mobileModeIsOn">
+  <div id="paypal-modal-container" [ngStyle]="{'display': paypalModalIsVisible == true ? 'flex':'none'}">
+    <div id="paypalContainer"></div>
+  </div>
   <div id="title-section">
-    <div class="column-title" id="type-of-code-title">
-      <p>Type of code</p>
-      <p>Choose the type of code (mono / multi)</p>
-      <button class="info-button"></button>
+    <div id="type-of-code-title" class="column-title">
+      <div id="type-of-code-title">
+        <p>Type of code</p>
+        <p>Choose the type of code (mono / multi)</p>
+      </div>
+      <img class="information-icon" (click)="DisplayInformationModal('firstInformationModal')" src="../../assets/Images/information-icon.svg" />
+      <div *ngIf="firstInformationModalIsVisible" class="information-modal">
+        <div class="information-modal-title">
+          <img class="information-icon"  src="../../assets/Images/information-icon.svg" />
+          <img (click)="CloseInformationModal('firstInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
+        </div>
+        <p>Two types of code:</p>
+        <ul>
+          <li>the monosurvey -> 1 code - 1 survey</li>
+          <li>the multisurvey -> 1 code - n surveys <br /> (5, 10, 20, 50, 100, 200)</li>
+        </ul>
+        <p>Two packages:</p>
+        <ul>
+          <li>200 surveys + 3 certification</li>
+          <li>same + 10 hours Kairios Praxis consulting</li>
+        </ul>
+        <p>
+          Group assessment report and
+          assistance:
+        </p>
+        <ul>
+          <li>
+            Group assessment and report for 5,
+            10, 20, 50, 100, 200 people, for more
+            information or more surveys contact
+            us (here link to the contact form)
+          </li>
+        </ul>
+        <p>One year membership</p>
+      </div>
     </div>
     <div class="column-title">
       <p>
@@ -23,21 +57,42 @@
         survey
       </p>
     </div>
-    <div class="column-title">
+    <div id="discount-coupon-title" class="column-title">
       <p>Discount coupon</p>
-      <button class="info-button"></button>
+      <img class="information-icon" (click)="DisplayInformationModal('secondInformationModal')" src="../../assets/Images/information-icon.svg" />
+      <div *ngIf="secondInformationModalIsVisible" class="information-modal">
+        <div class="information-modal-title">
+          <img class="information-icon" src="../../assets/Images/information-icon.svg" />
+          <img (click)="CloseInformationModal('secondInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
+        </div>
+        <ul>
+          <li>
+            If you have de Discount coupon
+            please enter it here.
+          </li>
+          <li>
+            If you have a special project, don’t
+            hesitate to tell us about it, we will see
+            together if a discount can be applied
+            and how we can help you with your
+            project.
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="column-title">
       <p>Total</p>
     </div>
   </div>
   <div id="orders-list-container">
-    <div class="order-row" #orderRow *ngFor="let order of listOfOrders;index as i">
-      <select id="survey-options">
-        <option value="monosurveyCode" (click)="SelectMonosurveyOption(order)">Monosurvey code</option>
-        <option value="multisurveyCodeFiveSurveys" (click)="SelectMultisurveyFiveUsagesOption(order)">Multisurvey code 5 surveys</option>
-        <option value="multisurveyCodeTenSurveys" (click)="SelectMultisurveyTenUsagesOption(order)">Multisurvey code 10 surveys</option>
-      </select>
+    <div class="order-row" #orderRow *ngFor="let order of listOfOrders;index as i" id="order-{{order.id}}">
+      <div class="column">
+        <select>
+          <option value="monosurveyCode" (click)="SelectMonosurveyOption(order)">Monosurvey code</option>
+          <option value="multisurveyCodeFiveSurveys" (click)="SelectMultisurveyFiveUsagesOption(order)">Multisurvey code 5 surveys</option>
+          <option value="multisurveyCodeTenSurveys" (click)="SelectMultisurveyTenUsagesOption(order)">Multisurvey code 10 surveys</option>
+        </select>
+      </div>
       <div class="column">
         <input class="number-of-codes-field" id="number-of-codes-container" type="number" (keyup)="NumberOfCodesChanged($event,order)" [(ngModel)]="order.numberOfCodes" />
       </div>
@@ -47,8 +102,9 @@
       <div class="column" id="survey-price">
         <span>{{order.pricePerUnit | currency}}</span>
       </div>
-      <div class="column">
-        <input id="discount-field" placeholder="insert your code" />
+      <div class="column coupon-column">
+        <input #couponField id="discount-field" [attr.data-previous-value]="this.value" [(ngModel)]="order.couponBody" (focus)="RemoveErrorAppearence($event)" (focusout)="CheckForDiscountValidity(order, $event)" placeholder="insert your code" />
+        <span class="coupon-error-message" id="discount-coupon-error-text-of-order-{{order.id}}">Entered coupon is invalid.</span>
       </div>
       <div class="column total-sum">
         <span>{{order.totalPrice | currency}}</span>
@@ -71,6 +127,113 @@
         confirmation of this by email.
       </p>
     </div>
-    <div id="paypalContainer" ></div>
+    <div id="valid-your-order-container">
+      <p [ngClass]="{'button-is-active': ordersCounter > 0, 'button-is-not-active': ordersCounter == 0}" (click)="DisplayPayPalModal($event)">Valid your order</p>
+    </div>
+  </div>
+</div>
+
+<div id="order-container-mobile" *ngIf="mobileModeIsOn">
+  <div id="paypal-modal-container" [ngStyle]="{'display': paypalModalIsVisible == true ? 'flex':'none'}">
+    <div id="paypalContainer"></div>
+  </div>
+  <div id="title-section-mobile">
+    <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+    <h1>Get codes</h1>
+  </div>
+  <div id="order-mobile">
+    <div id="type-of-code-title-container-mobile" class="order-row-mobile">
+      <p>
+        Type of code
+        Choose the type of code (mono / multi)
+        <img class="information-icon" (click)="DisplayInformationModal('firstInformationModal')" src="../../assets/Images/information-icon.svg" />
+      </p>
+      <select>
+        <option value="monosurveyCode" (click)="SelectMonosurveyOption(listOfOrders[0])">Monosurvey code</option>
+        <option value="multisurveyCodeFiveSurveys" (click)="SelectMultisurveyFiveUsagesOption(listOfOrders[0])">Multisurvey code 5 surveys</option>
+        <option value="multisurveyCodeTenSurveys" (click)="SelectMultisurveyTenUsagesOption(listOfOrders[0])">Multisurvey code 10 surveys</option>
+      </select>
+      <div *ngIf="firstInformationModalIsVisible" class="information-modal">
+        <div class="information-modal-title">
+          <img class="information-icon" src="../../assets/Images/information-icon.svg" />
+          <img (click)="CloseInformationModal('firstInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
+        </div>
+        <p>Two types of code:</p>
+        <ul>
+          <li>the monosurvey -> 1 code - 1 survey</li>
+          <li>the multisurvey -> 1 code - n surveys <br /> (5, 10, 20, 50, 100, 200)</li>
+        </ul>
+        <p>Two packages:</p>
+        <ul>
+          <li>200 surveys + 3 certification</li>
+          <li>same + 10 hours Kairios Praxis consulting</li>
+        </ul>
+        <p>
+          Group assessment report and
+          assistance:
+        </p>
+        <ul>
+          <li>
+            Group assessment and report for 5,
+            10, 20, 50, 100, 200 people, for more
+            information or more surveys contact
+            us (here link to the contact form)
+          </li>
+        </ul>
+        <p>One year membership</p>
+      </div>
+    </div>
+    <div class="order-row-mobile">
+      <p>Quantity</p>
+      <input type="number" (keyup)="NumberOfCodesChanged($event,listOfOrders[0])" [(ngModel)]="listOfOrders[0].numberOfCodes" />
+      <div id="quatity-section-bottom-texts-container">
+        <p>(Number of surveys->{{listOfOrders[0].numberOfSurveys}})</p>
+        <div id="quatity-section-bottom-texts-container-right-texts">
+          <p>Unit price:</p>
+          <p class="cost-container">{{listOfOrders[0].pricePerUnit | currency}}</p>
+        </div>
+      </div>
+    </div>
+    <div id="discount-coupon-container-mobile" class="order-row-mobile">
+      <p>I have a discount coupon <img (click)="DisplayInformationModal('secondInformationModal')" class="information-icon" src="../../assets/Images/information-icon.svg" /></p>
+      <input id="discount-field" [(ngModel)]="listOfOrders[0].couponBody" (focus)="RemoveErrorAppearence($event)" (focusout)="CheckForDiscountValidity(listOfOrders[0], $event)" placeholder="insert your code" />
+      <span class="coupon-error-message">Entered coupon is invalid.</span>
+      <div *ngIf="secondInformationModalIsVisible" class="information-modal">
+        <div class="information-modal-title">
+          <img class="information-icon" src="../../assets/Images/information-icon.svg" />
+          <img (click)="CloseInformationModal('secondInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
+        </div>
+        <ul>
+          <li>
+            If you have de Discount coupon
+            please enter it here.
+          </li>
+          <li>
+            If you have a special project, don’t
+            hesitate to tell us about it, we will see
+            together if a discount can be applied
+            and how we can help you with your
+            project.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="total-price-row-mobile">
+      <p>Total Price (incl. VAT):</p>
+      <p class="cost-container">{{grandTotalSum | currency}}</p>
+    </div>
+    <button id="valid-your-order-button" (click)="DisplayPayPalModal($event)">Valid your order <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
+  </div>
+  <div id="information-container-mobile">
+    <p>
+      Once you have validated your order, you will be invited
+      to proceed with payment via PayPal
+    </p>
+    <p>
+      Your personal account will then be credited with
+      the number of surveys ordered and you will receive
+      confirmation of this by email and you will your code(s)
+      in the tab <span>My codes, survey results and reports</span>
+    </p>
   </div>
 </div>

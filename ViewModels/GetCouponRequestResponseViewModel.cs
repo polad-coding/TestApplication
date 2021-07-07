@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace KPProject.ViewModels
 {
-    public class OrderViewModel
+    public class GetCouponRequestResponseViewModel
     {
+        public int Id { get; set; }
         public string CouponBody { get; set; }
-        public int NumberOfSurveys { get; set; }
-        public int DefaultNumberOfUsages { get; set; }
+        public int? NumberOfUsagesLeft { get; set; }
+        public double DiscountRate { get; set; }
     }
 }

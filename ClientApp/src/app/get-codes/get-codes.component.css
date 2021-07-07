@@ -1,33 +1,96 @@
 #title-section {
   display: flex;
-  width:90%;
-  margin-left:auto;
-  margin-right:auto;
-  margin-top:30px;
+  width: 99%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}
+
+.coupon-error-message{
+    color:red;
+    font-size:0.6rem;
+    display:none;
+}
+
+#type-of-code-title{
+    position:relative;
+}
+
+.information-modal {
+  position: absolute;
+  font-size: 0.6rem;
+  background-color: white;
+  top: 0px;
+  left: 0px;
+  width: auto;
+  text-align: left;
+  padding: 10px;
+  /*right: -30px;*/
+  border-radius: 5px;
+  z-index: 10;
+  border: 2px solid #006F91;
+}
+
+.information-modal-title {
+  position: relative;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#discount-coupon-title{
+    position:relative;
+}
+
+#discount-coupon-container-mobile, #type-of-code-title-container-mobile {
+  position: relative;
+}
+
+.information-modal-title img:last-child {
+  position: absolute;
+  right: 0;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+  .information-modal p{
+      font-family:barlowSemiCondensedMedium;
+      margin-bottom:5px;
+      margin-top:5px;
+  }
+
+  .coupon-column input {
+    max-width: 130px;
+  }
+
+.coupon-column{
+    display:flex;
+    flex-flow:column;
+    align-items:center;
+
 }
 
 #order-container {
   display: flex;
   justify-content: center;
   background-color: #9AC7EC;
-  color:#006F91;
-  flex-flow:column;
-  font-family:barlowSemiCondensedLight;
+  color: #006F91;
+  flex-flow: column;
+  font-family: barlowSemiCondensedLight;
+  position: relative;
 }
 
 #survey-options {
   color: #006F91;
   font-size: 0.9rem;
-  min-width:210px;
 }
 
 #number-of-codes-container {
-  border: none;
   color: #006F91;
   max-width: 130px;
-  display:flex;
-  justify-content:center;
-  text-align:center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 #discount-field {
@@ -37,23 +100,59 @@
   color: #006F91;
 }
 
+.column select{
+    max-width:130px;
+    height:30px;
+
+}
+
 .column {
-  width: 15%;
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+  justify-content: center;
+  align-items:center;
+}
+
+#paypal-modal-container {
+  display: flex;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#valid-your-order-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 60px;
+  align-items: center;
+  width: 30%;
+}
+
+
+
+.information-icon {
+  height: 20px;
+  width: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+  filter: invert(29%) sepia(96%) saturate(688%) hue-rotate(155deg) brightness(96%) contrast(103%);
+}
+
+#type-of-code-title {
+  flex-flow: column;
+  text-align: center;
+}
+
+.type-of-code-field {
+  background-color: white;
+  padding: 10px;
   display: flex;
   justify-content: center;
-}
-
-#type-of-code-title{
-    flex-flow:column;
-    text-align:center;
-}
-
-.type-of-code-field{
-    background-color:white;
-    padding:10px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  align-items: center;
 }
 
 #discount-coupon-container {
@@ -65,52 +164,68 @@
 }
 
 .number-of-codes-field {
-  background-color: white;
-  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #add-new-element-button {
-    display:inline;
+  display: inline;
 }
 
-#grand-total-sum-container span{
-    color:#006F91;
-    margin-right:10px;
+#grand-total-sum-container span {
+  color: #006F91;
+  margin-right: 10px;
 }
 
-#paypalContainer{
-    margin-left:auto;
-    margin-right:30px;
+.button-is-active {
+  padding: 10px;
+  background-color: #006F91;
+  color: white;
+  height: max-content;
+  cursor: pointer;
+}
+
+.button-is-not-active {
+  padding: 10px;
+  background-color: white;
+  color: #006F91;
+  height: max-content;
+  pointer-events: none;
+}
+
+#paypalContainer {
+  background-color: #006F91;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 #grand-total-sum-container {
   display: flex;
   justify-content: flex-end;
-  padding-right:50px;
+  padding-right: 50px;
 }
 
-#bottom-section{
-    display:flex;
-    width:100%;
-    margin-top:20px;
-    margin-bottom:20px;
+#bottom-section {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-#bottom-section button{
-    padding:10px;
-    background-color:#006F91;
-    color:white;
-    margin-left:auto;
-    margin-right:30px;
-}
+  #bottom-section button {
+    padding: 10px;
+    background-color: #006F91;
+    color: white;
+    margin-left: auto;
+    margin-right: 30px;
+  }
 
-#bottom-section-texts{
-    color:#006F91;
-    margin-left:30px;
-    line-height:1.8;
+#bottom-section-texts {
+  width: 70%;
+  color: #006F91;
+  margin-left: 30px;
+  line-height: 1.8;
 }
 
 #add-new-element-button button {
@@ -123,35 +238,197 @@
   margin-top: 10px;
 }
 
-    #add-new-element-button button:hover {
-      background-color: #006F91;
-      color:white;
-    }
-    
+  #add-new-element-button button:hover {
+    background-color: #006F91;
+    color: white;
+  }
+
 .order-row {
   display: flex;
-  width: 90%;
+  width: 99%;
   margin-left: auto;
   margin-right: auto;
-  margin-top:10px;
-  margin-bottom:10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-height:50px;
+  min-height:50px;
 }
 
-#orders-list-container{
-    width:100%;
-    max-height:200px;
-    min-height:200px;
-    overflow-y:auto;
+#orders-list-container {
+  width: 100%;
+  max-height: 200px;
+  min-height: 200px;
+  overflow-y: auto;
 }
 
 .column-title {
-  width: 15%;
   display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
   justify-content: center;
   text-align: center;
+  align-items: center;
 }
 
-#code-options-drop-down{
-    display:none;
+#code-options-drop-down {
+  display: none;
 }
 
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+    #order-container{
+        font-size:0.8rem;
+    }
+
+    .information-icon{
+        height:15px;
+        width:15px;
+    }
+
+    .order-row{
+        max-height:40px;
+        min-height:40px;
+    }
+
+    .column select, .column input{
+        height:80%;
+        width:80%;
+        border:1px solid #006F91;
+        border-radius:3px;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 800px) {
+  #order-container {
+    font-size: 0.6rem;
+  }
+
+  .information-icon {
+    height: 10px;
+    width: 10px;
+  }
+
+  .order-row {
+    max-height: 30px;
+    min-height: 30px;
+  }
+
+  .column select, .column input {
+    height: 90%;
+    width: 90%;
+    border: 1px solid #006F91;
+    border-radius: 3px;
+  }
+
+  .coupon-error-message{
+      font-size:0.3rem;
+  }
+}
+
+
+#order-container-mobile {
+  background-color: #9ac7ec;
+  display: flex;
+  flex-flow: column;
+}
+
+#title-section-mobile{
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    color:#006F91;
+    margin-top:20px;
+}
+
+#title-section-mobile img{
+    height:100%;
+    position:absolute;
+    left:0;
+}
+
+#order-container-mobile{
+    display:flex;
+    flex-flow:column;
+    width:100%;
+    font-size:0.8rem;
+    color:#006F91;
+}
+
+#order-mobile{
+    width:90%;
+    margin:auto;
+    display:flex;
+    flex-flow:column;
+    font-size:1rem;
+}
+
+.order-row-mobile{
+    display:flex;
+    flex-flow:column;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.order-row-mobile select, .order-row-mobile input{
+    width:100%;
+    min-height:40px;
+    max-height:40px;
+    margin-top:10px;
+    text-align:center;
+    color:#006F91;
+}
+
+#quatity-section-bottom-texts-container{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+}
+
+#quatity-section-bottom-texts-container-right-texts{
+    display:flex;
+}
+
+#total-price-row-mobile {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cost-container {
+  background-color: #c5dfec;
+  padding: 3px;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-family:barlowSemiCondensedMedium;
+}
+
+#valid-your-order-button{
+    display:flex;
+    color:white;
+    justify-content:center;
+    align-items:center;
+    background-color:#006F91;
+    margin-top:20px;
+}
+
+  #valid-your-order-button img {
+    height: 40px;
+    width: 40px;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(213deg) brightness(103%) contrast(104%);
+  }
+
+#information-container-mobile{
+    color:#006F91;
+    font-family:barlowSemiCondensedLightItalic;
+    background-color:white;
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:10px;
+    margin-top:10px;
+    padding:5px;
+}

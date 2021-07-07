@@ -845,5 +845,87 @@ namespace KPProject.Services
 
             return false;
         }
+
+        public async Task PopulateDBWithCoupons()
+        {
+            var listOfGeneralCoupons = new List<GeneralCoupon>();
+
+            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMSTUDENT", DiscountRate = 20.00 });
+            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMDISABLED", DiscountRate = 40.00 });
+            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMINNEED", DiscountRate = 40.00 });
+            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMCOOL", DiscountRate = 99.00 });
+
+            await _applicationDbContext.GeneralCoupons.AddRangeAsync(listOfGeneralCoupons);
+
+            var listOfAssociatedCoupons = new List<AssociatedCoupon>();
+
+            listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "JNKASI2", NumberOfUsagesLeft = 10, DiscountRate = 50.00 });
+            listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "NLNBJJS", NumberOfUsagesLeft = 1, DiscountRate = 80.00 });
+            listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "JNKJNK9", NumberOfUsagesLeft = 5, DiscountRate = 65.00 });
+
+            await _applicationDbContext.AssociatedCoupons.AddRangeAsync(listOfAssociatedCoupons);
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            listOfAssociatedCoupons.ForEach(ac =>
+            {
+                _applicationDbContext.ApplicationUserAssociatedCoupons.Add(new ApplicationUserAssociatedCoupon { AssociatedCouponId = ac.Id, ApplicationUserId = "3a10366e-4d73-441d-a18c-43deb1e508c7" });
+            });
+
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task<GetCouponRequestResponseViewModel> GetCouponAsync(string couponBody, string userId)
+        {
+            GetCouponRequestResponseViewModel response;
+            var generalCoupon = await _applicationDbContext.GeneralCoupons.FirstOrDefaultAsync(gc => gc.CouponBody == couponBody);
+
+            if (generalCoupon != null)
+            {
+                response = new GetCouponRequestResponseViewModel { Id = generalCoupon.Id, CouponBody = couponBody, NumberOfUsagesLeft = null, DiscountRate = generalCoupon.DiscountRate };
+                return response;
+            }
+
+            var associatedCoupon = await _applicationDbContext.AssociatedCoupons.FirstOrDefaultAsync(ac => ac.CouponBody == couponBody && ac.ApplicationUserAssociatedCoupons.FirstOrDefault(auac => auac.ApplicationUserId == userId && auac.AssociatedCouponId == ac.Id) != null);
+
+            if (associatedCoupon != null)
+            {
+                response = new GetCouponRequestResponseViewModel { Id = associatedCoupon.Id, CouponBody = couponBody, NumberOfUsagesLeft = associatedCoupon.NumberOfUsagesLeft, DiscountRate = associatedCoupon.DiscountRate };
+                return response;
+            }
+
+            return null;
+        }
+
+        public async Task<bool> CheckIfAllCouponsAreValidAsync(List<OrderViewModel> orders)
+        {
+
+            foreach (var order in orders)
+            {
+                if (order.CouponBody == null)
+                {
+                    continue;
+                }
+
+                var coupon = _applicationDbContext.AssociatedCoupons.FirstOrDefault(ac => ac.CouponBody == order.CouponBody);
+
+                if (coupon == null)
+                {
+                    continue;
+                }
+
+                var numberOfDuplicateCoupons = orders.Count(o => o.CouponBody == order.CouponBody);
+
+
+                if (coupon.NumberOfUsagesLeft < numberOfDuplicateCoupons)
+                {
+                    return false;
+
+                }
+            }
+
+            return true;
+        }
     }
 }

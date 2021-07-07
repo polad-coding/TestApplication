@@ -3,14 +3,16 @@ using System;
 using KPProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KPProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210705123001_Made_Code_Body_Fields_Unique_In_Coupon_Entities")]
+    partial class Made_Code_Body_Fields_Unique_In_Coupon_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,7 +288,7 @@ namespace KPProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("CouponBody")
+                    b.Property<string>("CodeBody")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<double>("DiscountRate")
@@ -297,7 +299,7 @@ namespace KPProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CouponBody")
+                    b.HasIndex("CodeBody")
                         .IsUnique();
 
                     b.ToTable("AssociatedCoupons");

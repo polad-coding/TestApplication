@@ -28,6 +28,29 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
+        [Route("CheckIfAllCouponsAreValid")]
+        public async Task<ActionResult<bool>> CheckIfAllCouponsAreValidAsync(List<OrderViewModel> orders)
+        {
+            var requestResult = _dataService.CheckIfAllCouponsAreValidAsync(orders);
+
+            return Ok(requestResult);
+        }
+
+        [HttpGet]
+        [Route("GetCoupon")]
+        public async Task<ActionResult<GetCouponRequestResponseViewModel>> GetCouponAsync([FromQuery]string couponBody)
+        {
+            var coupon = await _dataService.GetCouponAsync(couponBody, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (coupon != null)
+            {
+                return Ok(coupon);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
         [Route("GoToPreviousStageOfTheSurvey")]
         public async Task<ActionResult> GoToPreviousStageOfTheSurveyAsync([FromBody]int surveyId)
         {

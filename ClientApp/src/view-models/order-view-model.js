@@ -7,7 +7,7 @@ var OrderViewModel = /** @class */ (function () {
         this.numberOfCodes = numberOfCodes;
         this.numberOfSurveys = numberOfSurveys;
         this.pricePerUnit = pricePerUnit;
-        this.discountCoupon = discoutCoupon;
+        this.couponBody = discoutCoupon;
         this.totalPrice = totalPrice;
         this.defaultNumberOfUsages = defaultNumberOfUsages;
     }

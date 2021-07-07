@@ -177,6 +177,7 @@ namespace KPProject
             //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
             //CreateValuesLanguageFiles(serviceProvider).Wait();
             //CreateCertifications(serviceProvider).Wait();
+            //PopulateDBWithCoupons(serviceProvider).Wait();
         }
 
         public async Task CreateValues(IServiceProvider serviceProvider)
@@ -225,6 +226,13 @@ namespace KPProject
             await roleManager.CreateAsync(new IdentityRole("Practitioner"));
             await roleManager.CreateAsync(new IdentityRole("User"));
             await roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
+
+        public async Task PopulateDBWithCoupons(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithCoupons();
         }
 
         public async Task CreateUsers(IServiceProvider serviceProvider)

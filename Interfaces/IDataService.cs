@@ -38,5 +38,8 @@ namespace KPProject.Interfaces
         Task<bool> AssociateUserDataToTheSurveyAsync(string userId);
         Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel);
         Task<bool> GoToPreviousStageOfTheSurveyAsync(int surveyId);
+        Task PopulateDBWithCoupons();
+        Task<GetCouponRequestResponseViewModel> GetCouponAsync(string couponBody, string userId);
+        Task<bool> CheckIfAllCouponsAreValidAsync(List<OrderViewModel> orders);
     }
 }
