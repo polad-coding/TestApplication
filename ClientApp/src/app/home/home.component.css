@@ -175,6 +175,7 @@
   width: 100%;
   display: flex;
   flex-flow: row;
+  max-width:100vw;
 }
 
 #kp-main-page-slideshow {

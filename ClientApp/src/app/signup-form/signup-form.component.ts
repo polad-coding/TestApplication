@@ -25,7 +25,7 @@ export class SignupFormComponent implements OnInit {
   @Input()
   public redirectToAccountPage: boolean = true;
   @Output()
-  public displayIfOperationSuccessful = new EventEmitter<boolean>();
+  public displayIfOperationSuccessful = new EventEmitter<UserViewModel>();
 
   constructor(private _authService: AuthenticationService, private _router: Router) { }
 
@@ -46,10 +46,16 @@ export class SignupFormComponent implements OnInit {
     if (this.registerViewModel.email != this.registerViewModel.confirmEmail) {
       this.errorMessage = 'Please enter the same email addresses.';
       this.formIsInvalid = true;
+      setTimeout(() => {
+        document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
     else if (this.registerViewModel.password != this.registerViewModel.confirmPassword) {
       this.formIsInvalid = true;  
       this.errorMessage = 'Please enter the same passwords.';
+      setTimeout(() => {
+        document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
     else {
       this._authService.RegisterUser(this.registerViewModel).subscribe(response => {
@@ -66,17 +72,23 @@ export class SignupFormComponent implements OnInit {
           }
           else {
             //TODO - implement event emitter
-            this.displayIfOperationSuccessful.emit(true);
+            this.displayIfOperationSuccessful.emit(this.user);
           }
         },
           error => {
             this.formIsInvalid = true;
             this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
+            setTimeout(() => {
+              document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
           })
       },
         error => {
           this.formIsInvalid = true;
           this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
+          setTimeout(() => {
+            document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+          }, 100);
         });
     }
 

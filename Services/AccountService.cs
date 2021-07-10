@@ -77,6 +77,8 @@ namespace KPProject.Services
             oldUser.MyerBriggsCode = userViewModel.MyerBriggsCode;
             oldUser.ProfileImageName = $"{userViewModel.Email}-user-profile-image";
 
+            //TODO - here uncomment
+
             //if (userViewModel.Email != oldEmail)
             //{
             //    File.Copy(

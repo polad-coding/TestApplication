@@ -19,7 +19,11 @@ export class WrapUpComponent implements OnInit {
   private relativeWeightOfThePerspectives: Array<number> = new Array<number>();
 
   constructor(private _dataService: DataService, private _router: Router) {
-
+    this._dataService.DecideToWhichStageToTransfer(Number.parseInt(localStorage.getItem('surveyId'))).subscribe(response => {
+      if (response.body != 'wrap-up') {
+        this._router.navigate([response.body]);
+      }
+    });
   }
 
   public DownloadYourPersonalReport() {

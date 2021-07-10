@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-survey',
@@ -7,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SurveyComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) { }
+
+  public RedirectToEnterCodePage() {
+    this._router.navigate(['enterCode']);
+  }
 
   ngOnInit() {
     localStorage.setItem('currentTabName', 'survey');
+    window.scroll(0, 0);
   }
 
 }

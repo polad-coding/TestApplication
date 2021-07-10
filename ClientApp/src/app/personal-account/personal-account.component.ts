@@ -8,6 +8,7 @@ import { GenderViewModel } from '../../view-models/gender-view-model';
 import { RegionViewModel } from '../../view-models/region-view-model';
 import { LanguageViewModel } from '../../view-models/language-view-model';
 import { DataService } from '../../app-services/data-service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-personal-account',
@@ -32,7 +33,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
   public currentSelectedTabIndex: number;
   public userHasUnsignedSurveys: boolean = false;
 
-  constructor(private _router: Router, private accountService: AccountService, private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer) {
+  constructor(private _router: Router, private _jwtHelper: JwtHelperService, private accountService: AccountService, private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer) {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.user = _router.getCurrentNavigation().extras.state.user;
     }
@@ -43,6 +44,11 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
+    if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
+      this._router.navigate(['authorizationPage']);
+    }
+
+    localStorage.removeItem('currentTabName');
     if (this.user == null || this.user == undefined) {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
@@ -150,7 +156,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     }
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
-
+    this.regionModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
   }
 
   public EditInputField(fieldName: string, event: MouseEvent) {
@@ -182,6 +188,9 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
           if (response.body === true) {
             this.formHasError = true;
             this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
+            setTimeout(() => {
+              document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
           }
           else {
             this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
@@ -201,9 +210,15 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
       console.log(personalInformationForm);
       if (personalInformationForm.controls['email'].errors.required) {
         this.errorMessage = this.errorMessage.concat('Email address is a compulsory field! ');
+        setTimeout(() => {
+          document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
       else if (personalInformationForm.controls['email'].errors.pattern) {
         this.errorMessage = this.errorMessage.concat('Incorrect email address! ');
+        setTimeout(() => {
+          document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
 
       if (true) {

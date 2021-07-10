@@ -129,17 +129,18 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   public DisplayPayPalModal(event: MouseEvent) {
-    console.debug(this.listOfOrders);
     this._dataService.CheckIfAllCouponsAreValid(this.listOfOrders).subscribe((response: any) => {
       console.info(response);
       if (response.body.result == true) {
         event.stopPropagation();
         this.paypalModalIsVisible = true;
-        console.info(this.grandTotalSum.toFixed(2));
-        console.info(this.grandTotalSum.toPrecision(2));
         if (document.getElementById('paypalContainer').firstChild != undefined) {
           document.getElementById('paypalContainer').removeChild(document.getElementById('paypalContainer').firstChild);
         }
+        setTimeout(() => {
+          document.getElementById('paypalContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+
         render({
           id: "#paypalContainer",
           currency: "USD",
@@ -148,8 +149,9 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
             this._dataService.GenerateCodesForTheUser(this.listOfOrders).subscribe(response => {
               //Perform the operation
-              localStorage.setItem('currentTabName', 'servey-results-and-reports-section');
-
+              localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+              localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+                
               this.listOfOrders = new Array<OrderViewModel>();
               window.location.reload();
             }, error => {
@@ -211,6 +213,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
+  //TODO - check why doesn't work here
   public NumberOfCodesChangedMobile(event) {
     if (this.listOfOrders[0].numberOfCodes >= 0) {
       this.listOfOrders[0].numberOfSurveys = this.listOfOrders[0].defaultNumberOfUsages * this.listOfOrders[0].numberOfCodes;

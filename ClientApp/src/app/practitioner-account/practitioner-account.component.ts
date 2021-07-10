@@ -2,6 +2,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnChanges, OnInit, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { element } from 'protractor';
 import { AccountService } from '../../app-services/account.service';
 import { GenderViewModel } from '../../view-models/gender-view-model';
@@ -29,11 +30,19 @@ export class PractitionerAccountComponent   {
     this.AdjustZIndexes();
   }
 
-  constructor(private renderer2: Renderer2, private accountService: AccountService) {
+  constructor(private renderer2: Renderer2, private _router: Router, private accountService: AccountService, private _jwtHelper: JwtHelperService) {
 
   }
 
   ngOnInit() {
+
+    if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
+      this._router.navigate(['authorizationPage']);
+    }
+
+    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+      this._router.navigate(['personalAccount']);
+    }
 
     if (this.user == null || this.user == undefined) {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
@@ -43,7 +52,7 @@ export class PractitionerAccountComponent   {
       });
     }
 
-    this.selectedTab = localStorage.getItem('personalAccountTabName');
+    this.selectedTab = localStorage.getItem('practitionerAccountTabName');
   }
 
   public SelectTab(event: any) {

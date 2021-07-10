@@ -39,9 +39,14 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   private surveyId: number; 
 
   constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) {
-
+    this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
   }
 
+  public ProceedToPersonalSpace() {
+    this._dataService.DeleteSurveyFirstStageResults(this.surveyId).subscribe(response => {
+      this._router.navigate(['personalAccount']);
+    })
+  }
 
   public ProceedToDescriptionStage(event) {
     this.isStepDescriptionPage = true;
@@ -200,6 +205,18 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     this.isStepDescriptionPage = false;
     this.isSelectionStage = true;
 
+    let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe(response => {
+      if (response.body == 'surveySecondStage') {
+        this._dataService.GetFirstStageValues(surveyId).subscribe((getFirstStageValuesResponse: any) => {
+          if (getFirstStageValuesResponse.ok) {
+            this.MarkAllValuesImportance(getFirstStageValuesResponse.body);
+          }
+        });
+      }
+    })
+
     this.currentIndex = 0;
     setTimeout(() => {
       this.SelectNewValue(null, 0);
@@ -208,7 +225,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
     //this._renderer2.addClass(this.valueContainers.first.nativeElement, 'current-value');
 
-    console.log(this.valueContainers);
 
   }
 
@@ -248,14 +264,56 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     //TODO - place the survey creation process in other place after testing
-      let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
-      this._dataService.GetTheCurrentStageValues(surveyId).subscribe((response: any) => {
-        if (response.ok) {
-          this.values = response.body;
-        }
-      });
+    let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+    this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe((response: any) => {
+      if (response.body == 'surveyFirstStage') {
+        this._dataService.GetValuesForFirstStage(surveyId).subscribe((getCurrentStageValuesResponse: any) => {
+          if (getCurrentStageValuesResponse.ok) {
+            this.values = getCurrentStageValuesResponse.body;
+            console.debug(this.values);
+          }
+        });
+      }
+      else if (response.body == 'surveySecondStage') {
+        this._dataService.GetValuesForFirstStage(surveyId).subscribe((getValuesForFirstStageResponse: any) => {
+          if (getValuesForFirstStageResponse.ok) {
+            this.values = getValuesForFirstStageResponse.body;
+            console.info(this.values);
 
+          }
+        });
+      }
+      else if (response.body == 'surveyThirdStage') {
+        this._router.navigate(['surveyThirdStage']);
+      }
+      else {
+        this._router.navigate(['wrap-up']);
+      }
+    });
+  }
 
+  private MarkAllValuesImportance(selectedValues: Array<ValueViewModel>) {
+    console.log(selectedValues);
+
+    this.valueContainers.forEach(vc => {
+      if (selectedValues.find(sv => sv.id == vc.nativeElement.dataset.valueid) != null) {
+        this.numberOfValuesQualifiedAsImportant += 1;
+        this.numberOfValuesQualified += 1;
+        //Add element to the lessImportantValues list
+        this.importantValues.push(vc);
+        //Change the style of the element
+        this._renderer2.addClass(vc.nativeElement.firstChild, 'value-is-important');
+        this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-important');
+      }
+      else {
+        this.numberOfValuesQualified += 1;
+        this.lessImportantValues.push(vc);
+        this._renderer2.addClass(vc.nativeElement.firstChild, 'value-is-not-important');
+        this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
+      }
+    });
+    console.log(this.importantValues);
+    console.log(this.lessImportantValues);
   }
 
   public SaveFirstStageResults(event) {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AccountService } from '../../app-services/account.service';
@@ -84,6 +84,7 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
       this.userRole = 'practitioner';
     }
   }
+
 
   public RedirectToPractitionersDirectory() {
     localStorage.setItem('personalAccountTabName', 'my-account-section');

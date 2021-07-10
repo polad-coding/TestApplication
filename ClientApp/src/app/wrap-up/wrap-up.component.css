@@ -33,8 +33,8 @@
 }
 
   #your-profile-section img {
-    width: 350px;
-    height: 350px;
+    width: 320px;
+    height: 320px;
   }
 
 #your-profile-section-texts {
@@ -394,7 +394,7 @@
   }
 
   .perspective-container {
-    min-height: auto;
+    min-height: max-content;
     border-right: 1px solid #006F91;
     margin-bottom:20px;
   }
@@ -518,7 +518,7 @@
 
 @media only screen and (min-width:320px) and (max-width:400px) {
   #perspectives-pie-diagram {
-    width: 400px;
+    width: 100vw;
   }
 }
 

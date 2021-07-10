@@ -6,6 +6,7 @@ import {
   animate,
   transition,
 } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public currentIndex: number = this.slidesNoVisible;
   public lastSlideIndex: number;
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2, private _router: Router) { }
 
   ngAfterViewInit(): void {
     this.lastSlideIndex = this.slides.length;
@@ -49,6 +50,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.slidesNoVisible = 1;
     }
     this.DisplayNewSlides();
+  }
+
+  public RedirectToSurveyPage() {
+    this._router.navigate(['survey']);
+  }
+
+  public RedirectToPractitionersDirectoryPage() {
+    this._router.navigate(['practitionersDirectory']);
   }
 
   @HostListener('window:resize', ['$event'])

@@ -36,7 +36,7 @@
     <app-signup-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetOperationResult($event)"></app-signup-form>
   </div>
 </div>
-<div id="enter-code-container" *ngIf="userAgreedWithTheClause && userIsAuthorized && secondStage == true">
+<div id="enter-code-container" *ngIf="userAgreedWithTheClause && userIsAuthorized && secondStage">
   <div tabindex="1" id="error-section-placeholder">
 
   </div>

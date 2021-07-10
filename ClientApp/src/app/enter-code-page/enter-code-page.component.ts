@@ -18,6 +18,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
 export class EnterCodePageComponent implements OnInit {
 
   public userAgreedWithTheClause: boolean = false;
+  public user: UserViewModel;
   public secondStage: boolean = false;
   public errorMessage: string;
   public codeEntered: string;
@@ -27,19 +28,26 @@ export class EnterCodePageComponent implements OnInit {
 
   ngOnInit() {
     let jwt = localStorage.getItem('jwt');
+    let userAgreedOnTheClause = localStorage.getItem('userAgreedOnTheClause');
     if (jwt && !this._jwtHelper.isTokenExpired(jwt)) {
       this.userIsAuthorized = true;
+    }
+
+    if (userAgreedOnTheClause != null && userAgreedOnTheClause == 'true') {
+      this.userAgreedWithTheClause = true;
+      this.secondStage = true;
     }
   }
 
   public GetOperationResult(eventResponse) {
-    if (eventResponse == true) {
-      this.userIsAuthorized = true;
+    if (eventResponse != null) {
+      window.location.reload();
     }
   }
 
   public ChangeUserAgreementFlag() {
     this.userAgreedWithTheClause = true;
+    localStorage.setItem('userAgreedOnTheClause', 'true');
   }
 
   public NextPageButtonClicked() {
@@ -52,7 +60,7 @@ export class EnterCodePageComponent implements OnInit {
       this._router.navigate(['personalAccount']);
     }
     else {
-      localStorage.setItem('personalAccountTabName', 'get-codes-and-support-section');
+      localStorage.setItem('practitionerAccountTabName', 'get-codes-and-support-section');
       this._router.navigate(['practitionerAccount']);
     }
   }

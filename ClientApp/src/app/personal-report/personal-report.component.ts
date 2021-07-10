@@ -126,6 +126,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                       this._ds.GenerateIndividualPdfReport(obj).subscribe((response: Blob) => {
                         const fileUrl = window.URL.createObjectURL(response);
                         const showWindow = window.open(fileUrl);
+                        localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+                        this.router.navigate(['personalAccount']);
                       });
                     }, 0);
                   }

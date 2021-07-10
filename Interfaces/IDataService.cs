@@ -41,5 +41,10 @@ namespace KPProject.Interfaces
         Task PopulateDBWithCoupons();
         Task<GetCouponRequestResponseViewModel> GetCouponAsync(string couponBody, string userId);
         Task<bool> CheckIfAllCouponsAreValidAsync(List<OrderViewModel> orders);
+        Task<List<ValueModel>> GetValuesForFirstStageAsync(int surveyId);
+        Task<List<ValueModel>> GetFirstStageValuesAsync(int surveyId);
+        Task<List<ValueModel>> GetSecondStageValuesAsync(int surveyId);
+        Task<bool> DeleteSurveyFirstStageResultsAsync(int surveyId);
+        Task<bool> DeleteSurveySecondStageResultsAsync(int surveyId);
     }
 }

@@ -25,7 +25,7 @@ export class SigninFormComponent implements OnInit {
   @Input()
   public redirectToAccountPage: boolean = true;
   @Output()
-  public displayIfOperationSuccessful = new EventEmitter<boolean>();
+  public displayIfOperationSuccessful = new EventEmitter<UserViewModel>();
 
   constructor(private _router: Router,
     private _authService: AuthenticationService,
@@ -62,18 +62,24 @@ export class SigninFormComponent implements OnInit {
             }
           }
           else {
-            this.displayIfOperationSuccessful.emit(true);
+            this.displayIfOperationSuccessful.emit(this.user);
           }
         }
       },
         error => {
           this.formIsInvalid = true;
           this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
+          setTimeout(() => {
+            document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+          }, 100);
         });
     }
     else {
       this.formIsInvalid = true;
       this.errorMessage = "The entered data is in incorrect format, your email must be valid email address and your password must consist of at least 8 characters.";
+      setTimeout(() => {
+        document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
   }
 

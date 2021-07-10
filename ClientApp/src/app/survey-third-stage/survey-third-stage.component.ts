@@ -40,6 +40,12 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public GoToPreviousStep() {
+    if (window.confirm("Are you sure you want to leave the stage uncompleated, all your choises will be lost.")) {
+        this._router.navigate(['surveySecondStage']);
+    }
+  }
+
   public UploadSurveyResults() {
     console.log(this.selectedValues);
     this._dataService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, Number.parseInt(localStorage.getItem('surveyId')))).subscribe(response => {
@@ -129,12 +135,26 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
-    if (this.values.length == 0) {
-      this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
-        this.values = response.body;
-        console.log(this.values);
-      });
-    }
+    this._dataService.DecideToWhichStageToTransfer(Number.parseInt(localStorage.getItem('surveyId'))).subscribe(response => {
+      if (response.body == 'wrap-up') {
+        this._router.navigate(['wrap-up']);
+      }
+      else if (response.body == 'surveyThirdStage') {
+        if (this.values.length == 0) {
+          this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
+            this.values = response.body;
+            console.log(this.values);
+          });
+        }
+      }
+      else if (response.body == 'surveySecondStage') {
+        this._router.navigate(['surveySecondStage']);
+      }
+      else {
+        this._router.navigate(['surveyFirstStage']);
+      }
+    });
+
   }
 
 

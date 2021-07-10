@@ -202,7 +202,7 @@
 }
 
   #valid-changes-section button:hover {
-    background: #006F91;
+    background-color: #006F91;
     color:white;
   }
 
@@ -356,6 +356,8 @@ input:disabled {
     text-align:center;
     background-color:red;
     color:white;
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 @media only screen and (min-width:800px) and (max-width:1000px) {
@@ -395,8 +397,11 @@ input:disabled {
     }
 
       #valid-changes-section button {
-        width: 100px;
+        width: max-content;
         height: 40px;
+        display:flex;
+        align-items:center;
+        padding:5px;
       }
 
     #submit-form-section {

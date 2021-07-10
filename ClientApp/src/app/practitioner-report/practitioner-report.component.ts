@@ -124,6 +124,8 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                       this._ds.GeneratePdf(obj).subscribe((response: Blob) => {
                         const fileUrl = window.URL.createObjectURL(response);
                         const showWindow = window.open(fileUrl);
+                        localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+                        this.router.navigate(['practitionerAccount']);
                       });
                     }, 3);
                   }

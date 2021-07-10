@@ -105,10 +105,9 @@ export function tokenGetter() {
       { path: 'surveyThirdStage', component: SurveyThirdStageComponent },
       { path: 'personalReport', component: PersonalReportComponent },
       { path: 'practitionerReport', component: PractitionerReportComponent },
-      { path: 'order', component: GetCodesComponent },
       { path: 'wrap-up', component: WrapUpComponent },
       { path: 'enterCode', component: EnterCodePageComponent },
-      { path: 'enterSurveyAccount', component: EnterSurveyAccountFormComponent },
+      //{ path: 'enterSurveyAccount', component: EnterSurveyAccountFormComponent },
       { path: 'practitionersDirectory', component: PractitionersDirectoryComponent }
     ]),
     JwtModule.forRoot({

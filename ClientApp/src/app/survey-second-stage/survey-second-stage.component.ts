@@ -41,46 +41,27 @@ export class SurveySecondStageComponent implements OnInit {
 
 
   constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
-      this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
-        this.values = response.body;
-        this.GroupValues(this.values);
-
-        this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
-
-        this.valuesGroupedByPerspectives.forEach((value, key) => {
-          this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
-          this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
-        });
-
-
-        this.MarkAsImportantGroupsWithLessThanFourItems();
-        this.valuesGroupedByPerspectives.forEach((vl, k) => {
-          if (vl.length >= 4) {
-            this.arrayOfPages.push(k);
-          }
-        });
-        this.DecideHowManyPagesToShow();
-
-        this.CalculateCurrentGroupId();
-
-        this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
-        this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
-
-        this.CalculateCurrentPage();
-      });
   }
 
-  private CalculateCurrentPage() {
-    let counter = 1;
-    this.valuesGroupedByPerspectives.forEach((vl, k) => {
-      if (k == this.currentGroupId) {
-        this.currentPageIndex = counter;
-      }
-      else {
-        counter += 1;
-      }
-    });
+  public ProceedToFirstStage(event) {
+    if (window.confirm("Are you sure you want to leave the stage uncompleated, all your choises will be lost.")) {
+      this._dataService.DeleteSurveySecondStageResults(this.surveyId).subscribe(response => {
+        this._router.navigate(['surveyFirstStage']);
+      })
+    }
   }
+
+  //private CalculateCurrentPage() {
+  //  let counter = 1;
+  //  this.valuesGroupedByPerspectives.forEach((vl, k) => {
+  //    if (k == this.currentGroupId) {
+  //      this.currentPageIndex = counter;
+  //    }
+  //    else {
+  //      counter += 1;
+  //    }
+  //  });
+  //}
 
   private CalculateCurrentGroupId() {
     this.valuesGroupedByPerspectives.forEach((vl, k) => {
@@ -91,6 +72,101 @@ export class SurveySecondStageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+    this._dataService.DecideToWhichStageToTransfer(this.surveyId).subscribe((response: any) => {
+      if (response.body == 'surveyFirstStage') {
+        this._router.navigate(['surveyFirstStage']);
+      }
+      else if (response.body == 'surveySecondStage') {
+        this._dataService.GetFirstStageValues(this.surveyId).subscribe((response: any) => {
+          this.values = response.body;
+          this.GroupValues(this.values);
+
+
+
+          this.valuesGroupedByPerspectives.forEach((value, key) => {
+            this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+            this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+          });
+
+
+          this.MarkAsImportantGroupsWithLessThanFourItems();
+          this.valuesGroupedByPerspectives.forEach((vl, k) => {
+            if (vl.length >= 4) {
+              this.arrayOfPages.push(k);
+            }
+          });
+
+          this.DecideHowManyPagesToShow();
+
+          this.CalculateCurrentGroupId();
+
+          this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
+          this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+
+
+        });
+      }
+      else if (response.body == 'surveyThirdStage') {
+        this._dataService.GetFirstStageValues(this.surveyId).subscribe((getValuesForFirstStageResponse: any) => {
+          if (getValuesForFirstStageResponse.ok) {
+            this.values = getValuesForFirstStageResponse.body;
+            this.GroupValues(this.values);
+
+
+
+            this.valuesGroupedByPerspectives.forEach((value, key) => {
+              this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+              this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+            });
+
+
+            this.MarkAsImportantGroupsWithLessThanFourItems();
+            this.valuesGroupedByPerspectives.forEach((vl, k) => {
+              if (vl.length >= 4) {
+                this.arrayOfPages.push(k);
+              }
+            });
+
+            this._dataService.GetSecondStageValues(this.surveyId).subscribe((response: any) => {
+              let secondStageSelections: Array<ValueViewModel> = response.body;
+
+              secondStageSelections.forEach(secondStageSelection => {
+                this.valuesMarkedAsImportantGroupedByPerspectives.get(secondStageSelection.perspectiveId).push(secondStageSelection);
+              });
+
+              //this.valuesGroupedByPerspectives.set(secondStageSelection.perspectiveId, this.valuesGroupedByPerspectives.get(secondStageSelection.perspectiveId).filter(vgbp => vgbp.id != secondStageSelection.id));
+
+              console.info(this.valuesGroupedByPerspectives);
+              console.info(this.valuesMarkedAsImportantGroupedByPerspectives);
+
+              this.valuesGroupedByPerspectives.forEach((v, k) => {
+                this.valuesGroupedByPerspectives.set(k, new Array<ValueViewModel>());
+              });
+
+              this.values.forEach(v => {
+                if (secondStageSelections.find(sss => sss.id == v.id) == null) {
+                  this.valuesGroupedByPerspectives.get(v.perspectiveId).push(v);
+                }
+              })
+
+            });
+
+            this.DecideHowManyPagesToShow();
+
+            this.CalculateCurrentGroupId();
+
+            this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
+            this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+
+            this.stepIsFilledCorrectly = true;
+          }
+        });
+      }
+      else {
+        this._router.navigate(['wrap-up']);
+      }
+    });
 
   }
 
@@ -169,6 +245,7 @@ export class SurveySecondStageComponent implements OnInit {
     this.isDescriptionStage = false;
     setTimeout(() => {
       this.MarkCompleatedPages();
+      this.valuesPageButtons.first.nativeElement.click();
     }, 100)
   }
 
@@ -210,7 +287,7 @@ export class SurveySecondStageComponent implements OnInit {
       else {
         this._renderer2.removeClass(vpb.nativeElement.firstChild, 'page-is-compleated');
       }
-    }); 
+    });
 
   }
 
@@ -245,36 +322,63 @@ export class SurveySecondStageComponent implements OnInit {
   }
 
   public GoToPreviousGroupPage(event: MouseEvent) {
-    if (this.currentPageIndex > 1) {
-      for (var i = this.currentGroupId - 1; i > 0; i--) {
-        if (this.valuesGroupedByPerspectives.has(i)) {
-          this.currentGroupId = i;
-          break;
-        }
-      }
-      this.currentPageIndex -= 1;
+    //let oldPageIndex = this.currentPageIndex;
+    //this.currentPageIndex -= 1;
+    let element: any = document.getElementsByClassName('currentPage')[0];
 
-      this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
-      this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+
+    if (element.previousSibling.classList != undefined && element.previousSibling.classList.contains('values-page')) {
+      this._renderer2.removeClass(element, 'currentPage');
+      this._renderer2.addClass(element.previousSibling, 'currentPage');
+      this.ChangePage(null, Number.parseInt(element.previousSibling.dataset.id), Number.parseInt(element.previousSibling.dataset.index));
     }
+    //else {
+    //  this.currentPageIndex = oldPageIndex;
+    //}
+    //if (this.currentPageIndex > 1) {
+    //  for (var i = this.currentGroupId - 1; i > 0; i--) {
+    //    if (this.valuesGroupedByPerspectives.has(i)) {
+    //      this.currentGroupId = i;
+    //      break;
+    //    }
+    //  }
+    //  this.currentPageIndex -= 1;
+
+    //  this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
+    //  this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+    //}
   }
 
   public GoToNextGroupPage() {
-    if (this.currentPageIndex <= this.numberOfPagesToShow) {
-      for (var i = this.currentGroupId + 1; i <= AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
-        if (this.valuesGroupedByPerspectives.has(i)) {
-          this.currentGroupId = i;
-          break;
-        }
-      }
-      this.currentPageIndex += 1;
-      this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
-      this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+    //let oldPageIndex = this.currentPageIndex;
+    //this.currentPageIndex += 1;
+    let element: any = document.getElementsByClassName('currentPage')[0];
+
+    console.debug(element);
+    if (element.nextSibling.classList != undefined && element.nextSibling.classList.contains('values-page')) {
+      this._renderer2.removeClass(element, 'currentPage');
+      this._renderer2.addClass(element.nextSibling, 'currentPage');
+      this.ChangePage(null, Number.parseInt(element.nextSibling.dataset.id), Number.parseInt(element.nextSibling.dataset.index));
     }
+    //else {
+    //  this.currentPageIndex = oldPageIndex;
+    //}
+    //if (this.currentPageIndex <= this.numberOfPagesToShow) {
+    //  for (var i = this.currentGroupId + 1; i <= AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
+    //    if (this.valuesGroupedByPerspectives.has(i)) {
+    //      this.currentGroupId = i;
+    //      break;
+    //    }
+    //  }
+    //  this.currentPageIndex += 1;
+    //  this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
+    //  this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+    //}
   }
 
   public ChangePage(event: MouseEvent, key: number, index: number) {
-    event.stopPropagation();
+    //event.stopPropagation();
+
     this.currentGroupId = key;
     this.currentPageIndex = index + 1;
     this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
@@ -305,8 +409,6 @@ export class SurveySecondStageComponent implements OnInit {
     values.forEach(value => {
       this.valuesGroupedByPerspectives.get(value.perspectiveId).push(value);
     })
-
-    console.log(this.valuesGroupedByPerspectives);
   }
 
 }

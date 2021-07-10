@@ -177,7 +177,7 @@ namespace KPProject
             //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
             //CreateValuesLanguageFiles(serviceProvider).Wait();
             //CreateCertifications(serviceProvider).Wait();
-            //PopulateDBWithCoupons(serviceProvider).Wait();
+            PopulateDBWithCoupons(serviceProvider).Wait();
         }
 
         public async Task CreateValues(IServiceProvider serviceProvider)

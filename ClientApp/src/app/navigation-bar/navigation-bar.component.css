@@ -9,6 +9,9 @@
     margin-right:auto;
 }
 
+#navigation-bar-kp-logo{
+    cursor:pointer;
+}
 
 #user-authorization-operations-container-mobile button {
   color: #006F91;

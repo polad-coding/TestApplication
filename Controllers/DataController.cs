@@ -28,6 +28,76 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
+        [Route("DeleteSurveyFirstStageResults")]
+        public async Task<ActionResult> DeleteSurveyFirstStageResultsAsync([FromBody]int surveyId)
+        {
+            var requestIsSuccessful = await _dataService.DeleteSurveyFirstStageResultsAsync(surveyId);
+
+            if (requestIsSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("DeleteSurveySecondStageResults")]
+        public async Task<ActionResult> DeleteSurveySecondStageResultsAsync([FromBody] int surveyId)
+        {
+            var requestIsSuccessful = await _dataService.DeleteSurveySecondStageResultsAsync(surveyId);
+
+            if (requestIsSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetValuesForFirstStage")]
+        public async Task<ActionResult<List<ValueModel>>> GetValuesForFirstStageAsync([FromQuery]int surveyId)
+        {
+            var response = await _dataService.GetValuesForFirstStageAsync(surveyId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetFirstStageValues")]
+        public async Task<ActionResult<List<ValueModel>>> GetFirstStageValuesAsync([FromQuery] int surveyId)
+        {
+            var response = await _dataService.GetFirstStageValuesAsync(surveyId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetSecondStageValues")]
+        public async Task<ActionResult<List<ValueModel>>> GetSecondStageValuesAsync([FromQuery] int surveyId)
+        {
+            var response = await _dataService.GetSecondStageValuesAsync(surveyId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
         [Route("CheckIfAllCouponsAreValid")]
         public async Task<ActionResult<bool>> CheckIfAllCouponsAreValidAsync(List<OrderViewModel> orders)
         {

@@ -77,7 +77,7 @@
         <li [ngClass]="{'current-tab': currentTabName == 'services'}">SERVICES</li>
         <li [ngClass]="{'current-tab': currentTabName == 'newsAndAgenda'}">NEWS / AGENDA</li>
         <li [ngClass]="{'current-tab': currentTabName == 'resources'}">RESOURCES</li>
-        <li [ngClass]="{'current-tab': currentTabName == 'prosAccess'}">PROS-ACCESS</li>
+        <li [ngClass]="{'current-tab': currentTabName == 'prosAccess'}" (click)="RedirectToPractitionerAccount()">PROS-ACCESS</li>
         <li [ngClass]="{'current-tab': currentTabName == 'whoWeAre'}" (click)="RedirectToPractitionersDirectory()">WHO WE ARE?</li>
       </ul>
     </div>
@@ -144,31 +144,27 @@
 <div id="actions-side-bar-modal" *ngIf="actionsSideBarIsVisible">
   <div id="actions-side-bar" (click)="ActionsSideBarClick($event)">
     <ul id="actions">
-      <li class="side-bar-action">
+      <li (click)="RedirectToSurveyPage()" class="side-bar-action">
         <a>The Survey</a>
       </li>
       <li class="side-bar-action">
         <a>Values?</a>
       </li>
       <li class="side-bar-action">
-        <a>The Method</a>
+        <a>Services</a>
       </li>
       <li class="side-bar-action">
-        <a>The Blog</a>
-      </li>
-      <li class="side-bar-action">
-        <a>Practitioners</a>
+        <a>News / Agenda</a>
       </li>
       <li class="side-bar-action">
         <a>Resources</a>
       </li>
-      <li class="side-bar-action">
-        <a>Sign in</a>
-      </li>
-      <li class="side-bar-action">
+      <li (click)="RedirectToPractitionerAccount()" class="side-bar-action">
         <a>Pros-access</a>
       </li>
-
+      <li (click)="RedirectToPractitionersDirectory()" class="side-bar-action">
+        <a>Who we are?</a>
+      </li>
     </ul>
   </div>
 </div>

@@ -1,0 +1,13 @@
+#loading-screen-gif-container {
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  #loading-screen-gif-container img {
+    height: 300px;
+    width: 400px;
+  }

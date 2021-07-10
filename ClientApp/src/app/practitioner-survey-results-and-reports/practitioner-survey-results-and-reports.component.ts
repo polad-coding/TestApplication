@@ -26,6 +26,11 @@ export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
     });
   }
 
+  public GoToGetCodesTab() {
+    localStorage.setItem('practitionerAccountTabName', 'get-codes-and-support-section');
+    window.location.reload();
+  }
+
   public GenerateIndividualReport(surveyId: string) {
     localStorage.setItem('surveyId', surveyId);
 

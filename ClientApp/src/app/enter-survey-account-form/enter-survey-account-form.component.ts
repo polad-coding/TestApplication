@@ -38,12 +38,12 @@ export class EnterSurveyAccountFormComponent implements OnInit {
       });
     }
 
-    if (localStorage.getItem('surveyCode') != null) {
-      this.surveyCode = localStorage.getItem('surveyCode');
-    }
-    else {
-      this._router.navigate(['enterCode']);
-    }
+    //if (localStorage.getItem('surveyCode') != null) {
+    //  this.surveyCode = localStorage.getItem('surveyCode');
+    //}
+    //else {
+    //  this._router.navigate(['enterCode']);
+    //}
   }
 
   public DisplayRegionsModal(event: MouseEvent) {

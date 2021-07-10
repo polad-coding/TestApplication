@@ -2,7 +2,7 @@
 <app-page-title titleText="The survey"></app-page-title>
 <div id="kp-survey-page-welcome-to-perspectives-survey-section">
   <div id="kp-survey-page-welcome-to-perspectives-survey-section-image">
-    <img src="../../assets/Images/KP-Perspectives-Pie.png"/>
+    <img src="../../assets/Images/210101-Results-BASE-cropped.svg"/>
   </div>
   <div id="kp-survey-page-welcome-to-perspectives-survey-section-texts">
     <p>
@@ -26,7 +26,7 @@
       choose a certified practitioner from the list proposed by Kairios Praxis. The data will be kept anonymously for statistical purposes only.
       Once completed, the results of the survey (online profile and perspectives, downloading personal Values Perspective Report) can be
       accessed anytime by entering email and password.
-      <button class="kp-leaf-button">
+      <button (click)="RedirectToEnterCodePage()" class="kp-leaf-button">
         <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" />
       </button>
     </p>
@@ -108,7 +108,7 @@
 </div>
 <div id="kp-survey-page-action-buttons">
   <button><span>I want to know more on values</span> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
-  <button><span>Take the survey</span> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
+  <button (click)="RedirectToEnterCodePage()"><span>Take the survey</span> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
 </div>
 <div id="kp-survey-page-whats-next-section">
   <div id="kp-survey-page-whats-next-section-texts">

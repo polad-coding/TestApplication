@@ -3,7 +3,8 @@
 <div id="survey-first-stage-container" >
   <div id="title-section">
     <div class="prev-step-button-container">
-      <button class="button-enabled" *ngIf="isSelectionStage || isStepDescriptionPage" (click)="ProceedToDescriptionStage($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
+      <button class="button-enabled" *ngIf="isStepDescriptionPage" (click)="ProceedToPersonalSpace($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> To personal account </button>
+      <button class="button-enabled" *ngIf="isSelectionStage" (click)="ProceedToDescriptionStage($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
       <button class="button-enabled" *ngIf="isValidationStage" (click)="ProccedToSelectionStage($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Selection </button>
     </div>
     <div id="step-title-container">
@@ -66,7 +67,7 @@
     </div>
     <div id="values-list-section">
       <div id="values-bar">
-          <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-id]="i" class="value-container">
+          <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-valueId]="value.id" [attr.data-id]="i" class="value-container">
             <p>{{value.character}}</p>
             <p>{{'Values.' + value.character + '.Title' | translate}}</p>
           </div>

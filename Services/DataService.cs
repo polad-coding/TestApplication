@@ -97,7 +97,7 @@ namespace KPProject.Services
 
                 foreach (var item in data)
                 {
-                    text.AppendLine($"\"{item.Character}\" : {JsonConvert.SerializeObject(item).Replace("'","\'")},");
+                    text.AppendLine($"\"{item.Character}\" : {JsonConvert.SerializeObject(item).Replace("'", "\'")},");
                 }
 
                 text.AppendLine("}}");
@@ -184,6 +184,15 @@ namespace KPProject.Services
         public async Task<bool> SaveFirstStageResultsAsync(List<ValueModel> values, int surveyId)
         {
             List<SurveyFirstStageModel> surveyFirstStageModels = new List<SurveyFirstStageModel>();
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+
+            if (survey.FirstStagePassed)
+            {
+                var entriesToDelete = await _applicationDbContext.SurveyFirstStages.Where(sfs => sfs.SurveyId == surveyId).ToListAsync();
+
+                _applicationDbContext.SurveyFirstStages.RemoveRange(entriesToDelete);
+                await _applicationDbContext.SaveChangesAsync();
+            }
 
             values.ForEach(v =>
             {
@@ -197,7 +206,6 @@ namespace KPProject.Services
                 return false;
             }
 
-            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
             survey.FirstStagePassed = true;
             survey.TakenOn = DateTime.Now;
 
@@ -214,6 +222,16 @@ namespace KPProject.Services
         public async Task<bool> SaveSecondStageResultsAsync(List<ValueModel> values, int surveyId)
         {
             List<SurveySecondStageModel> surveySecondStageModels = new List<SurveySecondStageModel>();
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+
+
+            if (survey.SecondStagePassed)
+            {
+                var entriesToDelete = await _applicationDbContext.SurveySecondStages.Where(sss => sss.SurveyId == surveyId).ToListAsync();
+
+                _applicationDbContext.SurveySecondStages.RemoveRange(entriesToDelete);
+                await _applicationDbContext.SaveChangesAsync();
+            }
 
             values.ForEach(v =>
             {
@@ -227,7 +245,6 @@ namespace KPProject.Services
                 return false;
             }
 
-            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
             survey.SecondStagePassed = true;
             survey.TakenOn = DateTime.Now;
 
@@ -339,12 +356,40 @@ namespace KPProject.Services
                 }
             });
 
+            //TODO - Decrease number of usages for each coupon
+
+            await this.DecreaseNumberOfUsagesOfAssociatedCoupons(ordersList);
+
             if (await _applicationDbContext.SaveChangesAsync() > 0)
             {
                 return true;
             }
 
             return false;
+        }
+
+        private async Task DecreaseNumberOfUsagesOfAssociatedCoupons(List<OrderViewModel> ordersList)
+        {
+            ordersList.ForEach(o =>
+            {
+                if (o.CouponBody != null)
+                {
+                    var coupon = _applicationDbContext.AssociatedCoupons.FirstOrDefault(ac => ac.CouponBody == o.CouponBody);
+
+                    if (coupon != null)
+                    {
+                        if (coupon.NumberOfUsagesLeft == 1)
+                        {
+                            _applicationDbContext.AssociatedCoupons.Remove(coupon);
+                        }
+                        else
+                        {
+                            coupon.NumberOfUsagesLeft -= 1;
+                            _applicationDbContext.AssociatedCoupons.Update(coupon);
+                        }
+                    }
+                }
+            });
         }
 
         private async Task<string> GenerateNewCode()
@@ -378,7 +423,7 @@ namespace KPProject.Services
                 surveyResults.Add(new SurveyResultViewModel()
                 {
                     Code = survey.Code,
-                    IsCompleated = survey.ThirdStagePassed,
+                    IsCompleated = survey.ThirdStagePassed && survey.AnonymisedUserId != null,
                     SurveyId = survey.Id,
                     TakenOn = survey.TakenOn.ToString(),
                     PractitionerId = survey.PractitionerUserId,
@@ -401,6 +446,47 @@ namespace KPProject.Services
             });
 
             return surveyResults;
+        }
+
+        public async Task<List<ValueModel>> GetValuesForFirstStageAsync(int surveyId)
+        {
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+            var values = new List<ValueModel>();
+
+            values = await _applicationDbContext.Values.ToListAsync();
+            this.Shuffle(values, survey.Seed);
+
+            return values;
+        }
+
+        public async Task<List<ValueModel>> GetFirstStageValuesAsync(int surveyId)
+        {
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+            var values = new List<ValueModel>();
+
+            var elements = await _applicationDbContext.SurveyFirstStages.Where(sfs => sfs.SurveyId == surveyId).Select(sfs => sfs.Value).ToListAsync();
+
+            elements.ForEach(e =>
+            {
+                values.Add(e);
+            });
+
+            return values;
+        }
+
+        public async Task<List<ValueModel>> GetSecondStageValuesAsync(int surveyId)
+        {
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+            var values = new List<ValueModel>();
+
+            var elements = await _applicationDbContext.SurveySecondStages.Where(sss => sss.SurveyId == surveyId).Select(sss => sss.Value).ToListAsync();
+
+            elements.ForEach(e =>
+            {
+                values.Add(e);
+            });
+
+            return values;
         }
 
         public async Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId)
@@ -751,10 +837,10 @@ namespace KPProject.Services
 
         public async Task<bool> AssociateUserDataToTheSurveyAsync(string userId)
         {
-            var user = await _applicationDbContext.Users.FirstAsync((u) => u.Id == userId );
+            var user = await _applicationDbContext.Users.FirstAsync((u) => u.Id == userId);
             var userRegions = await _applicationDbContext.UserRegions.Where(ur => ur.ApplicationUserId == userId).ToListAsync();
 
-            var anonymisedUser = new AnonymisedUser() { Age = user.Age, Gender = user.Gender, Education = user.Education, Position = user.Position, MyerBriggsCode = user.MyerBriggsCode, SectorOfActivity = user.SectorOfActivity  };
+            var anonymisedUser = new AnonymisedUser() { Age = user.Age, Gender = user.Gender, Education = user.Education, Position = user.Position, MyerBriggsCode = user.MyerBriggsCode, SectorOfActivity = user.SectorOfActivity };
 
             await _applicationDbContext.AnonymisedUsers.AddAsync(anonymisedUser);
 
@@ -848,32 +934,37 @@ namespace KPProject.Services
 
         public async Task PopulateDBWithCoupons()
         {
-            var listOfGeneralCoupons = new List<GeneralCoupon>();
-
-            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMSTUDENT", DiscountRate = 20.00 });
-            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMDISABLED", DiscountRate = 40.00 });
-            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMINNEED", DiscountRate = 40.00 });
-            listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMCOOL", DiscountRate = 99.00 });
-
-            await _applicationDbContext.GeneralCoupons.AddRangeAsync(listOfGeneralCoupons);
-
-            var listOfAssociatedCoupons = new List<AssociatedCoupon>();
-
-            listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "JNKASI2", NumberOfUsagesLeft = 10, DiscountRate = 50.00 });
-            listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "NLNBJJS", NumberOfUsagesLeft = 1, DiscountRate = 80.00 });
-            listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "JNKJNK9", NumberOfUsagesLeft = 5, DiscountRate = 65.00 });
-
-            await _applicationDbContext.AssociatedCoupons.AddRangeAsync(listOfAssociatedCoupons);
-
-            await _applicationDbContext.SaveChangesAsync();
-
-            listOfAssociatedCoupons.ForEach(ac =>
+            var numberOfGeneralCoupons = await _applicationDbContext.GeneralCoupons.CountAsync();
+            var numberOfAssociatedCoupons = await _applicationDbContext.AssociatedCoupons.CountAsync();
+            if (numberOfAssociatedCoupons == 0 && numberOfGeneralCoupons == 0)
             {
-                _applicationDbContext.ApplicationUserAssociatedCoupons.Add(new ApplicationUserAssociatedCoupon { AssociatedCouponId = ac.Id, ApplicationUserId = "3a10366e-4d73-441d-a18c-43deb1e508c7" });
-            });
+                var listOfGeneralCoupons = new List<GeneralCoupon>();
+
+                listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMSTUDENT", DiscountRate = 20.00 });
+                listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMDISABLED", DiscountRate = 40.00 });
+                listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMINNEED", DiscountRate = 40.00 });
+                listOfGeneralCoupons.Add(new GeneralCoupon { CouponBody = "IAMCOOL", DiscountRate = 99.00 });
+
+                await _applicationDbContext.GeneralCoupons.AddRangeAsync(listOfGeneralCoupons);
+
+                var listOfAssociatedCoupons = new List<AssociatedCoupon>();
+
+                listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "JNKASI2", NumberOfUsagesLeft = 10, DiscountRate = 50.00 });
+                listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "NLNBJJS", NumberOfUsagesLeft = 1, DiscountRate = 80.00 });
+                listOfAssociatedCoupons.Add(new AssociatedCoupon { CouponBody = "JNKJNK9", NumberOfUsagesLeft = 5, DiscountRate = 65.00 });
+
+                await _applicationDbContext.AssociatedCoupons.AddRangeAsync(listOfAssociatedCoupons);
+
+                await _applicationDbContext.SaveChangesAsync();
+
+                listOfAssociatedCoupons.ForEach(ac =>
+                {
+                    _applicationDbContext.ApplicationUserAssociatedCoupons.Add(new ApplicationUserAssociatedCoupon { AssociatedCouponId = ac.Id, ApplicationUserId = "3a10366e-4d73-441d-a18c-43deb1e508c7" });
+                });
 
 
-            await _applicationDbContext.SaveChangesAsync();
+                await _applicationDbContext.SaveChangesAsync(); 
+            }
         }
 
         public async Task<GetCouponRequestResponseViewModel> GetCouponAsync(string couponBody, string userId)
@@ -926,6 +1017,56 @@ namespace KPProject.Services
             }
 
             return true;
+        }
+
+        public async Task<bool> DeleteSurveyFirstStageResultsAsync(int surveyId)
+        {
+            var entrieInEntity = await _applicationDbContext.SurveyFirstStages.FirstOrDefaultAsync(sfs => sfs.SurveyId == surveyId);
+
+            if (entrieInEntity == null)
+            {
+                return true;
+            }
+            var rowsToDelete = _applicationDbContext.SurveyFirstStages.Where(sfs => sfs.SurveyId == surveyId);
+            _applicationDbContext.SurveyFirstStages.RemoveRange(rowsToDelete);
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+            survey.FirstStagePassed = false;
+
+            _applicationDbContext.Surveys.Update(survey);
+
+            var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeleteSurveySecondStageResultsAsync(int surveyId)
+        {
+            var entrieInEntity = await _applicationDbContext.SurveySecondStages.FirstOrDefaultAsync(sss => sss.SurveyId == surveyId);
+
+            if (entrieInEntity == null)
+            {
+                return true;
+            }
+
+            var rowsToDelete = _applicationDbContext.SurveySecondStages.Where(sss => sss.SurveyId == surveyId);
+            _applicationDbContext.SurveySecondStages.RemoveRange(rowsToDelete);
+            var survey = await _applicationDbContext.Surveys.FindAsync(surveyId);
+            survey.SecondStagePassed = false;
+
+            _applicationDbContext.Surveys.Update(survey);
+            var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

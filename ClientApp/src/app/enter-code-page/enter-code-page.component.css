@@ -227,6 +227,10 @@
   background-color: #d32d2d;
   color: white;
   margin-bottom: 20px;
+  max-width:90%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 #enter-code-field {

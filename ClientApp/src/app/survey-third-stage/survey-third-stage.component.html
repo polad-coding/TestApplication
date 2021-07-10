@@ -3,7 +3,8 @@
 <div id="survey-third-stage-container">
   <div id="title-section">
     <div class="prev-step-button-container">
-      <button class="button-enabled" *ngIf="isSelectionStage || isDescriptionStage" (click)="GoToDescriptionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
+      <button class="button-enabled" *ngIf="isDescriptionStage" (click)="GoToPreviousStep()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
+      <button class="button-enabled" *ngIf="isSelectionStage" (click)="GoToDescriptionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
       <button class="button-enabled" *ngIf="isValidationStage" (click)="GoToSelectionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Selection </button>
     </div>
     <div id="step-title-container">

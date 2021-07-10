@@ -21,6 +21,32 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
+//  Task<List<ValueModel>> GetValuesForFirstStageAsync(int surveyId);
+//Task < List < ValueModel >> GetFirstStageValuesAsync(int surveyId);
+//Task < List < ValueModel >> GetSecondStageValuesAsync(int surveyId);
+
+  public DeleteSurveyFirstStageResults(surveyId: number) {
+    return this.http.post(`https://${this.url}/Data/DeleteSurveyFirstStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+
+  }
+
+  public DeleteSurveySecondStageResults(surveyId: number) {
+    return this.http.post(`https://${this.url}/Data/DeleteSurveySecondStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+
+  }
+
+  public GetValuesForFirstStage(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetValuesForFirstStage?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
+  public GetFirstStageValues(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetFirstStageValues?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
+  public GetSecondStageValues(surveyId: number) {
+    return this.http.get(`https://${this.url}/Data/GetSecondStageValues?surveyId=${surveyId}`, { observe: 'response' });
+  }
+
   public CheckIfAllCouponsAreValid(listOfOrders: Array<OrderViewModel>) {
     return this.http.post(`https://${this.url}/Data/CheckIfAllCouponsAreValid`, listOfOrders, { observe: 'response' });
   }
