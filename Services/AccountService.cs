@@ -86,7 +86,7 @@ namespace KPProject.Services
                     Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{oldUser.ProfileImageName}.png")
                 );
 
-                File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
+                File.Delete(Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{userViewModel.ProfileImageName}.png"));
             }
 
 
