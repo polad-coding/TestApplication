@@ -18,7 +18,7 @@
     <div id="left-part">
       <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
       <p>Certified practitioner</p>
-      <p>Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+      <p *ngIf="practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
       <!--<p>Membership {{}}</p>-->
     </div>
     <div id="right-part">

@@ -16,7 +16,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
   styleUrls: ['./practitioners-directory.component.css'],
   providers: [AccountService, DataService]
 })
-export class PractitionersDirectoryComponent implements OnInit, AfterViewInit {
+export class PractitionersDirectoryComponent implements OnInit {
 
   public numberOfPractitioners: number;
   public selectedGendersText: string = 'No gender preference';
@@ -71,10 +71,7 @@ export class PractitionersDirectoryComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this._renderer2.setStyle(document.getElementById(`practitioner-${this.currentPractitionerIndex}`), 'height', '200px');
-    this._renderer2.setStyle(document.getElementById(`practitioner-${this.currentPractitionerIndex}`), 'width', '200px');
-  }
+  
 
   public SelectPractitioner(event: any) {
     //Change the styles for images

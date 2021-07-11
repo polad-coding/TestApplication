@@ -29,7 +29,7 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("DeleteSurveyFirstStageResults")]
-        public async Task<ActionResult> DeleteSurveyFirstStageResultsAsync([FromBody]int surveyId)
+        public async Task<ActionResult> DeleteSurveyFirstStageResultsAsync([FromBody] int surveyId)
         {
             var requestIsSuccessful = await _dataService.DeleteSurveyFirstStageResultsAsync(surveyId);
 
@@ -57,7 +57,7 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("GetValuesForFirstStage")]
-        public async Task<ActionResult<List<ValueModel>>> GetValuesForFirstStageAsync([FromQuery]int surveyId)
+        public async Task<ActionResult<List<ValueModel>>> GetValuesForFirstStageAsync([FromQuery] int surveyId)
         {
             var response = await _dataService.GetValuesForFirstStageAsync(surveyId);
 
@@ -108,7 +108,7 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("GetCoupon")]
-        public async Task<ActionResult<GetCouponRequestResponseViewModel>> GetCouponAsync([FromQuery]string couponBody)
+        public async Task<ActionResult<GetCouponRequestResponseViewModel>> GetCouponAsync([FromQuery] string couponBody)
         {
             var coupon = await _dataService.GetCouponAsync(couponBody, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -122,7 +122,7 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("GoToPreviousStageOfTheSurvey")]
-        public async Task<ActionResult> GoToPreviousStageOfTheSurveyAsync([FromBody]int surveyId)
+        public async Task<ActionResult> GoToPreviousStageOfTheSurveyAsync([FromBody] int surveyId)
         {
             var isRequestSuccessful = await _dataService.GoToPreviousStageOfTheSurveyAsync(surveyId);
 
@@ -136,7 +136,7 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("TransferTheCode")]
-        public async Task<ActionResult> TransferTheCodeAsync([FromBody]TransferCodesViewModel transferCodesViewModel)
+        public async Task<ActionResult> TransferTheCodeAsync([FromBody] TransferCodesViewModel transferCodesViewModel)
         {
             var isOperationSuccessful = await _dataService.TransferTheCodeAsync(transferCodesViewModel);
 
@@ -150,7 +150,7 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("AssociateUserDataToTheSurvey")]
-        public async Task<ActionResult> AssociateUserDataToTheSurveyAsync([FromBody]string userId)
+        public async Task<ActionResult> AssociateUserDataToTheSurveyAsync([FromBody] string userId)
         {
             var requestSucceded = await _dataService.AssociateUserDataToTheSurveyAsync(userId);
 
@@ -164,7 +164,7 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("UserHasUnsignedSurveys")]
-        public async Task<ActionResult<bool>> UserHasUnsignedSurveysAsync([FromQuery]string userId)
+        public async Task<ActionResult<bool>> UserHasUnsignedSurveysAsync([FromQuery] string userId)
         {
             var hasUnsignedSurvey = await _dataService.UserHasUnsignedSurveysAsync(userId);
 
@@ -286,7 +286,7 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("GetSurveyResults")]
-        public async Task<ActionResult<List<SurveyResultViewModel>>> GetSurveyResultsAsync([FromQuery]string userId)
+        public async Task<ActionResult<List<SurveyResultViewModel>>> GetSurveyResultsAsync([FromQuery] string userId)
         {
             var data = await _dataService.GetSurveyResultsAsync(userId);
 
@@ -354,7 +354,7 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("GeneratePdf")]
-        public IActionResult GeneratePdf([FromBody]ReportHTMLContentViewModel content)
+        public IActionResult GeneratePdf([FromBody] ReportHTMLContentViewModel content)
         {
             var globalSettings = new GlobalSettings
             {
@@ -365,7 +365,7 @@ namespace KPProject.Controllers
                 DocumentTitle = "PDF Report"
             };
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp","src","assets", "practitioner-report.css");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "practitioner-report.css");
 
             var objectSettings = new ObjectSettings
             {
@@ -401,16 +401,8 @@ namespace KPProject.Controllers
         [Route("GetPractitionersCertifications")]
         public async Task<ActionResult<List<ApplicationUserCertification>>> GetPractitionersCertificationsAsync(string userId)
         {
-            var practitionersCertifications = new List<ApplicationUserCertification>();
+            var practitionersCertifications = await _dataService.GetPractitionersCertificationsAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (userId == null)
-            {
-                practitionersCertifications = await _dataService.GetPractitionersCertificationsAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            }
-            else
-            {
-                practitionersCertifications = await _dataService.GetPractitionersCertificationsAsync(userId);
-            }
 
             if (practitionersCertifications == null)
             {
@@ -482,7 +474,7 @@ namespace KPProject.Controllers
 
         [HttpGet]
         [Route("GetParticularSurveyResults")]
-        public async Task<ActionResult<SurveyResultViewModel>> GetParticularSurveyResultsAsync([FromQuery]int surveyId)
+        public async Task<ActionResult<SurveyResultViewModel>> GetParticularSurveyResultsAsync([FromQuery] int surveyId)
         {
             var result = await _dataService.GetParticularSurveyResultsAsync(surveyId);
 
