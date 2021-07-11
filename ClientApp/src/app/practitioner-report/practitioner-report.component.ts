@@ -24,6 +24,7 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   public imageString: string;
   public textFilePerspectiveIndexes: Array<number> = [1, 2, 3, 4, 5, 6];
   public myChart: any;
+  public pageIndex = 1;
   public maxGraphSliceValue: number;
   public minGraphSliceValue: number;
   public user: UserViewModel;
@@ -124,8 +125,15 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                       this._ds.GeneratePdf(obj).subscribe((response: Blob) => {
                         const fileUrl = window.URL.createObjectURL(response);
                         const showWindow = window.open(fileUrl);
-                        localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-                        this.router.navigate(['practitionerAccount']);
+                        if (!showWindow || showWindow.closed || typeof showWindow.closed == 'undefined') {
+                          alert('Something went wrong! Probably pop ups on your browser are blocked, please allow pop ups to get your report.')
+                          this.router.navigate(['practitionerAccount']);
+
+                        }
+                        else {
+                          localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+                          this.router.navigate(['practitionerAccount']);
+                        }
                       });
                     }, 3);
                   }

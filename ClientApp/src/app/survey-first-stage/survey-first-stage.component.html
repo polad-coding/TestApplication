@@ -1,6 +1,6 @@
 <app-navigation-bar></app-navigation-bar>
 <app-page-title titleText="The survey"></app-page-title>
-<div id="survey-first-stage-container" >
+<div id="survey-first-stage-container">
   <div id="title-section">
     <div class="prev-step-button-container">
       <button class="button-enabled" *ngIf="isStepDescriptionPage" (click)="ProceedToPersonalSpace($event)"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> To personal account </button>
@@ -14,16 +14,16 @@
       <p>Choose up to 55 values out of 102</p>
     </div>
     <div class="step-validation-container">
-      <button [ngClass]="{'button-disabled':numberOfValuesQualified < 102, 'button-enabled':numberOfValuesQualified == 102}" (click)="ProceedToValidationStep($event)" *ngIf="!isStepDescriptionPage && !isValidationStage">Step validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button id="procced-to-validation-step-button" [ngClass]="{'button-disabled':numberOfValuesQualified < 102, 'button-enabled':numberOfValuesQualified == 102}" (click)="ProceedToValidationStep($event)" *ngIf="!isStepDescriptionPage && !isValidationStage">Step validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
       <button class="button-enabled to-selection-button" *ngIf="isStepDescriptionPage" (click)="ProccedToSelectionStage($event)">To selection<img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
-      <button [ngClass]="{'button-enabled': importantValues.length <= 55,'button-disabled': importantValues.length > 55, 'to-selection-button':true}" (click)="SaveFirstStageResults($event)" *ngIf="isValidationStage">Next step<img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button [ngClass]="{'button-enabled': importantValues.length <= 55 && importantValues.length >= 35,'button-disabled': importantValues.length > 55 || importantValues.length < 35, 'to-selection-button':true}" (click)="SaveFirstStageResults($event)" *ngIf="isValidationStage">Next step<img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
     </div>
   </div>
   <div id="description-page-container" *ngIf="isStepDescriptionPage">
     <div class="go-to-selection-stage-button">
 
     </div>
-    <div id="description-page-text" >
+    <div id="description-page-text">
       <p>{{'Survey.FirstStage.FirstParagraph' | translate}}</p><br />
       <p>{{'Survey.FirstStage.SecondParagraph' | translate}}</p><br />
       <p>{{'Survey.FirstStage.ThirdParagraph' | translate}}</p><br />
@@ -33,7 +33,7 @@
       <button (click)="ProccedToSelectionStage($event)"><img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" /></button>
     </div>
   </div>
-  <div id="values-selected-stats-section" *ngIf="isSelectionStage">
+  <div id="values-selected-stats-section" *ngIf="isSelectionStage && !isMobile">
     <div id="values-selected-stats-container">
       <p>{{numberOfValuesQualified}} values qualified out of 102</p>
       <p>{{numberOfValuesQualifiedAsImportant}} qualified as important</p>
@@ -53,7 +53,7 @@
           <p>{{'Values.' + values[currentIndex].character + '.Definition' | translate}}</p>
         </div>
       </div>
-      <div id="next-value-container" >
+      <div id="next-value-container">
         <button *ngIf="currentIndex < 101" (click)="SelectNextValue($event)"><img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" /></button>
       </div>
     </div>
@@ -62,18 +62,26 @@
       <button [ngClass]="{'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'not-important', 'important-button-style': currentValueClickedAtSelectionImportance == 'important'}" (click)="MarkAsImportant($event)">Important</button>
     </div>
   </div>
+  <div id="values-selected-stats-section-mobile" *ngIf="isSelectionStage && isMobile">
+    <div id="values-selected-stats-container-mobile">
+      <p>{{numberOfValuesQualified}} values qualified out of 102</p>
+      <p>{{numberOfValuesQualifiedAsImportant}} qualified as important</p>
+    </div>
+  </div>
   <div id="bottom-section" *ngIf="isSelectionStage">
-    <div class="values-display-options">
+    <div (click)="SelectPreviousValue($event)" class="switch-values-arrows-section">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
     </div>
     <div id="values-list-section">
       <div id="values-bar">
-          <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-valueId]="value.id" [attr.data-id]="i" class="value-container">
-            <p>{{value.character}}</p>
-            <p>{{'Values.' + value.character + '.Title' | translate}}</p>
-          </div>
+        <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-valueId]="value.id" [attr.data-id]="i" class="value-container">
+          <p>{{value.character}}</p>
+          <p>{{'Values.' + value.character + '.Title' | translate}}</p>
+        </div>
       </div>
     </div>
-    <div class="values-display-options">
+    <div (click)="SelectNextValue($event)" class="switch-values-arrows-section">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
     </div>
   </div>
   <div *ngIf="isValidationStage" id="validation-stage">
@@ -81,8 +89,11 @@
       <p *ngIf="numberOfValuesQualifiedAsImportant > 55">
         {{numberOfValuesQualifiedAsImportant - 55 + ' values selected too many\n Please deselect'}}
       </p>
-      <p *ngIf="numberOfValuesQualifiedAsImportant <= 55">
+      <p *ngIf="numberOfValuesQualifiedAsImportant <= 55 && numberOfValuesQualifiedAsImportant >= 35">
         {{numberOfValuesQualifiedAsImportant + ' values selected\n OK'}}
+      </p>
+      <p *ngIf="numberOfValuesQualifiedAsImportant < 35">
+        {{35 - numberOfValuesQualifiedAsImportant + ' values selected too less\n Please select more'}}
       </p>
     </div>
     <div id="less-important-values-container">
@@ -98,7 +109,7 @@
     </div>
     <div id="important-values-container">
       <p class="title">Important</p>
-      <div  [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}"> 
+      <div [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
         <ul cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValues" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
           <li *ngFor="let value of importantValues" (click)="DisplayValueModal($event, value, 'value-is-important')" cdkDrag>
             <span class="value-is-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>
@@ -119,7 +130,7 @@
       <p id="value-modal-description">
         {{'Values.' + values[currentValueClickedAtValidationStep.nativeElement.dataset.id].character + '.Definition' | translate}}
       </p>
-      <img id="close-modal-icon" (click)="CloseModal($event)" src="../../assets/Images/close.svg"/>
+      <img id="close-modal-icon" (click)="CloseModal($event)" src="../../assets/Images/close.svg" />
     </div>
   </div>
 </div>

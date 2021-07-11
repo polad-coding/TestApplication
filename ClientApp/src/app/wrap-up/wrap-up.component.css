@@ -17,6 +17,7 @@
     flex-flow:column;
     justify-content:center;
     margin-right:80px;
+    width:auto;
 }
 
   #brief-results-section-texts p:first-child {
@@ -123,6 +124,12 @@
     filter: invert(27%) sepia(94%) saturate(1431%) hue-rotate(168deg) brightness(87%) contrast(101%);
   }
 
+#chart-image-without-labels {
+  width: 100%;
+  margin: 0;
+  scale: 2;
+}
+
 #perspectives-pie-diagram{
     width:50%;
     position:relative;
@@ -131,8 +138,17 @@
     align-items:center;
 }
 
-#selected-perspectives-section{
-    width:50%;
+#brief-results-section-perspectives-pie-diagram {
+  min-width: 350px;
+  min-height: 350px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#selected-perspectives-section {
+  width: 50%;
 }
 
   #selected-perspectives-section{
@@ -147,25 +163,24 @@
     padding: 40px;
   }
 
-#pie-image-container {
-  height: 80px;
-  width: 80px;
+.pie-image-container {
+  height: 30px;
+  width: 30px;
   position: absolute;
-  border-radius: 50%;
-  background-color: white;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #006F91;
+  margin-bottom:45px;
 }
 
 #myChart{
     position:absolute;
 }
 
-#pie-image{
-    height:50px;
-    width:50px;
+#resultsSectionMyChart {
+  position: absolute;
+}
+
+.pie-image{
+    height:30px;
+    width:30px;
 }
 
 #primary-perspective-span{
@@ -257,6 +272,12 @@
     filter: invert(100%) sepia(3%) saturate(7455%) hue-rotate(43deg) brightness(111%) contrast(103%);
   }
 
+@media only screen and (min-width:1102px) and (max-width:1230px) {
+    .pie-image-container{
+        margin-bottom:95px;
+    }
+}
+
 @media only screen and (min-width:760px) and (max-width:1200px) {
   #brief-results-section-texts p:first-child {
     font-size: 2.4rem;
@@ -276,9 +297,13 @@
     margin-bottom: 30px;
   }
 
-  #brief-results-section > img{
-      width:auto;
-      margin:40px;
+  #chart-image-without-labels{
+      scale:0;
+  }
+
+  #brief-results-section > img {
+    width: auto;
+    margin: 40px;
   }
 
   #brief-results-section-texts{
@@ -468,6 +493,10 @@
       width: 800px;
     }
 
+    #brief-results-section-perspectives-pie-diagram {
+      width: 800px;
+    }
+
     #selected-perspectives-section {
       font-size: 1.2rem;
       margin-top: 30px;
@@ -486,6 +515,10 @@
       width: 700px;
     }
 
+    #brief-results-section-perspectives-pie-diagram {
+      width: 700px;
+    }
+
     #selected-perspectives-section {
       font-size: 1rem;
       margin-top: 30px;
@@ -500,8 +533,24 @@
 
   @media only screen and (min-width:320px) and (max-width:490px) {
 
+    .pie-image-container {
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      margin-bottom: 105px;
+    }
+
+    .pie-image {
+      height: 20px;
+      width: 20px;
+    }
+
     #perspectives-pie-diagram {
       width: 500px;
+    }
+
+    #brief-results-section-perspectives-pie-diagram{
+        width:500px;
     }
 
     #selected-perspectives-section {
@@ -519,6 +568,10 @@
 @media only screen and (min-width:320px) and (max-width:400px) {
   #perspectives-pie-diagram {
     width: 100vw;
+  }
+
+  #brief-results-section-perspectives-pie-diagram{
+      width:100vw;
   }
 }
 

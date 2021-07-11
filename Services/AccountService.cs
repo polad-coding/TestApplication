@@ -79,15 +79,15 @@ namespace KPProject.Services
 
             //TODO - here uncomment
 
-            //if (userViewModel.Email != oldEmail)
-            //{
-            //    File.Copy(
-            //        Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"),
-            //        Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldUser.ProfileImageName}.png")
-            //    );
+            if (userViewModel.Email != oldEmail)
+            {
+                File.Copy(
+                    Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{userViewModel.ProfileImageName}.png"),
+                    Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{oldUser.ProfileImageName}.png")
+                );
 
-            //    File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
-            //}
+                File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{userViewModel.ProfileImageName}.png"));
+            }
 
 
             var userWithNewData = await _userManager.UpdateAsync(oldUser);
@@ -202,9 +202,9 @@ namespace KPProject.Services
                 {
                     Image pic = Image.FromStream(ms);
 
-                    string path = Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{user.ProfileImageName}.png");
+                    string path = Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{user.ProfileImageName}.png");
 
-                    File.Delete(Path.Combine(".\\ClientApp\\src\\assets\\Profile-Images\\", $"{oldImageName}.png"));
+                    File.Delete(Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{oldImageName}.png"));
 
                     pic.Save(path, ImageFormat.Png);
                 }

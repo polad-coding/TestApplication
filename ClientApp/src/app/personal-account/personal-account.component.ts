@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { NgForm, NgModel, Validators } from '@angular/forms';
 import { AccountService } from '../../app-services/account.service';
@@ -9,6 +9,7 @@ import { RegionViewModel } from '../../view-models/region-view-model';
 import { LanguageViewModel } from '../../view-models/language-view-model';
 import { DataService } from '../../app-services/data-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 @Component({
   selector: 'app-personal-account',
@@ -16,7 +17,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./personal-account.component.css'],
   providers: [AccountService, DataService]
 })
-export class PersonalAccountComponent implements OnInit, AfterViewInit {
+export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChanges {
 
   public user: UserViewModel;
   @ViewChildren('inputField')
@@ -32,12 +33,15 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
   public accountSectionTabs: QueryList<ElementRef>;
   public currentSelectedTabIndex: number;
   public userHasUnsignedSurveys: boolean = false;
+  public formIsPristine: true;
 
-  constructor(private _router: Router, private _jwtHelper: JwtHelperService, private accountService: AccountService, private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer) {
+  constructor(private _router: Router, private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private accountService: AccountService, private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer) {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.user = _router.getCurrentNavigation().extras.state.user;
     }
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    }
     ngAfterViewInit(): void {
       this.AdjustZIndexes();
 
@@ -53,6 +57,21 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
         console.debug(this.user);
+
+        let genders = document.getElementsByClassName('gender-option');
+
+        console.debug(genders);
+
+        for (var i = 0; i < genders.length; i++) {
+          console.debug((<any>genders[i].firstChild).value.toString());
+
+          if ((<any>genders[i].firstChild).value.toString() == this.user.gender.genderName) {
+            console.info(this.user.gender.genderName);
+            this._renderer2.setAttribute(genders[i].firstChild, 'checked', 'true');
+          }
+        }
+
+
         let currentTab = localStorage.getItem('personalAccountTabName');
         if (currentTab == null) {
           localStorage.setItem('personalAccountTabName', 'my-account-section');

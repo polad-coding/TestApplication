@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { AfterViewInit, Component, ElementRef, Injector, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AfterViewInit, Component, ElementRef, HostListener, Injector, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Route, Router } from '@angular/router';
 import { count } from 'console';
 import { AppSettingsService } from '../../app-services/app-settings.service';
@@ -49,6 +50,26 @@ export class SurveySecondStageComponent implements OnInit {
         this._router.navigate(['surveyFirstStage']);
       })
     }
+  }
+
+  public ScrollUpInUnselectedValuesContainer(event) {
+    console.log(event.target.previousSibling);
+    event.target.nextSibling.scrollBy({ top: -70, behavior: 'smooth' });
+  }
+
+  public ScrollDownInUnselectedValuesContainer(event) {
+    console.log(event.target.previousSibling);
+    event.target.previousSibling.scrollBy({ top: 70, behavior: 'smooth' });
+  }
+
+  public ScrollUpInSelectedValuesContainer(event) {
+    console.log(event.target.previousSibling);
+    event.target.nextSibling.scrollBy({ top: -50, behavior: 'smooth' });
+  }
+
+  public ScrollDownInSelectedValuesContainer(event) {
+    console.log(event.target.previousSibling);
+    event.target.previousSibling.scrollBy({ top: 50, behavior: 'smooth' });
   }
 
   //private CalculateCurrentPage() {
@@ -186,6 +207,7 @@ export class SurveySecondStageComponent implements OnInit {
 
     if (!notEnoughtElements) {
       this.stepIsFilledCorrectly = true;
+      document.getElementById('to-next-step-button').scrollIntoView({ behavior: 'smooth' });
     }
     else {
       this.stepIsFilledCorrectly = false;
@@ -302,7 +324,15 @@ export class SurveySecondStageComponent implements OnInit {
     this._renderer2.setStyle(this.lessImportantValuesList.nativeElement, 'display', 'block');
   }
 
+  @HostListener('document:click', ['$event'])
+  public OnDocumentClicked(event) {
+    this.valueModalIsVisible = false;
+  }
+
   public DisplayValueModal(event: any, value: ValueViewModel) {
+    if (!this.valueModalIsVisible) {
+      event.stopPropagation();
+    }
     this.valueModalIsVisible = true;
     this.currentClickedValueCharacter = value.character;
     if ((event.target.firstChild.classList != undefined && event.target.firstChild.classList.contains('value-is-important') == true) || (event.target.classList != undefined && event.target.classList.contains('value-is-important') == true) || (event.target.parentElement.classList != undefined && event.target.parentElement.classList.contains('value-is-important') == true)) {
@@ -410,5 +440,6 @@ export class SurveySecondStageComponent implements OnInit {
       this.valuesGroupedByPerspectives.get(value.perspectiveId).push(value);
     })
   }
+
 
 }

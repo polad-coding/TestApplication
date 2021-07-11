@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../app-services/data-service';
 import { SurveyThirdStageSaveRequestModel } from '../../view-models/survey-third-stage-save-request-model';
@@ -33,6 +33,8 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   public isSelectionStage: boolean = false;
   public isValidationStage: boolean = false;
   public numberOfValuesSelected: number = 0;
+  public valueModalIsVisible: boolean = false;
+  public currentClickedValueCharacter: string;
 
   constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
     if (_router.getCurrentNavigation().extras.state != null) {
@@ -44,6 +46,28 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     if (window.confirm("Are you sure you want to leave the stage uncompleated, all your choises will be lost.")) {
         this._router.navigate(['surveySecondStage']);
     }
+  }
+
+  public ScrollDownInUnselectedValuesContainer(event) {
+    event.target.previousSibling.scrollBy({ top: 70, behavior: 'smooth' });
+
+  }
+
+  public ScrollUpInUnselectedValuesContainer(event) {
+    event.target.nextSibling.scrollBy({ top: -70, behavior: 'smooth' });
+  }
+
+  public DisplayValueModal(event: any, value: ValueViewModel) {
+    if (!this.valueModalIsVisible) {
+      event.stopPropagation();
+    }
+    this.valueModalIsVisible = true;
+    this.currentClickedValueCharacter = value.character;
+  }
+
+  @HostListener('document:click', ['$event'])
+  public OnDocumentClicked(event) {
+    this.valueModalIsVisible = false;
   }
 
   public UploadSurveyResults() {

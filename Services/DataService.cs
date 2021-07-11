@@ -207,7 +207,6 @@ namespace KPProject.Services
             }
 
             survey.FirstStagePassed = true;
-            survey.TakenOn = DateTime.Now;
 
             _applicationDbContext.Surveys.Update(survey);
 
@@ -246,7 +245,6 @@ namespace KPProject.Services
             }
 
             survey.SecondStagePassed = true;
-            survey.TakenOn = DateTime.Now;
 
 
             _applicationDbContext.Surveys.Update(survey);
@@ -880,13 +878,20 @@ namespace KPProject.Services
                 return false;
             }
 
+            var orderBelongsToThePractitioner = await _userManager.IsInRoleAsync(await _userManager.FindByIdAsync(order.UserId), "Practitioner");
+
+            if (!orderBelongsToThePractitioner)
+            {
+                return false;
+            }
+
             await _applicationDbContext.Orders.AddAsync(new OrderModel { CodeBody = order.CodeBody, NumberOfUsages = 1, UserId = transferCodesViewModel.UserId });
 
             order.NumberOfUsages -= 1;
 
             if (order.NumberOfUsages == 0)
             {
-                _applicationDbContext.Remove(order);
+                _applicationDbContext.Orders.Remove(order);
             }
             else
             {

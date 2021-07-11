@@ -2,7 +2,14 @@
 <app-page-title titleText="The survey"></app-page-title>
 <div id="wrap-up-container">
   <div id="brief-results-section">
-    <img src="../../assets/Images/KP-Perspectives-Pie.png"/>
+    <div id="brief-results-section-perspectives-pie-diagram">
+      <canvas id="resultsSectionMyChart" >
+      </canvas>
+      <img id="chart-image-without-labels" src="{{imageString}}" />
+      <div class="pie-image-container" style="margin-bottom:0px;">
+        <img class="pie-image" style="margin:0;" src="../../assets/KP-logotype/KP-logotype-006F91-chip.png" />
+      </div>
+    </div>
     <div id="brief-results-section-texts">
       <p>{{'Survey.WrapUp.WrapUpSectionTexts.Title' | translate}}</p>
       <p>{{'Survey.WrapUp.WrapUpSectionTexts.MainContent' | translate}}</p>
@@ -40,8 +47,8 @@
     <div id="perspectives-pie-diagram">
       <canvas id="myChart" style="height:100%;" >
       </canvas>
-      <div id="pie-image-container">
-        <img id="pie-image" src="../../assets/KP-logotype/KP-logotype-006F91-chip.png" />
+      <div class="pie-image-container">
+        <img class="pie-image" src="../../assets/KP-logotype/KP-logotype-006F91-chip.png" />
       </div>
     </div>
   </div>

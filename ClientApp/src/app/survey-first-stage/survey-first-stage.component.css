@@ -11,17 +11,24 @@
   justify-content: flex-end;
 }
 
-.not-important-button-style {
-  padding: 5px;
-  border: none;
-  width: 180px;
+#values-selected-stats-section-mobile {
+  color: #006F91;
+  font-size: 0.8rem;
   display: flex;
   justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 4px #006F91;
-  color: white;
-  background-color: #9ac7ec;
 }
+
+  .not-important-button-style {
+    padding: 5px;
+    border: none;
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 4px #006F91;
+    color: white;
+    background-color: #9ac7ec;
+  }
 
 .important-button-style {
   padding: 5px;
@@ -159,10 +166,17 @@
   margin-right: 30px;
 }
 
-#main-section {
+#values-selected-stats-container-mobile {
   display: flex;
-  flex-flow: column;
+  width:100%;
+  justify-content: space-around;
+  align-items: center;
 }
+
+  #main-section {
+    display: flex;
+    flex-flow: column;
+  }
 
 #value-part {
   display: flex;
@@ -250,15 +264,26 @@
   flex-flow: column;
   justify-content: center;
   color: #006F91;
+
 }
 
   #value-info p:first-child {
     font-family: barlowSemiCondensed;
-    font-size: 2rem
+    font-size: 2rem;
+    min-height: 120px;
+    max-height: 120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 
   #value-info p:last-child {
-    font-size: 1.2rem
+    font-size: 1rem;
+    min-height: 120px;
+    max-height: 120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 
 #importance-buttons-section {
@@ -271,6 +296,7 @@
 #bottom-section {
   display: flex;
   margin-top: 30px;
+  justify-content:space-evenly;
 }
 
 .values-display-options-validation-stage {
@@ -349,9 +375,21 @@
     font-size: 0.7rem;
   }
 
-.simplebar-content {
-  display: flex;
+.switch-values-arrows-section{
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
+
+  .switch-values-arrows-section img {
+    height: 40px;
+    width: 40px;
+    filter: invert(25%) sepia(65%) saturate(2322%) hue-rotate(171deg) brightness(94%) contrast(101%);
+  }
+
+  .simplebar-content {
+    display: flex;
+  }
 
 .value-is-not-important {
   color: white;
@@ -359,7 +397,8 @@
 }
 
 .value-is-important {
-  border: 2px solid #006F91;
+  color:white;
+  background-color:#006F91;
 }
 
 .current-value {
@@ -725,6 +764,10 @@
         width: 60px;
         height: 60px;
       }
+
+    #values-selected-stats-container-mobile{
+
+    }
   }
 
   @media only screen and (min-width: 320px) and (max-width: 400px) {

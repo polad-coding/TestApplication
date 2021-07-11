@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { DataService } from '../../app-services/data-service';
 import { ValueViewModel } from '../../view-models/value-view-model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -36,7 +36,8 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   public currentValueClickedAtValidationImportance: string;
   public currentValueClickedAtSelectionImportance: string;
   public isStepDescriptionPage: boolean = true;
-  private surveyId: number; 
+  public isMobile: boolean = false;
+  private surveyId: number;
 
   constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) {
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
@@ -46,6 +47,16 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     this._dataService.DeleteSurveyFirstStageResults(this.surveyId).subscribe(response => {
       this._router.navigate(['personalAccount']);
     })
+  }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(event) {
+    if (window.innerWidth <= 650) {
+      this.isMobile = true;
+    }
+    else {
+      this.isMobile = false;
+    }
   }
 
   public ProceedToDescriptionStage(event) {
@@ -90,7 +101,15 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  @HostListener('document:click', ['$event'])
+  public OnDocumentClicked(event) {
+    this.valueModalIsVisible = false;
+  }
+
   public DisplayValueModal(event: MouseEvent, element: ElementRef, className: string) {
+    if (!this.valueModalIsVisible) {
+      event.stopPropagation();
+    }
     this.currentValueClickedAtValidationStep = element;
     this.valueModalIsVisible = true;
     if (className == 'value-is-important') {
@@ -135,6 +154,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       }
       else {
         this.numberOfValuesQualified += 1;
+        this.CheckIfSelectionStepIsCompleated();
       }
       //Add element to the lessImportantValues list
       this.lessImportantValues.push(this.valueContainers.find(el => el.nativeElement.dataset.id == this.currentIndex));
@@ -143,7 +163,15 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this._renderer2.removeClass(this.lessImportantValues[this.lessImportantValues.length - 1].nativeElement.firstChild, 'value-is-important');
       this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-important');
-      this.SelectNextValue(null);
+    }
+    this.SelectNextValue(null);
+  }
+
+  private CheckIfSelectionStepIsCompleated() {
+    if (this.numberOfValuesQualified == 102) {
+      setTimeout(() => {
+        document.getElementById('procced-to-validation-step-button').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     }
   }
 
@@ -167,6 +195,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       }
       else {
         this.numberOfValuesQualified += 1;
+        this.CheckIfSelectionStepIsCompleated();
       }
       this.numberOfValuesQualifiedAsImportant += 1;
       //Add element to the lessImportantValues list
@@ -176,8 +205,8 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this._renderer2.removeClass(this.importantValues[this.importantValues.length - 1].nativeElement.firstChild, 'value-is-not-important');
       this._renderer2.addClass(this.valueIdeogram.nativeElement, 'value-is-important');
       this._renderer2.removeClass(this.valueIdeogram.nativeElement, 'value-is-not-important');
-      this.SelectNextValue(null);
     }
+    this.SelectNextValue(null);
   }
 
   public TurnOnDescriptiveMode() {
@@ -263,6 +292,12 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (window.innerWidth <= 650) {
+      this.isMobile = true;
+    }
+    else {
+      this.isMobile = false;
+    }
     //TODO - place the survey creation process in other place after testing
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
     this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe((response: any) => {
@@ -331,7 +366,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
         }
       }
 
-      this._router.navigate(['surveySecondStage'],ne);
+      this._router.navigate(['surveySecondStage'], ne);
       //TODO - go to second stage with the given values
     });
 

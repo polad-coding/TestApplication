@@ -56,11 +56,29 @@
   </div>
 </div>
 <div id="body-section" *ngIf="isSelectionStage" cdkDropListGroup>
-  <div cdkDropList [cdkDropListData]="values" (cdkDropListDropped)="drop($event)" id="important-values-box">
-    <div  cdkDrag class="important-value" *ngFor="let value of values;index as i">
-      <span>{{value.character}}</span>
-      <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+  <div id="value-modal" *ngIf="valueModalIsVisible">
+    <div id="value-modal-ideogram-section">
+      <div #valueModalIdeogram id="value-modal-ideogram" [ngClass]="{'value-is-important':currentClickedValueImportance == 'important'}">
+        {{currentClickedValueCharacter | translate}}
+      </div>
     </div>
+    <p id="value-modal-title">
+      {{'Values.' + currentClickedValueCharacter + '.Title' | translate}}
+    </p>
+    <p id="value-modal-description">
+      {{'Values.' + currentClickedValueCharacter + '.Definition' | translate}}
+    </p>
+    <img id="close-modal-icon" (click)="CloseModal($event)" src="../../assets/Images/close.svg" />
+  </div>
+  <div id="body-section-values-from-previous-step-container">
+    <img class="scroll-up-arrow" (click)="ScrollUpInUnselectedValuesContainer($event)" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+    <div cdkDropList [cdkDropListData]="values" (cdkDropListDropped)="drop($event)" id="important-values-box">
+      <div cdkDrag class="important-value" *ngFor="let value of values;index as i" (click)="DisplayValueModal($event, value)">
+        <span>{{value.character}}</span>
+        <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+      </div>
+    </div>
+    <img class="scroll-down-arrow" (click)="ScrollDownInUnselectedValuesContainer($event)" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
   </div>
   <div id="table-section">
     <div class="priorities-container">
@@ -73,31 +91,31 @@
       </div>
       <div class="values-priorities-column-right-part">
         <div cdkDropList [cdkDropListData]="firstRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="firstRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="1">
+          <div *ngIf="firstRowArray[0] != undefined" (click)="DisplayValueModal($event, firstRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="1">
             <p>{{firstRowArray[0].character}}</p>
             <p>{{'Values.' + firstRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="secondRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="secondRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="2">
+          <div *ngIf="secondRowArray[0] != undefined" (click)="DisplayValueModal($event, secondRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="2">
             <p>{{secondRowArray[0].character}}</p>
             <p>{{'Values.' + secondRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="thirdRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="thirdRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="3">
+          <div *ngIf="thirdRowArray[0] != undefined" (click)="DisplayValueModal($event, thirdRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="3">
             <p>{{thirdRowArray[0].character}}</p>
             <p>{{'Values.' + thirdRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="fourthRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="fourthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="4">
+          <div *ngIf="fourthRowArray[0] != undefined" (click)="DisplayValueModal($event, fourthRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="4">
             <p>{{fourthRowArray[0].character}}</p>
             <p>{{'Values.' + fourthRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="fifthRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="fifthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="5">
+          <div *ngIf="fifthRowArray[0] != undefined" (click)="DisplayValueModal($event, fifthRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="5">
             <p>{{fifthRowArray[0].character}}</p>
             <p>{{'Values.' + fifthRowArray[0].character + '.Title' | translate}}</p>
           </div>
@@ -113,25 +131,25 @@
       </div>
       <div class="values-priorities-column-right-part">
         <div cdkDropList [cdkDropListData]="sixthRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="sixthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="6">
+          <div *ngIf="sixthRowArray[0] != undefined" (click)="DisplayValueModal($event, sixthRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="6">
             <p>{{sixthRowArray[0].character}}</p>
             <p>{{'Values.' + sixthRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="seventhRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="seventhRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="7">
+          <div *ngIf="seventhRowArray[0] != undefined" (click)="DisplayValueModal($event, seventhRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="7">
             <p>{{seventhRowArray[0].character}}</p>
             <p>{{'Values.' + seventhRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="eighthRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="eighthRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="8">
+          <div *ngIf="eighthRowArray[0] != undefined" (click)="DisplayValueModal($event, eighthRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="8">
             <p>{{eighthRowArray[0].character}}</p>
             <p>{{'Values.' + eighthRowArray[0].character + '.Title' | translate}}</p>
           </div>
         </div>
         <div cdkDropList [cdkDropListData]="ninethRowArray" (cdkDropListDropped)="drop($event)">
-          <div *ngIf="ninethRowArray[0] != undefined" cdkDrag class="table-cell" [attr.data-priority]="9">
+          <div *ngIf="ninethRowArray[0] != undefined" (click)="DisplayValueModal($event, ninethRowArray[0])" cdkDrag class="table-cell" [attr.data-priority]="9">
             <p>{{ninethRowArray[0].character}}</p>
             <p>{{'Values.' + ninethRowArray[0].character + '.Title' | translate}}</p>
           </div>

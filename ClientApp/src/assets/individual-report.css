@@ -358,18 +358,26 @@
     font-size:1.5rem;
 }
 
+.page-footer{
+    text-align:center;
+    color:#006F91;
+}
+
+.values-questions-container {
+  page-break-inside: avoid;
+}
+
 .perspectives-table-explanation {
   max-height: 400px;
-  padding:5px;
-  padding-top:50px;
+  padding: 5px;
+  padding-top: 50px;
   height: 400px;
   text-align: center;
   width: 225px;
-  display:-webkit-flex;
-  align-items:center;
+  display: -webkit-flex;
+  align-items: center;
   font-size: 1.6rem;
-  color:black;
-
+  color: black;
 }
 
 .perspectives-table-explanation p{

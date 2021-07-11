@@ -21,8 +21,11 @@
       <div class="survey-result-row-white-cell">
         <p>{{surveyResult.code}}</p>
       </div>
-      <div class="survey-result-row-white-cell">
-        <p>{{surveyResult.takenOn}}</p>
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn != null">
+        <p>{{surveyResult.takenOn | date:'yyyy MMM d'}}</p>
+      </div>
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null">
+        <p>Survey in progress</p>
       </div>
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
         <p>{{surveyResult.practitionerFullName}}</p>

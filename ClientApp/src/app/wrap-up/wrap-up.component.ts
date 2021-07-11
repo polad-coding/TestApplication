@@ -17,6 +17,8 @@ export class WrapUpComponent implements OnInit {
   public secondaryPerspectiveId: number;
   public valuesFromThirdStage: Array<ValueViewModel> = new Array<ValueViewModel>();
   private relativeWeightOfThePerspectives: Array<number> = new Array<number>();
+  public resultsSectionMyChart: Chart;
+  public imageString;
 
   constructor(private _dataService: DataService, private _router: Router) {
     this._dataService.DecideToWhichStageToTransfer(Number.parseInt(localStorage.getItem('surveyId'))).subscribe(response => {
@@ -71,6 +73,63 @@ export class WrapUpComponent implements OnInit {
             maxGraphSliceValue += 1;
             maxGraphSliceValue = Math.round(maxGraphSliceValue);
 
+            this.resultsSectionMyChart = new Chart('resultsSectionMyChart', {
+              type: 'polarArea',
+              options: {
+                animation: {
+                  onComplete: () => {
+                    this.imageString = this.resultsSectionMyChart.toBase64Image();
+                  }
+                },
+                legend: {
+                  display: false,
+                  position: 'bottom',
+                  labels: {
+                    fontColor: '#006F91',
+                    fontFamily: 'barlowSemiCondensedLight',
+                    boxWidth: 0,
+                    padding: 0,
+                    fontSize:0 
+                  },
+                },
+                scale: {
+                  display: false,
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    display: false,
+                    max: maxGraphSliceValue,
+                    min: 0
+                  }
+                }
+              },
+              
+              data: {
+                labels: [],
+                //labels: [
+                //  'Expansion',
+                //  'Systems',
+                //  'Relational',
+                //  'Management',
+                //  'Family',
+                //  'Grounding'
+                //],
+                datasets: [{
+                  data: this.relativeWeightOfThePerspectives.reverse(),
+                  backgroundColor: [
+                    '#544595',
+                    '#009EE3',
+                    '#009640',
+                    '#FFCC00',
+                    '#ED7102',
+                    '#E30513'
+                  ]
+                }]
+              }
+            });
+
+
             var myChart = new Chart('myChart', {
               type: 'polarArea',
               options: {
@@ -81,9 +140,8 @@ export class WrapUpComponent implements OnInit {
                     fontColor: '#006F91',
                     fontFamily: 'barlowSemiCondensedLight',
                     boxWidth: 10,
-                    padding: 20
+                    padding: 30
                   },
-                  fullWidth: false
                 },
                 scale: {
                   gridLines: {
@@ -106,7 +164,7 @@ export class WrapUpComponent implements OnInit {
                   'Grounding'
                 ],
                 datasets: [{
-                  data: this.relativeWeightOfThePerspectives.reverse(),
+                  data: this.relativeWeightOfThePerspectives,
                   backgroundColor: [
                     '#544595',
                     '#009EE3',
