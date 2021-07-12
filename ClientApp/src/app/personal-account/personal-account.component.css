@@ -193,17 +193,16 @@
     color: #006F91;
   }
 
-#valid-changes-section button {
+.is-enabled {
   width: 160px;
   height: 60px;
-  background: white;
+  background: #006F91;
   border: none;
-  color: #006F91;
+  color: white;
 }
 
-  #valid-changes-section button:hover {
-    background-color: #006F91;
-    color:white;
+  .is-enabled:hover {
+    box-shadow:0px 0px 5px rgba(0,0,0,0.4);
   }
 
 #valid-changes-section{
@@ -360,8 +359,15 @@ input:disabled {
     margin-bottom:10px;
 }
 
+.is-disabled {
+  pointer-events: none;
+  background-color: white;
+  padding: 20px;
+  color: gray;
+}
+
 @media only screen and (min-width:800px) and (max-width:1000px) {
-    #personal-account-form{
+  #personal-account-form{
         width:90%;
     }
 
@@ -396,13 +402,21 @@ input:disabled {
       align-items: center;
     }
 
-      #valid-changes-section button {
-        width: max-content;
-        height: 40px;
-        display:flex;
-        align-items:center;
-        padding:5px;
-      }
+    .is-enabled {
+      width: max-content;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+    }
+
+    .is-disabled {
+      width: max-content;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+    }
 
     #submit-form-section {
       margin-top: 10px;

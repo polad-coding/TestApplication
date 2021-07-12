@@ -11,6 +11,7 @@ import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { ReportTableValueViewModel } from '../../view-models/report-table-value-view-model';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
 import { ReportHTMLContentViewModel } from '../../view-models/report-html-content-view-model';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
   public surveyResults: SurveyResultViewModel;
   //TODO - get information about survey taker and survey 
 
-  constructor(private _as: AccountService, private _ds: DataService, private router: Router) {
+  constructor(private _as: AccountService, private _ds: DataService, private router: Router, private _location: Location) {
   }
 
 
@@ -132,7 +133,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                         }
                         else {
                           localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
-                          this.router.navigate(['personalAccount']);
+                          localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+                          this._location.back();
                         }
                       });
                     }, 0);

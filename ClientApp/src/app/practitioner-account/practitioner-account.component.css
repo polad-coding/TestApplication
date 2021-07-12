@@ -5,6 +5,20 @@
   margin:auto;
 }
 
+#error-message-container {
+  max-width: 300px;
+  height: auto;
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: red;
+  color: white;
+  margin-bottom:20px;
+}
+
 #survey-results-and-reports-container {
   background-color: #9AC7EC;
   width: 95%;

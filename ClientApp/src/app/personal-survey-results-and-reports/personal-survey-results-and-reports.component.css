@@ -2,11 +2,16 @@
     display:flex;
 }
 
-.title{
-    flex-grow:1;
-    flex-basis:0;
-    text-align:center;
-    color:#006F91;
+#enter-your-code-button {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.title {
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: center;
+  color: #006F91;
 }
 
 .survey-result-row{

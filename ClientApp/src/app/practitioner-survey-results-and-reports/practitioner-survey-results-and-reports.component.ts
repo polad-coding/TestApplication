@@ -21,13 +21,22 @@ export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
   constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
+    console.log(this.surveysResults);
+
     if (this.user == undefined || this.user == null) {
+
       this._accountService.GetCurrentUser().subscribe((response :any)=> {
         this.user = response.body;
         this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
           this.surveysResults = response.body;
           console.log(this.surveysResults);
         });
+      });
+    }
+    else {
+      this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
+        this.surveysResults = response.body;
+        console.log(this.surveysResults);
       });
     }
   }

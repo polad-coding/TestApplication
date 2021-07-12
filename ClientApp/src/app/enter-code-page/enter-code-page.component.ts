@@ -78,7 +78,7 @@ export class EnterCodePageComponent implements OnInit {
                 this._router.navigate(['personalAccount']);
               }
               else {
-                localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+                localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
                 this._router.navigate(['practitionerAccount']);
               }
             }

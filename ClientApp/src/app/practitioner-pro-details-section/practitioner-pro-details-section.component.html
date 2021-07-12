@@ -30,6 +30,7 @@
     </div>
   </div>
 </div>
+
 <div id="practitioner-pro-account-container">
   <div id="practitioner-pro-account-form-container">
     <div id="practitioner-pro-account-main-part">
@@ -38,6 +39,7 @@
           <img *ngIf="user.profileImageName === null" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
           <img *ngIf="user.profileImageName !== null" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
+          <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg" />
         </div>
         <p>Certified</p>
         <p>practitioner</p>

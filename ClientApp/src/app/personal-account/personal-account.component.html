@@ -194,8 +194,8 @@
 
       </div>
       <div id="valid-changes-section" >
-        <button *ngIf="!userHasUnsignedSurveys" (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
-        <button *ngIf="userHasUnsignedSurveys" (click)="AssociateUserDataToTheSurvey(personalInformationForm)">Get your survey result</button>
+        <button *ngIf="!userHasUnsignedSurveys" [ngClass]="{'is-enabled': !personalInformationForm.pristine,'is-disabled' : personalInformationForm.pristine}" (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
+        <button *ngIf="userHasUnsignedSurveys" class="is-enabled" (click)="AssociateUserDataToTheSurvey(personalInformationForm)">Get your survey result</button>
       </div>
       <div id="see-privacy-image-block">
         <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />

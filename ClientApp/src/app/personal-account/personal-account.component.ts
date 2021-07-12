@@ -20,6 +20,7 @@ import { CLIENT_RENEG_LIMIT } from 'tls';
 export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChanges {
 
   public user: UserViewModel;
+  private oldEmail: string;
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   public regions: Array<RegionViewModel>;
@@ -56,6 +57,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     if (this.user == null || this.user == undefined) {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
+        this.oldEmail = this.user.email;
         console.debug(this.user);
 
         let genders = document.getElementsByClassName('gender-option');
@@ -89,6 +91,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
       });
     }
     else {
+      this.oldEmail = this.user.email;
+
       if (localStorage.getItem('personalAccountTabName') == null) {
         localStorage.setItem('personalAccountTabName', 'my-account-section');
         this.selectedTab = localStorage.getItem('personalAccountTabName');
@@ -207,6 +211,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
           if (response.body === true) {
             this.formHasError = true;
             this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
+            this.user.email = this.oldEmail;
+            personalInformationForm.controls['email'].markAsPristine();
             setTimeout(() => {
               document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
             }, 100);
@@ -261,6 +267,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     });
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
+    this.formHasError = false;
   }
 
   public PreventEventPropagation(event: MouseEvent) {

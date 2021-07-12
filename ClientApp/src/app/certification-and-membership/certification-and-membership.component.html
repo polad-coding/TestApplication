@@ -18,7 +18,7 @@
     <div id="left-part">
       <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
       <p>Certified practitioner</p>
-      <p *ngIf="practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+      <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
       <!--<p>Membership {{}}</p>-->
     </div>
     <div id="right-part">
@@ -34,39 +34,39 @@
       </div>
       <div id="status-drop-container">
         <div class="status-drop">
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[0] == undefined" />
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[0] != undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] != undefined" />
         </div>
         <div class="status-drop">
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[1] == undefined" />
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[1] != undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] != undefined" />
 
         </div>
         <div class="status-drop">
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[2] == undefined" />
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[2] != undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] != undefined" />
         </div>
         <div class="status-drop">
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[3] == undefined" />
-          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[3] != undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] == undefined" />
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] != undefined" />
         </div>
       </div>
       <div id="certification-status-container">
         <div class="certification-status">
-          <p *ngIf="practitionersCertifications[0] != undefined">{{practitionersCertifications[0].validatedOn | date:'d LLLL y'}}</p>
-          <p *ngIf="practitionersCertifications[0] == undefined">Ongoing</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] != undefined">{{practitionersCertifications[0].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] == undefined">Ongoing</p>
         </div>
         <div class="certification-status">
-          <p *ngIf="practitionersCertifications[1] != undefined">{{practitionersCertifications[1].validatedOn | date:'d LLLL y'}}</p>
-          <p *ngIf="practitionersCertifications[1] == undefined && practitionersCertifications[0] != undefinded">Ongoing</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] != undefined">{{practitionersCertifications[1].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] == undefined && practitionersCertifications[0] != undefinded">Ongoing</p>
         </div>
         <div class="certification-status">
-          <p *ngIf="practitionersCertifications[2] != undefined">{{practitionersCertifications[2].validatedOn | date:'d LLLL y'}}</p>
-          <p *ngIf="practitionersCertifications[2] == undefined && practitionersCertifications[1] != undefinded">Ongoing</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] != undefined">{{practitionersCertifications[2].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] == undefined && practitionersCertifications[1] != undefinded">Ongoing</p>
         </div>
         <div class="certification-status">
-          <p *ngIf="practitionersCertifications[3] != undefined">{{practitionersCertifications[3].validatedOn | date:'d LLLL y'}}</p>
-          <p *ngIf="practitionersCertifications[3] == undefined && practitionersCertifications[2] != undefinded">Ongoing</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] != undefined">{{practitionersCertifications[3].validatedOn | date:'d LLLL y'}}</p>
+          <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] == undefined && practitionersCertifications[2] != undefinded">Ongoing</p>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
   <div id="image-section-mobile">
     <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
     <p>Certified practitioner</p>
-    <p *ngIf="practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+    <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
     <p *ngIf="membership != null">Membership OK</p>
     <p *ngIf="membership == null">Membership needs the renewal</p>
   </div>
@@ -135,39 +135,39 @@
     </div>
     <div id="status-drop-container-mobile">
       <div class="status-drop-mobile">
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[0] == undefined" />
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[0] != undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] != undefined" />
       </div>
       <div class="status-drop-mobile">
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[1] == undefined" />
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[1] != undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] != undefined" />
 
       </div>
       <div class="status-drop-mobile">
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[2] == undefined" />
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[2] != undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] != undefined" />
       </div>
       <div class="status-drop-mobile">
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications[3] == undefined" />
-        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications[3] != undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] == undefined" />
+        <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] != undefined" />
       </div>
     </div>
     <div id="certification-status-container-mobile">
       <div class="certification-status-mobile">
-        <p *ngIf="practitionersCertifications[0] != undefined">{{practitionersCertifications[0].validatedOn | date:'d LLLL y'}}</p>
-        <p *ngIf="practitionersCertifications[0] == undefined">Ongoing</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] != undefined">{{practitionersCertifications[0].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[0] == undefined">Ongoing</p>
       </div>
       <div class="certification-status-mobile">
-        <p *ngIf="practitionersCertifications[1] != undefined">{{practitionersCertifications[1].validatedOn | date:'d LLLL y'}}</p>
-        <p *ngIf="practitionersCertifications[1] == undefined && practitionersCertifications[0] != undefinded">Ongoing</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] != undefined">{{practitionersCertifications[1].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] == undefined && practitionersCertifications[0] != undefinded">Ongoing</p>
       </div>
       <div class="certification-status-mobile">
-        <p *ngIf="practitionersCertifications[2] != undefined">{{practitionersCertifications[2].validatedOn | date:'d LLLL y'}}</p>
-        <p *ngIf="practitionersCertifications[2] == undefined && practitionersCertifications[1] != undefinded">Ongoing</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] != undefined">{{practitionersCertifications[2].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] == undefined && practitionersCertifications[1] != undefinded">Ongoing</p>
       </div>
       <div class="certification-status-mobile">
-        <p *ngIf="practitionersCertifications[3] != undefined">{{practitionersCertifications[3].validatedOn | date:'d LLLL y'}}</p>
-        <p *ngIf="practitionersCertifications[3] == undefined && practitionersCertifications[2] != undefinded">Ongoing</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] != undefined">{{practitionersCertifications[3].validatedOn | date:'d LLLL y'}}</p>
+        <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[3] == undefined && practitionersCertifications[2] != undefinded">Ongoing</p>
       </div>
     </div>
   </div>

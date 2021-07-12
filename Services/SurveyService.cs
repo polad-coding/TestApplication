@@ -58,7 +58,7 @@ namespace KPProject.Services
 
             //await _dbContext.SaveChangesAsync();
 
-            var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId,  Seed = seed };
+            var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId,  TakenOn = null,  Seed = seed };
 
             await _dbContext.Surveys.AddAsync(survey);
 

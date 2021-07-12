@@ -159,6 +159,13 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
+
+
+    if (localStorage.getItem('surveyId') == null || localStorage.getItem('surveyId') == undefined) {
+      localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+      this._router.navigate(['personalAccount']);
+    }
+
     this._dataService.DecideToWhichStageToTransfer(Number.parseInt(localStorage.getItem('surveyId'))).subscribe(response => {
       if (response.body == 'wrap-up') {
         this._router.navigate(['wrap-up']);

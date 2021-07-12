@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../../app-services/account.service';
@@ -29,6 +29,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
   public profileImageName;
   public regions: Array<RegionViewModel>;
   public languages: Array<LanguageViewModel>;
+  @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
   public certificateLevel: string = 'Level 1';
 
   constructor(private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
@@ -49,14 +50,20 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
     if (personalInformationForm.errors === null) {
-      this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
-        if (response.body === true) {
-          //this.formHasError = true;
-          //this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
+      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
+        if (response.body == true) {
+          this.errorMessage.emit('Your ordinary and professional email addresses cannot be duplicate.');
         }
         else {
-          this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-            this._router.navigate(['/practitionerAccount']);
+          this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
+            if (response.body === true) {
+              this.errorMessage.emit('This email address already exists in our database.');
+            }
+            else {
+              this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+                this._router.navigate(['/practitionerAccount']);
+              });
+            }
           });
         }
       });

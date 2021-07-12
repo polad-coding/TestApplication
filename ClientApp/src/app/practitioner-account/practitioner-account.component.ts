@@ -25,6 +25,8 @@ export class PractitionerAccountComponent   {
   public currentSelectedTabIndex: number;
   public selectedTab: string = 'my-account-section';
   public user: UserViewModel;
+  public formHasError: boolean = false;
+  public errorMessage: string = '';
 
   ngAfterViewInit(): void {
     this.AdjustZIndexes();
@@ -32,6 +34,18 @@ export class PractitionerAccountComponent   {
 
   constructor(private renderer2: Renderer2, private _router: Router, private accountService: AccountService, private _jwtHelper: JwtHelperService) {
 
+  }
+
+  public OnError(eventBody) {
+    this.formHasError = true;
+    this.errorMessage = eventBody;
+    document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  @HostListener('document:click', ['$event'])
+  public OnDocumentClicked(event) {
+    this.formHasError = false;
+    this.errorMessage = '';
   }
 
   ngOnInit() {

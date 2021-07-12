@@ -22,6 +22,7 @@
           <img *ngIf="user.profileImageName === null" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
           <img *ngIf="user.profileImageName !== null" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
+          <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg"/>
         </div>
         <p>Certified</p>
         <p>practitioner</p>
@@ -47,7 +48,7 @@
               <label for="firstName">First name:</label>
             </div>
             <div class="input-field-section">
-              <input name="firstName" #inputField placeholder="Your first name." (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.firstName" />
+              <input name="firstName" #inputField placeholder="Your first name." pattern="[a-zA-Z]*" (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.firstName" />
             </div>
             <div class="edit-button-section">
               <button (click)="EditInputField('firstName',$event)">
@@ -60,7 +61,7 @@
               <label for="lastName">Last name:</label>
             </div>
             <div class="input-field-section">
-              <input name="lastName" #inputField placeholder="Your lastName." (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.lastName" />
+              <input name="lastName" #inputField placeholder="Your lastName." pattern="[a-zA-Z]*" (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.lastName" />
             </div>
             <div class="edit-button-section">
               <button (click)="EditInputField('lastName',$event)">
@@ -151,7 +152,7 @@
               <label for="Age">Age:</label>
             </div>
             <div class="input-field-section">
-              <input name="Age" placeholder="Enter your age." type="number" (click)="PreventEventPropagation($event)" #inputField [(ngModel)]="user.age" disabled />
+              <input name="Age" placeholder="Enter your age." type="number" pattern="[0-9]*" (click)="PreventEventPropagation($event)" #inputField [(ngModel)]="user.age" disabled />
             </div>
             <div class="edit-button-section">
               <button (click)="EditInputField('Age',$event)">

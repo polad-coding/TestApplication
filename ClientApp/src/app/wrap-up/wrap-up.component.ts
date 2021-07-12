@@ -21,6 +21,14 @@ export class WrapUpComponent implements OnInit {
   public imageString;
 
   constructor(private _dataService: DataService, private _router: Router) {
+
+    let surveyId = localStorage.getItem('surveyId');
+
+    if (surveyId == null || surveyId == undefined) {
+      localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+      this._router.navigate(['personalAccount']);
+    }
+
     this._dataService.DecideToWhichStageToTransfer(Number.parseInt(localStorage.getItem('surveyId'))).subscribe(response => {
       if (response.body != 'wrap-up') {
         this._router.navigate([response.body]);

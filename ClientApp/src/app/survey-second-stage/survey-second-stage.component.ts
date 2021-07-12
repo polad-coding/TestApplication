@@ -94,6 +94,12 @@ export class SurveySecondStageComponent implements OnInit {
 
   ngOnInit() {
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    if (localStorage.getItem('surveyId') == null || localStorage.getItem('surveyId') == undefined) {
+      localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+      this._router.navigate(['personalAccount']);
+    }
+
     this._dataService.DecideToWhichStageToTransfer(this.surveyId).subscribe((response: any) => {
       if (response.body == 'surveyFirstStage') {
         this._router.navigate(['surveyFirstStage']);

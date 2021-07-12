@@ -40,7 +40,7 @@
   margin-left: 10px;
 }
 
-  #practitioner-account-photo-section img {
+  #practitioner-account-photo-section img:not(:last-child) {
     height: 220px;
     width: 220px;
   }
@@ -48,6 +48,15 @@
   #practitioner-account-photo-section p {
     color: #006F91;
   }
+
+#change-image-pencil-image {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  right: 10px;
+  bottom: 10px;
+  filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(226deg) brightness(109%) contrast(101%);
+}
 
 #image-upload-element {
   position: absolute;
@@ -335,7 +344,7 @@ input:disabled {
 
 
 @media only screen and (min-width:950px) and (max-width:1050px) {
-  #upload-image-container img {
+  #upload-image-container img:not(:last-child) {
     height: 150px;
     width: 150px;
   }
@@ -368,7 +377,7 @@ input:disabled {
       margin-top:20px;
   }
 
-  #upload-image-container img {
+  #upload-image-container img:not(:last-child) {
     height: 150px;
     width: 150px;
   }
@@ -387,7 +396,7 @@ input:disabled {
       margin-top: 20px;
     }
 
-      #practitioner-account-photo-section img {
+      #practitioner-account-photo-section img :not(:last-child){
         height: 200px;
         width: 200px;
       }

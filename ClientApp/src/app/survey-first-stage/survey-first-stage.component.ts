@@ -298,8 +298,19 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     else {
       this.isMobile = false;
     }
+
+
+
     //TODO - place the survey creation process in other place after testing
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    console.info(surveyId);
+
+    if (localStorage.getItem('surveyId') == null || localStorage.getItem('surveyId') == undefined) {
+      localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+      this._router.navigate(['personalAccount']);
+    }
+
     this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe((response: any) => {
       if (response.body == 'surveyFirstStage') {
         this._dataService.GetValuesForFirstStage(surveyId).subscribe((getCurrentStageValuesResponse: any) => {

@@ -11,7 +11,7 @@
       <img class="information-icon" (click)="DisplayInformationModal('firstInformationModal')" src="../../assets/Images/information-icon.svg" />
       <div *ngIf="firstInformationModalIsVisible" class="information-modal">
         <div class="information-modal-title">
-          <img class="information-icon"  src="../../assets/Images/information-icon.svg" />
+          <img class="information-icon" src="../../assets/Images/information-icon.svg" />
           <img (click)="CloseInformationModal('firstInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
         </div>
         <p>Two types of code:</p>
@@ -88,8 +88,8 @@
     <div class="order-row" #orderRow *ngFor="let order of listOfOrders;index as i" id="order-{{order.id}}">
       <div class="column">
         <select (change)="ChangeTheCodeType(order, $event)">
-          <option value="monosurveyCode" >Monosurvey code</option>
-          <option value="multisurveyCodeFiveSurveys" >Multisurvey code 5 surveys</option>
+          <option value="monosurveyCode">Monosurvey code</option>
+          <option value="multisurveyCodeFiveSurveys">Multisurvey code 5 surveys</option>
           <option value="multisurveyCodeTenSurveys">Multisurvey code 10 surveys</option>
         </select>
       </div>
@@ -115,16 +115,33 @@
     <button (click)="AddNewOrder($event)">Add more code</button>
   </div>
   <div id="grand-total-sum-container">
-    <span>Grand total</span>
-    <span> (incl.VAT)</span>
-    <span>{{grandTotalSum | currency}}</span>
+    <div>
+      <div>Total</div>
+      <div>{{totalSum | currency}}</div>
+    </div>
+    <div *ngIf="enablePractitionersDiscount">
+      <div>25 % practitioner discount</div>
+      <div>-{{totalSum * 25 / 100 | currency}}</div>
+    </div>
+    <div *ngIf="enableMembershipDiscount">
+      <div>20 % member extra discount</div>
+      <div>-{{totalSum * 20 / 100 | currency}}</div>
+    </div>
+    <div>
+      <div style="font-family:barlowSemiCondensedMedium;">
+        Grand total (incl.VAT)
+      </div>
+      <div>
+        {{grandTotalSum | currency}}
+      </div>
+    </div>
   </div>
   <div id="bottom-section">
     <div id="bottom-section-texts">
       <p>Once you have validated your order, you will be invited to proceed with payment via PayPal (e.g.).</p>
       <p>
         Your personal account will then be credited with the number of surveys ordered and you will receive
-        confirmation of this by email.
+        confirmation of this by email and you will your code(s) in the tab <span> My codes, survey results and reports</span>
       </p>
     </div>
     <div id="valid-your-order-container">
@@ -149,9 +166,9 @@
         <img class="information-icon" (click)="DisplayInformationModal('firstInformationModal')" src="../../assets/Images/information-icon.svg" />
       </p>
       <select (change)="ChangeTheCodeType(listOfOrders[0], $event)">
-        <option value="monosurveyCode" >Monosurvey code</option>
+        <option value="monosurveyCode">Monosurvey code</option>
         <option value="multisurveyCodeFiveSurveys">Multisurvey code 5 surveys</option>
-        <option value="multisurveyCodeTenSurveys" >Multisurvey code 10 surveys</option>
+        <option value="multisurveyCodeTenSurveys">Multisurvey code 10 surveys</option>
       </select>
       <div *ngIf="firstInformationModalIsVisible" class="information-modal">
         <div class="information-modal-title">
@@ -185,7 +202,7 @@
     </div>
     <div class="order-row-mobile">
       <p>Quantity</p>
-      <input type="number" (blur)="NumberOfCodesChangedMobile($event)" [(ngModel)]="listOfOrders[0].numberOfCodes" />
+      <input type="number" (touchend)="NumberOfCodesChangedMobile($event)" [(ngModel)]="listOfOrders[0].numberOfCodes" />
       <div id="quatity-section-bottom-texts-container">
         <p>(Number of surveys->{{listOfOrders[0].numberOfSurveys}})</p>
         <div id="quatity-section-bottom-texts-container-right-texts">
@@ -219,21 +236,35 @@
       </div>
     </div>
     <div id="total-price-row-mobile">
-      <p>Total Price (incl. VAT):</p>
-      <p class="cost-container">{{grandTotalSum | currency}}</p>
+      <div>
+        <div>Total</div>
+        <div class="cost-container">{{totalSum | currency}}</div>
+      </div>
+      <div *ngIf="enablePractitionersDiscount">
+        <div>25 % practitioner discount</div>
+        <div class="cost-container">-{{totalSum * 25 / 100 | currency}}</div>
+      </div>
+      <div *ngIf="enableMembershipDiscount">
+        <div>20 % member extra discount</div>
+        <div class="cost-container">-{{totalSum * 20 / 100 | currency}}</div>
+      </div>
+      <div>
+        <div>Total Price (incl. VAT):</div>
+        <div class="cost-container">{{grandTotalSum | currency}}</div>
+      </div>
+      <button id="valid-your-order-button" (click)="DisplayPayPalModal($event)">Valid your order <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
     </div>
-    <button id="valid-your-order-button" (click)="DisplayPayPalModal($event)">Valid your order <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
-  </div>
-  <div id="information-container-mobile">
-    <p>
-      Once you have validated your order, you will be invited
-      to proceed with payment via PayPal
-    </p>
-    <p>
-      Your personal account will then be credited with
-      the number of surveys ordered and you will receive
-      confirmation of this by email and you will your code(s)
-      in the tab <span>My codes, survey results and reports</span>
-    </p>
+    <div id="information-container-mobile">
+      <p>
+        Once you have validated your order, you will be invited
+        to proceed with payment via PayPal
+      </p>
+      <p>
+        Your personal account will then be credited with
+        the number of surveys ordered and you will receive
+        confirmation of this by email and you will your code(s)
+        in the tab <span>My codes, survey results and reports</span>
+      </p>
+    </div>
   </div>
 </div>

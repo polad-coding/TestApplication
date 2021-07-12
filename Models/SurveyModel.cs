@@ -16,7 +16,7 @@ namespace KPProject.Models
         public ApplicationUser PractitionerUser { get; set; }
         public string PractitionerUserId { get; set; }
         public string Code { get; set; }
-        public DateTime TakenOn { get; set; }
+        public DateTime? TakenOn { get; set; }
         public bool FirstStagePassed { get; set; }
         public bool SecondStagePassed { get; set; }
         public bool ThirdStagePassed { get; set; }

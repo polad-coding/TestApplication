@@ -21,10 +21,10 @@
       <div class="survey-result-row-white-cell">
         <p>{{surveyResult.code}}</p>
       </div>
-      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn != null">
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn != null && surveyResult.takenOn != ''">
         <p>{{surveyResult.takenOn | date:'yyyy MMM d'}}</p>
       </div>
-      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null">
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null || surveyResult.takenOn == ''">
         <p>Survey in progress</p>
       </div>
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
@@ -47,6 +47,23 @@
         Take survey
       </button>
       <div *ngIf="!surveyResult.isCompleated" class="survey-result-empty-cell">
+
+      </div>
+    </div>
+    <div class="survey-result-row">
+      <div (click)="RedirectToEnterCodePage()" class="survey-result-row-white-cell">
+        <p id="enter-your-code-button">Enter your code</p>
+      </div>
+      <div class="survey-result-row-white-cell">
+        <p>- - - - - -</p>
+      </div>
+      <div class="survey-result-row-white-cell">
+        <p id="choose-a-practitioner-button">Choose a practitioner</p>
+      </div>
+      <div class="survey-result-empty-cell">
+
+      </div>
+      <div class="survey-result-empty-cell">
 
       </div>
     </div>

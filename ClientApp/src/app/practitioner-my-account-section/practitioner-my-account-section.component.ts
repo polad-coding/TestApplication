@@ -57,6 +57,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
   }
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
+    console.log(personalInformationForm.errors);
     if (personalInformationForm.errors === null) {
       if (personalInformationForm.controls['email'].pristine) {
         this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {

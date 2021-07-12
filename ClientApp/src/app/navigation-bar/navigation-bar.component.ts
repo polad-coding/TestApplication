@@ -101,6 +101,8 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   }
 
   public RedirectToPractitionerAccount() {
+    localStorage.setItem('practitionerAccountTabName', 'my-account-section');
+    localStorage.setItem('currentTabName', 'prosAccess');
     this._router.navigate(['practitionerAccount']);
   }
 
@@ -114,6 +116,7 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
 
   public LogOutUser() {
     localStorage.removeItem('jwt');
+    window.location.reload();
     this._router.navigate(['']);
   }
 

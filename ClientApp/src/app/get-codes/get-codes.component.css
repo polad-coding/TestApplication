@@ -6,10 +6,10 @@
   margin-top: 30px;
 }
 
-.coupon-error-message{
-    color:red;
-    font-size:0.6rem;
-    display:none;
+.coupon-error-message {
+  color: red;
+  font-size: 0.6rem;
+  display: none;
 }
 
 #type-of-code-title{
@@ -25,7 +25,6 @@
   width: auto;
   text-align: left;
   padding: 10px;
-  /*right: -30px;*/
   border-radius: 5px;
   z-index: 10;
   border: 2px solid #006F91;
@@ -203,9 +202,24 @@
 
 #grand-total-sum-container {
   display: flex;
-  justify-content: flex-end;
+  flex-flow: column;
   padding-right: 50px;
+  width: max-content;
+  margin-left: auto;
+  align-items:flex-end;
 }
+
+#grand-total-sum-container > div{
+    display:flex;
+}
+
+  #grand-total-sum-container > div > div:first-child{
+    margin-right:20px;
+    text-align:right;
+  }
+
+  #grand-total-sum-container > div > div:first-child {
+  }
 
 #bottom-section {
   display: flex;
@@ -226,18 +240,25 @@
   width: 70%;
   color: #006F91;
   margin-left: 30px;
-  line-height: 1.8;
+  line-height: 1.5;
+  padding:10px;
+  background-color:white;
+  border-radius:3px;
 }
 
-#add-new-element-button button {
-  padding: 10px;
-  background-color: white;
-  box-shadow: 0px 0px 3px #006F91;
-  color: #006F91;
-  margin-left: 110px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
+  #bottom-section-texts span{
+      font-family:barlowSemiCondensedMedium;
+  }
+
+  #add-new-element-button button {
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 0px 3px #006F91;
+    color: #006F91;
+    margin-left: 110px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
 
   #add-new-element-button button:hover {
     background-color: #006F91;
@@ -395,18 +416,29 @@
 #total-price-row-mobile {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  flex-flow:column;
+  align-items: flex-end;
 }
 
-.cost-container {
-  background-color: #c5dfec;
-  padding: 3px;
-  min-width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items:center;
-  font-family:barlowSemiCondensedMedium;
-}
+  #total-price-row-mobile > div{
+      display:flex;
+      margin-bottom:5px;
+  }
+
+    #total-price-row-mobile > div > div:first-child {
+      margin-right: 20px;
+      text-align: right;
+    }
+
+  .cost-container {
+    background-color: #c5dfec;
+    padding: 3px;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: barlowSemiCondensedMedium;
+  }
 
 #valid-your-order-button{
     display:flex;
@@ -415,6 +447,7 @@
     align-items:center;
     background-color:#006F91;
     margin-top:20px;
+    padding:5px;
 }
 
   #valid-your-order-button img {

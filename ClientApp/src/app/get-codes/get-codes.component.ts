@@ -6,6 +6,7 @@ import { DataService } from '../../app-services/data-service';
 import { error } from 'protractor';
 import { GetCouponRequestResponseViewModel } from '../../view-models/get-coupon-request-response-view-model';
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-get-codes',
@@ -22,8 +23,11 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public ordersCounter: number = 0;
   public value: number = 0;
   public errorMessage: string = '';
+  public totalSum: number = 0;
   public grandTotalSum: number = 0;
   public listOfOrders: Array<OrderViewModel> = new Array<OrderViewModel>();
+  public enablePractitionersDiscount: boolean = false;
+  public enableMembershipDiscount: boolean = false;
   @ViewChild('codeOptionsDropDown', { static: false })
   public dropDownList: ElementRef;
   @ViewChildren('orderRow')
@@ -37,7 +41,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public secondInformationModalIsVisible = false;
   private listOfAssociatedCouponsToCountdown: Array<GetCouponRequestResponseViewModel> = new Array<GetCouponRequestResponseViewModel>();
 
-  constructor(private _renderer2: Renderer2, private _dataService: DataService) {
+  constructor(private _renderer2: Renderer2, private _dataService: DataService, private _jwtHelper: JwtHelperService) {
     this.LoadScript();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -49,13 +53,23 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if (event.target.innerWidth <= 599) {
-      this.listOfOrders = new Array<OrderViewModel>();
-      this.counter = 0;
-      this.AddNewOrder(null);
-      this.mobileModeIsOn = true;
+      if (this.mobileModeIsOn == false) {
+        this.listOfOrders = new Array<OrderViewModel>();
+        this.counter = 0;
+        this.AddNewOrder(null);
+        this.grandTotalSum = this.listOfOrders[0].totalPrice;
+        this.totalSum = this.listOfOrders[0].pricePerUnit;
+        this.mobileModeIsOn = true;
+        this.CalculateNewGrandTotalSum();
+      }
     }
     else if (event.target.innerWidth > 599) {
-      this.mobileModeIsOn = false;
+      if (this.mobileModeIsOn == true) {
+        this.grandTotalSum = this.listOfOrders[0].totalPrice;
+        this.totalSum = this.listOfOrders[0].pricePerUnit;
+        this.mobileModeIsOn = false;
+        this.CalculateNewGrandTotalSum();
+      }
     }
   }
 
@@ -81,7 +95,17 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     if (window.innerWidth <= 599) {
       this.mobileModeIsOn = true;
     }
-    
+
+    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == 'Practitioner') {
+      this.enablePractitionersDiscount = true;
+    }
+
+    this._dataService.GetMembershipStatus().subscribe((response: any) => {
+      if (response.body != null) {
+        this.enableMembershipDiscount = true;
+      }
+    });
+
     this.AddNewOrder(null);
   }
 
@@ -257,9 +281,26 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   private CalculateNewGrandTotalSum() {
     this.grandTotalSum = 0;
+    this.totalSum = 0;
     this.listOfOrders.forEach(order => {
       this.grandTotalSum += order.totalPrice;
+      this.totalSum += order.totalPrice;
     });
+
+    let membershipDiscountValue = 0;
+    let practitionerDiscountValue = 0;
+
+    if (this.enableMembershipDiscount = true) {
+      membershipDiscountValue = this.grandTotalSum * 20 / 100;
+    }
+
+    if (this.enablePractitionersDiscount) {
+      practitionerDiscountValue = this.grandTotalSum * 25 / 100;
+    }
+
+    this.grandTotalSum -= membershipDiscountValue;
+    this.grandTotalSum -= practitionerDiscountValue;
+
   }
 
   public DisplayCodesOptionsDropDown(event, order) {
