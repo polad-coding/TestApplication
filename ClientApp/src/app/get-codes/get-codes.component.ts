@@ -290,7 +290,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     let membershipDiscountValue = 0;
     let practitionerDiscountValue = 0;
 
-    if (this.enableMembershipDiscount = true) {
+    if (this.enableMembershipDiscount == true) {
       membershipDiscountValue = this.grandTotalSum * 20 / 100;
     }
 

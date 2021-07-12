@@ -150,7 +150,7 @@
   </div>
 </div>
 
-<div id="order-container-mobile" *ngIf="mobileModeIsOn">
+<div id="order-container-mobile" *ngIf="mobileModeIsOn" (touchend)="NumberOfCodesChangedMobile($event)">
   <div id="paypal-modal-container" [ngStyle]="{'display': paypalModalIsVisible == true ? 'flex':'none'}">
     <div id="paypalContainer"></div>
   </div>
@@ -202,7 +202,7 @@
     </div>
     <div class="order-row-mobile">
       <p>Quantity</p>
-      <input type="number" (touchend)="NumberOfCodesChangedMobile($event)" [(ngModel)]="listOfOrders[0].numberOfCodes" />
+      <input type="number"  [(ngModel)]="listOfOrders[0].numberOfCodes" />
       <div id="quatity-section-bottom-texts-container">
         <p>(Number of surveys->{{listOfOrders[0].numberOfSurveys}})</p>
         <div id="quatity-section-bottom-texts-container-right-texts">
