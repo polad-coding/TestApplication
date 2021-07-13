@@ -3,9 +3,9 @@
 <div id="survey-third-stage-container">
   <div id="title-section">
     <div class="prev-step-button-container">
-      <button class="button-enabled" *ngIf="isDescriptionStage" (click)="GoToPreviousStep()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
-      <button class="button-enabled" *ngIf="isSelectionStage" (click)="GoToDescriptionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Previous step </button>
-      <button class="button-enabled" *ngIf="isValidationStage" (click)="GoToSelectionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Selection </button>
+      <button class="button-enabled" *ngIf="isDescriptionStage" (click)="GoToPreviousStep()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> To second step </button>
+      <button class="button-enabled" *ngIf="isSelectionStage" (click)="GoToDescriptionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Back </button>
+      <button class="button-enabled" *ngIf="isValidationStage" (click)="GoToSelectionStage()"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-270.png" /> Back </button>
     </div>
     <div id="step-title-container">
       <p>
@@ -16,7 +16,7 @@
     <div class="step-validation-container">
       <button [ngClass]="{'button-enabled':numberOfValuesSelected == 9,'button-disabled':numberOfValuesSelected < 9}" (click)="GoToValidationStage()" *ngIf="isSelectionStage">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
       <button class="button-enabled" *ngIf="isDescriptionStage" (click)="GoToSelectionStage()">To selection <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
-      <button id="button-invisible" *ngIf="isValidationStage"></button>
+      <button class="button-enabled" (click)="UploadSurveyResults()" *ngIf="isValidationStage">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
     </div>
   </div>
 </div>
@@ -50,9 +50,6 @@
       <p>{{'Survey.ThirdStage.ValidationStepTexts.ThirdParagraph' | translate}}</p>
       <p>{{'Survey.ThirdStage.ValidationStepTexts.FourthParagraph' | translate}}</p>
     </div>
-  </div>
-  <div id="validation-stage-button-section">
-    <button class="button-enabled" (click)="UploadSurveyResults()">Survey validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /></button>
   </div>
 </div>
 <div id="body-section" *ngIf="isSelectionStage" cdkDropListGroup>

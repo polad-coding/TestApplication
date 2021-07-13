@@ -1,7 +1,9 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { error } from 'protractor';
 import { AccountService } from '../../app-services/account.service';
+import { DataService } from '../../app-services/data-service';
 import { LanguageViewModel } from '../../view-models/language-view-model';
 import { RegionViewModel } from '../../view-models/region-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
@@ -10,12 +12,12 @@ import { UserViewModel } from '../../view-models/user-view-model';
   selector: 'app-practitioner-pro-details-section',
   templateUrl: './practitioner-pro-details-section.component.html',
   styleUrls: ['./practitioner-pro-details-section.component.css'],
-  providers: [AccountService]
+  providers: [AccountService, DataService]
 })
-export class PractitionerProDetailsSectionComponent implements OnInit {
+export class PractitionerProDetailsSectionComponent implements OnInit, AfterViewInit {
 
-  public certificationLevel: string = 'Individual assessment';
-  public membership: string = 'OK';
+  public certificationLevel: string;
+  public membership: string;
   @Input()
   public user: UserViewModel;
   @ViewChildren('inputField')
@@ -30,9 +32,38 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
   public regions: Array<RegionViewModel>;
   public languages: Array<LanguageViewModel>;
   @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
-  public certificateLevel: string = 'Level 1';
+  public certificateLevel: string = '';
+  public oldProfessionalEmail: string;
+  public oldPhoneNumber: string;
+  public oldWebsite: string;
+  public isUploadingProccess: boolean = false;
 
-  constructor(private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
+  constructor(private _dataService : DataService, private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
+
+  ngAfterViewInit(): void {
+    this.oldProfessionalEmail = this.user.professionalEmail;
+    this.oldPhoneNumber = this.user.phoneNumber;
+    this.oldWebsite = this.user.website;
+    this._dataService.GetMembershipStatus().subscribe((response: any) => {
+      console.log(response.body);
+      if (response.body != '' && response.body != undefined && response.body != null) {
+        this.membership = 'OK';
+      }
+    });
+
+      this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
+        let certifications: any = response.body;
+        console.log(certifications);
+        certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
+        if (certifications.length > 0) {
+          this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
+          this.certificationLevel = certifications[certifications.length - 1].certification.certificationType;
+        }
+        else {
+          this.certificateLevel = '';
+        }
+      });
+    }
 
   ngOnInit() {
   }
@@ -49,6 +80,20 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
   }
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
+    event.stopPropagation();
+
+    if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
+      return;
+    }
+
+    if (!this.CheckIfMobileNumber(personalInformationForm)) {
+      return;
+    }
+
+    //if (!this.CheckIfValidWebURL(personalInformationForm)) {
+    //  return;
+    //}
+
     if (personalInformationForm.errors === null) {
       this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
         if (response.body == true) {
@@ -61,7 +106,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
             }
             else {
               this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-                this._router.navigate(['/practitionerAccount']);
+                window.location.reload();
               });
             }
           });
@@ -76,6 +121,81 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
     }
 
   }
+
+  public CheckIfValidWebURL(personalInformationForm: NgForm): boolean {
+    if (personalInformationForm.controls['website'].pristine) {
+      return true;
+    }
+
+    let website: string = personalInformationForm.controls['website'].value;
+    let stringIsWebsite = new RegExp('/^(https?:\/\/)?(www\.)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\.)+[\w]{2,}(\/\S*)?$/ig');
+
+
+
+    if (website != null && website.length > 0) {
+      if (stringIsWebsite.test(website)) {
+        return true;
+      }
+    }
+    else {
+      return true;
+    }
+
+    this.errorMessage.emit('Your website URL is in incorrect format.');
+    this.user.website = this.oldWebsite;
+    personalInformationForm.controls['website'].markAsPristine();
+
+    return false;
+  }
+
+  public CheckIfMobileNumber(personalInformationForm: NgForm): boolean {
+    if (personalInformationForm.controls['phoneNumber'].pristine) {
+      return true;
+    }
+
+    let phoneNumber: string = personalInformationForm.controls['phoneNumber'].value;
+    let stringIsNumber = new RegExp('^[0-9]*$');
+
+    if (phoneNumber != null && phoneNumber.length > 0) {
+      if (stringIsNumber.test(phoneNumber)) {
+        return true;
+      }
+    }
+    else {
+      return true;
+    }
+
+    this.errorMessage.emit('Your phone number is in incorrect format. Reminder:phone number must be without whitespaces.');
+    this.user.profileImageName = this.oldPhoneNumber;
+    personalInformationForm.controls['phoneNumber'].markAsPristine();
+
+    return false;
+  }
+
+  public CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
+    if (personalInformationForm.controls['professionalEmail'].pristine) {
+      return true;
+    }
+
+    let email: string = personalInformationForm.controls['professionalEmail'].value;
+    let stringIsEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
+
+    if (email != null && email.length > 0) {
+      if (stringIsEmail.test(email)) {
+        return true;
+      }
+    }
+    else {
+      return true;
+    }
+
+    this.errorMessage.emit('Your email addess is incorrect. Reminder: email address must be valid email.');
+    this.user.professionalEmail = this.oldProfessionalEmail;
+    personalInformationForm.controls['professionalEmail'].markAsPristine();
+
+    return false;
+  }
+
 
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
@@ -168,10 +288,13 @@ export class PractitionerProDetailsSectionComponent implements OnInit {
   }
 
   public ChooseNewProfileImage(files: FileList) {
+    this.isUploadingProccess = true;
     this.ToBase64(files[0]).then((value: string) => {
       this.accountService.UploadProfileImage((value)).subscribe((response: any) => {
+        window.location.reload();
+        console.log('here');
         this.profileImageName = response.body;
-      });
+      }, error => window.location.reload());
     });
   }
 

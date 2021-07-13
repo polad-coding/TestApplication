@@ -126,7 +126,9 @@
 
 #chart-image-without-labels {
   width: 100%;
+  max-width:100%;
   margin: 0;
+  -webkit-transform:scale(2);
   scale: 2;
 }
 
@@ -297,8 +299,10 @@
     margin-bottom: 30px;
   }
 
-  #chart-image-without-labels{
-      scale:0;
+  #chart-image-without-labels {
+      max-width:60%;
+    -webkit-transform: scale(1.5);
+    scale: 0;
   }
 
   #brief-results-section > img {

@@ -43,7 +43,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   }
 
   public GoToPreviousStep() {
-    if (window.confirm("Are you sure you want to leave the stage uncompleated, all your choises will be lost.")) {
+    if (window.confirm("You are about to leave this 3rd step, if it has not been validated, your choices will not be saved.")) {
         this._router.navigate(['surveySecondStage']);
     }
   }

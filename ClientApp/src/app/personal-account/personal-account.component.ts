@@ -21,6 +21,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
   public user: UserViewModel;
   private oldEmail: string;
+  private oldName: string;
+  private oldSurname: string;
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   public regions: Array<RegionViewModel>;
@@ -42,11 +44,11 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    }
-    ngAfterViewInit(): void {
-      this.AdjustZIndexes();
+  }
+  ngAfterViewInit(): void {
+    this.AdjustZIndexes();
 
-    }
+  }
 
   ngOnInit() {
     if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
@@ -58,6 +60,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
         this.oldEmail = this.user.email;
+        this.oldName = this.user.firstName;
+        this.oldSurname = this.user.lastName;
         console.debug(this.user);
 
         let genders = document.getElementsByClassName('gender-option');
@@ -92,6 +96,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     }
     else {
       this.oldEmail = this.user.email;
+      this.oldName = this.user.firstName;
+      this.oldSurname = this.user.lastName;
 
       if (localStorage.getItem('personalAccountTabName') == null) {
         localStorage.setItem('personalAccountTabName', 'my-account-section');
@@ -196,65 +202,113 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
     this.errorMessage = '';
     personalInformationForm.control.enable();
-    if (personalInformationForm.errors === null) {
-      this.formHasError = false;
-      //TODO - check if email and Myer code are correct
-      if (personalInformationForm.controls['email'].pristine) {
-        this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-          if (!this.userHasUnsignedSurveys) {
-            window.location.reload();
-          }
-        });
-      }
-      else {
-        this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
-          if (response.body === true) {
-            this.formHasError = true;
-            this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
-            this.user.email = this.oldEmail;
-            personalInformationForm.controls['email'].markAsPristine();
-            setTimeout(() => {
-              document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-          }
-          else {
+
+    if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
+      console.info(this.formHasError);
+      setTimeout(() => {
+        document.getElementById('error-message-container').style.display = 'flex';
+        document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+        this.formHasError = true;
+      }, 100);
+      return;
+    }
+
+    if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
+      setTimeout(() => {
+        document.getElementById('error-message-container').style.display = 'flex';
+        document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+        this.formHasError = true;
+
+      }, 100);
+      return;
+    }
+
+    if (personalInformationForm.controls['email'].pristine) {
+      this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+        if (!this.userHasUnsignedSurveys) {
+          window.location.reload();
+        }
+      });
+    }
+    else {
+      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
+        if (response.body === true) {
+          document.getElementById('error-message-container').style.display = 'flex';
+          this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
+          this.formHasError = true;
+
+          this.user.email = this.oldEmail;
+          personalInformationForm.controls['email'].markAsPristine();
+          setTimeout(() => {
+            document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+        else {
+          if (this.user.professionalEmail != personalInformationForm.value.email) {
             this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
               if (!this.userHasUnsignedSurveys) {
                 window.location.reload();
               }
             });
           }
-        });
-      }
+          else {
+            document.getElementById('error-message-container').style.display = 'flex';
+            this.formHasError = true;
 
-      //TODO - perform the changes if so
-      console.log(this.user);
+            this.errorMessage = this.errorMessage.concat('This email address is already registered as your professional email.');
+            this.user.email = this.oldEmail;
+            personalInformationForm.controls['email'].markAsPristine();
+            setTimeout(() => {
+              document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }
+        }
+      });
     }
-    else {
-      this.formHasError = true;
-      console.log(personalInformationForm);
-      if (personalInformationForm.controls['email'].errors.required) {
-        this.errorMessage = this.errorMessage.concat('Email address is a compulsory field! ');
-        setTimeout(() => {
-          document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-      else if (personalInformationForm.controls['email'].errors.pattern) {
-        this.errorMessage = this.errorMessage.concat('Incorrect email address! ');
-        setTimeout(() => {
-          document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-
-      if (true) {
-
-      }
-    }
-    
   }
 
-  public SetGender(event: MouseEvent, gender: string) {
+  public CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
+    let email: string = personalInformationForm.controls['email'].value;
+    let stringIsEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
+
+    if (email.length > 0) {
+      if (stringIsEmail.test(email)) {
+        return true;
+      }
+    }
+    this.formHasError = true;
+
+    this.errorMessage = 'Your email addess is incorrect. Reminder: email address must be valid email.';
+    this.user.email = this.oldEmail;
+    personalInformationForm.controls['email'].markAsPristine();
+
+    return false;
+  }
+
+  public CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm: NgForm): boolean {
+    let firstName: string = personalInformationForm.controls['firstName'].value;
+    let lastName: string = personalInformationForm.controls['lastName'].value;
+    let checkIfNumberExist = new RegExp('[0-9]');
+
+    if (firstName.length > 1 && lastName.length > 1) {
+      if (!checkIfNumberExist.test(firstName) && !checkIfNumberExist.test(lastName)) {
+        return true;
+      }
+    }
+    this.formHasError = true;
+
+    this.errorMessage = 'Name or Surname fields were not filled correctly. Reminder: these fields must contain at least 2 characters and must not contain any numbers.';
+    this.user.firstName = this.oldName;
+    this.user.lastName = this.oldSurname;
+    personalInformationForm.controls['firstName'].markAsPristine();
+    personalInformationForm.controls['lastName'].markAsPristine();
+
+    return false;
+  }
+
+  public SetGender(event: MouseEvent, gender: string , personalInformationForm: NgForm) {
     let newGender = new GenderViewModel();
+    personalInformationForm.form.markAsDirty();
     newGender.genderName = gender;
     this.user.gender = newGender;
   }
@@ -265,9 +319,10 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
       this.renderer2.setAttribute(el.nativeElement, 'disabled', 'disabled');
       this.renderer2.setStyle(el.nativeElement, 'border', 'none');
     });
+    this.formHasError = false;
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
-    this.formHasError = false;
+    document.getElementById('error-message-container').style.display = 'none';
   }
 
   public PreventEventPropagation(event: MouseEvent) {

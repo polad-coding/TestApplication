@@ -36,8 +36,9 @@
     <div id="practitioner-pro-account-main-part">
       <div id="practitioner-pro-account-photo-section">
         <div id="upload-image-container">
-          <img *ngIf="user.profileImageName === null" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
-          <img *ngIf="user.profileImageName !== null" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+          <img *ngIf="user.profileImageName === null && !isUploadingProccess" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
+          <img *ngIf="isUploadingProccess" style="background:white;" src="../../assets/Images/loading-screen.gif" />
+          <img *ngIf="user.profileImageName !== null && ! isUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
           <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg" />
         </div>
@@ -154,7 +155,7 @@
 
       </div>
       <div id="valid-changes-section">
-        <button (click)="ChangeProfileData($event,proInformationForm)">Valid changes</button>
+        <button [ngClass]="{'is-disabled': proInformationForm.pristine, 'is-enabled': !proInformationForm.pristine}" (click)="ChangeProfileData($event,proInformationForm)">Valid changes</button>
       </div>
       <div id="see-privacy-image-block">
         <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />

@@ -38,15 +38,17 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   public isStepDescriptionPage: boolean = true;
   public isMobile: boolean = false;
   private surveyId: number;
+  private proceedToThirdStepDirectly: boolean = false;
 
   constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) {
+    
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
   }
 
   public ProceedToPersonalSpace() {
-    this._dataService.DeleteSurveyFirstStageResults(this.surveyId).subscribe(response => {
+    if (window.confirm("You are about to leave the survey, the choices of non validated steps will not be saved.")) {
       this._router.navigate(['personalAccount']);
-    })
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -73,7 +75,9 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
         event.previousIndex,
         event.currentIndex);
 
-      if (event.container.element.nativeElement.parentElement.parentElement.id == 'important-values-container') {
+      console.log(event.container);
+
+      if (event.container.element.nativeElement.parentElement.id == 'important-values-container') {
         this.numberOfValuesQualifiedAsImportant += 1;
       }
       else {
@@ -340,6 +344,10 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
   private MarkAllValuesImportance(selectedValues: Array<ValueViewModel>) {
     console.log(selectedValues);
+    this.numberOfValuesQualified = 0;
+    this.numberOfValuesQualifiedAsImportant = 0;
+    this.importantValues = new Array<ElementRef>();
+    this.lessImportantValues = new Array<ElementRef>();
 
     this.valueContainers.forEach(vc => {
       if (selectedValues.find(sv => sv.id == vc.nativeElement.dataset.valueid) != null) {

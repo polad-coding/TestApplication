@@ -19,8 +19,9 @@
     <div id="practitioner-account-main-part">
       <div id="practitioner-account-photo-section" *ngIf="imageSectionIsVisible === 'true'">
         <div id="upload-image-container">
-          <img *ngIf="user.profileImageName === null" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
-          <img *ngIf="user.profileImageName !== null" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+          <img *ngIf="user.profileImageName === null && !isUploadingProccess" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
+          <img *ngIf="isUploadingProccess" style="background:white;" src="../../assets/Images/loading-screen.gif" />
+          <img *ngIf="user.profileImageName !== null && !isUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
           <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg"/>
         </div>
@@ -75,15 +76,15 @@
             </div>
             <div class="input-field-section" id="gender-radio-buttons-section" (click)="PreventEventPropagation($event)">
               <div class="gender-option">
-                <input type="radio" name="Gender" (click)="SetGender($event, 'Male')" #inputField value="Male" disabled [checked]="user.gender.genderName ==='Male' ? true : false" />
+                <input type="radio" name="Gender" (click)="SetGender($event, 'Male',personalInformationForm)" #inputField value="Male" disabled [checked]="user.gender.genderName ==='Male' ? true : false" />
                 <p>Male</p>
               </div>
               <div class="gender-option">
-                <input type="radio" name="Gender" (click)="SetGender($event, 'Female')" #inputField value="Female" disabled [checked]="user.gender.genderName ==='Female' ? true : false" />
+                <input type="radio" name="Gender" (click)="SetGender($event, 'Female',personalInformationForm)" #inputField value="Female" disabled [checked]="user.gender.genderName ==='Female' ? true : false" />
                 <p>Female</p>
               </div>
               <div class="gender-option">
-                <input type="radio" name="Gender" (click)="SetGender($event, 'Other')" #inputField value="Other" disabled [checked]="user.gender.genderName ==='Other' ? true : false" />
+                <input type="radio" name="Gender" (click)="SetGender($event, 'Other',personalInformationForm)" #inputField value="Other" disabled [checked]="user.gender.genderName ==='Other' ? true : false" />
                 <p>Other</p>
               </div>
             </div>
@@ -182,7 +183,7 @@
 
       </div>
       <div id="valid-changes-section">
-        <button (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
+        <button [ngClass]="{'is-disabled': personalInformationForm.pristine, 'is-enabled': !personalInformationForm.pristine}" (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
       </div>
       <div id="see-privacy-image-block">
         <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />

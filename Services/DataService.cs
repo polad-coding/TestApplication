@@ -425,8 +425,7 @@ namespace KPProject.Services
                     SurveyId = survey.Id,
                     TakenOn = survey.TakenOn.ToString(),
                     PractitionerId = survey.PractitionerUserId,
-                    PractitionerFullName = practitionerFullName,
-                    TakersEmail = surveyTakerEmail
+                    PractitionerFullName = practitionerFullName
                 });
             });
 

@@ -25,7 +25,7 @@
         <p>{{surveyResult.takenOn | date:'yyyy MMM d'}}</p>
       </div>
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null || surveyResult.takenOn == ''">
-        <p>Survey in progress</p>
+        <p>...</p>
       </div>
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
         <p>{{surveyResult.practitionerFullName}}</p>

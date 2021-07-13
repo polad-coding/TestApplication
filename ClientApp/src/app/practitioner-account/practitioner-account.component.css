@@ -10,7 +10,7 @@
   height: auto;
   padding: 10px;
   margin: auto;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   text-align: center;

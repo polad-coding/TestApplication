@@ -36,17 +36,18 @@ export class PractitionerAccountComponent   {
 
   }
 
+  @HostListener('document:click', ['$event'])
+  public OnDocumentClicked(event) {
+    document.getElementById('error-message-container').style.display = 'none';
+  }
+
   public OnError(eventBody) {
-    this.formHasError = true;
     this.errorMessage = eventBody;
+    document.getElementById('error-message-container').style.display = 'flex';
     document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
   }
 
-  @HostListener('document:click', ['$event'])
-  public OnDocumentClicked(event) {
-    this.formHasError = false;
-    this.errorMessage = '';
-  }
+
 
   ngOnInit() {
 

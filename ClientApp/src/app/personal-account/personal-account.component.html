@@ -16,7 +16,7 @@
 </div>
 <app-navigation-bar></app-navigation-bar>
 <app-page-title titleText="PersonalAccount"></app-page-title>
-<div id="error-message-container" *ngIf="formHasError">
+<div id="error-message-container">
   <p>{{errorMessage}}</p>
 </div>
 <div id="tip-container" *ngIf="userHasUnsignedSurveys">
@@ -88,15 +88,15 @@
           </div>
           <div class="input-field-section" id="gender-radio-buttons-section" (click)="PreventEventPropagation($event)">
             <div class="gender-option">
-              <input type="radio" name="Gender" (click)="SetGender($event, 'Male')" #inputField value="Male" disabled  />
+              <input type="radio" name="Gender" (click)="SetGender($event, 'Male', personalInformationForm)" #inputField value="Male" disabled  [checked]="user.gender.genderName ==='Male' ? true : false" />
               <p>Male</p>
             </div>
             <div class="gender-option">
-              <input type="radio" name="Gender" (click)="SetGender($event, 'Female')" #inputField value="Female" disabled  />
+              <input type="radio" name="Gender" (click)="SetGender($event, 'Female', personalInformationForm)" #inputField value="Female" disabled [checked]="user.gender.genderName ==='Female' ? true : false"  />
               <p>Female</p>
             </div>
             <div class="gender-option">
-              <input type="radio" name="Gender" (click)="SetGender($event, 'Other')" #inputField value="Other" disabled  />
+              <input type="radio" name="Gender" (click)="SetGender($event, 'Other', personalInformationForm)" #inputField value="Other" disabled [checked]="user.gender.genderName ==='Other' ? true : false" />
               <p>Other</p>
             </div>
           </div>

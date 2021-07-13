@@ -45,9 +45,9 @@ export class SurveySecondStageComponent implements OnInit {
   }
 
   public ProceedToFirstStage(event) {
-    if (window.confirm("Are you sure you want to leave the stage uncompleated, all your choises will be lost.")) {
+    if (window.confirm("You are about to leave this 2n step, if it has not been validated, your choices will not be saved.")) {
       this._dataService.DeleteSurveySecondStageResults(this.surveyId).subscribe(response => {
-        this._router.navigate(['surveyFirstStage']);
+        this._router.navigate(['surveyFirstStage'], { state: { startFromValidationStep: true } });
       })
     }
   }

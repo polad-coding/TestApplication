@@ -18,13 +18,13 @@
 
 .information-modal {
   position: absolute;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   background-color: white;
   top: 0px;
   left: 0px;
   width: auto;
   text-align: left;
-  padding: 10px;
+  padding: 20px;
   border-radius: 5px;
   z-index: 10;
   border: 2px solid #006F91;

@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../../app-services/account.service';
+import { DataService } from '../../app-services/data-service';
+import { CertificationViewModel } from '../../view-models/certification-view-model';
 import { GenderViewModel } from '../../view-models/gender-view-model';
 import { RegionViewModel } from '../../view-models/region-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
@@ -10,12 +12,16 @@ import { UserViewModel } from '../../view-models/user-view-model';
   selector: 'app-practitioner-my-account-section',
   templateUrl: './practitioner-my-account-section.component.html',
   styleUrls: ['./practitioner-my-account-section.component.css'],
-  providers: [AccountService]
+  providers: [AccountService, DataService]
 })
-export class PractitionerMyAccountSectionComponent implements OnInit  {
+export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewInit {
 
   @Input()
   public user: UserViewModel;
+  private oldEmail: string;
+  private oldName: string;
+  private oldSurname: string;
+  //public errorMessage: string = '';
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   public regions: Array<RegionViewModel>;
@@ -24,12 +30,37 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   public profileImageName;
   @Input()
-  public certificateLevel: string = 'Level 1';
+  public certificateLevel: string = '';
   public imageSectionIsVisible: string = 'true';
+  @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
+  public isUploadingProccess: boolean = false;
 
-  constructor(private _router: Router, private renderer2: Renderer2, private accountService: AccountService, private renderer: Renderer) { }
+
+  constructor(private _dataService: DataService, private _router: Router, private renderer2: Renderer2, private accountService: AccountService, private renderer: Renderer) { }
+  ngAfterViewInit(): void {
+    this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
+      let certifications: any = response.body;
+      console.log(certifications);
+      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
+      if (certifications.length > 0) {
+        this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
+      }
+      else {
+        this.certificateLevel = '';
+      }
+    });
+      //setTimeout(() => {
+        this.oldEmail = this.user.email;
+        this.oldName = this.user.firstName;
+        this.oldSurname = this.user.lastName;
+        console.log(this.oldName);
+        console.log(this.oldSurname);
+      //}, 100);
+    }
 
   ngOnInit() {
+
+
   }
 
   public DisplayRegionsModal(event: MouseEvent) {
@@ -57,44 +88,85 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
   }
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
-    console.log(personalInformationForm.errors);
-    if (personalInformationForm.errors === null) {
-      if (personalInformationForm.controls['email'].pristine) {
-        this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-          this._router.navigate(['/practitionerAccount']);
-        });
-      }
-      else {
-        this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
-          if (response.body === true) {
-            //this.formHasError = true;
-            //this.errorMessage = this.errorMessage.concat('This email address already exists in our database.');
-          }
-          else {
-            this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-              this._router.navigate(['/practitionerAccount']);
-            });
-          }
-        });
-      }
+    event.stopPropagation(); 
+    if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
+      return;
+    }
+
+    if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
+      return;
+    }
+
+    if (personalInformationForm.controls['email'].pristine) {
+      this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+        window.location.reload();
+      });
     }
     else {
-      //this.formHasError = true;
-      console.log(personalInformationForm);
-      if (personalInformationForm.controls['email'].errors.required) {
-        //this.errorMessage = this.errorMessage.concat('Email address is a compulsory field! ');
-      }
-      else if (personalInformationForm.controls['email'].errors.pattern) {
-        //this.errorMessage = this.errorMessage.concat('Incorrect email address! ');
-      }
+      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
+        if (response.body === true) {
+          this.user.email = this.oldEmail;
+          personalInformationForm.controls['email'].markAsPristine();
+          this.errorMessage.emit('Entered email is already registered. Please enter something else.');
+        }
+        else {
+          this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.email).subscribe((response: any) => {
+            if (response.body) {
+              this.errorMessage.emit('This email address is already registered.');
 
-
+            }
+            else {
+              this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+                window.location.reload();
+              });
+            }
+          })
+        }
+      });
     }
-
   }
 
-  public SetGender(event: MouseEvent, gender: string) {
+  public CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
+    let email: string = personalInformationForm.controls['email'].value;
+    let stringIsEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
+
+    if (email.length > 0) {
+      if (stringIsEmail.test(email)) {
+        return true;
+      }
+    }
+
+    this.errorMessage.emit('Your email addess is incorrect. Reminder: email address must be valid email.');
+    this.user.email = this.oldEmail;
+    personalInformationForm.controls['email'].markAsPristine();
+
+    return false;
+  }
+
+  public CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm: NgForm): boolean {
+    let firstName: string = personalInformationForm.controls['firstName'].value;
+    let lastName: string = personalInformationForm.controls['lastName'].value;
+    let checkIfNumberExist = new RegExp('[0-9]');
+
+    if (firstName.length > 1 && lastName.length > 1) {
+      if (!checkIfNumberExist.test(firstName) && !checkIfNumberExist.test(lastName)) {
+        return true;
+      }
+    }
+
+    this.errorMessage.emit('Name or Surname fields were not filled correctly. Reminder: these fields must contain at least 2 characters and must not contain any numbers.');
+    this.user.firstName = this.oldName;
+    this.user.lastName = this.oldSurname;
+    personalInformationForm.controls['firstName'].markAsPristine();
+    personalInformationForm.controls['lastName'].markAsPristine();
+
+    return false;
+  }
+
+
+  public SetGender(event: MouseEvent, gender: string, proForm: NgForm) {
     let newGender = new GenderViewModel();
+    proForm.form.markAsDirty();
     newGender.genderName = gender;
     this.user.gender = newGender;
   }
@@ -138,10 +210,12 @@ export class PractitionerMyAccountSectionComponent implements OnInit  {
   }
 
   public ChooseNewProfileImage(files: FileList) {
+    this.isUploadingProccess = true;
     this.ToBase64(files[0]).then((value: string) => {
       this.accountService.UploadProfileImage((value)).subscribe((response: any) => {
+        window.location.reload();
         this.profileImageName = response.body;
-      });
+      }, error => window.location.reload());
     });
   }
 

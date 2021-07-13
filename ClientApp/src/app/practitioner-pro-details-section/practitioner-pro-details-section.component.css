@@ -10,6 +10,25 @@
   margin-bottom: 20px;
 }
 
+.is-enabled {
+  width: 160px;
+  height: 60px;
+  background: #006F91;
+  border: none;
+  color: white;
+}
+
+  .is-enabled:hover {
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+  }
+
+.is-disabled {
+  pointer-events: none;
+  background-color: white;
+  padding: 20px;
+  color: gray;
+}
+
 #certificate-identificator-container {
   display: flex;
   border: 2px solid #006F91;
@@ -242,18 +261,7 @@
     color: #006F91;
   }
 
-#valid-changes-section button {
-  width: 160px;
-  height: 60px;
-  background: white;
-  border: none;
-  color: #006F91;
-}
 
-  #valid-changes-section button:hover {
-    background: #006F91;
-    color: white;
-  }
 
 #valid-changes-section {
   display: flex;
@@ -483,6 +491,8 @@ input:disabled {
       margin-left: 0px;
       margin-top: 20px;
     }
+
+
 
     #upload-image-container img:not(:last-child) {
       height: 150px;
