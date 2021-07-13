@@ -102,6 +102,7 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
             }
           })
           this.certifications = response.body;
+          this.certifications = this.certifications.reverse();
           this._dataService.GetPractitionersCertifications(null).subscribe((practitionersCertificationResponse: any) => {
             console.log(practitionersCertificationResponse);
             this.practitionersCertifications = practitionersCertificationResponse.body;
