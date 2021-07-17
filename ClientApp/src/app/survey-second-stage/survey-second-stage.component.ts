@@ -60,22 +60,18 @@ export class SurveySecondStageComponent implements OnInit {
   }
 
   public ScrollUpInUnselectedValuesContainer(event) {
-    console.log(event.target.previousSibling);
     event.target.nextSibling.scrollBy({ top: -70, behavior: 'smooth' });
   }
 
   public ScrollDownInUnselectedValuesContainer(event) {
-    console.log(event.target.previousSibling);
     event.target.previousSibling.scrollBy({ top: 70, behavior: 'smooth' });
   }
 
   public ScrollUpInSelectedValuesContainer(event) {
-    console.log(event.target.previousSibling);
     event.target.nextSibling.scrollBy({ top: -50, behavior: 'smooth' });
   }
 
   public ScrollDownInSelectedValuesContainer(event) {
-    console.log(event.target.previousSibling);
     event.target.previousSibling.scrollBy({ top: 50, behavior: 'smooth' });
   }
 
@@ -107,7 +103,6 @@ export class SurveySecondStageComponent implements OnInit {
         this._dataService.GetFirstStageValues(this.surveyId).subscribe((response: any) => {
           this.values = response.body;
           this.GroupValues(this.values);
-
 
 
           this.valuesGroupedByPerspectives.forEach((value, key) => {
@@ -142,7 +137,7 @@ export class SurveySecondStageComponent implements OnInit {
             this.values = getValuesForFirstStageResponse.body;
             this.GroupValues(this.values);
 
-
+            //---------------------------------------------------------------------
 
             this.valuesGroupedByPerspectives.forEach((value, key) => {
               this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
@@ -164,6 +159,13 @@ export class SurveySecondStageComponent implements OnInit {
                 this.valuesMarkedAsImportantGroupedByPerspectives.get(secondStageSelection.perspectiveId).push(secondStageSelection);
               });
 
+              this.defaultValuesMarkedAsImportantGroupedByPerspectives.forEach((vl,i) => {
+                if (vl.length > 0) {
+                  this.valuesMarkedAsImportantGroupedByPerspectives.set(i, new Array<ValueViewModel>());
+                } 
+              })
+
+              console.log(this.valuesMarkedAsImportantGroupedByPerspectives);
 
               this.valuesGroupedByPerspectives.forEach((v, k) => {
                 this.valuesGroupedByPerspectives.set(k, new Array<ValueViewModel>());
@@ -171,7 +173,9 @@ export class SurveySecondStageComponent implements OnInit {
 
               this.values.forEach(v => {
                 if (secondStageSelections.find(sss => sss.id == v.id) == null) {
-                  this.valuesGroupedByPerspectives.get(v.perspectiveId).push(v);
+                  if (this.valuesGroupedByPerspectives.get(v.perspectiveId) != undefined) {
+                    this.valuesGroupedByPerspectives.get(v.perspectiveId).push(v);
+                  }
                 }
               })
 
@@ -204,6 +208,7 @@ export class SurveySecondStageComponent implements OnInit {
 
   private CheckIfStepIsFilledCorrectly() {
 
+
     let notEnoughtElements: boolean = false;
 
     for (var i = 1; i <= 6; i++) {
@@ -216,6 +221,7 @@ export class SurveySecondStageComponent implements OnInit {
 
     }
 
+
     if (!notEnoughtElements) {
       this.stepIsFilledCorrectly = true;
       document.getElementById('to-next-step-button').scrollIntoView({ behavior: 'smooth' });
@@ -224,11 +230,11 @@ export class SurveySecondStageComponent implements OnInit {
       this.stepIsFilledCorrectly = false;
     }
 
-    console.log(this.stepIsFilledCorrectly);
 
   }
 
   private MarkAsImportantGroupsWithLessThanFourItems() {
+
     this.valuesGroupedByPerspectives.forEach((valueList, k) => {
       if (valueList.length < 4) {
         valueList.forEach(value => {
@@ -238,6 +244,9 @@ export class SurveySecondStageComponent implements OnInit {
       }
 
     })
+
+    console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
+
   }
 
   public ProceedNextStage(event) {
@@ -255,8 +264,8 @@ export class SurveySecondStageComponent implements OnInit {
       })
     });
 
-    console.log('unique');
-    console.log(valuesToSafe);
+    console.log(this.valuesMarkedAsImportantGroupedByPerspectives);
+    console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
 
     this._dataService.SaveSecondStageResults(new SurveySecondStageSaveRequestModel(valuesToSafe, this.surveyId)).subscribe(response => {
       let ne: NavigationExtras = {
@@ -348,12 +357,10 @@ export class SurveySecondStageComponent implements OnInit {
     this.currentClickedValueCharacter = value.character;
     if ((event.target.firstChild.classList != undefined && event.target.firstChild.classList.contains('value-is-important') == true) || (event.target.classList != undefined && event.target.classList.contains('value-is-important') == true) || (event.target.parentElement.classList != undefined && event.target.parentElement.classList.contains('value-is-important') == true)) {
       this.currentClickedValueImportance = 'important';
-      console.log(this.currentClickedValueImportance);
 
     }
     else {
       this.currentClickedValueImportance = '';
-      console.log(this.currentClickedValueImportance);
 
     }
   }
@@ -395,7 +402,6 @@ export class SurveySecondStageComponent implements OnInit {
     //this.currentPageIndex += 1;
     let element: any = document.getElementsByClassName('currentPage')[0];
 
-    console.debug(element);
     if (element.nextSibling.classList != undefined && element.nextSibling.classList.contains('values-page')) {
       this._renderer2.removeClass(element, 'currentPage');
       this._renderer2.addClass(element.nextSibling, 'currentPage');

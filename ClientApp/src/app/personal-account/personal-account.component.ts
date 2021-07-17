@@ -80,21 +80,6 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
         this.oldEmail = this.user.email;
         this.oldName = this.user.firstName;
         this.oldSurname = this.user.lastName;
-        console.debug(this.user);
-
-        let genders = document.getElementsByClassName('gender-option');
-
-        console.debug(genders);
-
-        for (var i = 0; i < genders.length; i++) {
-          console.debug((<any>genders[i].firstChild).value.toString());
-
-          if ((<any>genders[i].firstChild).value.toString() == this.user.gender.genderName) {
-            console.info(this.user.gender.genderName);
-            this._renderer2.setAttribute(genders[i].firstChild, 'checked', 'true');
-          }
-        }
-
 
         let currentTab = localStorage.getItem('personalAccountTabName');
         if (currentTab == null) {
@@ -105,8 +90,10 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
           this.selectedTab = currentTab;
         }
 
+
         this._dataService.UserHasUnsignedSurveys(this.user.id).subscribe((response: any) => {
           this.userHasUnsignedSurveys = response.body;
+          console.log('here');
           console.log(this.userHasUnsignedSurveys);
         });
 
@@ -251,7 +238,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     if (personalInformationForm.controls['email'].pristine) {
       this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
         if (!this.userHasUnsignedSurveys) {
-          window.location.reload();
+          return;
         }
       });
     }
@@ -272,7 +259,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
           if (this.user.professionalEmail != personalInformationForm.value.email) {
             this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
               if (!this.userHasUnsignedSurveys) {
-                window.location.reload();
+                return;
               }
             });
           }

@@ -84,7 +84,6 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   }
 
   public UploadSurveyResults() {
-    console.log(this.selectedValues);
     this._dataService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, Number.parseInt(localStorage.getItem('surveyId')))).subscribe(response => {
       localStorage.setItem('personalAccountTabName', 'my-account-section');
       this._router.navigate(['personalAccount']);
@@ -189,7 +188,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
         if (this.values.length == 0) {
           this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
             this.values = response.body;
-            this.ShuffleValues(this.values);
+            //this.ShuffleValues(this.values);
             console.log(this.values);
           });
         }
