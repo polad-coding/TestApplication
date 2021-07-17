@@ -142,7 +142,7 @@ export class WrapUpComponent implements OnInit {
               type: 'polarArea',
               options: {
                 legend: {
-                  //display: false,
+                  display: false,
                   position: 'bottom',
                   labels: {
                     fontColor: '#006F91',

@@ -41,6 +41,15 @@ namespace KPProject.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("GetSelectedRegionsForCurrentUser")]
+        public async Task<ActionResult<List<RegionModel>>> GetSelectedRegionsForCurrentUserAsync()
+        {
+            var regions = await _dataService.GetSelectedRegionsForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(regions);
+        }
+
         [HttpPost]
         [Route("DeleteSurveySecondStageResults")]
         public async Task<ActionResult> DeleteSurveySecondStageResultsAsync([FromBody] int surveyId)
@@ -335,13 +344,17 @@ namespace KPProject.Controllers
             };
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "individual-report.css");
+            string footerPath = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "footer.html");
+            string headerPath = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "header.html");
 
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
                 //Page = "https://code-maze.com/",
                 HtmlContent = content.Html,
-                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path }
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path },
+                FooterSettings = { FontName = "BarlowSemiCondensedLight", FontSize = 9, Line = false, HtmUrl = footerPath, Center = "[Page]" },
+                 HeaderSettings = { FontName = "BarlowSemiCondensedLight", FontSize = 9, Line = false, HtmUrl = headerPath, Spacing = 20}
             };
             var pdf = new HtmlToPdfDocument()
             {
@@ -366,13 +379,18 @@ namespace KPProject.Controllers
             };
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "practitioner-report.css");
+            string footerPath = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "footer.html");
+            string headerPath = Path.Combine(Directory.GetCurrentDirectory(), "ClientApp", "src", "assets", "header.html");
+
 
             var objectSettings = new ObjectSettings
             {
                 PagesCount = true,
                 //Page = "https://code-maze.com/",
                 HtmlContent = content.Html,
-                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path }
+                WebSettings = { DefaultEncoding = "utf-8", UserStyleSheet = path },
+                FooterSettings = { FontName = "BarlowSemiCondensedLight", FontSize = 9, Line = false, HtmUrl = footerPath, Center = "[Page]" },
+                HeaderSettings = { FontName = "BarlowSemiCondensedLight", FontSize = 9, Line = false, HtmUrl = headerPath, Spacing = 20 }
             };
             var pdf = new HtmlToPdfDocument()
             {

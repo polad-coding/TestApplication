@@ -10,6 +10,7 @@ import { LanguageViewModel } from '../../view-models/language-view-model';
 import { DataService } from '../../app-services/data-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CLIENT_RENEG_LIMIT } from 'tls';
+import { Element } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-personal-account',
@@ -28,6 +29,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   public regions: Array<RegionViewModel>;
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
+  @ViewChild('gendersModalContainer', { read: ElementRef, static: false })
+  public genderModal: ElementRef;
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   public errorMessage: string = '';
   public selectedTab: string = 'my-account-section';
@@ -37,6 +40,9 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   public currentSelectedTabIndex: number;
   public userHasUnsignedSurveys: boolean = false;
   public formIsPristine: true;
+  public selectedGender: string;
+  @ViewChild('personalInformationForm', { read: NgForm, static: false })
+  public personalInformationForm: NgForm;
 
   constructor(private _router: Router, private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private accountService: AccountService, private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer) {
     if (_router.getCurrentNavigation().extras.state != null) {
@@ -54,6 +60,18 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
       this._router.navigate(['authorizationPage']);
     }
+
+    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+      this._router.navigate(['practitionerAccount']);
+    }
+
+    this.accountService.GetAllRegions().subscribe((response: any) => {
+      this.regions = response.body;
+    });
+
+    this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {
+      this.newRegionsSelected = response.body;
+    });
 
     localStorage.removeItem('currentTabName');
     if (this.user == null || this.user == undefined) {
@@ -178,10 +196,17 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
     //TODO - deselect all regions
-    if (this.regions === undefined) {
-      this.accountService.GetAllRegions().subscribe((response: any) => {
-        this.regions = response.body;
-      });
+    console.log(this.newRegionsSelected);
+
+    let regionContainers = document.getElementsByClassName('region-checkbox-container');
+
+    for (var i = 0; i < regionContainers.length; i++) {
+      this._renderer2.removeClass(regionContainers[i].lastChild, 'is-selected');
+      this._renderer2.addClass(regionContainers[i].lastChild, 'is-not-selected');
+    }
+
+    for (var i = 0; i < this.newRegionsSelected.length; i++) {
+      this._renderer2.addClass(document.getElementById(`${this.newRegionsSelected[i].regionName}-country-container`), 'is-selected');
     }
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
@@ -306,11 +331,62 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     return false;
   }
 
-  public SetGender(event: MouseEvent, gender: string , personalInformationForm: NgForm) {
+  public DisplayGenderModal(event: any) {
+    event.stopPropagation();
+    this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'flex');
+    this.selectedGender = this.user.gender.genderName;
+
+    let genderContainer = this.genderModal.nativeElement.firstChild.children[1];
+
+    let nextSibling = this.genderModal.nativeElement.firstChild.children[1].firstChild;
+
+    while (nextSibling) {
+      console.log(nextSibling);
+      this._renderer2.removeClass(nextSibling, 'gender-option-selected');
+      nextSibling = nextSibling.nextElementSibling;
+    }
+
+
+    for (var i = 0; i < genderContainer.children.length; i++) {
+      console.log(genderContainer.children[i].innerText.toString());
+      if (genderContainer.children[i].innerText.toString() == this.user.gender.genderName) {
+        this._renderer2.addClass(genderContainer.children[i], 'gender-option-selected');
+        break;
+      }
+      
+    }
+
+    this.genderModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  public SelectGender(event: any, gender: string) {
+    this.selectedGender = gender;
+
+    let nextSibling = event.target.nextElementSibling;
+
+    while (nextSibling) {
+      this._renderer2.removeClass(nextSibling, 'gender-option-selected');
+      nextSibling = nextSibling.nextElementSibling;
+    }
+
+    let previousSibling = event.target.previousElementSibling;
+
+    while (previousSibling) {
+      this._renderer2.removeClass(previousSibling, 'gender-option-selected');
+      previousSibling = previousSibling.previousElementSibling;
+    }
+
+
+    this._renderer2.addClass(event.target, 'gender-option-selected');
+  }
+
+  public SetGender(personalInformationForm: NgForm) {
+    console.log(this.personalInformationForm);
     let newGender = new GenderViewModel();
-    personalInformationForm.form.markAsDirty();
-    newGender.genderName = gender;
+    this.personalInformationForm.form.markAsDirty();
+    newGender.genderName = this.selectedGender;
     this.user.gender = newGender;
+    this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
   }
 
   @HostListener('document:click', ['$event'])
@@ -322,6 +398,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     this.formHasError = false;
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
+    this.renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
     document.getElementById('error-message-container').style.display = 'none';
   }
 
@@ -335,21 +412,27 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     if (element.className === 'is-not-selected') {
       this.renderer2.removeClass(element, 'is-not-selected');
       this.renderer2.addClass(element, 'is-selected');
-      this.newRegionsSelected.push(JSON.parse(event.target.value));
     }
     else {
       this.renderer2.removeClass(element, 'is-selected');
       this.renderer2.addClass(element, 'is-not-selected');
-      this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
     }
   }
 
   public SubmitRegionsForm(regionsForm: NgForm) {
-    //populate the regions array with these elements
+    this.newRegionsSelected = new Array<RegionViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newRegionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
     this.user.regions = this.newRegionsSelected;
     //reset form and close it
+    this.personalInformationForm.form.markAsDirty();
     regionsForm.resetForm();
-    this.newRegionsSelected = new Array<RegionViewModel>();
     this.OnDocumentClicked(null);
   }
 

@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { SurveyService } from '../../app-services/survey-service';
 import { SurveyFirstStageSaveRequestModel } from '../../view-models/survey-first-stage-save-request-model';
 import { NavigationExtras, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-survey-first-stage',
@@ -40,8 +41,13 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   private surveyId: number;
   private proceedToThirdStepDirectly: boolean = false;
 
-  constructor(private _dataService: DataService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _router: Router) {
-    
+  constructor(private _dataService: DataService, private _surveyService: SurveyService, private _jwtHelper: JwtHelperService, private _renderer2: Renderer2, private _router: Router) {
+    let ne = _router.getCurrentNavigation().extras.state;
+
+    if (ne != undefined && ne.startFromValidationStep == true) {
+      this.proceedToThirdStepDirectly = true;
+    }
+
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
   }
 
@@ -303,7 +309,9 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       this.isMobile = false;
     }
 
-
+    if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
+      this._router.navigate(['authorizationPage']);
+    }
 
     //TODO - place the survey creation process in other place after testing
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
@@ -328,6 +336,13 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
         this._dataService.GetValuesForFirstStage(surveyId).subscribe((getValuesForFirstStageResponse: any) => {
           if (getValuesForFirstStageResponse.ok) {
             this.values = getValuesForFirstStageResponse.body;
+
+            this.ProccedToSelectionStage(null);
+
+            setTimeout(() => {
+              this.ProceedToValidationStep(null);
+            }, 300);
+
             console.info(this.values);
 
           }

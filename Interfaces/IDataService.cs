@@ -46,5 +46,6 @@ namespace KPProject.Interfaces
         Task<List<ValueModel>> GetSecondStageValuesAsync(int surveyId);
         Task<bool> DeleteSurveyFirstStageResultsAsync(int surveyId);
         Task<bool> DeleteSurveySecondStageResultsAsync(int surveyId);
+        Task<List<RegionModel>> GetSelectedRegionsForCurrentUserAsync(string userId);
     }
 }

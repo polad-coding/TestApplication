@@ -39,6 +39,10 @@ export class DataService {
     return this.http.get(`https://${this.url}/Data/GetValuesForFirstStage?surveyId=${surveyId}`, { observe: 'response' });
   }
 
+  public GetSelectedRegionsForCurrentUser() {
+    return this.http.get(`https://${this.url}/Data/GetSelectedRegionsForCurrentUser`, { observe: 'response' });
+  }
+
   public GetFirstStageValues(surveyId: number) {
     return this.http.get(`https://${this.url}/Data/GetFirstStageValues?surveyId=${surveyId}`, { observe: 'response' });
   }

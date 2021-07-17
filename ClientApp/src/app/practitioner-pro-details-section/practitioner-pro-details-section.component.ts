@@ -38,7 +38,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   public oldWebsite: string;
   public isUploadingProccess: boolean = false;
 
-  constructor(private _dataService : DataService, private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
+  constructor(private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
 
   ngAfterViewInit(): void {
     this.oldProfessionalEmail = this.user.professionalEmail;
@@ -51,19 +51,19 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
       }
     });
 
-      this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
-        let certifications: any = response.body;
-        console.log(certifications);
-        certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
-        if (certifications.length > 0) {
-          this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
-          this.certificationLevel = certifications[certifications.length - 1].certification.certificationType;
-        }
-        else {
-          this.certificateLevel = '';
-        }
-      });
-    }
+    this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
+      let certifications: any = response.body;
+      console.log(certifications);
+      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
+      if (certifications.length > 0) {
+        this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
+        this.certificationLevel = certifications[certifications.length - 1].certification.certificationType;
+      }
+      else {
+        this.certificateLevel = '';
+      }
+    });
+  }
 
   ngOnInit() {
   }
@@ -90,36 +90,38 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
       return;
     }
 
-    //if (!this.CheckIfValidWebURL(personalInformationForm)) {
-    //  return;
-    //}
-
-    if (personalInformationForm.errors === null) {
-      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
-        if (response.body == true) {
-          this.errorMessage.emit('Your ordinary and professional email addresses cannot be duplicate.');
-        }
-        else {
-          this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
-            if (response.body === true) {
-              this.errorMessage.emit('This email address already exists in our database.');
-            }
-            else {
-              this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-                window.location.reload();
-              });
-            }
-          });
-        }
+    if (personalInformationForm.controls['professionalEmail'].pristine) {
+      this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+        window.location.reload();
       });
     }
     else {
-      if (personalInformationForm.controls['email'].errors.required) {
+      if (personalInformationForm.errors === null) {
+        this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
+          if (response.body == true) {
+            this.errorMessage.emit('Your ordinary and professional email addresses cannot be duplicate.');
+          }
+          else {
+            this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
+              if (response.body === true) {
+                this.errorMessage.emit('This email address already exists in our database.');
+              }
+              else {
+                this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+                  window.location.reload();
+                });
+              }
+            });
+          }
+        });
       }
-      else if (personalInformationForm.controls['email'].errors.pattern) {
+      else {
+        if (personalInformationForm.controls['email'].errors.required) {
+        }
+        else if (personalInformationForm.controls['email'].errors.pattern) {
+        }
       }
     }
-
   }
 
   public CheckIfValidWebURL(personalInformationForm: NgForm): boolean {

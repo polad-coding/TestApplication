@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { CertificationViewModel } from '../../view-models/certification-view-model';
@@ -27,6 +28,8 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
   public regions: Array<RegionViewModel>;
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
+  @ViewChild('gendersModalContainer', { read: ElementRef, static: false })
+  public genderModal: ElementRef;
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   public profileImageName;
   @Input()
@@ -34,9 +37,12 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
   public imageSectionIsVisible: string = 'true';
   @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
   public isUploadingProccess: boolean = false;
+  public selectedGender: string;
+  @ViewChild('personalInformationForm', { read: NgForm, static: false })
+  public personalInformationForm: NgForm;
 
 
-  constructor(private _dataService: DataService, private _router: Router, private renderer2: Renderer2, private accountService: AccountService, private renderer: Renderer) { }
+  constructor(private _dataService: DataService, private _router: Router, private _renderer2: Renderer2, private accountService: AccountService, private renderer: Renderer) { }
   ngAfterViewInit(): void {
     this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
       let certifications: any = response.body;
@@ -49,30 +55,109 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
         this.certificateLevel = '';
       }
     });
-      //setTimeout(() => {
-        this.oldEmail = this.user.email;
-        this.oldName = this.user.firstName;
-        this.oldSurname = this.user.lastName;
-        console.log(this.oldName);
-        console.log(this.oldSurname);
-      //}, 100);
-    }
+    //setTimeout(() => {
+    this.oldEmail = this.user.email;
+    this.oldName = this.user.firstName;
+    this.oldSurname = this.user.lastName;
+    console.log(this.oldName);
+    console.log(this.oldSurname);
+    //}, 100);
+  }
 
   ngOnInit() {
+    this.accountService.GetAllRegions().subscribe((response: any) => {
+      this.regions = response.body;
+    });
+
+    //Get selected regions
+    this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {
+      this.newRegionsSelected = response.body;
+      console.log(this.newRegionsSelected);
+    });
+  }
+
+  public DisplayGenderModal(event: any) {
+    event.stopPropagation();
+    this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'flex');
+
+    let genderContainer = this.genderModal.nativeElement.firstChild.children[1];
+
+    let nextSibling = this.genderModal.nativeElement.firstChild.children[1].firstChild;
+
+    while (nextSibling) {
+      console.log(nextSibling);
+      this._renderer2.removeClass(nextSibling, 'gender-option-selected');
+      nextSibling = nextSibling.nextElementSibling;
+    }
+
+    for (var i = 0; i < genderContainer.children.length; i++) {
+      console.log(genderContainer.children[i].innerText.toString());
+      if (genderContainer.children[i].innerText.toString() == this.user.gender.genderName) {
+        this._renderer2.addClass(genderContainer.children[i], 'gender-option-selected');
+        break;
+      }
+
+    }
+
+    this.genderModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  public SelectGender(event: any, gender: string) {
+    this.selectedGender = gender;
+
+    let nextSibling = event.target.nextElementSibling;
+
+    while (nextSibling) {
+      this._renderer2.removeClass(nextSibling, 'gender-option-selected');
+      nextSibling = nextSibling.nextElementSibling;
+    }
+
+    let previousSibling = event.target.previousElementSibling;
+
+    while (previousSibling) {
+      this._renderer2.removeClass(previousSibling, 'gender-option-selected');
+      previousSibling = previousSibling.previousElementSibling;
+    }
 
 
+    this._renderer2.addClass(event.target, 'gender-option-selected');
+  }
+
+  public SetGender(personalInformationForm: NgForm) {
+    let newGender = new GenderViewModel();
+    console.log(personalInformationForm);
+    personalInformationForm.form.markAsDirty();
+    newGender.genderName = this.selectedGender;
+    this.user.gender = newGender;
+    this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
   }
 
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
+    console.log(this.newRegionsSelected);
     //TODO - deselect all regions
-    if (this.regions === undefined) {
-      this.accountService.GetAllRegions().subscribe((response: any) => {
-        this.regions = response.body;
-      });
+
+    let regionContainers = document.getElementsByClassName('region-checkbox-container');
+
+    for (var i = 0; i < regionContainers.length; i++) {
+      console.log(regionContainers[i].lastChild);
+      this._renderer2.removeClass(regionContainers[i].lastChild, 'is-selected');
+      this._renderer2.addClass(regionContainers[i].lastChild, 'is-not-selected');
     }
 
-    this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
+    for (var i = 0; i < this.newRegionsSelected.length; i++) {
+      this._renderer2.addClass(document.getElementById(`${this.newRegionsSelected[i].regionName}-country-container`), 'is-selected');
+    }
+
+    //this.newRegionsSelected.forEach(nrs => {
+    //  if (true) {
+
+    //  }
+    //});
+
+    //Select regions that are previously selected
+
+    this._renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
 
   }
 
@@ -81,14 +166,14 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this.OnDocumentClicked(null);
     let elements = this.inputFields.filter(el => el.nativeElement.name === fieldName);
     elements.forEach(element => {
-      this.renderer2.removeAttribute(element.nativeElement, 'disabled');
-      this.renderer2.setStyle(element.nativeElement, 'border', '1px solid #9AC7EC');
+      this._renderer2.removeAttribute(element.nativeElement, 'disabled');
+      this._renderer2.setStyle(element.nativeElement, 'border', '1px solid #9AC7EC');
       this.renderer.invokeElementMethod(element.nativeElement, 'focus');
     });
   }
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
-    event.stopPropagation(); 
+    event.stopPropagation();
     if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
       return;
     }
@@ -163,22 +248,15 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     return false;
   }
 
-
-  public SetGender(event: MouseEvent, gender: string, proForm: NgForm) {
-    let newGender = new GenderViewModel();
-    proForm.form.markAsDirty();
-    newGender.genderName = gender;
-    this.user.gender = newGender;
-  }
-
   @HostListener('document:click', ['$event'])
   public OnDocumentClicked(event) {
     this.inputFields.forEach(el => {
-      this.renderer2.setAttribute(el.nativeElement, 'disabled', 'disabled');
-      this.renderer2.setStyle(el.nativeElement, 'border', 'none');
+      this._renderer2.setAttribute(el.nativeElement, 'disabled', 'disabled');
+      this._renderer2.setStyle(el.nativeElement, 'border', 'none');
     });
 
-    this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
+    this._renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
+    this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
   }
 
   public PreventEventPropagation(event: MouseEvent) {
@@ -189,23 +267,32 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
-      this.renderer2.removeClass(element, 'is-not-selected');
-      this.renderer2.addClass(element, 'is-selected');
-      this.newRegionsSelected.push(JSON.parse(event.target.value));
+      this._renderer2.removeClass(element, 'is-not-selected');
+      this._renderer2.addClass(element, 'is-selected');
+      //this.newRegionsSelected.push(JSON.parse(event.target.value));
     }
     else {
-      this.renderer2.removeClass(element, 'is-selected');
-      this.renderer2.addClass(element, 'is-not-selected');
-      this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
+      this._renderer2.removeClass(element, 'is-selected');
+      this._renderer2.addClass(element, 'is-not-selected');
+      //this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
     }
   }
 
   public SubmitRegionsForm(regionsForm: NgForm) {
     //populate the regions array with these elements
+    this.newRegionsSelected = new Array<RegionViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newRegionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
     this.user.regions = this.newRegionsSelected;
     //reset form and close it
+    this.personalInformationForm.form.markAsDirty();
     regionsForm.resetForm();
-    this.newRegionsSelected = new Array<RegionViewModel>();
     this.OnDocumentClicked(null);
   }
 

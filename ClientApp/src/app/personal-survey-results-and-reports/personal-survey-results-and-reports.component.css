@@ -14,9 +14,9 @@
   color: #006F91;
 }
 
-.survey-result-row{
-    display:flex;
-
+.survey-result-row {
+  display: flex;
+  font-size: 0.8rem;
 }
 
   .survey-result-row div, .survey-result-row button{

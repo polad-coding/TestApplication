@@ -158,9 +158,11 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
       if (response.body.result == true) {
         event.stopPropagation();
         this.paypalModalIsVisible = true;
-        if (document.getElementById('paypalContainer').firstChild != undefined) {
-          document.getElementById('paypalContainer').removeChild(document.getElementById('paypalContainer').firstChild);
-        }
+        //if (document.getElementById('paypalContainer').firstChild != undefined && document.getElementById('paypalContainer').firstChild != null) {
+        //  console.log(document.getElementById('paypalContainer').firstChild);
+        //  //document.getElementById('paypalContainer').removeChild(document.getElementById('paypalContainer').firstChild);
+        //}
+        document.getElementById('paypalContainer').innerHTML = '';
         setTimeout(() => {
           document.getElementById('paypalContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);

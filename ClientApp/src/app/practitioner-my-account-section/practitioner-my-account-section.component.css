@@ -14,6 +14,74 @@ input[type=radio] {
   min-width: 20px;
 }
 
+#genders-modal-container {
+  display: none;
+  height: 100%;
+  width: 100vw;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 2000;
+}
+
+.gender-option {
+  border: 2px solid #006F91;
+  padding: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #006F91;
+}
+
+.gender-option-selected {
+  border: none;
+  color: white;
+  background-color: #006F91;
+}
+
+#gender-selected-row {
+  width: 75%;
+  display: flex;
+  justify-content: center;
+}
+
+  #gender-selected-row p {
+    color: white;
+    background-color: #006F91;
+    padding: 5px;
+  }
+
+#gender-modal-body {
+  height: 99%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+}
+
+#gender-modal-submit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+  #gender-modal-submit-button button {
+    border: 1px solid #006F91;
+    padding: 10px;
+    color: #006F91;
+    font-family: barlowSemiCondensedLight;
+    text-align: center;
+    background-color: transparent;
+  }
+
+    #gender-modal-submit-button button:hover {
+      border: none;
+      color: white;
+      background-color: #006F91;
+    }
 
  .region-container:first-child {
   margin-left: auto;
@@ -221,6 +289,16 @@ input[type=radio] {
 #gender-radio-buttons-section {
   display: flex;
   justify-content: space-around;
+}
+
+#genders-modal {
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+  background-color: white;
+  color: #006F91;
+  border-radius: 3px;
 }
 
 .gender-option {

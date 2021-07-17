@@ -2,19 +2,20 @@
   <img src="../../assets/Images/loading-screen.gif" />
 </div>
 <div style="height:500px;width:500px;visibility:hidden;">
-  <canvas style="display:none; height:100%; width:100%;" id="myChart">
+  <canvas style="display:none;" id="myChart">
+  </canvas>
+  <canvas style="display:none;" id="myChartWithoutLabel">
   </canvas>
 </div>
 <div id="report" style="display:none;">
   <div id="title-page">
     <h1>Value Practitioner Report</h1>
-    <img src="http://somefreedomain.ml/assets/Images/210101-Results-BASE-cropped.svg" />
+    <img src="{{imageStringWithoutLabel}}" />
     <p>{{user.firstName}} {{user.lastName}}</p>
     <p><span>{{surveyResults.code}}</span> — <span>{{surveyResults.takenOn | date:'yyyy-MMMM-d'}}</span></p>
   </div>
   <div id="survey-results-page">
     <div id="survey-results-page-title">
-      <img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
       <h1 id="survey-results-page-title-text">Results of the survey</h1>
     </div>
     <div id="survey-results-page-main-content">
@@ -80,9 +81,6 @@
     </div>
   </div>
   <div id="values-table-page">
-    <div id="values-table-page-title">
-      <img id="values-table-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    </div>
     <div id="values-table">
       <div id="grounding-column">
         <p class="table-cell" id="grounding-column-title">Grounding</p>
@@ -139,7 +137,6 @@
       <div class="reminder-text-container">
         <span>Reminder</span>
       </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
@@ -163,7 +160,6 @@
       <div class="reminder-text-container">
         <span>Reminder</span>
       </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
@@ -187,7 +183,6 @@
       <div class="reminder-text-container">
         <span>Reminder</span>
       </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
@@ -211,7 +206,6 @@
       <div class="reminder-text-container">
         <span>Reminder</span>
       </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
@@ -235,7 +229,6 @@
       <div class="reminder-text-container">
         <span>Reminder</span>
       </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
@@ -259,7 +252,6 @@
       <div class="reminder-text-container">
         <span>Reminder</span>
       </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
     </div>
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />

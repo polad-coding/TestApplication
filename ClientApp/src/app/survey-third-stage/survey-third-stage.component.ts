@@ -4,6 +4,7 @@ import { DataService } from '../../app-services/data-service';
 import { SurveyThirdStageSaveRequestModel } from '../../view-models/survey-third-stage-save-request-model';
 import { ValueViewModel } from '../../view-models/value-view-model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-survey-third-stage',
@@ -36,7 +37,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   public valueModalIsVisible: boolean = false;
   public currentClickedValueCharacter: string;
 
-  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
+  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router, private _jwtHelper: JwtHelperService) {
     if (_router.getCurrentNavigation().extras.state != null) {
       this.values = _router.getCurrentNavigation().extras.state.values;
     }
@@ -44,8 +45,20 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
   public GoToPreviousStep() {
     if (window.confirm("You are about to leave this 3rd step, if it has not been validated, your choices will not be saved.")) {
-        this._router.navigate(['surveySecondStage']);
+      this._router.navigate(['surveySecondStage'], { state: { startFromSelectionStage: true } });
     }
+  }
+
+  public ShuffleValues(values: Array<ValueViewModel>) {
+    let valuesLength = values.length;
+    let randomIndex = Math.floor(Math.random() * valuesLength);
+    let oldValue = values[randomIndex];
+
+    for (var i = 0; i < valuesLength; i++) {
+      values[randomIndex] = values[i];
+      values[i] = oldValue;
+      randomIndex = Math.floor(Math.random() * valuesLength);
+    }   
   }
 
   public ScrollDownInUnselectedValuesContainer(event) {
@@ -159,7 +172,9 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
-
+    if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
+      this._router.navigate(['authorizationPage']);
+    }
 
     if (localStorage.getItem('surveyId') == null || localStorage.getItem('surveyId') == undefined) {
       localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
@@ -174,6 +189,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
         if (this.values.length == 0) {
           this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
             this.values = response.body;
+            this.ShuffleValues(this.values);
             console.log(this.values);
           });
         }

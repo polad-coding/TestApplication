@@ -151,6 +151,7 @@ namespace KPProject.Services
             entries.ForEach(e => values.Add(e.Value));
             var seed = (await _applicationDbContext.Surveys.FirstAsync(survey => survey.Id == surveyId)).Seed;
 
+            //TODO - remove comment here
             this.Shuffle(values, seed);
 
             return values;
@@ -451,6 +452,7 @@ namespace KPProject.Services
             var values = new List<ValueModel>();
 
             values = await _applicationDbContext.Values.ToListAsync();
+            //TODO - remove comment here
             this.Shuffle(values, survey.Seed);
 
             return values;
@@ -1071,6 +1073,13 @@ namespace KPProject.Services
             }
 
             return false;
+        }
+
+        public async Task<List<RegionModel>> GetSelectedRegionsForCurrentUserAsync(string userId)
+        {
+            var regions = await _applicationDbContext.UserRegions.Where(ur => ur.ApplicationUserId == userId).Select(ur => ur.Region).ToListAsync();
+
+            return regions;
         }
     }
 }

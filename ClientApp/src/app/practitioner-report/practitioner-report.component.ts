@@ -22,9 +22,11 @@ import { Location } from '@angular/common';
 })
 export class PractitionerReportComponent implements OnInit, AfterViewInit {
 
+  public imageStringWithoutLabel: string;
   public imageString: string;
   public textFilePerspectiveIndexes: Array<number> = [1, 2, 3, 4, 5, 6];
   public myChart: any;
+  public myChartWithoudLabel: any;
   public pageIndex = 1;
   public maxGraphSliceValue: number;
   public minGraphSliceValue: number;
@@ -35,6 +37,8 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   public relativeWeightOfThePerspectives: Array<number> = new Array<number>();
   public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
   public surveyResults: SurveyResultViewModel;
+  public dataURL: string;
+  public windowPopUp: any;
   //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router, private _location: Location) {
@@ -63,6 +67,8 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+    this.windowPopUp = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
+    this.windowPopUp.document.write('Loading...');
 
     this._ds.GetParticularSurveyResults(surveyId).subscribe((surveyResultResponse: any) => {
 
@@ -110,6 +116,53 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
               this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
             }
 
+            this.myChartWithoudLabel = new Chart('myChartWithoutLabel', {
+              type: 'polarArea',
+              options: {
+                maintainAspectRatio: false,
+                aspectRatio: 1,
+                layout: {
+                },
+                animation: {
+                  onComplete: () => {
+                    this.imageStringWithoutLabel = this.myChartWithoudLabel.toBase64Image();
+                  }
+                },
+                legend: {
+                  display: false
+                },
+                scale: {
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    display: false
+                  }
+                }
+              },
+              data: {
+                labels: [
+                  'Expansion',
+                  'Systems',
+                  'Relational',
+                  'Management',
+                  'Family',
+                  'Grounding'
+                ],
+                datasets: [{
+                  data: this.relativeWeightOfThePerspectives.reverse(),
+                  backgroundColor: [
+                    '#544595',
+                    '#009EE3',
+                    '#009640',
+                    '#FFCC00',
+                    '#ED7102',
+                    '#E30513'
+                  ]
+                }]
+              }
+            });
+
             this.myChart = new Chart('myChart', {
               type: 'polarArea',
               options: {
@@ -124,18 +177,11 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                       let obj = new ReportHTMLContentViewModel();
                       obj.html = document.getElementById('report').innerHTML;
                       this._ds.GeneratePdf(obj).subscribe((response: Blob) => {
-                        const fileUrl = window.URL.createObjectURL(response);
-                        const showWindow = window.open(fileUrl);
-                        if (!showWindow || showWindow.closed || typeof showWindow.closed == 'undefined') {
-                          alert('Something went wrong! Probably pop ups on your browser are blocked, please allow pop ups to get your report.')
-                          this.router.navigate(['practitionerAccount']);
-
-                        }
-                        else {
-                          localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
-                          localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-                          this._location.back();
-                        }
+                        this.dataURL = window.URL.createObjectURL(response);
+                        this.windowPopUp.location.href = this.dataURL;
+                        localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+                        localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+                        this._location.back();
                       });
                     }, 3);
                   }
@@ -172,7 +218,7 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                   'Grounding'
                 ],
                 datasets: [{
-                  data: this.relativeWeightOfThePerspectives.reverse(),
+                  data: this.relativeWeightOfThePerspectives,
                   backgroundColor: [
                     '#544595',
                     '#009EE3',

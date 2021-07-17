@@ -77,7 +77,7 @@
 
 
 .level {
-  background-color: white;
+  background-color: #9AC7EC;
   color: #006F91;
   height: 40px;
   margin-bottom: 10px;
@@ -92,7 +92,7 @@
 }
 
 .certification-type {
-  background-color: white;
+  background-color: #9AC7EC;
   color: #006F91;
   height: 40px;
   margin-bottom: 10px;
@@ -107,7 +107,7 @@
 }
 
 .certification-status {
-  background-color: white;
+  background-color: #9AC7EC;
   color: #006F91;
   height: 40px;
   margin-bottom: 10px;
@@ -138,7 +138,7 @@
 }
 
 #membership-status-right-part div:not(:last-child) {
-  background-color: white;
+  background-color: #9AC7EC;
   color: #006F91;
   height: 40px;
   display: flex;
@@ -280,7 +280,7 @@
 .level-mobile {
   height: 30px;
   width: 80%;
-  background-color: white;
+  background-color: #9AC7EC;
   margin: 5px;
   text-align: center;
   color: #006F91;
@@ -297,7 +297,7 @@
 .certification-type-mobile {
   height: 30px;
   width: 80%;
-  background-color: white;
+  background-color: #9AC7EC;
   margin: 5px;
   text-align: center;
   color: #006F91;
@@ -314,7 +314,7 @@
 .certification-status-mobile {
   height: 30px;
   width: 80%;
-  background-color: white;
+  background-color: #9AC7EC;
   margin: 5px;
   text-align: center;
   color: #006F91;
@@ -339,7 +339,7 @@
     text-align: center;
     padding: 10px;
     margin: 10px;
-    background-color: white;
+    background-color: #9AC7EC;
     box-shadow: 0px 0px 3px #006F91;
   }
 
@@ -348,7 +348,7 @@
     text-align: center;
     padding: 10px;
     margin: 10px;
-    background-color: white;
+    background-color: #9AC7EC;
     box-shadow: 0px 0px 3px #006F91;
   }
 
@@ -357,7 +357,7 @@
     text-align: center;
     padding: 10px;
     margin: 10px;
-    background-color: white;
+    background-color: #9AC7EC;
     box-shadow: 0px 0px 3px #006F91;
   }
 

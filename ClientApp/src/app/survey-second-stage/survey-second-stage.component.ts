@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AfterViewInit, Component, ElementRef, HostListener, Injector, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationExtras, Route, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { count } from 'console';
 import { AppSettingsService } from '../../app-services/app-settings.service';
 import { DataService } from '../../app-services/data-service';
@@ -39,9 +40,15 @@ export class SurveySecondStageComponent implements OnInit {
   public currentImportantValuesGroup: Array<ValueViewModel> = new Array<ValueViewModel>();
   public arrayOfPages: Array<number> = new Array<number>();
   public surveyId: number;
+  private startFromSelectionStage = false;
 
 
-  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router) {
+  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private _router: Router) {
+    let ne = _router.getCurrentNavigation().extras.state;
+
+    if (ne != undefined && ne.startFromSelectionStage == true) {
+      this.startFromSelectionStage = true;
+    }
   }
 
   public ProceedToFirstStage(event) {
@@ -72,18 +79,6 @@ export class SurveySecondStageComponent implements OnInit {
     event.target.previousSibling.scrollBy({ top: 50, behavior: 'smooth' });
   }
 
-  //private CalculateCurrentPage() {
-  //  let counter = 1;
-  //  this.valuesGroupedByPerspectives.forEach((vl, k) => {
-  //    if (k == this.currentGroupId) {
-  //      this.currentPageIndex = counter;
-  //    }
-  //    else {
-  //      counter += 1;
-  //    }
-  //  });
-  //}
-
   private CalculateCurrentGroupId() {
     this.valuesGroupedByPerspectives.forEach((vl, k) => {
       if (this.currentGroupId > k) {
@@ -94,6 +89,10 @@ export class SurveySecondStageComponent implements OnInit {
 
   ngOnInit() {
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
+      this._router.navigate(['authorizationPage']);
+    }
 
     if (localStorage.getItem('surveyId') == null || localStorage.getItem('surveyId') == undefined) {
       localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
@@ -131,6 +130,9 @@ export class SurveySecondStageComponent implements OnInit {
           this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
           this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
 
+          if (this.startFromSelectionStage) {
+            this.ProceedToSelection(null);
+          }
 
         });
       }
@@ -162,10 +164,6 @@ export class SurveySecondStageComponent implements OnInit {
                 this.valuesMarkedAsImportantGroupedByPerspectives.get(secondStageSelection.perspectiveId).push(secondStageSelection);
               });
 
-              //this.valuesGroupedByPerspectives.set(secondStageSelection.perspectiveId, this.valuesGroupedByPerspectives.get(secondStageSelection.perspectiveId).filter(vgbp => vgbp.id != secondStageSelection.id));
-
-              console.info(this.valuesGroupedByPerspectives);
-              console.info(this.valuesMarkedAsImportantGroupedByPerspectives);
 
               this.valuesGroupedByPerspectives.forEach((v, k) => {
                 this.valuesGroupedByPerspectives.set(k, new Array<ValueViewModel>());
@@ -186,7 +184,14 @@ export class SurveySecondStageComponent implements OnInit {
             this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
             this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
 
+
+
             this.stepIsFilledCorrectly = true;
+
+            if (this.startFromSelectionStage) {
+              this.ProceedToSelection(null);
+            }
+
           }
         });
       }

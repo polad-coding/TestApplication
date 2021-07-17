@@ -1,3 +1,7 @@
+footer{
+    color:#006F91;
+}
+
 @font-face {
   font-family: barlowSemiCondensedMedium;
   src: url('../../../wwwroot/Fonts/BarlowSemiCondensed-Medium.ttf') format('truetype');
@@ -52,23 +56,18 @@
 
   #title-page > h1 {
     color: #006F91;
-    font-size: 8rem;
-    margin-bottom: 20px;
+    font-size: 6rem;
+    margin-bottom: 10px;
   }
 
   #title-page img:first-child {
-    height: 300px;
-    width: 250px;
-  }
-
-  #title-page img:nth-child(2){
-    height: 800px;
-    width: 1600px;
+    height: 700px;
+    width: 1400px;
   }
 
 
   #title-page > p {
-    font-size: 4rem;
+    font-size: 2.8rem;
     color: #006F91;
   }
 
@@ -170,10 +169,14 @@
     text-align:center;
 }
 
-#survey-results-page-main-content-title-texts > div {
-  display: -webkit-box;
-  text-align:center;
-}
+  #survey-results-page-main-content-title-texts{
+      font-size:1.5rem;
+  }
+
+  #survey-results-page-main-content-title-texts > div {
+    display: -webkit-box;
+    text-align: center;
+  }
 
 #survey-results-page-main-content-title-texts div img{
     height:50px;
@@ -290,15 +293,24 @@
   text-align: center;
 }
 
-.reminder:not(:last-child) {
-  page-break-after: always;
+.secondary-perspective-container{
+    page-break-after:always;
 }
 
-.reminder-header {
-  display: -webkit-box;
-  height: 300px;
-  margin-top: 250px;
+.perspectives-table-explanation{
+    border-left:1px solid #006F91;
+    border-bottom:1px solid #006F91;
 }
+
+  .perspectives-table-explanation:last-child{
+      border-right:1px solid #006F91;
+  }
+
+  .reminder-header {
+    display: -webkit-box;
+    height: 300px;
+    margin-top: 250px;
+  }
 
   .reminder-header img {
     height: 180px;
@@ -325,6 +337,8 @@
 
 .reminder-title {
   display: -webkit-box;
+  margin-top:40px;
+  padding-top:60px;
 }
 
   .reminder-title img {
@@ -373,7 +387,7 @@
   padding-top: 50px;
   height: 400px;
   text-align: center;
-  width: 225px;
+  width: 224px;
   display: -webkit-flex;
   align-items: center;
   font-size: 1.6rem;

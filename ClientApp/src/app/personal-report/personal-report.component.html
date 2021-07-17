@@ -1,21 +1,25 @@
 <div id="loading-screen-gif-container">
   <img src="../../assets/Images/loading-screen.gif" />
+  <!--<button *ngIf="fileURL != undefined" (click)="DownloadTheReport()">Download Your Report</button>-->
 </div>
 <div style="height:500px;width:500px;visibility:hidden;">
   <canvas style="display:none; height:100%; width:100%;" id="myChart">
   </canvas>
+  <canvas style="display:none; height:100%; width:100%;" id="myChartWithoutLegend">
+  </canvas>
 </div>
 <div id="report" style="display:none;">
   <div id="title-page">
-    <img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    <h1>Value Perspective Report</h1>
-    <img style="height:1000px; width:2000px;margin-left:-250px;" src="http://somefreedomain.ml/assets/Images/210101-Results-BASE-cropped.svg" />
+    <!--<img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
+    <h1>Value Perspective Individual Report</h1>
+    <!--<img style="height:1000px; width:2000px;margin-left:-250px;" src="http://somefreedomain.ml/assets/Images/210101-Results-BASE-cropped.svg" />-->
+    <img src="{{imageStringWithoutLegend}}" />
     <p>{{user.firstName}} {{user.lastName}}</p>
     <p><span>{{surveyResults.code}}</span> — <span>{{surveyResults.takenOn | date:'yyyy-MMMM-d'}}</span></p>
   </div>
   <div id="survey-results-page">
     <div id="survey-results-page-title">
-      <img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <!--<img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="font-size:80px;" id="survey-results-page-title-text">Value Perspective Report</h1>
     </div>
     <div id="survey-results-page-texts">
@@ -51,8 +55,8 @@
     </div>
     <div id="survey-results-page-main-content-title-texts">
       <h1>Here are the results from your survey</h1>
-      <p>The Prospects that you value most energetically are:</p>
-      <div style="display:-webkit-box; text-align:center; align-items:center; height:50px; justify-content:center;padding-left:180px;">
+      <p style="font-size:1.5rem;">The Prospects that you value most energetically are:</p>
+      <div style="display:-webkit-box; text-align:center; align-items:center; height:50px; justify-content:center; padding-left:100px;">
         <div style="width:33%;"></div>
         <div style="display:-webkit-box; width:33%;">
           <div>
@@ -64,7 +68,7 @@
             <img *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
           </div>
           <div style="line-height:50px;"><span style="font-family:barlowSemiCondensed;"> {{'Perspectives.' + corePerspectiveId + '.Title' | translate}}   </span> </div>
-          <div style="line-height:50px;"><span>  and</span></div>
+          <div style="line-height:50px;"><span style="margin-left:10px;">and</span></div>
           <div style="padding-top:-50px;">
             <img *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
             <img *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
@@ -85,11 +89,11 @@
       </div>
       <div id="survey-results-page-main-content-right-part" style="margin-left:-200px;font-size:2.1rem;">
         <div id="your-highest-priority-values-container">
-          <h1 style="font-family:barlowSemiCondensedLight; font-size:1.5rem;">Your Highest-Priority Values:</h1>
-          <div id="highest-priority-values-container">
+          <h1 style="font-family:barlowSemiCondensedLight; font-size:2.5rem;">Your Highest-Priority Values:</h1>
+          <div id="highest-priority-values-container" style="font-size:2rem;">
             <div *ngFor="let value of valuesFromThirdStage; index as i" class="value-container">
               <div style="display:-webkit-box; margin-bottom:10px;">
-                <span>{{i + 1}}</span>
+                <span style="font-size:2rem;">{{i + 1}}</span>
                 <div>
                   <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
                   <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
@@ -98,7 +102,7 @@
                   <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
                   <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
                 </div>
-                <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+                <span style="font-size:2rem; font-family:barlowSemiCondensedLight;">{{'Values.' + value.character + '.Title' | translate}}</span>
               </div>
             </div>
           </div>
@@ -108,7 +112,7 @@
   </div>
   <div id="human-energy-wheel-page" style="page-break-after:always; font-family:barlowSemiCondensedLight; color:#006F91;">
     <div id="human-energy-wheel-page-title" style="text-align:center;">
-      <img id="human-energy-wheel-page-title-image" style="height:200px; width:150px;" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <!--<img id="human-energy-wheel-page-title-image" style="height:200px; width:150px;" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="font-size:80px;" id="survey-results-page-title-text">The Values Perspectives</h1>
     </div>
     <p style="font-size:1.5rem;">
@@ -253,13 +257,39 @@
       <div style="width: 33%;"></div>
     </div>
   </div>-->
-  <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1">
-    <div class="reminder-header">
-      <div class="reminder-text-container">
-        <span>Reminder</span>
-      </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+  <div>
+    <div style="text-align:center;color:#006F91;font-size:2.5rem; margin-bottom:30px;">
+      <h1>Your Values Perspectives</h1>
     </div>
+    <p style="color:black; font-size:1.5rem;">Through the Value Perspectives survey, you have chosen as Core and Second Perspectives:</p>
+    <div style="text-align:center;">
+      <p style="font-size:2rem;">Core perspective:</p>
+      <div style="display:-webkit-box; text-align:center; margin-left:600px;">
+        <div>
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+        </div>
+        <div style="line-height: 50px; height: 50px;"><span style="color:#006F91; font-family:barlowSemiCondensedLight; font-size:2rem;">{{'Perspectives.' + corePerspectiveId + '.Title' | translate}}</span></div>
+      </div>
+      <p style="font-size:2rem;">Secondary Perspective:</p>
+      <div style="display:-webkit-box; text-align:center; margin-left:600px;">
+        <div style="line-height:50px; height:50px;">
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+        </div>
+        <div style="line-height: 50px; height: 50px;"><span style="color:#006F91; font-family:barlowSemiCondensedLight; font-size:2rem;">{{'Perspectives.' + secondaryPerspectiveId + '.Title' | translate}}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
       <div class="reminder-title-text">
@@ -277,13 +307,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="family-reminder" *ngIf="corePerspectiveId == 2 || secondaryPerspectiveId == 2">
-    <div class="reminder-header">
-      <div class="reminder-text-container">
-        <span>Reminder</span>
-      </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    </div>
+  <div class="reminder" id="family-reminder" *ngIf="corePerspectiveId == 2">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
       <div class="reminder-title-text">
@@ -301,13 +325,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="management-reminder" *ngIf="corePerspectiveId == 3 || secondaryPerspectiveId == 3">
-    <div class="reminder-header">
-      <div class="reminder-text-container">
-        <span>Reminder</span>
-      </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    </div>
+  <div class="reminder" id="management-reminder" *ngIf="corePerspectiveId == 3">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
       <div class="reminder-title-text">
@@ -325,13 +343,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="relational-reminder" *ngIf="corePerspectiveId == 4 || secondaryPerspectiveId == 4">
-    <div class="reminder-header">
-      <div class="reminder-text-container">
-        <span>Reminder</span>
-      </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    </div>
+  <div class="reminder" id="relational-reminder" *ngIf="corePerspectiveId == 4 ">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
       <div class="reminder-title-text">
@@ -349,13 +361,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="systems-reminder" *ngIf="corePerspectiveId == 5 || secondaryPerspectiveId == 5">
-    <div class="reminder-header">
-      <div class="reminder-text-container">
-        <span>Reminder</span>
-      </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    </div>
+  <div class="reminder" id="systems-reminder" *ngIf="corePerspectiveId == 5 ">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
       <div class="reminder-title-text">
@@ -373,13 +379,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="expansion-reminder" *ngIf="corePerspectiveId == 6 || secondaryPerspectiveId == 6">
-    <div class="reminder-header">
-      <div class="reminder-text-container">
-        <span>Reminder</span>
-      </div>
-      <img src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-    </div>
+  <div class="reminder" id="expansion-reminder" *ngIf="corePerspectiveId == 6">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
       <div class="reminder-title-text">
@@ -397,19 +397,133 @@
       </p>
     </div>
   </div>
+
+
+
+  <!------------------------------------------------>
+  <div class="secondary-perspective-container" id="grounding-reminder" *ngIf="secondaryPerspectiveId == 1">
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <div class="reminder-title-text">
+        <p>Grounding,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.1.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="secondary-perspective-container" id="family-reminder" *ngIf="secondaryPerspectiveId == 2">
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <div class="reminder-title-text">
+        <p>Family,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.2.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="secondary-perspective-container" id="management-reminder" *ngIf="secondaryPerspectiveId == 3">
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <div class="reminder-title-text">
+        <p>Management,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.3.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="secondary-perspective-container" id="relational-reminder" *ngIf="secondaryPerspectiveId == 4">
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <div class="reminder-title-text">
+        <p>Relational,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.4.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="secondary-perspective-container" id="systems-reminder" *ngIf="secondaryPerspectiveId == 5">
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <div class="reminder-title-text">
+        <p>Systems,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.5.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="secondary-perspective-container" id="expansion-reminder" *ngIf="secondaryPerspectiveId == 6">
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <div class="reminder-title-text">
+        <p>Expansion,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.6.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <!------------------------------------------------>
+
+
   <div id="questions-to-consider-page">
     <div id="questions-to-consider-page-header" style="text-align:center;">
-      <img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <!--<img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="color:#006F91; font-size:5rem;">Questions to consider on Perspectives</h1>
     </div>
     <p style="font-size:1.8rem;">Use these questions to reflect your Core and Second Values Perspectives</p>
     <div id="kp-perspectives-table-title-images">
-      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
-      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
-      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
-      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
-      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
-      <img class="kp-perspectives-table-title-image" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <div>
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+        <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 1 && secondaryPerspectiveId != 1"> </div>
+      </div>
+      <div>
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 2 || secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+        <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 2 && secondaryPerspectiveId != 2">
+        </div>
+      </div>
+      <div>
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 3 || secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+        <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 3 && secondaryPerspectiveId != 3">
+        </div>
+      </div>
+      <div>
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 4 || secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+        <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 4 && secondaryPerspectiveId != 4">
+        </div>
+      </div>
+      <div>
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 5 || secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+        <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 5 && secondaryPerspectiveId != 5">
+        </div>
+      </div>
+      <div>
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 6 || secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+        <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 6 && secondaryPerspectiveId != 6">
+        </div>
+      </div>
     </div>
     <div class="perspectives-table">
       <div class="perspectives-table-titles" style="display:-webkit-box;">
@@ -421,7 +535,7 @@
         <div class="perspectives-table-title" style="color:white; background-color:#5050a1">Expansion</div>
       </div>
       <div class="perspectives-table-explanations" style="display:-webkit-box;">
-        <div class="perspectives-table-explanation" style="background-color:#fcd2c0;">
+        <div class="perspectives-table-explanation" [ngStyle]="{'background-color' : (corePerspectiveId == 1 || secondaryPerspectiveId == 1) ? '#fcd2c0' : 'white'}">
           <p>
             These values
             ensure survival
@@ -437,7 +551,7 @@
             foundation.
           </p>
         </div>
-        <div class="perspectives-table-explanation" style="background-color:#fde0c7;">
+        <div class="perspectives-table-explanation" [ngStyle]="{'background-color' : (corePerspectiveId == 2 || secondaryPerspectiveId == 2) ? '#fde0c7' : 'white'}">
           <p>
             Values in this
             Perspective
@@ -450,7 +564,7 @@
             world
           </p>
         </div>
-        <div class="perspectives-table-explanation" style="background-color:#fef3d2;">
+        <div class="perspectives-table-explanation" [ngStyle]="{'background-color' : (corePerspectiveId == 3 || secondaryPerspectiveId == 3) ? '#fef3d2' : 'white'}">
           <p>
             These values
             are necessary
@@ -465,7 +579,7 @@
             success.
           </p>
         </div>
-        <div class="perspectives-table-explanation" style="background-color:#cbe6d3;">
+        <div class="perspectives-table-explanation" [ngStyle]="{'background-color' : (corePerspectiveId == 4 || secondaryPerspectiveId == 4) ? '#cbe6d3' : 'white'}">
           <p>
             These values
             emphasize
@@ -480,7 +594,7 @@
             with others.
           </p>
         </div>
-        <div class="perspectives-table-explanation" style="background-color:#c6eafa;">
+        <div class="perspectives-table-explanation" [ngStyle]="{'background-color' : (corePerspectiveId == 5 || secondaryPerspectiveId == 5) ? '#c6eafa' : 'white'}">
           <p>
             These values
             address our
@@ -494,7 +608,7 @@
             individual scope.
           </p>
         </div>
-        <div class="perspectives-table-explanation" style="background-color:#d0cee6;">
+        <div class="perspectives-table-explanation" [ngStyle]="{'background-color' : (corePerspectiveId == 6 || secondaryPerspectiveId == 6) ? '#d0cee6' : 'white'}">
           <p>
             Values in this
             Perspective act
@@ -569,7 +683,7 @@
   </div>
   <div id="your-highest-priority-values-page" style="font-family:barlowSemiCondensedLight;page-break-after:always;">
     <div id="your-highest-priority-values-page-header" style="text-align:center;">
-      <img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <!--<img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="color:#006F91; font-size:5rem;">Your Highest-Priority values</h1>
     </div>
     <p style="font-size:2rem;">Your Highest-Priority values are:</p>
@@ -691,14 +805,14 @@
       </div>
     </div>
     <div id="middle-texts-section">
-      <p style="font-size:1.8rem;">
+      <p style="font-size:1.6rem;">
         Your highest ranked priority values are those values you tend to draw on or turn your attention to most often. Generally,
         the values you have ranked highest tend to dominate your awareness. Lower ranked values can act in support of
         higher ranked values, or act alone, depending on the requirements of a specific situation. The exact rank-order is
         never rigid, but rather, tends to be dynamic. As you work with these values you will be able to observe with increasing
         awareness when each is being called upon.
       </p>
-      <p style="font-size:1.8rem;">
+      <p style="font-size:1.6rem;">
         These values may represent your natural talents and preferences, or they may represent areas you recognize as
         needing more of your attention. In the first case you will likely have skills to support these values. In the second case,
         you may need to develop skills to support specific values. Note too, that it is the nature of values that least some of
@@ -743,7 +857,7 @@
   </div>
   <div id="values-questions-pages">
     <div id="values-questions-pages-header" style="text-align:center;">
-      <img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
+      <!--<img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
     </div>
     <div class="values-questions-container" *ngFor="let value of valuesFromThirdStage; index as i">
       <div class="value-container-header">
@@ -773,7 +887,7 @@
       </div>
     </div>
   </div>
-  <div id="ending-texts-section" style="margin-top:30px; font-family:barlowSemiCondensedLight; font-size:2rem;">
+  <div id="ending-texts-section" style="margin-top:30px; font-family:barlowSemiCondensedLight; font-size:1.8rem;">
     <h1 style="text-align:center; color:#006F91; font-size:4rem;">
       Learn more on Values and how they work with you <br /> <span style="text-decoration:underline">kairiospraxis.com</span>
     </h1>

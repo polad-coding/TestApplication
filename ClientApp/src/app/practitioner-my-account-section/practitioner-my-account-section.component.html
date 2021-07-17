@@ -6,11 +6,26 @@
     <form id="modal-form" #regionsForm="ngForm">
       <div *ngFor="let region of regions" class="region-checkbox-container">
         <input type="checkbox" (click)="ToggleRegionSelection($event)" name="region" ngModel value="{{region | json}}">
-        <label class="is-not-selected" for="region">{{region.regionName}}</label>
+        <label class="is-not-selected" id="{{region.regionName + '-country-container'}}" for="region">{{region.regionName}}</label>
       </div>
     </form>
     <div id="region-modal-submit-button">
       <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
+    </div>
+  </div>
+</div>
+<div id="genders-modal-container" #gendersModalContainer>
+  <div id="genders-modal" (click)="PreventEventPropagation($event)">
+    <div id="modal-header">
+      <p>Choose your gender</p>
+    </div>
+    <div id="gender-modal-body">
+      <button class="gender-option" (click)="SelectGender($event,'Male')">Male</button>
+      <button class="gender-option" (click)="SelectGender($event,'Female')">Female</button>
+      <button class="gender-option" (click)="SelectGender($event,'Other')">Other</button>
+    </div>
+    <div id="gender-modal-submit-button">
+      <button (click)="SetGender(personalInformationForm)">Confirm</button>
     </div>
   </div>
 </div>
@@ -74,22 +89,12 @@
             <div class="label-section">
               <label for="Gender">Gender:</label>
             </div>
-            <div class="input-field-section" id="gender-radio-buttons-section" (click)="PreventEventPropagation($event)">
-              <div class="gender-option">
-                <input type="radio" name="Gender" (click)="SetGender($event, 'Male',personalInformationForm)" #inputField value="Male" disabled [checked]="user.gender.genderName ==='Male' ? true : false" />
-                <p>Male</p>
-              </div>
-              <div class="gender-option">
-                <input type="radio" name="Gender" (click)="SetGender($event, 'Female',personalInformationForm)" #inputField value="Female" disabled [checked]="user.gender.genderName ==='Female' ? true : false" />
-                <p>Female</p>
-              </div>
-              <div class="gender-option">
-                <input type="radio" name="Gender" (click)="SetGender($event, 'Other',personalInformationForm)" #inputField value="Other" disabled [checked]="user.gender.genderName ==='Other' ? true : false" />
-                <p>Other</p>
-              </div>
+            <div id="gender-selected-row">
+              <p *ngIf="user != undefined && user.gender.genderName != undefined">{{user.gender.genderName}}</p>
+              <p *ngIf="user == undefined || user.gender.genderName == undefined">Gender is not selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="EditInputField('Gender',$event)">
+              <button (click)="DisplayGenderModal($event)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
