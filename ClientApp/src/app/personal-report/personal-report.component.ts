@@ -186,7 +186,9 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                       obj.html = document.getElementById('report').innerHTML;
                       this._ds.GenerateIndividualPdfReport(obj).subscribe((response: Blob) => {
                         this.fileURL = window.URL.createObjectURL(response);
+                        let touchEvent = document.createEvent('TouchEvent');
                         document.getElementById('loading-gif').click();
+                        document.getElementById('loading-gif').dispatchEvent(touchEvent);
                         //this.popUpWindow.location.href = this.fileURL;
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
