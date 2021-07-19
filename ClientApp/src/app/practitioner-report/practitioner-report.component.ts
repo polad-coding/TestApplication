@@ -181,9 +181,6 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                       obj.html = document.getElementById('report').innerHTML;
                       this._ds.GeneratePdf(obj).subscribe((response: Blob) => {
                         this.fileURL = window.URL.createObjectURL(response);
-                        let touchEvent = document.createEvent('TouchEvent');
-                        document.getElementById('loading-gif').click();
-                        document.getElementById('loading-gif').dispatchEvent(touchEvent);
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
                         this._location.back();
