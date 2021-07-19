@@ -191,7 +191,6 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                         //this.popUpWindow.location.href = this.fileURL;
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-                        this._location.back();
                       });
                     }, 0);
                   }

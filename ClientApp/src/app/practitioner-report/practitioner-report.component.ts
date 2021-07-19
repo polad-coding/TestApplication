@@ -183,7 +183,6 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                         this.fileURL = window.URL.createObjectURL(response);
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-                        this._location.back();
                       });
                     }, 3);
                   }
