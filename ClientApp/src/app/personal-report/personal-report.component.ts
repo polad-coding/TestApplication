@@ -65,6 +65,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
   }
 
   public OpenPopUp() {
+    this._location.back();
+
     this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
     this.popUpWindow.location.href = this.fileURL;
   }
@@ -193,15 +195,6 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
                         this._location.back();
-                        //if (!showWindow || showWindow.closed || typeof showWindow.closed == 'undefined') {
-                        //  alert('Something went wrong! Probably pop ups on your browser are blocked, please allow pop ups to get your report.')
-                        //  this.router.navigate(['personalAccount']);
-                        //}
-                        //else {
-                        //  localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
-                        //  localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-                        //  this._location.back();
-                        //}
                       });
                     }, 0);
                   }
