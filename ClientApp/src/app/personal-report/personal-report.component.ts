@@ -37,7 +37,7 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
   public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
   public surveyResults: SurveyResultViewModel;
   public fileURL: string;
-  public popUpWindow: any;
+  public popUpWindow: Window;
   //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router, private _location: Location) {
@@ -64,11 +64,16 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
 
   }
 
+  public OpenPopUp() {
+    this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
+    this.popUpWindow.location.href = this.fileURL;
+  }
+
   ngOnInit() {
 
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
-    this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
-    this.popUpWindow.document.write('Loading...');
+
+
 
     this._ds.GetParticularSurveyResults(surveyId).subscribe((surveyResultResponse: any) => {
 
@@ -181,7 +186,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                       obj.html = document.getElementById('report').innerHTML;
                       this._ds.GenerateIndividualPdfReport(obj).subscribe((response: Blob) => {
                         this.fileURL = window.URL.createObjectURL(response);
-                        this.popUpWindow.location.href = this.fileURL;
+                        document.getElementById('loading-gif').click();
+                        //this.popUpWindow.location.href = this.fileURL;
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
                         this._location.back();

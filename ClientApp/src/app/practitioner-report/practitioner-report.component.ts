@@ -37,14 +37,18 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   public relativeWeightOfThePerspectives: Array<number> = new Array<number>();
   public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
   public surveyResults: SurveyResultViewModel;
-  public dataURL: string;
-  public windowPopUp: any;
+  public fileURL: string;
+  public popUpWindow: any;
   //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router, private _location: Location) {
 
   }
 
+  public OpenPopUp() {
+    this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
+    this.popUpWindow.location.href = this.fileURL;
+  }
 
   ngAfterViewInit(): void {
     //setTimeout(() => {
@@ -67,8 +71,6 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   ngOnInit() {
 
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
-    this.windowPopUp = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
-    this.windowPopUp.document.write('Loading...');
 
     this._ds.GetParticularSurveyResults(surveyId).subscribe((surveyResultResponse: any) => {
 
@@ -177,8 +179,8 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
                       let obj = new ReportHTMLContentViewModel();
                       obj.html = document.getElementById('report').innerHTML;
                       this._ds.GeneratePdf(obj).subscribe((response: Blob) => {
-                        this.dataURL = window.URL.createObjectURL(response);
-                        this.windowPopUp.location.href = this.dataURL;
+                        this.fileURL = window.URL.createObjectURL(response);
+                        document.getElementById('loading-gif').click();
                         localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
                         localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
                         this._location.back();

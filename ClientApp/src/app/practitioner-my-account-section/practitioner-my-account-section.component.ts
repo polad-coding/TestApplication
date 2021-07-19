@@ -40,6 +40,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
   public selectedGender: string;
   @ViewChild('personalInformationForm', { read: NgForm, static: false })
   public personalInformationForm: NgForm;
+  public dummyNumber: number;
 
 
   constructor(private _dataService: DataService, private _router: Router, private _renderer2: Renderer2, private accountService: AccountService, private renderer: Renderer) { }
@@ -68,6 +69,8 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this.accountService.GetAllRegions().subscribe((response: any) => {
       this.regions = response.body;
     });
+
+    this.dummyNumber = Math.floor(Math.random() * 100000);
 
     //Get selected regions
     this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {

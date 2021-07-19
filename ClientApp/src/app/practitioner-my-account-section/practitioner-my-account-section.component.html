@@ -36,7 +36,7 @@
         <div id="upload-image-container">
           <img *ngIf="user.profileImageName === null && !isUploadingProccess" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
           <img *ngIf="isUploadingProccess" style="background:white;" src="../../assets/Images/loading-screen.gif" />
-          <img *ngIf="user.profileImageName !== null && !isUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
+          <img *ngIf="user.profileImageName !== null && !isUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png?dummy={{dummyNumber}}" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
           <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg"/>
         </div>

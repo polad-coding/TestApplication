@@ -37,6 +37,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   public oldPhoneNumber: string;
   public oldWebsite: string;
   public isUploadingProccess: boolean = false;
+  public dummyNumber: number;
 
   constructor(private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
 
@@ -66,6 +67,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   }
 
   ngOnInit() {
+    this.dummyNumber = Math.floor(Math.random() * 100000);
   }
 
   public EditInputField(fieldName: string, event: MouseEvent) {

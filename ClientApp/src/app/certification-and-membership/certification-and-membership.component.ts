@@ -86,26 +86,28 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
       this.user = response.body;
       this._dataService.GetAllCertifications().subscribe((response: any) => {
         if (response.ok) {
-          render({
-            id: "#paypalContainer",
-            currency: "USD",
-            value: "50",
-            onApprove: (details) => {
-              this._dataService.RenewMembership().subscribe(response => {
-                if (response.ok) {
-                  console.log('here');
-                  location.reload();
-                }
-              }, error => {
-                alert('We had a problem processing your request, please try again!');
-              })
-            }
-          })
           this.certifications = response.body;
           this.certifications = this.certifications.reverse();
           this._dataService.GetPractitionersCertifications(null).subscribe((practitionersCertificationResponse: any) => {
             console.log(practitionersCertificationResponse);
             this.practitionersCertifications = practitionersCertificationResponse.body;
+
+            render({
+              id: "#paypalContainer",
+              currency: "USD",
+              value: "50",
+              onApprove: (details) => {
+                this._dataService.RenewMembership().subscribe(response => {
+                  if (response.ok) {
+                    console.log('here');
+                    location.reload();
+                  }
+                }, error => {
+                  alert('We had a problem processing your request, please try again!');
+                })
+              }
+            })
+
             this._dataService.GetMembershipStatus().subscribe((membershipStatusResponse: any) => {
               this.membership = membershipStatusResponse.body;
             });
