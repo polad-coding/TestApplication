@@ -46,11 +46,14 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   }
 
   public OpenPopUp() {
-    this._location.back();
-    location.reload();
-
     this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
     this.popUpWindow.location.href = this.fileURL;
+
+    this._location.back();
+
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   }
 
   ngAfterViewInit(): void {

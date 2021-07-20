@@ -183,7 +183,7 @@ namespace KPProject.Services
             return true;
         }
 
-        private EncoderParameters GetEncoderParametersForDecreasedImageGuality(int quality = 50)
+        private EncoderParameters GetEncoderParametersForDecreasedImageGuality(long quality = 50)
         {
             EncoderParameter qualityParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
 
@@ -211,28 +211,31 @@ namespace KPProject.Services
                 using (MemoryStream ms = new MemoryStream(dataBytes))
                 {
                     Image pic = Image.FromStream(ms);
-                    ImageCodecInfo pngCodec = GetEncoderInfo("image/png");
+                    ImageCodecInfo pngCodec = GetEncoderInfo(ImageFormat.Jpeg);
 
                     string path = Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{user.ProfileImageName}.png");
 
                     File.Delete(Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{oldImageName}.png"));
 
-                    pic.Save(path, pngCodec, this.GetEncoderParametersForDecreasedImageGuality());
+                    var encoderParameters = this.GetEncoderParametersForDecreasedImageGuality(50);
+
+                    pic.Save(path, pngCodec, encoderParameters);
                 }
             }
 
             return user.ProfileImageName;
         }
 
-        private ImageCodecInfo GetEncoderInfo(string mimeType)
+        private ImageCodecInfo GetEncoderInfo(ImageFormat mimeType)
         {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-
-            // Find the correct image codec 
-            for (int i = 0; i < codecs.Length; i++)
-                if (codecs[i].MimeType == mimeType)
-                    return codecs[i];
-
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == mimeType.Guid)
+                {
+                    return codec;
+                }
+            }
             return null;
         }
     }
