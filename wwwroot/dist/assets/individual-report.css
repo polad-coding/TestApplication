@@ -60,9 +60,9 @@ footer{
     margin-bottom: 10px;
   }
 
-  #title-page img:first-child {
-    height: 700px;
-    width: 1400px;
+  #title-page > img {
+    height: 1200px;
+    width: 1200px;
   }
 
 

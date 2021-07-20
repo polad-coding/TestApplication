@@ -183,6 +183,16 @@ namespace KPProject.Services
             return true;
         }
 
+        private EncoderParameters GetEncoderParametersForDecreasedImageGuality(int quality = 50)
+        {
+            EncoderParameter qualityParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+
+            EncoderParameters encoderParameters = new EncoderParameters(1);
+            encoderParameters.Param[0] = qualityParam;
+
+            return encoderParameters;
+        }
+
         public async Task<string> UploadProfileImageAsync(string data, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -201,16 +211,29 @@ namespace KPProject.Services
                 using (MemoryStream ms = new MemoryStream(dataBytes))
                 {
                     Image pic = Image.FromStream(ms);
+                    ImageCodecInfo pngCodec = GetEncoderInfo("image/png");
 
                     string path = Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{user.ProfileImageName}.png");
 
                     File.Delete(Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{oldImageName}.png"));
 
-                    pic.Save(path, ImageFormat.Png);
+                    pic.Save(path, pngCodec, this.GetEncoderParametersForDecreasedImageGuality());
                 }
             }
 
             return user.ProfileImageName;
+        }
+
+        private ImageCodecInfo GetEncoderInfo(string mimeType)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+
+            // Find the correct image codec 
+            for (int i = 0; i < codecs.Length; i++)
+                if (codecs[i].MimeType == mimeType)
+                    return codecs[i];
+
+            return null;
         }
     }
 }

@@ -235,6 +235,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
   public NumberOfCodesChanged(event, order) {
     if (order.numberOfCodes >= 0) {
+      order.numberOfCodes = Math.floor(order.numberOfCodes);
       this.listOfOrders[order.id].numberOfSurveys = this.listOfOrders[order.id].defaultNumberOfUsages * this.listOfOrders[order.id].numberOfCodes;
       this.listOfOrders[order.id].totalPrice = this.listOfOrders[order.id].numberOfSurveys * this.listOfOrders[order.id].pricePerUnit - (this.listOfOrders[order.id].numberOfSurveys * this.listOfOrders[order.id].pricePerUnit * (order.discountRate == null ? 0 : order.discountRate) / 100);
       this.CalculateNewGrandTotalSum();
@@ -245,6 +246,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   //TODO - check why doesn't work here
   public NumberOfCodesChangedMobile(event) {
     if (this.listOfOrders[0].numberOfCodes >= 0) {
+      this.listOfOrders[0].numberOfCodes = Math.floor(this.listOfOrders[0].numberOfCodes);
       this.listOfOrders[0].numberOfSurveys = this.listOfOrders[0].defaultNumberOfUsages * this.listOfOrders[0].numberOfCodes;
       this.listOfOrders[0].totalPrice = this.listOfOrders[0].numberOfSurveys * this.listOfOrders[0].pricePerUnit - (this.listOfOrders[0].numberOfSurveys * this.listOfOrders[0].pricePerUnit * (this.listOfOrders[0].discountRate == null ? 0 : this.listOfOrders[0].discountRate) / 100);
       this.CalculateNewGrandTotalSum();

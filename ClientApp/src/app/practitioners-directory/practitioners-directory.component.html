@@ -90,8 +90,8 @@
     </div>
     <div id="practitioners-images-section">
       <div (click)="SelectPractitioner($event)" *ngFor="let practitioner of currentPractitioners; index as i">
-        <img [ngClass]="{'practitioner':true, 'current-practitioner': i == 0}" id="practitioner-{{i}}" *ngIf="practitioner.profileImageName == undefined && practitioner.profileImageName == null"  src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
-        <img [ngClass]="{'practitioner':true, 'current-practitioner': i == 0}" id="practitioner-{{i}}" *ngIf="practitioner.profileImageName != undefined || practitioner.profileImageName != null"  src="../../assets/Profile-Images/{{practitioner.profileImageName}}.png" />
+        <img [ngClass]="{'practitioner':true, 'current-practitioner': i == 0}" id="practitioner-{{i}}" *ngIf="practitioner.profileImageName == undefined && practitioner.profileImageName == null"  src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg?dummy={{dummyNumber}}" />
+        <img [ngClass]="{'practitioner':true, 'current-practitioner': i == 0}" id="practitioner-{{i}}" *ngIf="practitioner.profileImageName != undefined || practitioner.profileImageName != null"  src="../../assets/Profile-Images/{{practitioner.profileImageName}}.png?dummy={{dummyNumber}}" />
       </div>
     </div>
     <div (click)="GoToNextPractitioner()" id="next-practitioner-button">

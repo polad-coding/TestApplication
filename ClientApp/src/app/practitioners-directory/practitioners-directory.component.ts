@@ -32,11 +32,14 @@ export class PractitionersDirectoryComponent implements OnInit {
   public languagesModalIsVisible: boolean = false;
   public regionsModalIsVisible: boolean = false;
   public gendersModalIsVisible: boolean = false;
+  public dummyNumber: number;
 
   constructor(private _accountService: AccountService, private _dataService: DataService, private _renderer2: Renderer2) { }
 
   ngOnInit() {
     this.onResize(null);
+
+    this.dummyNumber = Math.floor(Math.random() * 10000);
 
     localStorage.setItem('currentTabName', 'whoWeAre');
 
