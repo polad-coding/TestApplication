@@ -3,7 +3,7 @@
 <div id="wrap-up-container">
   <div id="brief-results-section">
     <div id="brief-results-section-perspectives-pie-diagram" style="max-width:100%;">
-      <canvas style="max-width:100%;display:none" id="resultsSectionMyChart" >
+      <canvas style="max-width:100%;display:none" id="resultsSectionMyChart">
       </canvas>
       <img id="chart-image-without-labels" src="{{imageString}}" />
       <div class="pie-image-container" style="margin-bottom:0px;">
@@ -22,16 +22,50 @@
       <p>{{'Survey.WrapUp.YourProfileSectionTexts.SecondParagraph' | translate}}</p>
       <p>{{'Survey.WrapUp.YourProfileSectionTexts.ThirdParagraph' | translate}}</p>
     </div>
-    <img src="../../assets/Images/notepad-with-perspectives-wheel.png"/>
+    <img src="../../assets/Images/notepad-with-perspectives-wheel.png" />
   </div>
   <div id="perspectives-wheel-section">
     <div id="selected-perspectives-section">
       <div>
         <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.FirstParagraph' | translate}}</p> <br />
         <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.CorePerspective' | translate}}</p>
-        <span id="primary-perspective-span"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png"/> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}</span>
+        <span id="primary-perspective-span" *ngIf="corePerspectiveId == 1">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" /> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="primary-perspective-span" *ngIf="corePerspectiveId == 2">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" /> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="primary-perspective-span" *ngIf="corePerspectiveId == 3">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" /> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="primary-perspective-span" *ngIf="corePerspectiveId == 4">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" /> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="primary-perspective-span" *ngIf="corePerspectiveId == 5">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" /> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="primary-perspective-span" *ngIf="corePerspectiveId == 6">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" /> {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
+        </span>
         <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.SecondPerspective' | translate}}</p>
-        <span id="secondary-perspective-span"> <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png"/> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}</span><br />
+        <span id="secondary-perspective-span" *ngIf="secondaryPerspectiveId == 1">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" /> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="secondary-perspective-span" *ngIf="secondaryPerspectiveId == 2">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" /> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="secondary-perspective-span" *ngIf="secondaryPerspectiveId == 3">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" /> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="secondary-perspective-span" *ngIf="secondaryPerspectiveId == 4">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" /> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="secondary-perspective-span" *ngIf="secondaryPerspectiveId == 5">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" /> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
+        </span>
+        <span id="secondary-perspective-span" *ngIf="secondaryPerspectiveId == 6">
+          <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" /> {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
+        </span><br />
       </div>
       <div id="your-highest-priority-values-container">
         <p>{{'Survey.WrapUp.PerspectivesWheelSectionTexts.SecondParagraph' | translate}}</p>
@@ -45,7 +79,7 @@
       </div>
     </div>
     <div id="perspectives-pie-diagram">
-      <canvas id="myChart" style="height:100%;" >
+      <canvas id="myChart" style="height:100%;">
       </canvas>
       <div class="pie-image-container">
         <img class="pie-image" src="../../assets/KP-logotype/KP-logotype-006F91-chip.png" />
@@ -65,8 +99,8 @@
       <div [ngClass]="{'perspective-container-title':true}" style="background-color:#E30513; color:white;">
         {{'Perspectives.1.Title' | translate}}
       </div>
-      <div [ngStyle]="{'background-color': corePerspectiveId == 1 || secondaryPerspectiveId == 1 ? '#fcd2c0' : 'white'}" class="perspective-container-content" >
-        <p >{{'Perspectives.1.WrapUpPagePerspectiveExplanation' | translate}}</p>
+      <div [ngStyle]="{'background-color': corePerspectiveId == 1 || secondaryPerspectiveId == 1 ? '#fcd2c0' : 'white'}" class="perspective-container-content">
+        <p>{{'Perspectives.1.WrapUpPagePerspectiveExplanation' | translate}}</p>
       </div>
     </div>
     <div class="perspective-container">
@@ -78,7 +112,7 @@
       </div>
     </div>
     <div class="perspective-container">
-      <div  class="perspective-container-title" style="background-color:#FFCC00; color:#006F91;">
+      <div class="perspective-container-title" style="background-color:#FFCC00; color:#006F91;">
         {{'Perspectives.3.Title' | translate}}
       </div>
       <div [ngStyle]="{'background-color': corePerspectiveId == 3 || secondaryPerspectiveId == 3 ? '#fef3d2' : 'white'}" class="perspective-container-content">

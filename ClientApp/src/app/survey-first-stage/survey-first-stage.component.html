@@ -33,12 +33,6 @@
       <button (click)="ProccedToSelectionStage($event)"><img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" /></button>
     </div>
   </div>
-  <div id="values-selected-stats-section" *ngIf="isSelectionStage && !isMobile">
-    <div id="values-selected-stats-container">
-      <p>{{numberOfValuesQualified}} values qualified out of 102</p>
-      <p>{{numberOfValuesQualifiedAsImportant}} qualified as important</p>
-    </div>
-  </div>
   <div id="main-section" *ngIf="isSelectionStage">
     <div id="value-part">
       <div id="previous-value-container">
@@ -64,6 +58,12 @@
   </div>
   <div id="values-selected-stats-section-mobile" *ngIf="isSelectionStage && isMobile">
     <div id="values-selected-stats-container-mobile">
+      <p>{{numberOfValuesQualified}} values qualified out of 102</p>
+      <p>{{numberOfValuesQualifiedAsImportant}} qualified as important</p>
+    </div>
+  </div>
+  <div id="values-selected-stats-section" *ngIf="isSelectionStage && !isMobile">
+    <div id="values-selected-stats-container">
       <p>{{numberOfValuesQualified}} values qualified out of 102</p>
       <p>{{numberOfValuesQualifiedAsImportant}} qualified as important</p>
     </div>
@@ -99,7 +99,7 @@
     <div id="less-important-values-container">
       <p class="title">Less important</p>
       <div cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="lessImportantValues" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
-        <ul >
+        <ul>
           <li *ngFor="let value of lessImportantValues;" (click)="DisplayValueModal($event, value,'value-is-not-important')" cdkDrag>
             <span class="value-is-not-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>
             <span *ngIf="descriptiveModeIsOn">{{'Values.' + values[value.nativeElement.dataset.id].character + '.Title' | translate}}</span>
@@ -110,7 +110,7 @@
     <div id="important-values-container">
       <p class="title">Important</p>
       <div cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValues" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
-        <ul >
+        <ul>
           <li *ngFor="let value of importantValues" (click)="DisplayValueModal($event, value, 'value-is-important')" cdkDrag>
             <span class="value-is-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>
             <span *ngIf="descriptiveModeIsOn">{{'Values.' + values[value.nativeElement.dataset.id].character + '.Title' | translate}}</span>

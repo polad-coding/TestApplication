@@ -1,6 +1,6 @@
 <div id="loading-screen-gif-container">
   <img id="loading-gif" *ngIf="fileURL == undefined" (click)="OpenPopUp()" src="../../assets/Images/loading-screen.gif" />
-  <button *ngIf="fileURL != undefined" (click)="OpenPopUp()">Download Your Report</button>
+  <button id="download-your-report-button" *ngIf="fileURL != undefined" (click)="OpenPopUp()">Download Your Report</button>
 </div>
 <div style="height:500px;width:500px;visibility:hidden;">
   <canvas style="display:none; height:100%; width:100%;" id="myChart">

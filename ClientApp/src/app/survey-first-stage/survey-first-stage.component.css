@@ -8,7 +8,7 @@
   color: #006F91;
   font-size: 0.8rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 #values-selected-stats-section-mobile {
@@ -148,6 +148,10 @@
   height: 40px;
 }
 
+*::-webkit-scrollbar{
+    width:20px;
+}
+
 #step-title-container {
   text-align: center;
   color: #006F91;
@@ -160,10 +164,10 @@
 
 #values-selected-stats-container {
   display: inline-flex;
-  flex-flow: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin-right: 30px;
+  width:100%;
 }
 
 #values-selected-stats-container-mobile {
@@ -669,7 +673,6 @@
       display: flex;
       flex-flow: row;
       justify-content: space-evenly;
-      position: absolute;
       width: 95%;
       margin-right: 0px;
       top: 90px;

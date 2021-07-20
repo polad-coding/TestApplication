@@ -92,6 +92,10 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
             console.log(practitionersCertificationResponse);
             this.practitionersCertifications = practitionersCertificationResponse.body;
 
+            this._dataService.GetMembershipStatus().subscribe((membershipStatusResponse: any) => {
+              this.membership = membershipStatusResponse.body;
+            });
+
             render({
               id: "#paypalContainer",
               currency: "USD",
@@ -108,9 +112,7 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
               }
             })
 
-            this._dataService.GetMembershipStatus().subscribe((membershipStatusResponse: any) => {
-              this.membership = membershipStatusResponse.body;
-            });
+
           });
         }
       });

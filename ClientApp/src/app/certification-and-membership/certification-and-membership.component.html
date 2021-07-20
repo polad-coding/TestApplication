@@ -73,20 +73,20 @@
   </div>
   <div id="actions-section">
     <div id="membership-status-left-part">
-      <p *ngIf="membership != null">Membership OK</p>
-      <p *ngIf="membership == null">Membership needs the renewal</p>
+      <p *ngIf="membership != undefined">Membership OK</p>
+      <p *ngIf="membership == undefined">Membership needs the renewal</p>
     </div>
     <div id="membership-status-right-part">
       <div>
         <p>Membership status</p>
       </div>
       <div>
-        <p *ngIf="membership != null">OK</p>
-        <p *ngIf="membership == null">Overdue</p>
+        <p *ngIf="membership != undefined">OK</p>
+        <p *ngIf="membership == undefined">Overdue</p>
       </div>
       <div>
-        <p *ngIf="membership != null">{{membership.validTill | date:'d LLLL y'}}</p>
-        <p *ngIf="membership == null">...</p>
+        <p *ngIf="membership != undefined">{{membership.validTill | date:'d LLLL y'}}</p>
+        <p *ngIf="membership == undefined">...</p>
       </div>
       <div>
         <button (click)="ShowPayPalModal($event)">Renew</button>

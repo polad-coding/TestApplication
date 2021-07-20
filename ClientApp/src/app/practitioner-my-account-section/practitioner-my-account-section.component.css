@@ -286,6 +286,12 @@ input[type=radio] {
   flex-flow: column;
 }
 
+  #valid-changes-section button {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+
 #gender-radio-buttons-section {
   display: flex;
   justify-content: space-around;

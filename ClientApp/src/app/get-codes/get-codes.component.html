@@ -9,7 +9,7 @@
         <p>Choose the type of code (mono / multi)</p>
       </div>
       <img class="information-icon" (click)="DisplayInformationModal('firstInformationModal')" src="../../assets/Images/information-icon.svg" />
-      <div *ngIf="firstInformationModalIsVisible" class="information-modal">
+      <div *ngIf="firstInformationModalIsVisible" id="first-information-modal" class="information-modal">
         <div class="information-modal-title">
           <img class="information-icon" src="../../assets/Images/information-icon.svg" />
           <img (click)="CloseInformationModal('firstInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
@@ -60,7 +60,7 @@
     <div id="discount-coupon-title" class="column-title">
       <p>Discount coupon</p>
       <img class="information-icon" (click)="DisplayInformationModal('secondInformationModal')" src="../../assets/Images/information-icon.svg" />
-      <div *ngIf="secondInformationModalIsVisible" class="information-modal">
+      <div *ngIf="secondInformationModalIsVisible" id="second-information-modal" class="information-modal">
         <div class="information-modal-title">
           <img class="information-icon" src="../../assets/Images/information-icon.svg" />
           <img (click)="CloseInformationModal('secondInformationModal')" height="30" width="30" src="../../assets/Images/close.svg" />
