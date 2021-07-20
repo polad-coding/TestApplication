@@ -68,6 +68,9 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
 
   ngOnInit() {
     this.dummyNumber = Math.floor(Math.random() * 100000);
+
+    localStorage.setItem('practitionerAccountTabName', 'pro-details-section');
+
   }
 
   public EditInputField(fieldName: string, event: MouseEvent) {

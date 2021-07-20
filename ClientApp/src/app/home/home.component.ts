@@ -102,6 +102,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   public DisplayNewSlides() {
+
+    if (this.slides == undefined) {
+      return;
+    }
+
     this.slides.forEach((e, index) => {
       console.log(this.currentIndex.toString());
       if ((index >= (this.currentIndex - this.slidesNoVisible)) && (index < this.currentIndex)) {

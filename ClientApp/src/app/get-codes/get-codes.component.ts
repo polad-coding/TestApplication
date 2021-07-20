@@ -45,6 +45,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     this.LoadScript();
   }
   ngOnChanges(changes: SimpleChanges): void {
+
   }
   ngAfterViewInit(): void {
 
@@ -92,6 +93,8 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    localStorage.setItem('practitionerAccountTabName', 'get-codes-and-support-section');
+
     if (window.innerWidth <= 599) {
       this.mobileModeIsOn = true;
     }

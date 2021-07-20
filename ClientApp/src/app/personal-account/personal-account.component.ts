@@ -57,6 +57,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngOnInit() {
+
     if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
       this._router.navigate(['authorizationPage']);
     }
@@ -93,8 +94,10 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
         this._dataService.UserHasUnsignedSurveys(this.user.id).subscribe((response: any) => {
           this.userHasUnsignedSurveys = response.body;
-          console.log('here');
-          console.log(this.userHasUnsignedSurveys);
+
+          if (!this.userHasUnsignedSurveys) {
+            localStorage.removeItem('surveyId');
+          }
         });
 
       });

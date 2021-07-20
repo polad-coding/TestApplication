@@ -70,6 +70,8 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
       this.regions = response.body;
     });
 
+    localStorage.setItem('practitionerAccountTabName', 'my-account-section');
+
     this.dummyNumber = Math.floor(Math.random() * 100000);
 
     //Get selected regions

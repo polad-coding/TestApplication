@@ -1,5 +1,5 @@
 *::-webkit-scrollbar {
-  width: 20px;
+  width: 30px;
 }
 
 #title-section {
@@ -30,8 +30,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  margin-bottom: 80px;
+  margin-top: 80px;
 }
 
 .go-to-selection-stage-button {

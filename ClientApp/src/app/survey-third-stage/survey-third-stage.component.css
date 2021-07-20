@@ -244,8 +244,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom:50px;
-  margin-top:50px;
+  margin-bottom:80px;
+  margin-top:80px;
 }
 
 .go-to-selection-stage-button {
@@ -410,7 +410,7 @@
   color: #006F91;
   text-wrap: normal;
   margin-top: 80px;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
   font-size: 1.4rem;
 }
 

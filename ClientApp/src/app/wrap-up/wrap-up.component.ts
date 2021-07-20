@@ -53,6 +53,8 @@ export class WrapUpComponent implements OnInit {
 
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this._dataService.GetTheRelativeWeightOfThePerspectives(surveyId).subscribe((response: any) => {
       if (response.ok) {
         this.relativeWeightOfThePerspectives = response.body;

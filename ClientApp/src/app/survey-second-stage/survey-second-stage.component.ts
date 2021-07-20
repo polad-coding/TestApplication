@@ -288,7 +288,7 @@ export class SurveySecondStageComponent implements OnInit {
     setTimeout(() => {
       this.MarkCompleatedPages();
       this.valuesPageButtons.first.nativeElement.click();
-    }, 100)
+    }, 800)
   }
 
   public MarkValueAsImportant(event: MouseEvent) {

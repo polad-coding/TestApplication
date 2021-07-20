@@ -77,7 +77,7 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
 
     this.currentTabName = localStorage.getItem('currentTabName');
 
-    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')) != null && this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
       this.userRole = 'user';
     }
     else {
@@ -116,8 +116,8 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
 
   public LogOutUser() {
     localStorage.removeItem('jwt');
-    window.location.reload();
     this._router.navigate(['']);
+    window.location.reload();
   }
 
   public DocumentClicked() {

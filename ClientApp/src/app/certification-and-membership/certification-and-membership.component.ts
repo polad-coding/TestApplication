@@ -76,6 +76,9 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
   }
 
   ngOnInit() {
+    localStorage.setItem('practitionerAccountTabName', 'certification-membership-section');
+
+
     if (window.innerWidth <= 850) {
       this.desktopVersion = false;
     }

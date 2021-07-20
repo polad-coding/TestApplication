@@ -16,6 +16,8 @@
   background: #006F91;
   border: none;
   color: white;
+  display:flex;
+  justify-content:center;
 }
 
   .is-enabled:hover {
@@ -78,6 +80,7 @@
     color: #006F91;
     margin:5px;
     text-align:center;
+    min-height:200px;
   }
 
 #certificate-label-part {

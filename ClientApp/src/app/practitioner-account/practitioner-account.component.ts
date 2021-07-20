@@ -50,6 +50,7 @@ export class PractitionerAccountComponent   {
 
 
   ngOnInit() {
+    localStorage.removeItem('surveyId');
 
     if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
       this._router.navigate(['authorizationPage']);

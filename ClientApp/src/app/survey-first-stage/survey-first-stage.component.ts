@@ -337,11 +337,15 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
           if (getValuesForFirstStageResponse.ok) {
             this.values = getValuesForFirstStageResponse.body;
 
-            this.ProccedToSelectionStage(null);
-
             setTimeout(() => {
-              this.ProceedToValidationStep(null);
-            }, 300);
+              this.ProccedToSelectionStage(null);
+              setTimeout(() => {
+                this.ProceedToValidationStep(null);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 800);
+            }, 800);
+
+
 
             console.info(this.values);
 

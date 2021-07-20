@@ -23,6 +23,9 @@ export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
   ngOnInit() {
     console.log(this.surveysResults);
 
+    localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+
+
     if (this.user == undefined || this.user == null) {
 
       this._accountService.GetCurrentUser().subscribe((response :any)=> {
