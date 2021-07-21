@@ -50,7 +50,7 @@ namespace KPProject.Services
                 {
                     client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+                    client.Authenticate("poladtesting@gmail.com", "plamf12345");
                     client.Send(mailMessage);
                 }
                 catch
