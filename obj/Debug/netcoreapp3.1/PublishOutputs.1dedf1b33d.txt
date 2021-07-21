@@ -40,6 +40,7 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Iden
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\IdentityServer4.EntityFramework.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\IdentityServer4.EntityFramework.Storage.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\IdentityServer4.Storage.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\MailKit.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Microsoft.AspNetCore.ApiAuthorization.IdentityServer.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
@@ -105,12 +106,15 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Micr
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Microsoft.Win32.SystemEvents.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\MimeKit.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\MySqlConnector.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\NETCore.MailKit.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Newtonsoft.Json.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Newtonsoft.Json.Bson.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\NuGet.Frameworks.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Pomelo.JsonObject.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\BouncyCastle.Crypto.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Collections.Immutable.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Composition.AttributedModel.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Composition.Convention.dll

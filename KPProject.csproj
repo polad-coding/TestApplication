@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
@@ -73,6 +74,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app-services\authentication-service.ts" />
     <None Remove="ClientApp\src\app-services\data-service.ts" />
+    <None Remove="ClientApp\src\app-services\email-sender-service.ts" />
     <None Remove="ClientApp\src\app-services\survey-service.ts" />
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\certification-view-model.ts" />
@@ -80,6 +82,7 @@
     <None Remove="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
     <None Remove="ClientApp\src\view-models\language-view-model.ts" />
     <None Remove="ClientApp\src\view-models\membership-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\message-view-model.ts" />
     <None Remove="ClientApp\src\view-models\order-view-model.ts" />
     <None Remove="ClientApp\src\view-models\practitioners-search-filter-view-model.ts" />
     <None Remove="ClientApp\src\view-models\region-view-model.ts" />
@@ -132,6 +135,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app-services\authentication-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\data-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app-services\email-sender-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\certification-view-model.ts" />
@@ -139,6 +143,7 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\language-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\membership-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\message-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\order-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\practitioners-search-filter-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />

@@ -38,7 +38,7 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
   public surveyResults: SurveyResultViewModel;
   public fileURL: string;
-  public popUpWindow: any;
+  public popUpWindow: Window;
   //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router, private _location: Location) {
@@ -49,13 +49,14 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
     this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
     this.popUpWindow.location.href = this.fileURL;
 
-
-    setTimeout(() => {
-      this._location.back();
+    if (this.popUpWindow != null && !this.popUpWindow.closed) {
       setTimeout(() => {
-        location.reload();
-      },1000)
-    }, 1000);
+        this._location.back();
+        setTimeout(() => {
+          location.reload();
+        }, 1000)
+      }, 1000);
+    }
   }
 
   ngAfterViewInit(): void {

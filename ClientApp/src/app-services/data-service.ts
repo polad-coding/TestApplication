@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GenderViewModel } from "../view-models/gender-view-model";
 import { LanguageViewModel } from "../view-models/language-view-model";
+import { MessageViewModel } from "../view-models/message-view-model";
 import { OrderViewModel } from "../view-models/order-view-model";
 import { PractitionersSearchFilterViewModel } from "../view-models/practitioners-search-filter-view-model";
 import { RegionViewModel } from "../view-models/region-view-model";
@@ -24,6 +25,7 @@ export class DataService {
 //  Task<List<ValueModel>> GetValuesForFirstStageAsync(int surveyId);
 //Task < List < ValueModel >> GetFirstStageValuesAsync(int surveyId);
 //Task < List < ValueModel >> GetSecondStageValuesAsync(int surveyId);
+
 
   public DeleteSurveyFirstStageResults(surveyId: number) {
     return this.http.post(`https://${this.url}/Data/DeleteSurveyFirstStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });

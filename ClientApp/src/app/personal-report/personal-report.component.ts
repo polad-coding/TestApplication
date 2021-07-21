@@ -68,12 +68,14 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
     this.popUpWindow = window.open('', 'Individual report', `width=${window.innerWidth},height=${window.innerHeight},menubar=0,toolbar=0`);
     this.popUpWindow.location.href = this.fileURL;
 
-    setTimeout(() => {
-      this._location.back();
+    if (this.popUpWindow != null && !this.popUpWindow.closed) {
       setTimeout(() => {
-        location.reload();
-      }, 1000)
-    }, 1000);
+        this._location.back();
+        setTimeout(() => {
+          location.reload();
+        }, 1000)
+      }, 1000);
+    }
   }
 
   ngOnInit() {

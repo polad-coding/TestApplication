@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnChanges, OnInit, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { render, paypal } from 'creditcardpayments/creditCardPayments';
 import { OrderViewModel } from '../../view-models/order-view-model';
 import { NgModel } from '@angular/forms';
@@ -7,18 +7,23 @@ import { error } from 'protractor';
 import { GetCouponRequestResponseViewModel } from '../../view-models/get-coupon-request-response-view-model';
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MessageViewModel } from '../../view-models/message-view-model';
+import { UserViewModel } from '../../view-models/user-view-model';
+import { EmailSenderService } from '../../app-services/email-sender-service';
 
 @Component({
   selector: 'app-get-codes',
   templateUrl: './get-codes.component.html',
   styleUrls: ['./get-codes.component.css'],
-  providers: [DataService],
+  providers: [DataService, EmailSenderService],
   host: {
     '(document:click)': 'DocumentClicked()',
   }
 })
 export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
+  @Input()
+  public user: UserViewModel;
   public isPractitioner = false;
   public ordersCounter: number = 0;
   public value: number = 0;
@@ -40,8 +45,9 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public firstInformationModalIsVisible = false;
   public secondInformationModalIsVisible = false;
   private listOfAssociatedCouponsToCountdown: Array<GetCouponRequestResponseViewModel> = new Array<GetCouponRequestResponseViewModel>();
+  public formatter = new Intl.NumberFormat();
 
-  constructor(private _renderer2: Renderer2, private _dataService: DataService, private _jwtHelper: JwtHelperService) {
+  constructor(private _renderer2: Renderer2, private _dataService: DataService, private _jwtHelper: JwtHelperService, private _emailSenderService: EmailSenderService) {
     this.LoadScript();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -87,7 +93,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     if (modalName == 'secondInformationModal') {
       this.secondInformationModalIsVisible = false;
     }
-    else if (modalName == 'firstInformationModal'){
+    else if (modalName == 'firstInformationModal') {
       this.firstInformationModalIsVisible = false;
     }
   }
@@ -176,13 +182,18 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
           value: `${this.grandTotalSum.toFixed(2)}`,
           onApprove: (details) => {
 
-            this._dataService.GenerateCodesForTheUser(this.listOfOrders).subscribe(response => {
+            this._dataService.GenerateCodesForTheUser(this.listOfOrders).subscribe((response: any) => {
               //Perform the operation
               localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
               localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-                
-              this.listOfOrders = new Array<OrderViewModel>();
-              window.location.reload();
+
+              //Send receipt
+              this.SendReceipt(response.body).subscribe(response => {
+                this.listOfOrders = new Array<OrderViewModel>();
+                window.location.reload();
+              });
+
+
             }, error => {
               alert('We had a problem processing your request, please try again!');
             })
@@ -194,6 +205,28 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
       }
     });
   }
+
+  private SendReceipt(listOfOrders: Array<OrderViewModel>) {
+    let messages = new Array<MessageViewModel>();
+    let toEmail = new Array<string>();
+
+    toEmail.push(this.user.email);
+
+    listOfOrders.forEach(order => {
+      messages.push(new MessageViewModel(toEmail,
+        'Receipt for your orders.',
+        `Dear ${this.user.firstName == undefined && this.user.lastName == undefined ? 'customer' : this.user.firstName + ' ' + this.user.lastName} thank you for your orders.\n This is a receipt for your latest payment.
+
+------------------------------------
+        Date ${Date.now()}
+        Amount: ${this.formatter.format(this.grandTotalSum)}
+------------------------------------`));
+    });
+
+    return this._emailSenderService.SendReciept(messages);
+  }
+
+
 
   private LoadScript() {
     let script = document.createElement('script');

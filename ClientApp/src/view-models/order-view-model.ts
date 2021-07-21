@@ -8,6 +8,7 @@ export class OrderViewModel {
   public totalPrice: number;
   public defaultNumberOfUsages: number;
   public discountRate: number;
+  public codeBody: string;
 
   constructor(id, numberOfCodes, numberOfSurveys, pricePerUnit, discoutCoupon, totalPrice, defaultNumberOfUsages) {
     this.id = id;

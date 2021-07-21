@@ -83,7 +83,19 @@ export class EnterCodePageComponent implements OnInit {
               }
             }
           }, error => {
-              this.errorMessage = 'This code already connected with your account, please enter different code.';
+              let userWantsToProceedToHisPersonalSpace = window.confirm('This code already belongs to your account, do you want to proceed to your personal space?');
+
+              if (userWantsToProceedToHisPersonalSpace) {
+                localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
+                localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
+
+                if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+                  this._router.navigate(['personalAccount']);
+                }
+                else if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+                  this._router.navigate(['practitionerAccount']);
+                }
+              }
           });
         }
         else {

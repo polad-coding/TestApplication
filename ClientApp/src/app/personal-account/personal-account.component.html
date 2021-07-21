@@ -50,7 +50,7 @@
     </div>
   </div>
   <div id="get-codes-container" *ngIf="selectedTab == 'get-codes-section' && !userHasUnsignedSurveys">
-    <app-get-codes></app-get-codes>
+    <app-get-codes [user]="user"></app-get-codes>
   </div>
   <div  id="survey-results-and-reports-container" *ngIf="selectedTab == 'servey-results-and-reports-section' && !userHasUnsignedSurveys">
     <app-personal-survey-results-and-reports></app-personal-survey-results-and-reports>

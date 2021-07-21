@@ -74,7 +74,7 @@
     </div>
     <div id="values-list-section">
       <div id="values-bar">
-        <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-valueId]="value.id" [attr.data-id]="i" class="value-container">
+        <div #valueContainers *ngFor="let value of values; index as i;" (click)="SelectNewValue($event, i)" [attr.data-valueId]="value.id" [attr.data-perspectiveId]="value.perspectiveId" [attr.data-id]="i" class="value-container">
           <p>{{value.character}}</p>
           <p>{{'Values.' + value.character + '.Title' | translate}}</p>
         </div>

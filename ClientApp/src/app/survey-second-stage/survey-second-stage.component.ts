@@ -449,9 +449,11 @@ export class SurveySecondStageComponent implements OnInit {
 
   private GroupValues(values: Array<ValueViewModel>) {
 
-    for (var i = 0; i < values.length; i++) {
-      this.valuesGroupedByPerspectives.set(values[i].perspectiveId, new Array<ValueViewModel>());
+    for (var i = 0; i < AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
+      this.valuesGroupedByPerspectives.set(i, new Array<ValueViewModel>());
     }
+
+    console.log(this.valuesGroupedByPerspectives);
 
     values.forEach(value => {
       this.valuesGroupedByPerspectives.get(value.perspectiveId).push(value);

@@ -180,3 +180,7 @@ C:\Users\polad\source\repos\TestApplication\obj\Debug\netcoreapp3.1\KPProject.ge
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\libwkhtmltox.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\libwkhtmltox.dylib
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\libwkhtmltox.so
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll

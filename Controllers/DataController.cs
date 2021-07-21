@@ -27,6 +27,8 @@ namespace KPProject.Controllers
             _converter = converter;
         }
 
+
+
         [HttpPost]
         [Route("DeleteSurveyFirstStageResults")]
         public async Task<ActionResult> DeleteSurveyFirstStageResultsAsync([FromBody] int surveyId)
@@ -224,13 +226,13 @@ namespace KPProject.Controllers
 
         [HttpPost]
         [Route("GenerateCodes")]
-        public async Task<ActionResult> GenerateCodesAsync(List<OrderViewModel> ordersList)
+        public async Task<ActionResult<List<OrderModel>>> GenerateCodesAsync(List<OrderViewModel> ordersList)
         {
-            var operationIsSuccessful = await _dataService.GenerateCodesAsync(ordersList, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var orders = await _dataService.GenerateCodesAsync(ordersList, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (operationIsSuccessful)
+            if (orders != null)
             {
-                return Ok();
+                return Ok(orders);
             }
 
             return BadRequest();

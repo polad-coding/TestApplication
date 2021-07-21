@@ -292,6 +292,7 @@ namespace KPProject.Services
         public async Task<List<double>> GetTheRelativeWeightOfThePerspectivesAsync(int surveyId)
         {
             //Calculate v for each perspective
+            var perspectives = await _applicationDbContext.Perspectives.ToListAsync();
 
             var vOfEachPerspective = ((await _applicationDbContext.Values.ToListAsync()).GroupBy((v) => v.PerspectiveId));
 
@@ -299,9 +300,36 @@ namespace KPProject.Services
 
             var cOfEachPerspective = (await _applicationDbContext.SurveyFirstStages.Where(sfm => sfm.SurveyId == surveyId).Select(v => v.Value).ToListAsync()).GroupBy(v => v.PerspectiveId);
 
+
+
             //Calculate t for each perspective
 
             var numberOfValuesSelectedAtSecondStepForEachPerspective = (await _applicationDbContext.SurveySecondStages.Where(sst => sst.SurveyId == surveyId).Select(v => v.Value).ToListAsync()).GroupBy(v => v.PerspectiveId);
+
+            //for (int i = 0; i < perspectives.Count; i++)
+            //{
+            //    bool hasAKey = false;
+            //    cOfEachPerspective.ToList().ForEach(g =>
+            //    {
+            //        if (g.Key == perspectives[i].Id)
+            //        {
+            //            hasAKey = true;
+            //        }
+            //    });
+
+            //    if (!hasAKey)
+            //    {
+            //        var dummyList = new List<ValueModel>();
+            //        dummyList.Add(new ValueModel { PerspectiveId = perspectives[i].Id });
+
+            //        var newGroup = dummyList.GroupBy(v => v.PerspectiveId).ToList();
+            //        var newGroupValue = newGroup[0];
+            //        cOfEachPerspective.ToList().Add(newGroupValue);
+            //        numberOfValuesSelectedAtSecondStepForEachPerspective.ToList().Add(newGroupValue);
+            //    }
+            //}
+
+
 
             var rankingOfValuesAtTheThirdStageOfASurvey = (await _applicationDbContext.SurveyThirdStages.Where(sts => sts.SurveyId == surveyId).Select(sts => new { priority = sts.ValuePriority, value = sts.Value }).ToListAsync()).OrderBy(v => v.value.PerspectiveId);
 
@@ -310,15 +338,17 @@ namespace KPProject.Services
 
             for (int i = 0; i < tOfEachPerspective.Count; i++)
             {
-                tOfEachPerspective[i] = cOfEachPerspective.First(e => e.Key == i + 1).ToList().Count +
-                    (numberOfValuesSelectedAtSecondStepForEachPerspective.First(e => e.Key == i + 1).ToList().Count * 2) +
+                var cOfEachPerspectiveAtSpecifikKeyIndex = cOfEachPerspective.FirstOrDefault(e => e.Key == i + 1);
+                var numberOfValuesSelectedAtSecondStepForEachPerspectiveAtSpecifikKeyIndex = numberOfValuesSelectedAtSecondStepForEachPerspective.FirstOrDefault(e => e.Key == i + 1);
+
+                tOfEachPerspective[i] = cOfEachPerspectiveAtSpecifikKeyIndex == null ? 0 : cOfEachPerspectiveAtSpecifikKeyIndex.ToList().Count +
+                    (numberOfValuesSelectedAtSecondStepForEachPerspectiveAtSpecifikKeyIndex == null ? 0 : numberOfValuesSelectedAtSecondStepForEachPerspectiveAtSpecifikKeyIndex.ToList().Count * 2) +
                     rankingOfValuesAtTheThirdStageOfASurvey.Where(e => e.value.PerspectiveId == i + 1).Sum(e => 10 - e.priority);
 
                 var a = (Convert.ToDouble(tOfEachPerspective[i]) / Convert.ToDouble(vOfEachPerspective.First(e => e.Key == i + 1).ToList().Count));
-                var b = (Convert.ToDouble(cOfEachPerspective.First(e => e.Key == i + 1).ToList().Count) / Convert.ToDouble(vOfEachPerspective.First(e => e.Key == i + 1).ToList().Count));
+                var b = (Convert.ToDouble(cOfEachPerspectiveAtSpecifikKeyIndex == null ? 0 : cOfEachPerspectiveAtSpecifikKeyIndex.ToList().Count) / Convert.ToDouble(vOfEachPerspective.First(e => e.Key == i + 1).ToList().Count));
 
                 WOfEachPerspective[i] = a * b;
-
             }
 
             var ROfEachPerspective = new List<double>() { 0, 0, 0, 0, 0, 0 };
@@ -341,30 +371,33 @@ namespace KPProject.Services
             return values;
         }
 
-        public async Task<bool> GenerateCodesAsync(List<OrderViewModel> ordersList, string userId)
+        public async Task<List<OrderModel>> GenerateCodesAsync(List<OrderViewModel> ordersList, string userId)
         {
             //Generate code
             var generatedCode = "";
+            var ordersToSave = new List<OrderModel>();
             //Create entry in DB
             ordersList.ForEach(async order =>
             {
                 for (int i = 0; i < order.NumberOfSurveys / order.DefaultNumberOfUsages; i++)
                 {
                     generatedCode = await this.GenerateNewCode();
-                    await this._applicationDbContext.Orders.AddAsync(new OrderModel { NumberOfUsages = order.DefaultNumberOfUsages, UserId = userId, CodeBody = generatedCode });
+                    ordersToSave.Add(new OrderModel { NumberOfUsages = order.DefaultNumberOfUsages, UserId = userId, CodeBody = generatedCode });
                 }
             });
 
             //TODO - Decrease number of usages for each coupon
 
+            await _applicationDbContext.Orders.AddRangeAsync(ordersToSave);
+
             await this.DecreaseNumberOfUsagesOfAssociatedCoupons(ordersList);
 
             if (await _applicationDbContext.SaveChangesAsync() > 0)
             {
-                return true;
+                return ordersToSave;
             }
 
-            return false;
+            return null;
         }
 
         private async Task DecreaseNumberOfUsagesOfAssociatedCoupons(List<OrderViewModel> ordersList)
@@ -1081,5 +1114,7 @@ namespace KPProject.Services
 
             return regions;
         }
+
+
     }
 }
