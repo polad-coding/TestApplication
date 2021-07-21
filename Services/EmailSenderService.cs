@@ -36,7 +36,7 @@ namespace KPProject.Services
         private MimeMessage CreateEmailMessage(MessageViewModel message)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("poladtesting@gmail.com"));
+            emailMessage.From.Add(new MailboxAddress("polad20178@gmail.com"));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
@@ -50,7 +50,7 @@ namespace KPProject.Services
                 {
                     client.Connect("smtp.gmail.com", 465, true);
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate("poladtesting@gmail.com", "plamf12345");
+                    client.Authenticate("polad20178@gmail.com", "plamf12345");
                     client.Send(mailMessage);
                 }
                 catch
