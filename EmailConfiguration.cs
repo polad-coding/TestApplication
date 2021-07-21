@@ -7,10 +7,10 @@ namespace KPProject
 {
     public class EmailConfiguration
     {
-        public string From { get; set; }
-        public string SmtpServer { get; set; }
-        public int Port { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public string From { get; set; } = "poladtesting@gmail.com";
+        public string SmtpServer { get; set; } = "smtp.gmail.com";
+        public int Port { get; set; } = 465;
+        public string UserName { get; set; } = "poladtesting@gmail.com";
+        public string Password { get; set; } = "plamf12345";
     }
 }

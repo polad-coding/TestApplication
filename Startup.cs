@@ -108,7 +108,6 @@ namespace KPProject
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<IEmailSender, EmailSenderService>();
             var emailConfig = Configuration
-                .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
 
