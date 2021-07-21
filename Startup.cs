@@ -106,6 +106,11 @@ namespace KPProject
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IDataService, DataService>();
             services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<IEmailSender, EmailSenderService>();
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
