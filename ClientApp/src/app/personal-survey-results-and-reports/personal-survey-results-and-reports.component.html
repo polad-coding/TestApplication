@@ -27,7 +27,7 @@
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null || surveyResult.takenOn == ''">
         <p>...</p>
       </div>
-      <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
+      <div class="survey-result-row-white-cell" [attr.data-practitionerId]="surveyResult.practitionerId" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
         <p>{{surveyResult.practitionerFullName}}</p>
         <button (click)="SendEmail(surveyResult.practitionerId)"><span>@</span></button>
       </div>

@@ -161,7 +161,7 @@ export class EnterSurveyAccountFormComponent implements OnInit {
   public CreateSurvey() {
     this._accountService.ChangeUserPersonalData(this.user).subscribe(response => {
       if (response.ok && response != null) {
-        this._surveyService.CreateSurvey(this.surveyCode, null).subscribe((response: any) => {
+        this._surveyService.CreateSurvey(this.surveyCode, null, -1).subscribe((response: any) => {
           console.log(response);
           if (response.ok) {
             localStorage.setItem('surveyId', response.body.id);

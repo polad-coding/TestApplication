@@ -23,7 +23,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   public user: UserViewModel;
   private oldEmail: string;
   private oldName: string;
-  private oldSurname: string;
+  private oldSurname: string; 
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   public regions: Array<RegionViewModel>;
@@ -241,8 +241,11 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     if (personalInformationForm.controls['email'].pristine) {
       this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
         if (!this.userHasUnsignedSurveys) {
+          location.reload();
+
           return;
         }
+        location.reload();
       });
     }
     else {
@@ -262,8 +265,11 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
           if (this.user.professionalEmail != personalInformationForm.value.email) {
             this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
               if (!this.userHasUnsignedSurveys) {
+                location.reload();
+
                 return;
               }
+              location.reload();
             });
           }
           else {

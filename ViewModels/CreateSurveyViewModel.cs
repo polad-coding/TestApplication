@@ -9,5 +9,6 @@ namespace KPProject.ViewModels
     {
         public string Code { get; set; }
         public string SurveyPractitionerId { get; set; }
+        public int NumberOfUsages { get; set; }
     }
 }

@@ -61,17 +61,17 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
     if (surveyId === 0) {
       localStorage.setItem('surveyCode', code);
 
-      this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
-        console.log(response);
-        if (response.ok) {
-          localStorage.setItem('surveyId', response.body.id);
-          localStorage.removeItem('surveyCode');
-          this._router.navigate(['surveyFirstStage']);
-        }
-      },
-        error => {
-          console.log(error);
-        });
+      //this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
+      //  console.log(response);
+      //  if (response.ok) {
+      localStorage.setItem('surveyId', surveyId.toString());
+      localStorage.removeItem('surveyCode');
+      this._router.navigate(['surveyFirstStage']);
+      //  }
+      //},
+      //  error => {
+      //    console.log(error);
+      //  });
 
     }
     else {

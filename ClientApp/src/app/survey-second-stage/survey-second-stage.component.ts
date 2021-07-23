@@ -285,6 +285,8 @@ export class SurveySecondStageComponent implements OnInit {
   public ProceedToSelection(event) {
     this.isSelectionStage = true;
     this.isDescriptionStage = false;
+
+    console.log(this.defaultValuesMarkedAsImportantGroupedByPerspectives);
     setTimeout(() => {
       this.MarkCompleatedPages();
       this.valuesPageButtons.first.nativeElement.click();
@@ -449,7 +451,7 @@ export class SurveySecondStageComponent implements OnInit {
 
   private GroupValues(values: Array<ValueViewModel>) {
 
-    for (var i = 0; i < AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
+    for (var i = 1; i <= AppSettingsService.NUMBER_OF_PERSPECTIVES; i++) {
       this.valuesGroupedByPerspectives.set(i, new Array<ValueViewModel>());
     }
 

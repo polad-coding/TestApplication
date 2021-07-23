@@ -97,7 +97,7 @@
         <input class="number-of-codes-field" id="number-of-codes-container" type="number" (keyup)="NumberOfCodesChanged($event,order)" [(ngModel)]="order.numberOfCodes" />
       </div>
       <div class="column" id="number-of-surveys">
-        <span>{{order.numberOfSurveys}}</span>
+        <span>{{order.numberOfUsages}}</span>
       </div>
       <div class="column" id="survey-price">
         <span>{{order.pricePerUnit | currency}}</span>

@@ -25,7 +25,7 @@ namespace KPProject.Controllers
         [Route("CreateSurvey")]
         public async Task<ActionResult<SurveyModel>> CreateSurveyAsync([FromBody]CreateSurveyViewModel createSurveyViewModel)
         {
-            var survey = await _surveyService.CreateSurveyAsync(createSurveyViewModel.Code, User.FindFirstValue(ClaimTypes.NameIdentifier), createSurveyViewModel.SurveyPractitionerId);
+            var survey = await _surveyService.CreateSurveyAsync(createSurveyViewModel.Code, User.FindFirstValue(ClaimTypes.NameIdentifier), createSurveyViewModel.SurveyPractitionerId, createSurveyViewModel.NumberOfUsages);
 
             if (survey == null)
             {

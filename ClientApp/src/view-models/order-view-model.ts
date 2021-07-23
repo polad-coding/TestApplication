@@ -2,7 +2,7 @@ export class OrderViewModel {
 
   public id: number;
   public numberOfCodes: number;
-  public numberOfSurveys: number;
+  public numberOfUsages: number;
   public pricePerUnit: number;
   public couponBody: string;
   public totalPrice: number;
@@ -13,7 +13,7 @@ export class OrderViewModel {
   constructor(id, numberOfCodes, numberOfSurveys, pricePerUnit, discoutCoupon, totalPrice, defaultNumberOfUsages) {
     this.id = id;
     this.numberOfCodes = numberOfCodes;
-    this.numberOfSurveys = numberOfSurveys;
+    this.numberOfUsages = numberOfSurveys;
     this.pricePerUnit = pricePerUnit;
     this.couponBody = discoutCoupon;
     this.totalPrice = totalPrice;

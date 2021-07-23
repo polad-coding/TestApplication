@@ -30,33 +30,10 @@ namespace KPProject.Services
             return seed;
         }
 
-        public async Task<SurveyModel> CreateSurveyAsync(string code, string userId, string surveyPractitionerId)
+        public async Task<SurveyModel> CreateSurveyAsync(string code, string userId, string surveyPractitionerId, int numberOfUsages)
         {
             var seed = this.GenerateRandomSeed();
             var user = await _userManager.FindByIdAsync(userId);
-            //var anonymisedUser = new AnonymisedUser {
-            //    Gender = user.Gender,
-            //    Age = user.Age,
-            //    Education = user.Education,
-            //    MyerBriggsCode = user.MyerBriggsCode,
-            //    Position = user.Position,
-            //    SectorOfActivity = user.SectorOfActivity
-            //};
-
-            //await _dbContext.AnonymisedUsers.AddAsync(anonymisedUser);
-
-            //await _dbContext.SaveChangesAsync();
-
-            //var anonimysedUserRegions = new List<AnonymisedUserRegion>();
-
-            //_dbContext.UserRegions
-            //    .Where(ur => ur.ApplicationUserId == userId)
-            //    .Select(ur => ur.RegionId).ToList()
-            //    .ForEach(id => anonimysedUserRegions.Add(new AnonymisedUserRegion { AnonymisedUserId = anonymisedUser.Id, RegionId = id }));
-
-            //await _dbContext.AnonymisedUserRegions.AddRangeAsync(anonimysedUserRegions);
-
-            //await _dbContext.SaveChangesAsync();
 
             var survey = new SurveyModel { Code = code, SurveyTakerUserId = userId, PractitionerUserId = surveyPractitionerId,  TakenOn = null,  Seed = seed };
 
@@ -69,16 +46,32 @@ namespace KPProject.Services
                 //Change codes format to quid
                 var order = _dbContext.Orders.Where(order => order.CodeBody == code).First();
 
-                order.NumberOfUsages -= 1;
-
-                if (order.NumberOfUsages == 0)
+                if (numberOfUsages == -1)
                 {
-                    _dbContext.Remove(order);
+                    order.NumberOfUsages -= 1;
+
+                    if (order.NumberOfUsages == 0)
+                    {
+                        _dbContext.Remove(order);
+                    }
+                    else
+                    {
+                        _dbContext.Update(order);
+                    }
                 }
                 else
                 {
-                    _dbContext.Update(order);
+                    if (numberOfUsages == 0)
+                    {
+                        _dbContext.Remove(order);
+                    }
+                    else
+                    {
+                        _dbContext.Update(order);
+                    }
                 }
+
+
 
 
                 var rowsWithNumberOfUsagesChanged = await _dbContext.SaveChangesAsync();

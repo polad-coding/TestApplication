@@ -196,7 +196,7 @@ namespace KPProject
         {
             var dataService = serviceProvider.GetRequiredService<IDataService>();
 
-            await dataService.PopulateDBWithCertificationsAsync();
+            await dataService.PopulateDBWithCertificationsAsync(); 
         }
 
         public async Task CreatePerspectivesLanguageFiles(IServiceProvider serviceProvider)

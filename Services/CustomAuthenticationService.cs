@@ -125,7 +125,7 @@ namespace KPProject.Services
             }
 
             var token = await GenerateAccessTokenAsync(userAttemptingToSignIn);
-
+             
             if (token == null)
             {
                 return null;

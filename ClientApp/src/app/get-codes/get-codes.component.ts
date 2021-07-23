@@ -10,12 +10,13 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MessageViewModel } from '../../view-models/message-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
 import { EmailSenderService } from '../../app-services/email-sender-service';
+import { SurveyService } from '../../app-services/survey-service';
 
 @Component({
   selector: 'app-get-codes',
   templateUrl: './get-codes.component.html',
   styleUrls: ['./get-codes.component.css'],
-  providers: [DataService, EmailSenderService],
+  providers: [DataService, EmailSenderService, SurveyService],
   host: {
     '(document:click)': 'DocumentClicked()',
   }
@@ -46,8 +47,9 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public secondInformationModalIsVisible = false;
   private listOfAssociatedCouponsToCountdown: Array<GetCouponRequestResponseViewModel> = new Array<GetCouponRequestResponseViewModel>();
   public formatter = new Intl.NumberFormat();
+  private userIsPractitioner = false;
 
-  constructor(private _renderer2: Renderer2, private _dataService: DataService, private _jwtHelper: JwtHelperService, private _emailSenderService: EmailSenderService) {
+  constructor(private _surveyService: SurveyService, private _renderer2: Renderer2, private _dataService: DataService, private _jwtHelper: JwtHelperService, private _emailSenderService: EmailSenderService) {
     this.LoadScript();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -107,6 +109,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
 
     if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == 'Practitioner') {
       this.enablePractitionersDiscount = true;
+      this.userIsPractitioner = true;
     }
 
     this._dataService.GetMembershipStatus().subscribe((response: any) => {
@@ -135,11 +138,11 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
         if (getCouponResponse.body != null) {
           order.couponBody = getCouponResponse.body.couponBody;
           order.discountRate = getCouponResponse.body.discountRate;
-          order.totalPrice = order.numberOfSurveys * order.pricePerUnit - (order.numberOfSurveys * order.pricePerUnit * order.discountRate / 100);
+          order.totalPrice = order.numberOfUsages * order.pricePerUnit - (order.numberOfUsages * order.pricePerUnit * order.discountRate / 100);
           this.CalculateNewGrandTotalSum();
         }
       }, error => {
-        order.totalPrice = order.numberOfSurveys * order.pricePerUnit;
+        order.totalPrice = order.numberOfUsages * order.pricePerUnit;
         order.couponBody = null;
         order.discountRate = 0;
         this.CalculateNewGrandTotalSum();
@@ -150,7 +153,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
       });
     }
     else {
-      order.totalPrice = order.numberOfSurveys * order.pricePerUnit;
+      order.totalPrice = order.numberOfUsages * order.pricePerUnit;
       order.couponBody = null;
       order.discountRate = 0;
       this.CalculateNewGrandTotalSum();
@@ -187,13 +190,21 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
               localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
               localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
 
-              //Send receipt
-              this.SendReceipt(response.body).subscribe(response => {
-                this.listOfOrders = new Array<OrderViewModel>();
-                window.location.reload();
+              response.body.forEach((order: OrderViewModel) => {
+                order.numberOfUsages -= 1;
+                for (var i = 0; i <= order.numberOfUsages;) {
+                  order.numberOfUsages -= 1;
+                  this._surveyService.CreateSurvey(order.codeBody, this.userIsPractitioner == true ? this.user.id : null, order.numberOfUsages).subscribe((createSurveyResponse) => {
+                    console.log(createSurveyResponse);
+                  });
+                }
               });
 
-
+              //Send receipt
+              //this.SendReceipt(response.body).subscribe(response => {
+              //  this.listOfOrders = new Array<OrderViewModel>();
+                window.location.reload();
+              //});
             }, error => {
               alert('We had a problem processing your request, please try again!');
             })
@@ -258,7 +269,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     console.info(order);
 
     this.listOfOrders[order.id].numberOfCodes = 1;
-    this.listOfOrders[order.id].numberOfSurveys = 1;
+    this.listOfOrders[order.id].numberOfUsages = 1;
     this.listOfOrders[order.id].pricePerUnit = 40;
     this.listOfOrders[order.id].couponBody = order.couponBody;
     this.listOfOrders[order.id].defaultNumberOfUsages = 1;
@@ -269,8 +280,8 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public NumberOfCodesChanged(event, order) {
     if (order.numberOfCodes >= 0) {
       order.numberOfCodes = Math.floor(order.numberOfCodes);
-      this.listOfOrders[order.id].numberOfSurveys = this.listOfOrders[order.id].defaultNumberOfUsages * this.listOfOrders[order.id].numberOfCodes;
-      this.listOfOrders[order.id].totalPrice = this.listOfOrders[order.id].numberOfSurveys * this.listOfOrders[order.id].pricePerUnit - (this.listOfOrders[order.id].numberOfSurveys * this.listOfOrders[order.id].pricePerUnit * (order.discountRate == null ? 0 : order.discountRate) / 100);
+      this.listOfOrders[order.id].numberOfUsages = this.listOfOrders[order.id].defaultNumberOfUsages * this.listOfOrders[order.id].numberOfCodes;
+      this.listOfOrders[order.id].totalPrice = this.listOfOrders[order.id].numberOfUsages * this.listOfOrders[order.id].pricePerUnit - (this.listOfOrders[order.id].numberOfUsages * this.listOfOrders[order.id].pricePerUnit * (order.discountRate == null ? 0 : order.discountRate) / 100);
       this.CalculateNewGrandTotalSum();
       console.info(this.listOfOrders[order.id]);
     }
@@ -280,8 +291,8 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public NumberOfCodesChangedMobile(event) {
     if (this.listOfOrders[0].numberOfCodes >= 0) {
       this.listOfOrders[0].numberOfCodes = Math.floor(this.listOfOrders[0].numberOfCodes);
-      this.listOfOrders[0].numberOfSurveys = this.listOfOrders[0].defaultNumberOfUsages * this.listOfOrders[0].numberOfCodes;
-      this.listOfOrders[0].totalPrice = this.listOfOrders[0].numberOfSurveys * this.listOfOrders[0].pricePerUnit - (this.listOfOrders[0].numberOfSurveys * this.listOfOrders[0].pricePerUnit * (this.listOfOrders[0].discountRate == null ? 0 : this.listOfOrders[0].discountRate) / 100);
+      this.listOfOrders[0].numberOfUsages = this.listOfOrders[0].defaultNumberOfUsages * this.listOfOrders[0].numberOfCodes;
+      this.listOfOrders[0].totalPrice = this.listOfOrders[0].numberOfUsages * this.listOfOrders[0].pricePerUnit - (this.listOfOrders[0].numberOfUsages * this.listOfOrders[0].pricePerUnit * (this.listOfOrders[0].discountRate == null ? 0 : this.listOfOrders[0].discountRate) / 100);
       this.CalculateNewGrandTotalSum();
     }
   }
@@ -290,7 +301,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
     console.info(order);
 
     this.listOfOrders[order.id].numberOfCodes = 1;
-    this.listOfOrders[order.id].numberOfSurveys = 5;
+    this.listOfOrders[order.id].numberOfUsages = 5;
     this.listOfOrders[order.id].pricePerUnit = 38;
     this.listOfOrders[order.id].couponBody = order.couponBody;
     this.listOfOrders[order.id].defaultNumberOfUsages = 5;
@@ -302,7 +313,7 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
   public SelectMultisurveyTenUsagesOption(order: OrderViewModel) {
     console.info(order);
     this.listOfOrders[order.id].numberOfCodes = 1;
-    this.listOfOrders[order.id].numberOfSurveys = 10;
+    this.listOfOrders[order.id].numberOfUsages = 10;
     this.listOfOrders[order.id].pricePerUnit = 35.60;
     this.listOfOrders[order.id].couponBody = order.couponBody;
     this.listOfOrders[order.id].defaultNumberOfUsages = 10;

@@ -9,8 +9,8 @@ export class SurveyService {
 
   constructor(private http: HttpClient) { }
 
-  public CreateSurvey(code: string, surveyPractitionerId: string) {
-    return this.http.post(`https://${this.url}/Survey/CreateSurvey`, { code: code, surveyPractitionerId: surveyPractitionerId }, {
+  public CreateSurvey(code: string, surveyPractitionerId: string, numberOfUsages: number) {
+    return this.http.post(`https://${this.url}/Survey/CreateSurvey`, { code: code, surveyPractitionerId: surveyPractitionerId, numberOfUsages: numberOfUsages }, {
       observe: 'response' });
   }
 }

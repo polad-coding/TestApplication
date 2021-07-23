@@ -379,7 +379,7 @@ namespace KPProject.Services
             //Create entry in DB
             ordersList.ForEach(async order =>
             {
-                for (int i = 0; i < order.NumberOfSurveys / order.DefaultNumberOfUsages; i++)
+                for (int i = 0; i < order.NumberOfUsages / order.DefaultNumberOfUsages; i++)
                 {
                     generatedCode = await this.GenerateNewCode();
                     ordersToSave.Add(new OrderModel { NumberOfUsages = order.DefaultNumberOfUsages, UserId = userId, CodeBody = generatedCode });
@@ -447,7 +447,7 @@ namespace KPProject.Services
 
             surveysTaken.ForEach(survey =>
             {
-                var practitioner = survey.PractitionerUser;
+                var practitioner = _applicationDbContext.Users.FirstOrDefault(u => u.Id == survey.PractitionerUserId);
                 var practitionerFullName = practitioner == null ? "" : practitioner.FirstName + " " + practitioner.LastName.ToUpper();
                 var surveyTaker = _userManager.FindByIdAsync(survey.SurveyTakerUserId).Result;
                 var surveyTakerEmail = surveyTaker.Email;
@@ -459,21 +459,9 @@ namespace KPProject.Services
                     SurveyId = survey.Id,
                     TakenOn = survey.TakenOn.ToString(),
                     PractitionerId = survey.PractitionerUserId,
-                    PractitionerFullName = practitionerFullName
+                    PractitionerFullName = practitionerFullName,
+                    TakersEmail = surveyTakerEmail
                 });
-            });
-
-            await _applicationDbContext.Orders.Where(order => order.UserId == userId).ForEachAsync(order =>
-            {
-                for (int i = 0; i < order.NumberOfUsages; i++)
-                {
-                    surveyResults.Add(new SurveyResultViewModel()
-                    {
-                        Code = order.CodeBody,
-                        IsCompleated = false
-                    });
-
-                }
             });
 
             return surveyResults;
@@ -584,7 +572,7 @@ namespace KPProject.Services
 
         public async Task<bool> CheckIfCodeIsValidAsync(string code)
         {
-            var dbCode = await _applicationDbContext.Orders.FirstOrDefaultAsync((order) => order.CodeBody == code);
+            var dbCode = await _applicationDbContext.Surveys.FirstOrDefaultAsync((s) => s.Code == code && s.FirstStagePassed == false);
 
             if (dbCode != null)
             {
@@ -905,32 +893,18 @@ namespace KPProject.Services
 
         public async Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel)
         {
-            var order = await _applicationDbContext.Orders.FirstOrDefaultAsync(o => o.CodeBody == transferCodesViewModel.Code && o.UserId != transferCodesViewModel.UserId);
+            var order = await _applicationDbContext.Surveys.FirstOrDefaultAsync(s => s.Code == transferCodesViewModel.Code && s.PractitionerUserId != transferCodesViewModel.UserId);
 
             if (order == null)
             {
                 return false;
             }
 
-            var orderBelongsToThePractitioner = await _userManager.IsInRoleAsync(await _userManager.FindByIdAsync(order.UserId), "Practitioner");
+            order.SurveyTakerUserId = transferCodesViewModel.UserId;
 
-            if (!orderBelongsToThePractitioner)
-            {
-                return false;
-            }
 
-            await _applicationDbContext.Orders.AddAsync(new OrderModel { CodeBody = order.CodeBody, NumberOfUsages = 1, UserId = transferCodesViewModel.UserId });
+            _applicationDbContext.Update(order);
 
-            order.NumberOfUsages -= 1;
-
-            if (order.NumberOfUsages == 0)
-            {
-                _applicationDbContext.Orders.Remove(order);
-            }
-            else
-            {
-                _applicationDbContext.Update(order);
-            }
 
             var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
 
@@ -1002,7 +976,7 @@ namespace KPProject.Services
                 });
 
 
-                await _applicationDbContext.SaveChangesAsync(); 
+                await _applicationDbContext.SaveChangesAsync();
             }
         }
 
@@ -1045,8 +1019,14 @@ namespace KPProject.Services
                     continue;
                 }
 
-                var numberOfDuplicateCoupons = orders.Count(o => o.CouponBody == order.CouponBody);
-
+                var numberOfDuplicateCoupons = 0;
+                orders.ForEach(o =>
+                {
+                    if (o.CouponBody == order.CouponBody)
+                    {
+                        numberOfDuplicateCoupons += 1 * o.NumberOfUsages;
+                    }
+                });
 
                 if (coupon.NumberOfUsagesLeft < numberOfDuplicateCoupons)
                 {
