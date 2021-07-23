@@ -460,7 +460,8 @@ namespace KPProject.Services
                     TakenOn = survey.TakenOn.ToString(),
                     PractitionerId = survey.PractitionerUserId,
                     PractitionerFullName = practitionerFullName,
-                    TakersEmail = surveyTakerEmail
+                    TakersEmail = surveyTakerEmail,
+                    FirstStagePassed = survey.FirstStagePassed
                 });
             });
 
