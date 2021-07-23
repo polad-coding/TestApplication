@@ -7,6 +7,7 @@ export class SurveyResultViewModel {
   public practitionerFullName: string;
   public practitionerId: string;
   public isCompleated: boolean;
+  public firstStagePassed: boolean;
   public takersEmail: string;
   public surveyTakerUser: UserViewModel;
 
