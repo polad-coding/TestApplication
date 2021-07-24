@@ -1,5 +1,6 @@
 <div id="order-container" *ngIf="!mobileModeIsOn">
   <div id="paypal-modal-container" [ngStyle]="{'display': paypalModalIsVisible == true ? 'flex':'none'}">
+    <div id="paypal-header">Choose your payment method</div>
     <div id="paypalContainer"></div>
   </div>
   <div id="title-section">
@@ -94,7 +95,7 @@
         </select>
       </div>
       <div class="column">
-        <input class="number-of-codes-field" id="number-of-codes-container" type="number" (keyup)="NumberOfCodesChanged($event,order)" [(ngModel)]="order.numberOfCodes" />
+        <input class="number-of-codes-field" id="number-of-codes-container" type="number" (focusout)="NumberOfCodesChanged($event,order)" [(ngModel)]="order.numberOfCodes" />
       </div>
       <div class="column" id="number-of-surveys">
         <span>{{order.numberOfUsages}}</span>
@@ -131,7 +132,7 @@
       <div style="font-family:barlowSemiCondensedMedium;">
         Grand total (incl.VAT)
       </div>
-      <div>
+      <div id="grand-total-price-container">
         {{grandTotalSum | currency}}
       </div>
     </div>
@@ -152,6 +153,7 @@
 
 <div id="order-container-mobile" *ngIf="mobileModeIsOn" (touchend)="NumberOfCodesChangedMobile($event)">
   <div id="paypal-modal-container" [ngStyle]="{'display': paypalModalIsVisible == true ? 'flex':'none'}">
+    <div id="paypal-header">Choose your payment method</div>
     <div id="paypalContainer"></div>
   </div>
   <div id="title-section-mobile">
@@ -204,7 +206,7 @@
       <p>Quantity</p>
       <input type="number"  [(ngModel)]="listOfOrders[0].numberOfCodes" />
       <div id="quatity-section-bottom-texts-container">
-        <p>(Number of surveys->{{listOfOrders[0].numberOfSurveys}})</p>
+        <p>(Number of surveys->{{listOfOrders[0].numberOfUsages}})</p>
         <div id="quatity-section-bottom-texts-container-right-texts">
           <p>Unit price:</p>
           <p class="cost-container">{{listOfOrders[0].pricePerUnit | currency}}</p>
@@ -250,7 +252,7 @@
       </div>
       <div>
         <div>Total Price (incl. VAT):</div>
-        <div class="cost-container">{{grandTotalSum | currency}}</div>
+        <div class="cost-container" id="grand-total-price-container">{{grandTotalSum | currency}}</div>
       </div>
       <button id="valid-your-order-button" (click)="DisplayPayPalModal($event)">Valid your order <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
     </div>

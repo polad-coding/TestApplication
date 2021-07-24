@@ -351,6 +351,9 @@ export class PractitionersDirectoryComponent implements OnInit {
   public ShowLanguagesModal(event: MouseEvent) {
     event.stopPropagation();
     this.languagesModalIsVisible = true;
+    setTimeout(() => {
+      document.getElementById('languages-modal').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }
 
   public PreventEventPropagation(event: MouseEvent) {
@@ -360,11 +363,17 @@ export class PractitionersDirectoryComponent implements OnInit {
   public ShowRegionsModal(event: MouseEvent) {
     event.stopPropagation();
     this.regionsModalIsVisible = true;
+    setTimeout(() => {
+      document.getElementById('regions-modal').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }
 
   public ShowGendersModal(event: MouseEvent) {
     event.stopPropagation();
     this.gendersModalIsVisible = true;
+    setTimeout(() => {
+      document.getElementById('genders-modal').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }
 
 }

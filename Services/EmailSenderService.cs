@@ -1,10 +1,15 @@
-﻿using KPProject.Interfaces;
+﻿using KPProject.Data;
+using KPProject.Interfaces;
+using KPProject.Models;
 using KPProject.ViewModels;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity;
 using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace KPProject.Services
@@ -12,11 +17,73 @@ namespace KPProject.Services
     public class EmailSenderService : IEmailSender
     {
         private readonly EmailConfiguration _emailConfig;
-        public EmailSenderService(EmailConfiguration emailConfig)
+        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public EmailSenderService(EmailConfiguration emailConfig, ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
         {
             _emailConfig = emailConfig;
+            _applicationDbContext = applicationDbContext;
+            _userManager = userManager;
         }
 
+        public async Task<bool> SendReceiptsAsync(SendOrdersReceiptViewModel sendOrdersReceiptViewModel, string userId)
+        {
+            var messages = new List<MessageViewModel>();
+            var user = await _applicationDbContext.Users.FindAsync(userId);
+            var isPractitionerUser = await _userManager.IsInRoleAsync(user, "Practitioner");
+            var toEmail = "";
+
+            if (isPractitionerUser)
+            {
+                toEmail = user.ProfessionalEmail == null ? user.Email : user.ProfessionalEmail;
+            }
+            else
+            {
+                toEmail = user.Email;
+            }
+
+            var messageContent = this.GenerateMessageContent(user, sendOrdersReceiptViewModel, isPractitionerUser);
+
+            messages.Add(new MessageViewModel(new List<string> { toEmail }, "Your orders receipt", messageContent));
+
+
+            var receiptsAreSent = this.SendReciept(messages);
+
+            return receiptsAreSent;
+        }
+
+
+
+        private string GenerateMessageContent(ApplicationUser user, SendOrdersReceiptViewModel sendOrdersReceiptViewModel, bool isPractitionerUser)
+        {
+            var message = new StringBuilder();
+            var appealToString = user.FirstName == null || user.LastName == null ? $"{user.FirstName} {user.LastName}" : "Customer";
+            var proccedToAccountType = isPractitionerUser ? "practitionerAccount" : "personalAccount";
+
+            message.AppendLine($"Dear  {appealToString}, thank you for purchasing our products. Here is the receipt for your latest order:\n");
+            message.AppendLine($"Date: {DateTime.Now.ToString("dd/MM/yyyy")}");
+            message.AppendLine($"Total price: {sendOrdersReceiptViewModel.totalPriceString}\n");
+            message.AppendLine($"Below are the codes that you bought, to navigate to your personal space and see them please procced to https://www.somefreedomain.ml/{proccedToAccountType}:");
+            message.AppendLine("-----------------------------------------------------------------");
+
+            foreach (var entry in sendOrdersReceiptViewModel.codesDictionary)
+            {
+                if (entry.Value == 1)
+                {
+                    message.AppendLine($"{entry.Key} - {entry.Value} usage");
+                }
+                else
+                {
+                    message.AppendLine($"{entry.Key} - {entry.Value} usages");
+                }
+            }
+
+            message.AppendLine("-----------------------------------------------------------------\n");
+            message.AppendLine("We appreciate your order!");
+            message.AppendLine("Kairios Praxis");
+
+            return message.ToString();
+        }
         public bool SendReciept(List<MessageViewModel> messages)
         {
             messages.ForEach(message =>

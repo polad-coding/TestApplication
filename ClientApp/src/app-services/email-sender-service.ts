@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { MessageViewModel } from "../view-models/message-view-model";
+import { OrderViewModel } from "../view-models/order-view-model";
+import { SendOrderReceiptViewModel } from "../view-models/send-orders-receipt-view-model";
 import { AppSettingsService } from "./app-settings.service";
 
 @Injectable()
@@ -16,5 +18,9 @@ export class EmailSenderService {
 
   public SendReciept(messages: Array<MessageViewModel>) {
     return this.http.post(`https://${this.url}/EmailSender/SendReciept`, messages, { observe: "response" });
+  }
+
+  public SendReceipts(sendOrderRecieptViewModel: SendOrderReceiptViewModel) {
+    return this.http.post(`https://${this.url}/EmailSender/SendReceipts`, sendOrderRecieptViewModel, { observe: 'response' });
   }
 }

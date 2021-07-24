@@ -1,0 +1,1 @@
+{"version":3,"file":"send-orders-receipt-view-model.js","sourceRoot":"","sources":["send-orders-receipt-view-model.ts"],"names":[],"mappings":";;;AAAA;IAIE,mCAAY,gBAAgB,EAAE,eAAe;QAC3C,IAAI,CAAC,gBAAgB,GAAG,gBAAgB,CAAC;QACzC,IAAI,CAAC,eAAe,GAAG,eAAe,CAAC;IACzC,CAAC;IACH,gCAAC;AAAD,CAAC,AARD,IAQC;AARY,8DAAyB"}

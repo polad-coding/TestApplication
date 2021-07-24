@@ -115,6 +115,7 @@
 
 #paypal-modal-container {
   display: flex;
+  flex-flow:column;
   height: 100%;
   position: absolute;
   width: 100%;
@@ -203,9 +204,22 @@
 }
 
 #paypalContainer {
-  background-color: #006F91;
+  background-color: white;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 0px 0px 5px 5px;
+  border:1px solid #006F91;
+}
+
+#paypal-header {
+  background-color: #006F91;
+  color: white;
+  border-radius: 5px 5px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:5px;
+  font-size:1rem;
+  width:222px;
 }
 
 #grand-total-sum-container {
@@ -214,7 +228,7 @@
   padding-right: 50px;
   width: max-content;
   margin-left: auto;
-  align-items:flex-end;
+  align-items: flex-end;
 }
 
 #grand-total-sum-container > div{

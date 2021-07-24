@@ -29,8 +29,9 @@ export class DataService {
 
   public DeleteSurveyFirstStageResults(surveyId: number) {
     return this.http.post(`https://${this.url}/Data/DeleteSurveyFirstStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
-
   }
+
+
 
   public DeleteSurveySecondStageResults(surveyId: number) {
     return this.http.post(`https://${this.url}/Data/DeleteSurveySecondStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });

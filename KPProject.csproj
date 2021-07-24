@@ -89,6 +89,7 @@
     <None Remove="ClientApp\src\view-models\register-view-model.ts" />
     <None Remove="ClientApp\src\view-models\report-html-content-view-model.ts" />
     <None Remove="ClientApp\src\view-models\report-table-value-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\send-orders-receipt-view-model.ts" />
     <None Remove="ClientApp\src\view-models\signin-view-model.ts" />
     <None Remove="ClientApp\src\view-models\survey-first-stage-save-request-model.ts" />
     <None Remove="ClientApp\src\view-models\survey-result-view-model.ts" />
@@ -149,6 +150,7 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\report-html-content-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\report-table-value-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\send-orders-receipt-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\signin-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\register-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\survey-first-stage-save-request-model.ts" />

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KPProject.Controllers
@@ -27,6 +28,20 @@ namespace KPProject.Controllers
             var operationSuccessful = _emailSenderService.SendReciept(messages);
 
             if (operationSuccessful)
+            {
+                return Ok();
+            }
+
+            return StatusCode(500);
+        }
+
+        [HttpPost]
+        [Route("SendReceipts")]
+        public async Task<ActionResult> SendReceiptsAsync(SendOrdersReceiptViewModel sendOrdersReceiptViewModel)
+        {
+            var requestSucceded = await _emailSenderService.SendReceiptsAsync(sendOrdersReceiptViewModel, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (requestSucceded)
             {
                 return Ok();
             }

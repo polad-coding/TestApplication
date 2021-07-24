@@ -27,8 +27,6 @@ namespace KPProject.Controllers
             _converter = converter;
         }
 
-
-
         [HttpPost]
         [Route("DeleteSurveyFirstStageResults")]
         public async Task<ActionResult> DeleteSurveyFirstStageResultsAsync([FromBody] int surveyId)

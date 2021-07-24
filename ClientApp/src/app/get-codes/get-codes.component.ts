@@ -11,6 +11,7 @@ import { MessageViewModel } from '../../view-models/message-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
 import { EmailSenderService } from '../../app-services/email-sender-service';
 import { SurveyService } from '../../app-services/survey-service';
+import { SendOrderReceiptViewModel } from '../../view-models/send-orders-receipt-view-model';
 
 @Component({
   selector: 'app-get-codes',
@@ -190,7 +191,12 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
               localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
               localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
 
+              let codesGenerated = {};
+              let totalPriceString = document.getElementById('grand-total-price-container').innerHTML;
+              let sendOrderRecieptViewModel = new SendOrderReceiptViewModel(totalPriceString, codesGenerated);
+
               response.body.forEach((order: OrderViewModel) => {
+                codesGenerated[order.codeBody] =  order.numberOfUsages;
                 order.numberOfUsages -= 1;
                 for (var i = 0; i <= order.numberOfUsages;) {
                   order.numberOfUsages -= 1;
@@ -200,11 +206,14 @@ export class GetCodesComponent implements OnInit, AfterViewInit, OnChanges {
                 }
               });
 
+
               //Send receipt
-              //this.SendReceipt(response.body).subscribe(response => {
-              //  this.listOfOrders = new Array<OrderViewModel>();
-                window.location.reload();
-              //});
+              this._emailSenderService.SendReceipts(sendOrderRecieptViewModel).subscribe(sendReceiptsResponse => {
+                if (sendReceiptsResponse.ok) {
+                  this.listOfOrders = new Array<OrderViewModel>();
+                  location.reload();
+                }
+              });
             }, error => {
               alert('We had a problem processing your request, please try again!');
             })
