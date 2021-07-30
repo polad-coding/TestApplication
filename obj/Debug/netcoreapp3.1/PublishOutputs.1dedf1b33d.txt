@@ -122,6 +122,7 @@ C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\Syst
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Composition.Runtime.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Composition.TypedParts.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Configuration.ConfigurationManager.dll
+C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Data.Common.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Diagnostics.DiagnosticSource.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.Drawing.Common.dll
 C:\Users\polad\source\repos\TestApplication\bin\Debug\netcoreapp3.1\publish\System.IdentityModel.Tokens.Jwt.dll

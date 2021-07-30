@@ -99,7 +99,7 @@
     </div>
   </div>
   <div id="practitioners-information-section" *ngIf="currentPractitioners.length > 0">
-    <div class="information-row">
+    <div class="information-row" *ngIf="practitionersCertifications[currentPractitionerIndex] != undefined && practitionersCertifications[currentPractitionerIndex].length > 0">
       <div class="information-row-title">
         <p>Certification(s):</p>
       </div>
@@ -109,7 +109,7 @@
         </p>
       </div>
     </div>
-    <div class="information-row">
+    <div class="information-row" *ngIf="currentPractitioners[currentPractitionerIndex].languages != undefined && currentPractitioners[currentPractitionerIndex].languages.length > 0">
       <div class="information-row-title">
         <p>Language(s):</p>
       </div>
@@ -119,7 +119,7 @@
         </p>
       </div>
     </div>
-    <div class="information-row">
+    <div class="information-row" *ngIf="currentPractitioners[currentPractitionerIndex].regions != undefined && currentPractitioners[currentPractitionerIndex].regions.length > 0">
       <div class="information-row-title">
         <p>Region(s):</p>
       </div>
@@ -139,7 +139,7 @@
         </button>
       </div>
     </div>
-    <div class="information-row">
+    <div class="information-row" *ngIf="currentPractitioners[currentPractitionerIndex].website != undefined && currentUserIsAMember">
       <div class="information-row-title">
         <p>Web site:</p>
       </div>
@@ -147,7 +147,7 @@
         <p>{{currentPractitioners[currentPractitionerIndex].website}}</p>
       </div>
     </div>
-    <div class="information-row">
+    <div class="information-row" *ngIf="currentPractitioners[currentPractitionerIndex].bio != undefined">
       <div class="information-row-title">
         <p>Bio:</p>
       </div>

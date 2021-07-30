@@ -28,6 +28,29 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
+        [Route("CreateGeneralCoupons")]
+        public async Task<ActionResult<bool>> CreateGeneralCouponsAsync(List<GeneralCoupon> generalCoupons)
+        {
+            var requestSucceded = await _dataService.CreateGeneralCouponsAsync(generalCoupons);
+
+            if (requestSucceded)
+            {
+                return Ok(requestSucceded);
+            }
+
+            return StatusCode(500);
+        }
+
+        [HttpPost]
+        [Route("CheckIfAllGeneralCouponsAreUnique")]
+        public async Task<ActionResult> CheckIfAllGeneralCouponsAreUniqueAsync(List<GeneralCoupon> generalCoupons)
+        {
+            var response = await _dataService.CheckIfAllGeneralCouponsAreUniqueAsync(generalCoupons);
+
+            return Ok(response);
+        }
+
+        [HttpPost]
         [Route("DeleteSurveyFirstStageResults")]
         public async Task<ActionResult> DeleteSurveyFirstStageResultsAsync([FromBody] int surveyId)
         {
@@ -428,6 +451,15 @@ namespace KPProject.Controllers
             }
 
             return Ok(practitionersCertifications);
+        }
+
+        [HttpGet]
+        [Route("GetMembershipStatusOfTheUser")]
+        public async Task<ActionResult<Membership>> GetMembershipStatusOfTheUserAsync(string userId)
+        {
+            var membership = await _dataService.GetMembershipStatusAsync(userId);
+
+            return Ok(membership);
         }
 
         [HttpGet]

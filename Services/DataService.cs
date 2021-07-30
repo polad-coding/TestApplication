@@ -426,15 +426,16 @@ namespace KPProject.Services
 
         private async Task<string> GenerateNewCode()
         {
-            var codesLength = 9;
+            var codesLength = 10;
             var code = new StringBuilder();
-            var randomSequence = Guid.NewGuid().ToString();
             var randomGenerator = new Random();
+            var sourceString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            char randomCharacter = '0';
 
             for (int i = 0; i < codesLength; i++)
             {
-                var character = randomSequence[randomGenerator.Next(randomSequence.Length)].ToString().ToUpper();
-                code.Append(character);
+                randomCharacter = sourceString[randomGenerator.Next(0, sourceString.Length)];
+                code.Append(randomCharacter);
             }
 
             return code.ToString();
@@ -1096,6 +1097,42 @@ namespace KPProject.Services
             return regions;
         }
 
+        public async Task<bool> CheckIfAllGeneralCouponsAreUniqueAsync(List<GeneralCoupon> generalCoupons)
+        {
+            foreach (var coupon in generalCoupons)
+            {
+                if (await _applicationDbContext.GeneralCoupons.AnyAsync(gc => gc.CouponBody == coupon.CouponBody))
+                {
+                    return false;
+                }
+            }
 
+            return true;
+        }
+
+        public async Task<bool> CreateGeneralCouponsAsync(List<GeneralCoupon> generalCoupons)
+        {
+
+            HashSet<string> set = new HashSet<string>(generalCoupons.Select(c => c.CouponBody));
+
+            if (set.Count != generalCoupons.Count)
+            {
+                return false;
+            }
+
+            foreach (var coupon in generalCoupons)
+            {
+                await _applicationDbContext.GeneralCoupons.AddAsync(coupon);
+            }
+
+            var rowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (rowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

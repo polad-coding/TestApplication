@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GenderViewModel } from "../view-models/gender-view-model";
+import { GeneralCouponViewModel } from "../view-models/general-coupon-view-model";
 import { LanguageViewModel } from "../view-models/language-view-model";
 import { MessageViewModel } from "../view-models/message-view-model";
 import { OrderViewModel } from "../view-models/order-view-model";
@@ -26,12 +27,21 @@ export class DataService {
 //Task < List < ValueModel >> GetFirstStageValuesAsync(int surveyId);
 //Task < List < ValueModel >> GetSecondStageValuesAsync(int surveyId);
 
+  public GetMembershipStatusOfTheUser(userId: string) {
+    return this.http.get(`https://${this.url}/Data/GetMembershipStatusOfTheUser?userId=${userId}`, { observe: 'response' });
+  }
 
   public DeleteSurveyFirstStageResults(surveyId: number) {
     return this.http.post(`https://${this.url}/Data/DeleteSurveyFirstStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
+  public CheckIfAllGeneralCouponsAreUnique(coupons: Array<GeneralCouponViewModel>) {
+    return this.http.post(`https://${this.url}/Data/CheckIfAllGeneralCouponsAreUnique`, coupons, { observe: 'response' });
+  }
 
+  public CreateGeneralCoupons(coupons: Array<GeneralCouponViewModel>) {
+    return this.http.post(`https://${this.url}/Data/CreateGeneralCoupons`, coupons, { observe: 'response' });
+  }
 
   public DeleteSurveySecondStageResults(surveyId: number) {
     return this.http.post(`https://${this.url}/Data/DeleteSurveySecondStageResults`, `\'${surveyId}\'`, { observe: 'response', headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });

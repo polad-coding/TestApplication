@@ -8,12 +8,13 @@ import { MembershipViewModel } from '../../view-models/membership-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
 import { render, paypal } from 'creditcardpayments/creditCardPayments';
 import { Router } from '@angular/router';
+import { EmailSenderService } from '../../app-services/email-sender-service';
 
 @Component({
   selector: 'app-certification-and-membership',
   templateUrl: './certification-and-membership.component.html',
   styleUrls: ['./certification-and-membership.component.css'],
-  providers: [DataService, AccountService]
+  providers: [DataService, AccountService, EmailSenderService]
 })
 export class CertificationAndMembershipComponent implements OnInit, AfterViewInit {
 
@@ -25,7 +26,7 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
   public desktopVersion: boolean = true;
   public paypalModalIsVisible: boolean = false;
 
-  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router) {
+  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router, private _emailSenderService: EmailSenderService) {
     this.LoadScript();
   }
 
@@ -36,8 +37,6 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
     else if (window.innerWidth > 850) {
       this.desktopVersion = true;
     }
-
-
   }
 
   private LoadScript() {
@@ -106,8 +105,9 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
               onApprove: (details) => {
                 this._dataService.RenewMembership().subscribe(response => {
                   if (response.ok) {
-                    console.log('here');
-                    location.reload();
+                    this._emailSenderService.SendMembershipRenewalReceipt().subscribe(sendMembershipRenewalReceiptResponse => {
+                        location.reload();
+                    });
                   }
                 }, error => {
                   alert('We had a problem processing your request, please try again!');

@@ -38,16 +38,16 @@ namespace KPProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseMySql(
-            //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
-
-            var context = new CustomAssemblyLoadContext();
-            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
-
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(
-            "Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
+                options.UseMySql(
+                    "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
+
+            //var context = new CustomAssemblyLoadContext();
+            //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //options.UseMySql(
+            //"Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -89,10 +89,10 @@ namespace KPProject
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = "somefreedomain.ml",
-                        ValidAudience = "somefreedomain.ml",
-                        //ValidIssuer = "localhost:5001",
-                        //ValidAudience = "localhost:5001",
+                        //ValidIssuer = "somefreedomain.ml",
+                        //ValidAudience = "somefreedomain.ml",
+                        ValidIssuer = "localhost:5001",
+                        ValidAudience = "localhost:5001",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc")),
                         ClockSkew = TimeSpan.Zero
                     };
@@ -181,6 +181,7 @@ namespace KPProject
             //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
             //CreateValuesLanguageFiles(serviceProvider).Wait();
             //CreateCertifications(serviceProvider).Wait();
+            CreateAdmin(serviceProvider).Wait();
             PopulateDBWithCoupons(serviceProvider).Wait();
         }
 
@@ -237,6 +238,27 @@ namespace KPProject
             var dataService = serviceProvider.GetRequiredService<IDataService>();
 
             await dataService.PopulateDBWithCoupons();
+        }
+
+        public async Task CreateAdmin(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            if (await userManager.FindByEmailAsync("admin@gmail.com") != null) 
+            {
+                return;
+            }
+
+            var created = await userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "admin@gmail.com",
+                UserName = "admin@gmail.com"
+            },"Admin123!");
+
+            if (created.Succeeded)
+            {
+                await userManager.AddToRoleAsync(await userManager.FindByEmailAsync("admin@gmail.com"), "Admin");
+            }
         }
 
         public async Task CreateUsers(IServiceProvider serviceProvider)

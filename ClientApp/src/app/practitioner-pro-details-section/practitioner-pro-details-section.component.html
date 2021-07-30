@@ -158,8 +158,10 @@
         <button [ngClass]="{'is-disabled': proInformationForm.pristine, 'is-enabled': !proInformationForm.pristine}" (click)="ChangeProfileData($event,proInformationForm)">Valid changes</button>
       </div>
       <div id="see-privacy-image-block">
-        <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
-        <a>See privacy policy</a>
+        <div id="see-privacy-container">
+          <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+          <a>See privacy policy</a>
+        </div>
       </div>
     </div>
   </div>

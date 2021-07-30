@@ -11,6 +11,6 @@ namespace KPProject.Interfaces
         void SendEmail(MessageViewModel message);
         bool SendReciept(List<MessageViewModel> messages);
         Task<bool> SendReceiptsAsync(SendOrdersReceiptViewModel sendOrdersReceiptViewModel, string userId);
-
+        Task<bool> SendMembershipRenewalReceipt(string userId);
     }
 }

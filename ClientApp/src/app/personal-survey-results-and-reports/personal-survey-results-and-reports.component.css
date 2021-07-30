@@ -1,10 +1,18 @@
-#survey-results-and-reports-titles{
-    display:flex;
+#survey-results-and-reports-titles {
+  display: flex;
 }
 
 #enter-your-code-button {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.send-email-container {
+  font-size: 1rem;
+}
+
+.practitioner-name-email-cell span {
+  margin-left: auto;
 }
 
 .title {
@@ -19,24 +27,24 @@
   font-size: 0.8rem;
 }
 
-  .survey-result-row div, .survey-result-row button{
+  .survey-result-row div, .survey-result-row button {
     flex-grow: 1;
     flex-basis: 0;
   }
 
-.survey-result-row-white-cell{
-    background-color:white;
-    color:#006F91;
-    cursor:pointer;
-    position:relative;
+.survey-result-row-white-cell {
+  background-color: white;
+  color: #006F91;
+  cursor: pointer;
+  position: relative;
 }
 
 
-.survey-result-row-white-cell button {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
+  .survey-result-row-white-cell button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 
     .survey-result-row-white-cell button span {
       position: absolute;
@@ -47,40 +55,40 @@
       align-items: center;
       color: #006F91;
       font-size: 25px;
-      margin-right:10px;
+      margin-right: 10px;
     }
 
-    #get-code-section{
-        display:flex;
-        position:relative;
-        justify-content:center;
-        margin-top:20px;
-    }
+#get-code-section {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin-top: 20px;
+}
 
-      #get-code-section > button {
-        background-color: #006F91;
-        color: white;
-        padding: 15px;
-      }
+  #get-code-section > button {
+    background-color: #006F91;
+    color: white;
+    padding: 15px;
+  }
 
-    #see-policy-container{
-        position:absolute;
-        right:0;
-        display:flex;
-        flex-flow:column;
-        align-items:center;
-        margin-right:20px;
-    }
+#see-policy-container {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-right: 20px;
+}
 
-    #see-policy-container a{
-        text-decoration:underline;
-        color:#006F91;
-    }
+  #see-policy-container a {
+    text-decoration: underline;
+    color: #006F91;
+  }
 
-    #see-policy-container img{
-        height:70px;
-        width:70px;
-    }
+  #see-policy-container img {
+    height: 70px;
+    width: 70px;
+  }
 
 #survey-results-and-reports-table-container {
   max-height: 350px;
@@ -105,36 +113,46 @@
   margin: 10px;
 }
 
-.cell-button{
-    height:100%;
-    width:100%;
+.cell-button {
+  height: 100%;
+  width: 100%;
 }
 
 @media only screen and (min-width:740px) and (max-width:1300px) {
-  .survey-result-row-white-cell, .survey-result-row-blue-cell{
-        text-align:center;
-    }
-
-
-
-
-    .survey-result-row{
-        height:70px;
-    }
-
-
-
-}
-
-@media only screen and (min-width:600px) and (max-width:740px) {
-
-  .survey-result-row-white-cell, .survey-result-row-blue-cell, .survey-result-empty-cell {
-    min-width:18%;
+  .survey-result-row-white-cell, .survey-result-row-blue-cell {
+    text-align: center;
   }
 
-  .title{
-      min-width:18%;
-      margin:3px;
+
+
+
+  .survey-result-row {
+    height: 70px;
+  }
+}
+
+/*.practitioner-name-email-cell*/
+
+@media only screen and (min-width:320px) and (max-width:900px) {
+    .practitioner-name-email-cell{
+        flex-flow:column;
+    }
+
+    .practitioner-name-email-cell span{
+        margin:0px;
+    }
+}
+
+
+
+@media only screen and (min-width:600px) and (max-width:740px) {
+  .survey-result-row-white-cell, .survey-result-row-blue-cell, .survey-result-empty-cell {
+    min-width: 18%;
+  }
+
+  .title {
+    min-width: 18%;
+    margin: 3px;
   }
 
   .survey-result-row-white-cell, .survey-result-row-blue-cell {
@@ -151,14 +169,13 @@
     margin: 3px;
     padding: 3px;
   }
-
 }
 
 @media only screen and (min-width:330px) and (max-width:600px) {
 
   .survey-result-row-white-cell, .survey-result-row-blue-cell, .survey-result-empty-cell {
     min-width: 18%;
-    font-size:0.6rem;
+    font-size: 0.6rem;
   }
 
   .title {
@@ -188,32 +205,30 @@
 
 @media only screen and (min-width:430px) and (max-width:600px) {
 
-    #see-policy-container img{
-        height:50px;
-        width:50px;
-    }
+  #see-policy-container img {
+    height: 50px;
+    width: 50px;
+  }
 
 
   #see-policy-container a {
-      font-size:0.8rem;
+    font-size: 0.8rem;
   }
-  
 }
 
 @media only screen and (min-width:330px) and (max-width:430px) {
 
-    #see-policy-container{
-        margin-right:10px;
+  #see-policy-container {
+    margin-right: 10px;
+  }
+
+    #see-policy-container img {
+      height: 40px;
+      width: 40px;
     }
 
-      #see-policy-container img {
-        height: 40px;
-        width: 40px;
-      }
 
-
-      #see-policy-container a {
-        font-size: 0.6rem;
-      }
-
+    #see-policy-container a {
+      font-size: 0.6rem;
+    }
 }

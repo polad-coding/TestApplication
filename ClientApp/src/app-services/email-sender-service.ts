@@ -23,4 +23,8 @@ export class EmailSenderService {
   public SendReceipts(sendOrderRecieptViewModel: SendOrderReceiptViewModel) {
     return this.http.post(`https://${this.url}/EmailSender/SendReceipts`, sendOrderRecieptViewModel, { observe: 'response' });
   }
+
+  public SendMembershipRenewalReceipt() {
+    return this.http.get(`https://${this.url}/EmailSender/SendMembershipRenewalReceipt`, { observe: 'response' });
+  }
 }

@@ -1,3 +1,18 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
 #practitioner-pro-account-container {
   width: 100%;
   height: auto;
@@ -10,14 +25,21 @@
   margin-bottom: 20px;
 }
 
+#see-privacy-container {
+  max-width: max-content;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
 .is-enabled {
   width: 160px;
   height: 60px;
   background: #006F91;
   border: none;
   color: white;
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 }
 
   .is-enabled:hover {
@@ -261,8 +283,8 @@
 }
 
   #see-privacy-image-block img {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
   }
 
   #see-privacy-image-block a {
@@ -525,12 +547,12 @@ input:disabled {
     #see-privacy-image-block {
       align-items: center;
       padding: 0px;
-      font-size: 0.5rem;
+      font-size: 0.8rem;
     }
 
       #see-privacy-image-block img {
-        height: 40px;
-        width: 40px;
+        height: 50px;
+        width: 50px;
       }
 
     #practitioner-pro-account-form {

@@ -135,7 +135,6 @@
 #validity-indicator-container {
   position: absolute;
   margin-top: 340px;
-  margin-left: 370px;
   color: #006F91;
 }
 
@@ -493,7 +492,7 @@
   height: 100%;
   padding-left: 5px;
   padding-right: 5px;
-  overflow-y: auto;
+  overflow-y: scroll;
   display: flex;
 }
 

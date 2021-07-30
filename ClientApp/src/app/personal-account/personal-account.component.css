@@ -1,3 +1,19 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+
 #personal-account-container {
   width: 100%;
   height: auto;
@@ -10,8 +26,15 @@
   margin-bottom: 20px;
 }
 
-input[type=radio]{
-    min-width:20px;
+#see-privacy-container{
+    max-width:max-content;
+    display:flex;
+    flex-flow:column;
+    align-items:center;
+}
+
+input[type=radio] {
+  min-width: 20px;
 }
 
 #tip-container {
@@ -188,8 +211,8 @@ input[type=radio]{
 }
 
   #see-privacy-image-block img {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
   }
 
   #see-privacy-image-block a {
@@ -202,7 +225,7 @@ input[type=radio]{
   height: 60px;
   background: #006F91;
   border: none;
-  color: white;
+  color: #fff;
 }
 
   .is-enabled:hover {
@@ -425,8 +448,8 @@ input:disabled {
     }
 
   #see-privacy-image-block img {
-    height: 80px;
-    width: 80px;
+    height: 50px;
+    width: 50px;
   }
 }
 
@@ -478,12 +501,12 @@ input:disabled {
     #see-privacy-image-block {
       align-items: center;
       padding: 0px;
-      font-size: 0.5rem;
+      font-size: 0.6rem;
     }
 
       #see-privacy-image-block img {
-        height: 40px;
-        width: 40px;
+        height: 50px;
+        width: 50px;
       }
 
     #myer-code-description-paragraph {
@@ -538,6 +561,5 @@ input:disabled {
     #see-privacy-image-block img {
       height: 70px;
       width: 70px;
-      margin-right: 20px;
     }
   }

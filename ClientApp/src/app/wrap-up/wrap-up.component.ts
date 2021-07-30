@@ -134,7 +134,8 @@ export class WrapUpComponent implements OnInit {
                     '#FFCC00',
                     '#ED7102',
                     '#E30513'
-                  ]
+                  ],
+                  borderWidth:0
                 }]
               }
             });
@@ -182,7 +183,8 @@ export class WrapUpComponent implements OnInit {
                     '#FFCC00',
                     '#ED7102',
                     '#E30513'
-                  ]
+                  ],
+                  borderWidth: 0
                 }]
               }
             });

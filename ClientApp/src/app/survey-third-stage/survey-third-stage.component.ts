@@ -55,6 +55,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     let oldValue = values[randomIndex];
 
     for (var i = 0; i < valuesLength; i++) {
+      oldValue = values[randomIndex];
       values[randomIndex] = values[i];
       values[i] = oldValue;
       randomIndex = Math.floor(Math.random() * valuesLength);
@@ -188,7 +189,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
         if (this.values.length == 0) {
           this._dataService.GetTheCurrentStageValues(Number.parseInt(localStorage.getItem('surveyId'))).subscribe((response: any) => {
             this.values = response.body;
-            //this.ShuffleValues(this.values);
+            this.ShuffleValues(this.values);
             console.log(this.values);
           });
         }

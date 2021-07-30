@@ -60,6 +60,9 @@ export class SigninFormComponent implements OnInit {
             else if (this.user.accessToken && this.jwtHelper.decodeToken(this.user.accessToken)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
               this._router.navigate(['/practitionerAccount']);
             }
+            else {
+              this._router.navigate(['backOffice']);
+            }
           }
           else {
             this.displayIfOperationSuccessful.emit(this.user);

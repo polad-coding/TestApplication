@@ -1,3 +1,26 @@
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: gray;
+  font-family: barlowSemiCondensedLightItalic;
+}
+
+
+#see-privacy-container {
+  max-width: max-content;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
 #practitioner-account-container {
   width: 100%;
   height: auto;
@@ -95,8 +118,8 @@ input[type=radio] {
   width: 160px;
   height: 60px;
   background: #006F91;
-  border: none;
-  color: white;
+  border: none;   
+  color: #fff;
   display: flex;
   justify-content: center;
 }
@@ -261,8 +284,8 @@ input[type=radio] {
 }
 
   #see-privacy-image-block img {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
   }
 
   #see-privacy-image-block a {
@@ -470,7 +493,7 @@ input:disabled {
     font-size: 0.8rem;
   }
 }
-@media only screen and (min-width:320px) and (max-width:950px) {
+@media only screen and (min-width:320px) and (max-width:1000px) {
   #practitioner-account-main-part {
     flex-flow:column;
   }
@@ -530,8 +553,8 @@ input:disabled {
     }
 
     #see-privacy-image-block img {
-      height: 80px;
-      width: 80px;
+      height: 50px;
+      width: 50px;
     }
   }
 
@@ -574,16 +597,16 @@ input:disabled {
     #see-privacy-image-block {
       align-items: center;
       padding: 0px;
-      font-size: 0.5rem;
+      font-size: 0.8rem;
     }
 
       #see-privacy-image-block img {
-        height: 40px;
-        width: 40px;
+        height: 50px;
+        width: 50px;
       }
 
     #myer-code-description-paragraph {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
       margin-top: 10px;
     }
 
@@ -634,6 +657,5 @@ input:disabled {
     #see-privacy-image-block img {
       height: 70px;
       width: 70px;
-      margin-right: 20px;
     }
   }

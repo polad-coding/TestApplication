@@ -1,7 +1,7 @@
 <div id="regions-modal-container" #regionModalContainer>
   <div id="regions-modal" (click)="PreventEventPropagation($event)">
     <div id="modal-header">
-      <p>Choose your regions</p>
+      <p>Choose your countries</p>
     </div>
     <form id="modal-form" #regionsForm="ngForm">
       <div *ngFor="let region of regions" class="region-checkbox-container">
@@ -101,7 +101,7 @@
           </div>
           <div class="input-section">
             <div class="label-section">
-              <label for="Region">Region:</label>
+              <label for="Region">Countries:</label>
             </div>
             <div class="input-field-section">
               <div *ngFor="let region of user.regions" class="region-container">
@@ -191,8 +191,10 @@
         <button [ngClass]="{'is-disabled': personalInformationForm.pristine, 'is-enabled': !personalInformationForm.pristine}" (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
       </div>
       <div id="see-privacy-image-block">
-        <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
-        <a>See privacy policy</a>
+        <div id="see-privacy-container">
+          <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
+          <a>See privacy policy</a>
+        </div>
       </div>
     </div>
     <p id="myer-code-description-paragraph">* Not compulsory - To know your 4-Letter Myer-Briggs Type Indicator Score : <span>www.16personalities.com</span></p>

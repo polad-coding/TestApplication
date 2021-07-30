@@ -27,6 +27,7 @@ export class PractitionersDirectoryComponent implements OnInit {
   public languages: Array<LanguageViewModel> = new Array<LanguageViewModel>();
   public geographicalLocations: Array<RegionViewModel> = new Array<RegionViewModel>();
   public currentPractitioners: Array<UserViewModel> = new Array<UserViewModel>();
+  public currentUserIsAMember: boolean = false;
   public practitionersCertifications: Array<Array<CertificationViewModel>> = new Array<Array<CertificationViewModel>>();
   public practitionersSearchFilterViewModel: PractitionersSearchFilterViewModel = new PractitionersSearchFilterViewModel();
   public languagesModalIsVisible: boolean = false;
@@ -77,6 +78,9 @@ export class PractitionersDirectoryComponent implements OnInit {
   
 
   public SelectPractitioner(event: any) {
+
+    console.log(this.currentPractitioners[this.currentPractitionerIndex]);
+
     //Change the styles for images
     this._renderer2.removeClass(document.getElementById(`practitioner-${this.currentPractitionerIndex}`), 'current-practitioner');
 
@@ -85,6 +89,15 @@ export class PractitionersDirectoryComponent implements OnInit {
 
     //Change current index
     this.currentPractitionerIndex = Number.parseInt(event.target.id.split('-').pop());
+
+    this._dataService.GetMembershipStatusOfTheUser(this.currentPractitioners[this.currentPractitionerIndex].id).subscribe((response: any) => {
+      if (response.body.validTill == undefined) {
+        this.currentUserIsAMember = false;
+      }
+      else {
+        this.currentUserIsAMember = true;
+      }
+    });
   }
 
   public GoToPreviousPractitioner() {

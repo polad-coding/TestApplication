@@ -245,7 +245,6 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
           return;
         }
-        location.reload();
       });
     }
     else {
@@ -269,7 +268,6 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
                 return;
               }
-              location.reload();
             });
           }
           else {

@@ -30,6 +30,21 @@
     <button (click)="ProceedToSelection($event)"><img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" /></button>
   </div>
 </div>
+<div id="pages-section" *ngIf="isSelectionStage">
+  <div id="go-to-previous-group-container">
+    <button (click)="GoToPreviousGroupPage($event)">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+    </button>
+  </div>
+  <div class="values-page" #valuesPageButton *ngFor="let key of arrayOfPages;index as i" (click)="ChangePage($event,key, i)" [attr.data-id]="key" [attr.data-index]="i" [ngClass]="{'currentPage':currentPageIndex == i+1}">
+    <p>{{i + 1}}</p>
+  </div>
+  <div id="go-to-next-group-container">
+    <button (click)="GoToNextGroupPage()">
+      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
+    </button>
+  </div>
+</div>
 <div id="main-section" *ngIf="isSelectionStage">
   <div id="go-to-prev-page-button">
     <button (click)="GoToPreviousGroupPage($event)">
@@ -78,7 +93,7 @@
     </button>
   </div>
 </div>
-<div id="pages-section" *ngIf="isSelectionStage">
+<!--<div id="pages-section" *ngIf="isSelectionStage">
   <div id="go-to-previous-group-container">
     <button (click)="GoToPreviousGroupPage($event)">
       <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
@@ -92,5 +107,5 @@
       <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
     </button>
   </div>
-</div>
+</div>-->
 <app-footer></app-footer>

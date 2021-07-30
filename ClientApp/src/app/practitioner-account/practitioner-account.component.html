@@ -12,13 +12,13 @@
     <p>Pro details</p>
   </div>
   <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'servey-results-and-reports-section', 'section-not-selected': selectedTab != 'servey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
-    <p>Survey & Reports</p>
+    <p>Codes, Survey & Reports</p>
   </div>
   <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'certification-membership-section', 'section-not-selected': selectedTab != 'certification-membership-section'}" #accountSectionTab (click)="SelectTab($event)" id="certification-membership-section">
     <p>Certification / Membership</p>
   </div>
   <div [ngClass]="{'practitioner-account-section': true, 'section-selected' : selectedTab == 'get-codes-and-support-section', 'section-not-selected': selectedTab != 'get-codes-and-support-section'}" #accountSectionTab (click)="SelectTab($event)" id="get-codes-and-support-section">
-    <p>Get codes and support</p>
+    <p>Get codes</p>
   </div>
 </div>
 <!--<div id="practitioner-account-container">

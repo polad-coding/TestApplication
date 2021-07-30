@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
-    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
@@ -79,6 +79,7 @@
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\general-coupon-view-model.ts" />
     <None Remove="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
     <None Remove="ClientApp\src\view-models\language-view-model.ts" />
     <None Remove="ClientApp\src\view-models\membership-view-model.ts" />
@@ -140,6 +141,7 @@
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\certification-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\general-coupon-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\language-view-model.ts" />

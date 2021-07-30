@@ -49,6 +49,8 @@
     margin-right: auto;
   }
 
+
+
 #close-modal-icon {
   height: 20px;
   width: 20px;
@@ -134,7 +136,7 @@
   #important-values-box {
     height: 300px;
     max-height: 300px;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     width: 300px;
     border-radius: 2px;
@@ -273,7 +275,7 @@
 }
 
 #table-section {
-  width: 20%;
+  width: 300px;
   display: flex;
   flex-flow: column;
 }
@@ -562,6 +564,7 @@
     filter: invert(26%) sepia(94%) saturate(1349%) hue-rotate(167deg) brightness(91%) contrast(102%);
   }
 
+
 @media only screen and (min-width: 320px) and (max-width: 450px) {
     #validation-stage-texts{
         font-size:1.2rem;
@@ -646,6 +649,14 @@
       font-size: 1.1rem;
       margin-top: 150px;
       width: 90%
+    }
+
+    #important-values-box{
+        margin-right:0px;
+    }
+
+    .values-priorities-column-right-part {
+      font-size: 0.7rem;
     }
 
     #table-section {

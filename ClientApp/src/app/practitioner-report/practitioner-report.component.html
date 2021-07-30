@@ -133,7 +133,7 @@
       </div>
     </div>
   </div>
-  <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1">
+  <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1">
     <div class="reminder-header">
       <div class="reminder-text-container">
         <span>Reminder</span>
@@ -156,7 +156,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="family-reminder" *ngIf="corePerspectiveId == 2 || secondaryPerspectiveId == 2">
+  <div class="reminder" id="family-reminder" *ngIf="corePerspectiveId == 2">
     <div class="reminder-header">
       <div class="reminder-text-container">
         <span>Reminder</span>
@@ -179,7 +179,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="management-reminder" *ngIf="corePerspectiveId == 3 || secondaryPerspectiveId == 3">
+  <div class="reminder" id="management-reminder" *ngIf="corePerspectiveId == 3">
     <div class="reminder-header">
       <div class="reminder-text-container">
         <span>Reminder</span>
@@ -202,7 +202,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="relational-reminder" *ngIf="corePerspectiveId == 4 || secondaryPerspectiveId == 4">
+  <div class="reminder" id="relational-reminder" *ngIf="corePerspectiveId == 4">
     <div class="reminder-header">
       <div class="reminder-text-container">
         <span>Reminder</span>
@@ -225,7 +225,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="systems-reminder" *ngIf="corePerspectiveId == 5 || secondaryPerspectiveId == 5">
+  <div class="reminder" id="systems-reminder" *ngIf="corePerspectiveId == 5">
     <div class="reminder-header">
       <div class="reminder-text-container">
         <span>Reminder</span>
@@ -248,7 +248,7 @@
       </p>
     </div>
   </div>
-  <div class="reminder" id="expansion-reminder" *ngIf="corePerspectiveId == 6 || secondaryPerspectiveId == 6">
+  <div class="reminder" id="expansion-reminder" *ngIf="corePerspectiveId == 6">
     <div class="reminder-header">
       <div class="reminder-text-container">
         <span>Reminder</span>
@@ -268,6 +268,120 @@
       <p>Expansion as a your Core Perspective</p>
       <p>
         {{'Perspectives.6.CorePerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="grounding-reminder" *ngIf="secondaryPerspectiveId == 1">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <div class="reminder-title-text">
+        <p>Grounding,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.1.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="family-reminder" *ngIf="secondaryPerspectiveId == 2">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <div class="reminder-title-text">
+        <p>Family,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.2.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="management-reminder" *ngIf="secondaryPerspectiveId == 3">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <div class="reminder-title-text">
+        <p>Management,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.3.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="relational-reminder" *ngIf="secondaryPerspectiveId == 4">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <div class="reminder-title-text">
+        <p>Relational,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.4.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="systems-reminder" *ngIf="secondaryPerspectiveId == 5">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <div class="reminder-title-text">
+        <p>Systems,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.5.MainPerspectiveText' | translate}}
+      </p>
+    </div>
+  </div>
+  <div class="reminder" id="expansion-reminder" *ngIf="secondaryPerspectiveId == 6">
+    <div class="reminder-header">
+      <div class="reminder-text-container">
+        <span>Reminder</span>
+      </div>
+    </div>
+    <div class="reminder-title">
+      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <div class="reminder-title-text">
+        <p>Expansion,</p>
+        <p>as your Second Perspective</p>
+      </div>
+    </div>
+    <div class="reminder-texts">
+      <p>
+        {{'Perspectives.6.MainPerspectiveText' | translate}}
       </p>
     </div>
   </div>

@@ -133,5 +133,43 @@ namespace KPProject.Services
             }
 
         }
+
+        private string GenerateMembershipRenewalMessageContent(ApplicationUser user)
+        {
+            var message = new StringBuilder();
+            var appealToString = user.FirstName == null || user.LastName == null ? $"{user.FirstName} {user.LastName}" : "Customer";
+            var proccedToAccountType = "practitionerAccount";
+            var newMembershipValidTill = _applicationDbContext.Memberships.First(m => m.UserId == user.Id).ValidTill;
+
+            message.AppendLine($"Dear  {appealToString}, thank you for renewing your membership. Here is the receipt for your latest renewal:\n");
+            message.AppendLine($"Date: {DateTime.Now.ToString("dd/MM/yyyy")}");
+            message.AppendLine($"Total price: $50\n");
+            message.AppendLine($"Your new membership is expanded till {newMembershipValidTill.ToString("dd/MM/yyyy")}, to see your membership status in your account please procced to https://www.somefreedomain.ml/{proccedToAccountType}.\n");
+            message.AppendLine("We appreciate your order!");
+            message.AppendLine("Kairios Praxis");
+
+            return message.ToString();
+        }
+
+        private MessageViewModel GenerateMembershipRenewalMessage(ApplicationUser user)
+        {
+            var toAddress = user.ProfessionalEmail == null ? user.Email : user.ProfessionalEmail;
+            var messageContent = this.GenerateMembershipRenewalMessageContent(user);
+            var message = new MessageViewModel(new List<string> { toAddress }, "Membership renewal receipt", messageContent);
+
+            return message;
+        }
+
+        public async Task<bool> SendMembershipRenewalReceipt(string userId)
+        {
+            var user = await _applicationDbContext.Users.FindAsync(userId);
+            var message = this.GenerateMembershipRenewalMessage(user);
+
+            var emailToSend = this.CreateEmailMessage(message);
+
+            this.Send(emailToSend);
+
+            return true;
+        }
     }
 }

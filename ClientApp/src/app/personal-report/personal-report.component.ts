@@ -175,7 +175,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                     '#FFCC00',
                     '#ED7102',
                     '#E30513'
-                  ]
+                  ],
+                  borderWidth:0
                 }]
               }
             });
@@ -242,7 +243,8 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
                     '#FFCC00',
                     '#ED7102',
                     '#E30513'
-                  ]
+                  ],
+                  borderWidth: 0
                 }]
               }
             });

@@ -24,12 +24,15 @@
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn != null && surveyResult.takenOn != ''">
         <p>{{surveyResult.takenOn | date:'yyyy MMM d'}}</p>
       </div>
-      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null || surveyResult.takenOn == ''">
+      <div class="survey-result-row-white-cell" *ngIf="(surveyResult.takenOn == null || surveyResult.takenOn == '') && surveyResult.firstStagePassed == false">
         <p>...</p>
       </div>
-      <div class="survey-result-row-white-cell" [attr.data-practitionerId]="surveyResult.practitionerId" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
-        <p>{{surveyResult.practitionerFullName}}</p>
-        <button (click)="SendEmail(surveyResult.practitionerId)"><span>@</span></button>
+      <div class="survey-result-row-white-cell" *ngIf="(surveyResult.takenOn == null || surveyResult.takenOn == '') && surveyResult.firstStagePassed == true">
+        <p>Survey in progress</p>
+      </div>
+      <div class="survey-result-row-white-cell practitioner-name-email-cell" [attr.data-practitionerId]="surveyResult.practitionerId" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
+        <span>{{surveyResult.practitionerFullName}}</span>
+        <span class="send-email-container" (click)="SendEmail(surveyResult.practitionerId)">@</span>
       </div>
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName == null || surveyResult.practitionerFullName == ''">
         <p>Choose a practitioner</p>

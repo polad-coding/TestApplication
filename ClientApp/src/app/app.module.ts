@@ -42,6 +42,7 @@ import { PractitionersDirectoryComponent } from './practitioners-directory/pract
 import { PersonalReportComponent } from './personal-report/personal-report.component';
 import { PractitionerReportComponent } from './practitioner-report/practitioner-report.component';
 import { AuthorizationPageComponent } from './authorization-page/authorization-page.component';
+import { BackOfficePageComponent } from './back-office-page/back-office-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -77,7 +78,8 @@ export function tokenGetter() {
     PractitionersDirectoryComponent,
     PersonalReportComponent,
     PractitionerReportComponent,
-    AuthorizationPageComponent
+    AuthorizationPageComponent,
+    BackOfficePageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -108,7 +110,8 @@ export function tokenGetter() {
       { path: 'wrap-up', component: WrapUpComponent },
       { path: 'enterCode', component: EnterCodePageComponent },
       //{ path: 'enterSurveyAccount', component: EnterSurveyAccountFormComponent },
-      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent }
+      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent },
+      { path: 'backOffice', component: BackOfficePageComponent }
     ]),
     JwtModule.forRoot({
       config: {

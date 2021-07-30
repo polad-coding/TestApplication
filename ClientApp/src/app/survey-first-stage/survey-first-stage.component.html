@@ -86,13 +86,19 @@
   </div>
   <div *ngIf="isValidationStage" id="validation-stage">
     <div id="validity-indicator-container">
-      <p *ngIf="numberOfValuesQualifiedAsImportant > 55">
+      <p *ngIf="numberOfValuesQualifiedAsImportant == 56">
+        {{numberOfValuesQualifiedAsImportant - 55 + ' value selected too many\n Please deselect'}}
+      </p>
+      <p *ngIf="numberOfValuesQualifiedAsImportant > 56">
         {{numberOfValuesQualifiedAsImportant - 55 + ' values selected too many\n Please deselect'}}
       </p>
       <p *ngIf="numberOfValuesQualifiedAsImportant <= 55 && numberOfValuesQualifiedAsImportant >= 35">
         {{numberOfValuesQualifiedAsImportant + ' values selected\n OK'}}
       </p>
-      <p *ngIf="numberOfValuesQualifiedAsImportant < 35">
+      <p *ngIf="numberOfValuesQualifiedAsImportant == 34">
+        {{35 - numberOfValuesQualifiedAsImportant + ' value selected too less\n Please select more'}}
+      </p>
+      <p *ngIf="numberOfValuesQualifiedAsImportant < 34">
         {{35 - numberOfValuesQualifiedAsImportant + ' values selected too less\n Please select more'}}
       </p>
     </div>

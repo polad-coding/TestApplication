@@ -21,6 +21,20 @@ namespace KPProject.Controllers
             _emailSenderService = emailSender;
         }
 
+        [HttpGet]
+        [Route("SendMembershipRenewalReceipt")]
+        public async Task<ActionResult> SendMembershipRenewalReceipt()
+        {
+            var receiptIsSent = await _emailSenderService.SendMembershipRenewalReceipt(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (receiptIsSent)
+            {
+                return Ok();
+            }
+
+            return StatusCode(500);
+        }
+
         [HttpPost]
         [Route("SendReciept")]
         public ActionResult SendReciept(List<MessageViewModel> messages)

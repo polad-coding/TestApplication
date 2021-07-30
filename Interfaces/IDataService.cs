@@ -20,6 +20,7 @@ namespace KPProject.Interfaces
         Task<bool> SaveThirdStageResultsAsync(List<PrioritizedValueViewModel> values, int surveyId);
         Task<List<double>> GetTheRelativeWeightOfThePerspectivesAsync(int surveyId);
         Task<List<ValueModel>> GetSurveyThirdStageResultsAsync(int surveyId);
+        Task<bool> CreateGeneralCouponsAsync(List<GeneralCoupon> generalCoupons);
         Task<List<OrderModel>> GenerateCodesAsync(List<OrderViewModel> ordersList, string userId);
         Task<List<SurveyResultViewModel>> GetSurveyResultsAsync(string userId);
         Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId);
@@ -47,5 +48,6 @@ namespace KPProject.Interfaces
         Task<bool> DeleteSurveyFirstStageResultsAsync(int surveyId);
         Task<bool> DeleteSurveySecondStageResultsAsync(int surveyId);
         Task<List<RegionModel>> GetSelectedRegionsForCurrentUserAsync(string userId);
+        Task<bool> CheckIfAllGeneralCouponsAreUniqueAsync(List<GeneralCoupon> generalCoupons);
     }
 }
