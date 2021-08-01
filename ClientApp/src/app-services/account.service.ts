@@ -18,6 +18,22 @@ export class AccountService {
     return this.http.get(`https://${this.url}/Account/Regions`, { observe: 'response' });
   }
 
+  public GetAllPositions() {
+    return this.http.get(`https://${this.url}/Account/Positions`, { observe: 'response' });
+  }
+
+  public GetAllAgeGroups() {
+    return this.http.get(`https://${this.url}/Account/AgeGroups`, { observe: 'response' });
+  }
+
+  public GetAllEducations() {
+    return this.http.get(`https://${this.url}/Account/Educations`, { observe: 'response' });
+  }
+
+  public GetAllSectorsOfActivities() {
+    return this.http.get(`https://${this.url}/Account/SectorsOfActivities`, { observe: 'response' });
+  }
+
   public GetAllLanguages() {
     return this.http.get(`https://${this.url}/Account/Languages`, { observe: 'response' });
   }

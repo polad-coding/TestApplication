@@ -150,8 +150,16 @@ input[type=radio] {
   width: 75%;
   display: flex;
   overflow-x: auto;
-  justify-content: center;
+  /*justify-content: center;*/
 }
+
+.input-field-section > div:first-child, .input-field-section > p{
+    margin-left:auto;
+}
+
+  .input-field-section > div:last-child, .input-field-section > p {
+    margin-right: auto;
+  }
 
   .input-field-section input {
     width: 100%;
@@ -244,12 +252,12 @@ input[type=radio] {
 
 
 
-.region-container {
+.modal-selection-container{
   padding: 5px;
   background-color: #006F91;
-  color:white;
-  margin-left:10px;
-  margin-right:10px;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 input:disabled {
@@ -269,20 +277,9 @@ input:disabled {
     cursor:pointer;
 }
 
-#regions-modal-container{
-    display:none;
-    height:100%;
-    width:100vw;
-    position:absolute;
-    justify-content:center;
-    align-items:center;
-    top:0;
-    left:0;
-    background-color:rgba(0,0,0,0.3);
-    z-index:2000;
-}
 
-#genders-modal-container {
+
+.modal-container {
   display: none;
   height: 100%;
   width: 100vw;
@@ -295,27 +292,20 @@ input:disabled {
   z-index: 2000;
 }
 
-#regions-modal {
+.modal {
   height: 400px;
   width: 300px;
   display: flex;
+  position:initial;
   flex-flow: column;
   background-color: white;
   color: #006F91;
   border-radius:3px;
 }
 
-#genders-modal {
-  height: 400px;
-  width: 300px;
-  display: flex;
-  flex-flow: column;
-  background-color: white;
-  color: #006F91;
-  border-radius: 3px;
-}
 
-#modal-header {
+
+.modal-header {
   height: 40px;
   justify-content: center;
   display: flex;
@@ -326,14 +316,27 @@ input:disabled {
   font-family:barlowSemiCondensedMedium;
 }
 
-#modal-form {
+.modal-form {
   height: 100%;
   padding: 10px;
   overflow-y: auto;
   font-family: barlowSemiCondensedLight;
 }
 
-.region-checkbox-container {
+
+.genders-form {
+  display: flex;
+  flex-flow: column;
+  justify-content:space-around;
+}
+
+.age-groups-form {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+}
+
+.checkbox-container {
   display: flex;
   position:relative;
   margin-bottom:10px;
@@ -348,10 +351,25 @@ input:disabled {
   color: #006F91;
 }
 
+.age-group-option {
+  border: 2px solid #006F91;
+  padding: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #006F91;
+}
+
 .gender-option-selected{
     border:none;
     color:white;
     background-color:#006F91; 
+}
+
+.age-group-option-selected {
+  border: none;
+  color: white;
+  background-color: #006F91;
 }
 
 #gender-selected-row{
@@ -366,14 +384,13 @@ input:disabled {
     padding:5px;
 }
 
-#gender-modal-body {
-  height: 99%;
+.education-form {
   display: flex;
   flex-flow: column;
   justify-content: space-around;
 }
 
-.region-checkbox-container input {
+.checkbox-container input {
   border: none;
   position: absolute;
   width: 100%;
@@ -398,14 +415,14 @@ input:disabled {
   padding: 10px;
 }
 
-#region-modal-submit-button, #gender-modal-submit-button {
+.modal-submit-button {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
 }
 
-  #region-modal-submit-button button, #gender-modal-submit-button button {
+.modal-submit-button button {
     border: 1px solid #006F91;
     padding: 10px;
     color: #006F91;
@@ -414,7 +431,7 @@ input:disabled {
     background-color: transparent;
   }
 
-    #region-modal-submit-button button:hover, #gender-modal-submit-button button:hover {
+    .modal-submit-button button:hover {
       border: none;
       color: white;
       background-color: #006F91;
@@ -523,10 +540,15 @@ input:disabled {
       overflow-x: auto;
     }
 
-    .region-container {
+/*    .modal-selection-container {
+        max-height:35px;
       height: max-content;
       margin-right: 0px;
-    }
+    }*/
+
+.modal-selection-container p{
+    min-width:max-content;
+}
 
     .edit-button-section {
       height: 100%;

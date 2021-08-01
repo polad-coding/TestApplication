@@ -56,6 +56,22 @@ export class DataService {
     return this.http.get(`https://${this.url}/Data/GetSelectedRegionsForCurrentUser`, { observe: 'response' });
   }
 
+  public GetSelectedLanguagesForCurrentUser() {
+    return this.http.get(`https://${this.url}/Data/GetSelectedLanguagesForCurrentUser`, { observe: 'response' });
+  }
+
+  public GetSelectedPositionsForCurrentUser() {
+    return this.http.get(`https://${this.url}/Data/GetSelectedPositionsForCurrentUser`, { observe: 'response' });
+  }
+
+  public GetSelectedEducationsForCurrentUser() {
+    return this.http.get(`https://${this.url}/Data/GetSelectedEducationsForCurrentUser`, { observe: 'response' });
+  }
+
+  public GetSelectedSectorsOfActivityForCurrentUser() {
+    return this.http.get(`https://${this.url}/Data/GetSelectedSectorsOfActivityForCurrentUser`, { observe: 'response' });
+  }
+
   public GetFirstStageValues(surveyId: number) {
     return this.http.get(`https://${this.url}/Data/GetFirstStageValues?surveyId=${surveyId}`, { observe: 'response' });
   }

@@ -63,10 +63,10 @@ namespace KPProject.Services
             var expires = DateTime.Now.AddHours(3);
 
             var tokenTemplate = new JwtSecurityToken(
-                //"localhost:5001",
-                //"localhost:5001",
-                "somefreedomain.ml",
-                "somefreedomain.ml",
+                "localhost:5001",
+                "localhost:5001",
+                //"somefreedomain.ml",
+                //"somefreedomain.ml",
                 claims,
                 expires: expires,
                 signingCredentials: creds
@@ -105,6 +105,7 @@ namespace KPProject.Services
                     LanguageId = el.LanguageId,
                     Language = _dbContext.Languages.First(lang => lang.Id == el.LanguageId)
                 }).ToList();
+
             userAttemptingToSignIn.Regions = _dbContext.UserRegions
                 .Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id)
                 .Select(ur => new UserRegion()
@@ -115,7 +116,38 @@ namespace KPProject.Services
                     Region = _dbContext.Regions.First(reg => reg.Id == ur.RegionId)
                 }).ToList();
 
+            userAttemptingToSignIn.Positions = _dbContext.ApplicationUserPositions
+            .Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id)
+            .Select(ur => new ApplicationUserPosition()
+            {
+                ApplicationUserId = ur.ApplicationUserId,
+                ApplicationUser = ur.ApplicationUser,
+                PositionId = ur.PositionId,
+                Position = _dbContext.Positions.First(position => position.Id == ur.PositionId)
+            }).ToList();
+
+            userAttemptingToSignIn.Educations = _dbContext.ApplicationUserEducations
+            .Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id)
+            .Select(ur => new ApplicationUserEducation()
+            {
+                ApplicationUserId = ur.ApplicationUserId,
+                ApplicationUser = ur.ApplicationUser,
+                EducationId = ur.EducationId,
+                Education = _dbContext.Educations.First(education => education.Id == ur.EducationId)
+            }).ToList();
+
+            userAttemptingToSignIn.SectorsOfActivities = _dbContext.ApplicationUserSectorsOfActivities
+            .Where(element => element.ApplicationUserId == userAttemptingToSignIn.Id)
+            .Select(ur => new ApplicationUserSectorOfActivity()
+            {
+                ApplicationUserId = ur.ApplicationUserId,
+                ApplicationUser = ur.ApplicationUser,
+                SectorOfActivityId = ur.SectorOfActivityId,
+                SectorOfActivity = _dbContext.SectorsOfActivity.First(soa => soa.Id == ur.SectorOfActivityId)
+            }).ToList();
+
             userAttemptingToSignIn.Gender = await _dbContext.Gender.FirstAsync(g => g.Id == userAttemptingToSignIn.GenderId);
+            userAttemptingToSignIn.AgeGroupModel = await _dbContext.AgeGroups.FirstOrDefaultAsync(ag => ag.Id == userAttemptingToSignIn.AgeGroupModelId);
 
             var signIn = await _signInManager.PasswordSignInAsync(userAttemptingToSignIn, signInViewModel.Password, false, false);
 
@@ -125,7 +157,7 @@ namespace KPProject.Services
             }
 
             var token = await GenerateAccessTokenAsync(userAttemptingToSignIn);
-             
+
             if (token == null)
             {
                 return null;

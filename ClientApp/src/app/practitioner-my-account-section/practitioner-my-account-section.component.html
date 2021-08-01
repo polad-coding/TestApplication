@@ -1,30 +1,93 @@
-<div id="regions-modal-container" #regionModalContainer>
-  <div id="regions-modal" (click)="PreventEventPropagation($event)">
-    <div id="modal-header">
+<div class="modal-container" #ageGroupsModalContainer>
+  <div class="modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
+      <p>Choose your age group</p>
+    </div>
+    <div class="modal-form age-groups-form">
+      <button class="age-group-option" (click)="SelectAgeGroup($event, ageGroup)" *ngFor="let ageGroup of ageGroups">{{ageGroup.groupAgeRange}}</button>
+    </div>
+    <div class="modal-submit-button">
+      <button (click)="SetAgeGroup(personalInformationForm)">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-container" #educationModalContainer>
+  <div class="modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
+      <p>Choose your education</p>
+    </div>
+    <form class="modal-form education-form" #educationForm="ngForm">
+      <div *ngFor="let education of educations" class="checkbox-container education-checkbox-container">
+        <input type="checkbox" (click)="ToggleSelection($event)" name="education" ngModel value="{{education | json}}">
+        <label class="is-not-selected" id="{{education.educationName + '-education-container'}}" for="education">{{education.educationName}}</label>
+      </div>
+    </form>
+    <div class="modal-submit-button" (click)="SubmitEducationForm(educationForm)">
+      <button>Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="modal-container" #positionModalContainer>
+  <div class="modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
+      <p>Choose your position</p>
+    </div>
+    <form class="modal-form" #positionForm="ngForm">
+      <div *ngFor="let position of positions" class="checkbox-container">
+        <input type="checkbox" (click)="ToggleSelection($event)" name="position" ngModel value="{{position | json}}">
+        <label class="is-not-selected" id="{{position.positionName + '-position-container'}}" for="position">{{position.positionName}}</label>
+      </div>
+    </form>
+    <div class="modal-submit-button" (click)="SubmitPositionForm(educationForm)">
+      <button>Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-container" #sectorsOfActivitiesModalContainer>
+  <div class="modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
+      <p>Choose your sector of activity</p>
+    </div>
+    <form class="modal-form" #sectorsOfActivitiesForm="ngForm">
+      <div *ngFor="let sectorOfActivity of sectorsOfActivities" class="checkbox-container">
+        <input type="checkbox" (click)="ToggleSelection($event)" name="sectorOfActivity" ngModel value="{{sectorOfActivity | json}}">
+        <label class="is-not-selected" id="{{sectorOfActivity.sectorOfActivityName + '-sector-of-activity-container'}}" for="sectorOfActivity">{{sectorOfActivity.sectorOfActivityName}}</label>
+      </div>
+    </form>
+    <div class="modal-submit-button" (click)="SubmitSectorOfActivityForm(sectorsOfActivitiesForm)">
+      <button>Confirm</button>
+    </div>
+  </div>
+</div>
+<div class="modal-container" #regionModalContainer>
+  <div class="modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
       <p>Choose your countries</p>
     </div>
-    <form id="modal-form" #regionsForm="ngForm">
-      <div *ngFor="let region of regions" class="region-checkbox-container">
-        <input type="checkbox" (click)="ToggleRegionSelection($event)" name="region" ngModel value="{{region | json}}">
+    <form class="modal-form" #regionsForm="ngForm">
+      <div *ngFor="let region of regions" class="checkbox-container">
+        <input type="checkbox" (click)="ToggleSelection($event)" name="region" ngModel value="{{region | json}}">
         <label class="is-not-selected" id="{{region.regionName + '-country-container'}}" for="region">{{region.regionName}}</label>
       </div>
     </form>
-    <div id="region-modal-submit-button">
+    <div class="modal-submit-button">
       <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
     </div>
   </div>
 </div>
-<div id="genders-modal-container" #gendersModalContainer>
-  <div id="genders-modal" (click)="PreventEventPropagation($event)">
-    <div id="modal-header">
+<div class="modal-container" #gendersModalContainer>
+  <div class="modal" (click)="PreventEventPropagation($event)">
+    <div class="modal-header">
       <p>Choose your gender</p>
     </div>
-    <div id="gender-modal-body">
+    <div class="modal-body">
       <button class="gender-option" (click)="SelectGender($event,'Male')">Male</button>
       <button class="gender-option" (click)="SelectGender($event,'Female')">Female</button>
       <button class="gender-option" (click)="SelectGender($event,'Other')">Other</button>
     </div>
-    <div id="gender-modal-submit-button">
+    <div class="modal-submit-button">
       <button (click)="SetGender(personalInformationForm)">Confirm</button>
     </div>
   </div>
@@ -38,7 +101,7 @@
           <img *ngIf="isUploadingProccess" style="background:white;" src="../../assets/Images/loading-screen.gif" />
           <img *ngIf="user.profileImageName !== null && !isUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png?dummy={{dummyNumber}}" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
-          <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg"/>
+          <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg" />
         </div>
         <p>Certified</p>
         <p>practitioner</p>
@@ -104,8 +167,11 @@
               <label for="Region">Countries:</label>
             </div>
             <div class="input-field-section">
-              <div *ngFor="let region of user.regions" class="region-container">
+              <div *ngFor="let region of user.regions" class="modal-selection-container">
                 <p>{{region.regionName}} </p>
+              </div>
+              <div class="region-container" *ngIf="user.regions == undefined || user.regions.length == 0">
+                <p>Country is not selected</p>
               </div>
             </div>
             <div class="edit-button-section">
@@ -119,10 +185,13 @@
               <label for="Education">Education:</label>
             </div>
             <div class="input-field-section">
-              <input name="Education" placeholder="Enter your education." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.education" />
+              <div *ngFor="let education of user.educations" class="modal-selection-container">
+                <p>{{education.educationName}}</p>
+              </div>
+              <p class="modal-selection-container" *ngIf="user == undefined || user.educations.length == 0">No educations selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="EditInputField('Education',$event)">
+              <button (click)="DisplayEducationsModal($event)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
@@ -132,10 +201,13 @@
               <label for="Position">Position / Profession:</label>
             </div>
             <div class="input-field-section">
-              <input name="Position" placeholder="Enter your position." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.position" />
+              <div *ngFor="let position of user.positions" class="modal-selection-container">
+                <p>{{position.positionName}}</p>
+              </div>
+              <p class="modal-selection-container" *ngIf="user == undefined || user.positions.length == 0">No positions selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="EditInputField('Position',$event)">
+              <button (click)="DisplayPositionModal($event)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
@@ -145,23 +217,27 @@
               <label for="ActivitySector">Sector of activity:</label>
             </div>
             <div class="input-field-section">
-              <input name="ActivitySector" placeholder="Enter your sector of activity." #inputField (click)="PreventEventPropagation($event)" disabled [(ngModel)]="user.sectorOfActivity" />
+              <div *ngFor="let sectorOfActivity of user.sectorsOfActivities" class="modal-selection-container">
+                <p>{{sectorOfActivity.sectorOfActivityName}}</p>
+              </div>
+              <p class="modal-selection-container" *ngIf="user == undefined || user.sectorsOfActivities.length == 0">No sectors of activity selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="EditInputField('ActivitySector',$event)">
+              <button (click)="DisplaySectorsOfActivitiesModal($event)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
           </div>
           <div class="input-section">
             <div class="label-section">
-              <label for="Age">Age:</label>
+              <label for="Age">Age group:</label>
             </div>
             <div class="input-field-section">
-              <input name="Age" placeholder="Enter your age." type="number" pattern="[0-9]*" (click)="PreventEventPropagation($event)" #inputField [(ngModel)]="user.age" disabled />
+              <p class="modal-selection-container" *ngIf="user != undefined && user.ageGroup != null && user.ageGroup != undefined">{{user.ageGroup.groupAgeRange}}</p>
+              <p class="modal-selection-container" *ngIf="user == undefined || user.ageGroup == null || user.ageGroup.groupAgeRange == undefined">Age group is not selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="EditInputField('Age',$event)">
+              <button (click)="DisplayAgeGroupModal($event)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>

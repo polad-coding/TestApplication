@@ -41,13 +41,17 @@ namespace KPProject.Interfaces
         Task<bool> GoToPreviousStageOfTheSurveyAsync(int surveyId);
         Task PopulateDBWithCoupons();
         Task<GetCouponRequestResponseViewModel> GetCouponAsync(string couponBody, string userId);
+        Task<List<PositionModel>> GetSelectedPositionsForCurrentUserAsync(string userId);
         Task<bool> CheckIfAllCouponsAreValidAsync(List<OrderViewModel> orders);
         Task<List<ValueModel>> GetValuesForFirstStageAsync(int surveyId);
         Task<List<ValueModel>> GetFirstStageValuesAsync(int surveyId);
+        Task<List<EducationModel>> GetSelectedEducationsForCurrentUserAsync(string userId);
         Task<List<ValueModel>> GetSecondStageValuesAsync(int surveyId);
         Task<bool> DeleteSurveyFirstStageResultsAsync(int surveyId);
         Task<bool> DeleteSurveySecondStageResultsAsync(int surveyId);
         Task<List<RegionModel>> GetSelectedRegionsForCurrentUserAsync(string userId);
+        Task<List<LanguageModel>> GetSelectedLanguagesForCurrentUserAsync(string userId);
         Task<bool> CheckIfAllGeneralCouponsAreUniqueAsync(List<GeneralCoupon> generalCoupons);
+        Task<List<SectorOfActivityModel>> GetSelectedSectorsOfActivityForCurrentUserAsync(string userId);
     }
 }

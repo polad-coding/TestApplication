@@ -4,9 +4,9 @@
       <p>Choose your regions</p>
     </div>
     <form class="modal-form" #regionsForm="ngForm">
-      <div *ngFor="let region of regions" class="region-checkbox-container">
-        <input type="checkbox" (click)="ToggleRegionSelection($event)" name="region" ngModel value="{{region | json}}">
-        <label class="is-not-selected" for="region">{{region.regionName}}</label>
+      <div *ngFor="let region of regions" class="checkbox-container">
+        <input type="checkbox" (click)="ToggleSelection($event)" name="region" ngModel value="{{region | json}}">
+        <label class="is-not-selected" id="{{region.regionName + '-country-container'}}" for="region">{{region.regionName}}</label>
       </div>
     </form>
     <div id="region-modal-submit-button">
@@ -20,9 +20,9 @@
       <p>Choose your languages</p>
     </div>
     <form class="modal-form" #languagesForm="ngForm">
-      <div *ngFor="let language of languages" class="language-checkbox-container">
-        <input type="checkbox" (click)="ToggleLanguagesSelection($event)" name="language" ngModel value="{{language | json}}">
-        <label class="is-not-selected" for="language">{{language.languageName}}</label>
+      <div *ngFor="let language of languages" class="checkbox-container">
+        <input type="checkbox" (click)="ToggleSelection($event)" name="language" ngModel value="{{language | json}}">
+        <label class="is-not-selected" id="{{language.languageName + '-language-container'}}" for="language">{{language.languageName}}</label>
       </div>
     </form>
     <div id="language-modal-submit-button">
@@ -112,6 +112,7 @@
               <div *ngFor="let language of user.languages" class="language-container">
                 <p>{{language.languageName}}</p>
               </div>
+              <p class="language-container" *ngIf="user != undefined && user.languages.length == 0">No language selected</p>
             </div>
             <div class="edit-button-section">
               <button (click)="DisplayLanguagesModal($event)">
@@ -127,6 +128,7 @@
               <div *ngFor="let region of user.regions" class="region-container">
                 <p>{{region.regionName}} </p>
               </div>
+              <p class="region-container" *ngIf="user != undefined && user.regions.length == 0">No region selected</p>
             </div>
             <div class="edit-button-section">
               <button (click)="DisplayRegionsModal($event)">

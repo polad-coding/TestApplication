@@ -17,6 +17,14 @@ namespace KPProject.Profiles
                             opt => opt.MapFrom(src => src.Languages.Select(element => element.Language)))
                 .ForMember(dest => dest.Regions,
                             opt => opt.MapFrom(src => src.Regions.Select(element => element.Region)))
+                .ForMember(dest => dest.Positions,
+                            opt => opt.MapFrom(src => src.Positions.Select(element => element.Position)))
+                .ForMember(dest => dest.Educations,
+                            opt => opt.MapFrom(src => src.Educations.Select(element => element.Education)))
+                .ForMember(dest => dest.SectorsOfActivities,
+                            opt => opt.MapFrom(src => src.SectorsOfActivities.Select(element => element.SectorOfActivity)))
+                .ForMember(dest => dest.AgeGroup,
+                            opt => opt.MapFrom(src => src.AgeGroupModel))
                 .ReverseMap();
         }
     }

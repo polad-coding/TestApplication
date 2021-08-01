@@ -22,6 +22,8 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   public user: UserViewModel;
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
+  @ViewChild('proInformationForm', { read: NgForm, static: false })
+  public proInformationForm: NgForm;
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
@@ -68,6 +70,22 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
 
   ngOnInit() {
     this.dummyNumber = Math.floor(Math.random() * 100000);
+
+    this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {
+      this.newRegionsSelected = response.body;
+    });
+
+    this._dataService.GetSelectedLanguagesForCurrentUser().subscribe((response: any) => {
+      this.newLanguagesSelected = response.body;
+    });
+
+    this.accountService.GetAllRegions().subscribe((response: any) => {
+      this.regions = response.body;
+    });
+
+    this.accountService.GetAllLanguages().subscribe((response: any) => {
+      this.languages = response.body;
+    });
 
     localStorage.setItem('practitionerAccountTabName', 'pro-details-section');
 
@@ -207,26 +225,41 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
     //TODO - deselect all regions
-    if (this.regions === undefined) {
-      this.accountService.GetAllRegions().subscribe((response: any) => {
-        this.regions = response.body;
-      });
+
+    let regionContainers = document.getElementsByClassName('checkbox-container');
+
+    for (var i = 0; i < regionContainers.length; i++) {
+      this.renderer2.removeClass(regionContainers[i].lastChild, 'is-selected');
+      this.renderer2.addClass(regionContainers[i].lastChild, 'is-not-selected');
+    }
+
+    for (var i = 0; i < this.newRegionsSelected.length; i++) {
+      this.renderer2.addClass(document.getElementById(`${this.newRegionsSelected[i].regionName}-country-container`), 'is-selected');
     }
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
+    this.regionModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
 
   }
 
   public DisplayLanguagesModal(event: MouseEvent) {
     event.stopPropagation();
     //TODO - deselect all regions
-    if (this.languages === undefined) {
-      this.accountService.GetAllLanguages().subscribe((response: any) => {
-        this.languages = response.body;
-      });
+
+    let languageContainers = document.getElementsByClassName('checkbox-container');
+    console.log(languageContainers);
+    console.log(this.newLanguagesSelected);
+    for (var i = 0; i < languageContainers.length; i++) {
+      this.renderer2.removeClass(languageContainers[i].lastChild, 'is-selected');
+      this.renderer2.addClass(languageContainers[i].lastChild, 'is-not-selected');
+    }
+
+    for (var i = 0; i < this.newLanguagesSelected.length; i++) {
+      this.renderer2.addClass(document.getElementById(`${this.newLanguagesSelected[i].languageName}-language-container`), 'is-selected');
     }
 
     this.renderer2.setStyle(this.languageModal.nativeElement, 'display', 'flex');
+    this.languageModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
 
   }
 
@@ -246,51 +279,56 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     event.stopPropagation();
   }
 
-  public ToggleRegionSelection(event: any) {
+
+
+  public ToggleSelection(event: any) {
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
       this.renderer2.removeClass(element, 'is-not-selected');
       this.renderer2.addClass(element, 'is-selected');
-      this.newRegionsSelected.push(JSON.parse(event.target.value));
+      //this.newRegionsSelected.push(JSON.parse(event.target.value));
     }
     else {
       this.renderer2.removeClass(element, 'is-selected');
       this.renderer2.addClass(element, 'is-not-selected');
-      this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
-    }
-  }
-
-  public ToggleLanguagesSelection(event: any) {
-    let element = event.target.nextSibling;
-
-    if (element.className === 'is-not-selected') {
-      this.renderer2.removeClass(element, 'is-not-selected');
-      this.renderer2.addClass(element, 'is-selected');
-      this.newLanguagesSelected.push(JSON.parse(event.target.value));
-    }
-    else {
-      this.renderer2.removeClass(element, 'is-selected');
-      this.renderer2.addClass(element, 'is-not-selected');
-      this.newLanguagesSelected = this.newLanguagesSelected.filter(el => !(el.languageName === JSON.parse(event.target.value).languageName));
+      //this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
     }
   }
 
   public SubmitRegionsForm(regionsForm: NgForm) {
     //populate the regions array with these elements
+    this.newRegionsSelected = new Array<RegionViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newRegionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
     this.user.regions = this.newRegionsSelected;
     //reset form and close it
+    this.proInformationForm.form.markAsDirty();
     regionsForm.resetForm();
-    this.newRegionsSelected = new Array<RegionViewModel>();
     this.OnDocumentClicked(null);
   }
 
+
   public SubmitLanguagesForm(languagesForm: NgForm) {
-    //populate the regions array with these elements
+    this.newLanguagesSelected = new Array<LanguageViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newLanguagesSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
     this.user.languages = this.newLanguagesSelected;
     //reset form and close it
+    this.proInformationForm.form.markAsDirty();
     languagesForm.resetForm();
-    this.newLanguagesSelected = new Array<LanguageViewModel>();
     this.OnDocumentClicked(null);
   }
 

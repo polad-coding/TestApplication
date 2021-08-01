@@ -41,9 +41,15 @@ namespace KPProject.Services
             var oldEmail = oldUser.Email;
             var newUserRegions = new List<UserRegion>();
             var newUserLanguages = new List<UserLanguage>();
+            var newUserEducations = new List<ApplicationUserEducation>();
+            var newUserPositions = new List<ApplicationUserPosition>();
+            var newUserSectorsOfActivity = new List<ApplicationUserSectorOfActivity>();
 
             _dbContext.UserRegions.RemoveRange(_dbContext.UserRegions.Where(ur => ur.ApplicationUserId == userViewModel.Id));
             _dbContext.UserLanguages.RemoveRange(_dbContext.UserLanguages.Where(ul => ul.ApplicationUserId == userViewModel.Id));
+            _dbContext.ApplicationUserEducations.RemoveRange(_dbContext.ApplicationUserEducations.Where(ul => ul.ApplicationUserId == userViewModel.Id));
+            _dbContext.ApplicationUserPositions.RemoveRange(_dbContext.ApplicationUserPositions.Where(ul => ul.ApplicationUserId == userViewModel.Id));
+            _dbContext.ApplicationUserSectorsOfActivities.RemoveRange(_dbContext.ApplicationUserSectorsOfActivities.Where(ul => ul.ApplicationUserId == userViewModel.Id));
 
             await _dbContext.SaveChangesAsync();
 
@@ -59,6 +65,27 @@ namespace KPProject.Services
                 LanguageId = language.Id
             }));
 
+            userViewModel.Positions.ForEach(position => newUserPositions.Add(new ApplicationUserPosition
+            {
+                ApplicationUserId = oldUser.Id,
+                PositionId = position.Id
+            }));
+
+
+            userViewModel.Educations.ForEach(education => newUserEducations.Add(new ApplicationUserEducation
+            {
+                ApplicationUserId = oldUser.Id,
+                EducationId = education.Id
+            }));
+
+            userViewModel.SectorsOfActivities.ForEach(soa => newUserSectorsOfActivity.Add(new ApplicationUserSectorOfActivity
+            {
+                ApplicationUserId = oldUser.Id,
+                SectorOfActivityId = soa.Id
+            }));
+
+            //TODO - solve problems here, add migration, update database, add models, services and implement this feature finally
+
             oldUser.Email = userViewModel.Email;
             oldUser.UserName = userViewModel.Email;
             oldUser.FirstName = userViewModel.FirstName;
@@ -66,15 +93,15 @@ namespace KPProject.Services
             oldUser.Gender = await _dbContext.Gender.FirstAsync(g => g.GenderName == userViewModel.Gender.GenderName);
             oldUser.Regions = newUserRegions;
             oldUser.Languages = newUserLanguages;
-            oldUser.Education = userViewModel.Education;
-            oldUser.Position = userViewModel.Position;
-            oldUser.ProfessionalEmail = userViewModel.ProfessionalEmail;
+            oldUser.Educations = newUserEducations;
+            oldUser.Positions = newUserPositions;
+            oldUser.SectorsOfActivities = newUserSectorsOfActivity;
             oldUser.PhoneNumber = userViewModel.PhoneNumber;
             oldUser.Website = userViewModel.Website;
             oldUser.Bio = userViewModel.Bio;
-            oldUser.SectorOfActivity = userViewModel.SectorOfActivity;
             oldUser.Age = userViewModel.Age;
             oldUser.MyerBriggsCode = userViewModel.MyerBriggsCode;
+            oldUser.AgeGroupModel = await _dbContext.AgeGroups.FirstAsync(ag => ag.GroupAgeRange == userViewModel.AgeGroup.GroupAgeRange);
             oldUser.ProfileImageName = $"{userViewModel.Email}-user-profile-image";
 
             //TODO - here uncomment
@@ -148,7 +175,39 @@ namespace KPProject.Services
                 Region = _dbContext.Regions.First(reg => reg.Id == ur.RegionId)
             }).ToList();
 
+
+            user.Positions = _dbContext.ApplicationUserPositions
+            .Where(element => element.ApplicationUserId == user.Id)
+            .Select(ur => new ApplicationUserPosition()
+            {
+                ApplicationUserId = ur.ApplicationUserId,
+                ApplicationUser = ur.ApplicationUser,
+                PositionId = ur.PositionId,
+                Position = _dbContext.Positions.First(position => position.Id == ur.PositionId)
+            }).ToList();
+
+            user.Educations = _dbContext.ApplicationUserEducations
+            .Where(element => element.ApplicationUserId == user.Id)
+            .Select(ur => new ApplicationUserEducation()
+            {
+                ApplicationUserId = ur.ApplicationUserId,
+                ApplicationUser = ur.ApplicationUser,
+                EducationId = ur.EducationId,
+                Education = _dbContext.Educations.First(education => education.Id == ur.EducationId)
+            }).ToList();
+
+            user.SectorsOfActivities = _dbContext.ApplicationUserSectorsOfActivities
+            .Where(element => element.ApplicationUserId == user.Id)
+            .Select(ur => new ApplicationUserSectorOfActivity()
+            {
+                ApplicationUserId = ur.ApplicationUserId,
+                ApplicationUser = ur.ApplicationUser,
+                SectorOfActivityId = ur.SectorOfActivityId,
+                SectorOfActivity = _dbContext.SectorsOfActivity.First(soa => soa.Id == ur.SectorOfActivityId)
+            }).ToList();
+
             user.Gender = await _dbContext.Gender.FirstAsync(gender => gender.Id == user.GenderId);
+            user.AgeGroupModel = await _dbContext.AgeGroups.FirstOrDefaultAsync(ag => ag.Id == user.AgeGroupModelId);
 
             if (user == null)
             {
@@ -237,6 +296,54 @@ namespace KPProject.Services
                 }
             }
             return null;
+        }
+
+        public async Task<List<PositionModel>> GetAllPositionsAsync()
+        {
+            var positions = await _dbContext.Positions.ToListAsync();
+
+            if (positions == null)
+            {
+                return null;
+            }
+
+            return positions;
+        }
+
+        public async Task<List<EducationModel>> GetAllEducationsAsync()
+        {
+            var educations = await _dbContext.Educations.ToListAsync();
+
+            if (educations == null)
+            {
+                return null;
+            }
+
+            return educations;
+        }
+
+        public async Task<List<SectorOfActivityModel>> GetAllSectorsOfActivitiesAsync()
+        {
+            var sectorsOfActivities = await _dbContext.SectorsOfActivity.ToListAsync();
+
+            if (sectorsOfActivities == null)
+            {
+                return null;
+            }
+
+            return sectorsOfActivities;
+        }
+
+        public async Task<List<AgeGroupModel>> GetAllAgeGroupsAsync()
+        {
+            var ageGroups = await _dbContext.AgeGroups.ToListAsync();
+
+            if (ageGroups == null)
+            {
+                return null;
+            }
+
+            return ageGroups;
         }
     }
 }

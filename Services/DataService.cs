@@ -861,8 +861,11 @@ namespace KPProject.Services
         {
             var user = await _applicationDbContext.Users.FirstAsync((u) => u.Id == userId);
             var userRegions = await _applicationDbContext.UserRegions.Where(ur => ur.ApplicationUserId == userId).ToListAsync();
+            var userEducations = await _applicationDbContext.ApplicationUserEducations.Where(ue => ue.ApplicationUserId == userId).ToListAsync();
+            var userPositions = await _applicationDbContext.ApplicationUserPositions.Where(up => up.ApplicationUserId == userId).ToListAsync();
+            var userSectorsOfActivities = await _applicationDbContext.ApplicationUserSectorsOfActivities.Where(usoa => usoa.ApplicationUserId == userId).ToListAsync();
 
-            var anonymisedUser = new AnonymisedUser() { Age = user.Age, Gender = user.Gender, Education = user.Education, Position = user.Position, MyerBriggsCode = user.MyerBriggsCode, SectorOfActivity = user.SectorOfActivity };
+            var anonymisedUser = new AnonymisedUser() { AgeGroup = user.AgeGroupModel,  Gender = user.Gender, MyerBriggsCode = user.MyerBriggsCode};
 
             await _applicationDbContext.AnonymisedUsers.AddAsync(anonymisedUser);
 
@@ -876,6 +879,38 @@ namespace KPProject.Services
             });
 
             await _applicationDbContext.AnonymisedUserRegions.AddRangeAsync(anonymisedUserRegions);
+
+
+
+            var anonymisedUserPositions = new List<AnonymisedUserPosition>();
+
+            userPositions.ForEach((up) =>
+            {
+                anonymisedUserPositions.Add(new AnonymisedUserPosition() { AnonymisedUserId = anonymisedUser.Id, PositionId = up.PositionId });
+            });
+
+            await _applicationDbContext.AnonymisedUserPositions.AddRangeAsync(anonymisedUserPositions);
+
+
+
+            var anonymisedUserEducations = new List<AnonymisedUserEducation>();
+
+            userEducations.ForEach((ue) =>
+            {
+                anonymisedUserEducations.Add(new AnonymisedUserEducation() { AnonymisedUserId = anonymisedUser.Id, EducationId = ue.EducationId });
+            });
+
+            await _applicationDbContext.AnonymisedUserEducations.AddRangeAsync(anonymisedUserEducations);
+
+
+            var anonymisedUserSectorsOfActivities = new List<AnonymisedUserSectorsOfActivity>();
+
+            userSectorsOfActivities.ForEach((ausoa) =>
+            {
+                anonymisedUserSectorsOfActivities.Add(new AnonymisedUserSectorsOfActivity() { AnonymisedUserId = anonymisedUser.Id, SectorOfActivityId = ausoa.SectorOfActivityId });
+            });
+
+            await _applicationDbContext.AnonymisedUserSectorsOfActivities.AddRangeAsync(anonymisedUserSectorsOfActivities);
 
             await _applicationDbContext.SaveChangesAsync();
 
@@ -1133,6 +1168,34 @@ namespace KPProject.Services
             }
 
             return false;
+        }
+
+        public async Task<List<PositionModel>> GetSelectedPositionsForCurrentUserAsync(string userId)
+        {
+            var positions = await _applicationDbContext.ApplicationUserPositions.Where(up => up.ApplicationUserId == userId).Select(up => up.Position).ToListAsync();
+
+            return positions;
+        }
+
+        public async Task<List<EducationModel>> GetSelectedEducationsForCurrentUserAsync(string userId)
+        {
+            var educations = await _applicationDbContext.ApplicationUserEducations.Where(ue => ue.ApplicationUserId == userId).Select(ue => ue.Education).ToListAsync();
+
+            return educations;
+        }
+
+        public async Task<List<SectorOfActivityModel>> GetSelectedSectorsOfActivityForCurrentUserAsync(string userId)
+        {
+            var sectorOfActivity = await _applicationDbContext.ApplicationUserSectorsOfActivities.Where(usoa => usoa.ApplicationUserId == userId).Select(usoa => usoa.SectorOfActivity).ToListAsync();
+
+            return sectorOfActivity;
+        }
+
+        public async Task<List<LanguageModel>> GetSelectedLanguagesForCurrentUserAsync(string userId)
+        {
+            var languages = await _applicationDbContext.UserLanguages.Where(ul => ul.ApplicationUserId == userId).Select(ul => ul.Language).ToListAsync();
+
+            return languages;
         }
     }
 }

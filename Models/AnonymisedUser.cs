@@ -10,10 +10,11 @@ namespace KPProject.Models
         public int Id { get; set; }
         public Gender Gender { get; set; }
         public List<AnonymisedUserRegion> AnonymisedUserRegions { get; set; }
-        public string Education { get; set; }
-        public string Position { get; set; }
-        public string SectorOfActivity { get; set; }
-        public int Age { get; set; }
+        public List<AnonymisedUserEducation> Educations { get; set; }
+        public List<AnonymisedUserPosition> Positions { get; set; }
+        public List<AnonymisedUserSectorsOfActivity> SectorsOfActivities { get; set; }
+        public int AgeGroupId { get; set; }
+        public AgeGroupModel AgeGroup { get; set; }
         public string MyerBriggsCode { get; set; }
     }
 }

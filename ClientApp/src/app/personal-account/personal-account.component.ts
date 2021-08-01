@@ -11,6 +11,10 @@ import { DataService } from '../../app-services/data-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CLIENT_RENEG_LIMIT } from 'tls';
 import { Element } from '@angular/compiler/src/render3/r3_ast';
+import { PositionViewModel } from '../../view-models/position-view-model';
+import { EducationViewModel } from '../../view-models/education-view-model';
+import { SectorOfActivityViewModel } from '../../view-models/sector-of-activity-view-model';
+import { AgeGroupViewModel } from '../../view-models/age-group-view-model';
 
 @Component({
   selector: 'app-personal-account',
@@ -27,11 +31,27 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   public regions: Array<RegionViewModel>;
+  public positions: Array<PositionViewModel>;
+  public educations: Array<EducationViewModel>;
+  public ageGroups: Array<AgeGroupViewModel>;
+  public sectorsOfActivities: Array<SectorOfActivityViewModel>;
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
   @ViewChild('gendersModalContainer', { read: ElementRef, static: false })
   public genderModal: ElementRef;
+  @ViewChild('ageGroupsModalContainer', { read: ElementRef, static: false })
+  public ageGroupsModal: ElementRef;
+  @ViewChild('positionModalContainer', { read: ElementRef, static: false })
+  public positionModal: ElementRef;
+  @ViewChild('educationModalContainer', { read: ElementRef, static: false })
+  public educationModal: ElementRef;
+  @ViewChild('sectorsOfActivitiesModalContainer', { read: ElementRef, static: false })
+  public sectorsOfActivitiesModal: ElementRef;
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
+  public newPositionsSelected: Array<PositionViewModel> = new Array<PositionViewModel>();
+  public newEducationsSelected: Array<EducationViewModel> = new Array<EducationViewModel>();
+  public newSectorsOfActivitiesSelected: Array<SectorOfActivityViewModel> = new Array<SectorOfActivityViewModel>();
+  public newAgeGroupSelected: AgeGroupViewModel = new AgeGroupViewModel(undefined, undefined);
   public errorMessage: string = '';
   public selectedTab: string = 'my-account-section';
   public formHasError: boolean = false;
@@ -66,23 +86,58 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
       this._router.navigate(['practitionerAccount']);
     }
 
+    this.accountService.GetAllAgeGroups().subscribe((response: any) => {
+      this.ageGroups = response.body;
+      console.log(this.ageGroups);
+    });
+
     this.accountService.GetAllRegions().subscribe((response: any) => {
       this.regions = response.body;
+    });
+
+    this.accountService.GetAllEducations().subscribe((response: any) => {
+      this.educations = response.body;
+    });
+
+    this.accountService.GetAllPositions().subscribe((response: any) => {
+      this.positions = response.body;
+
+    });
+
+    this.accountService.GetAllSectorsOfActivities().subscribe((response: any) => {
+      this.sectorsOfActivities = response.body;
     });
 
     this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {
       this.newRegionsSelected = response.body;
     });
 
+    this._dataService.GetSelectedEducationsForCurrentUser().subscribe((response: any) => {
+      this.newEducationsSelected = response.body;
+    });
+
+    this._dataService.GetSelectedPositionsForCurrentUser().subscribe((response: any) => {
+      this.newPositionsSelected = response.body;
+    });
+
+    this._dataService.GetSelectedSectorsOfActivityForCurrentUser().subscribe((response: any) => {
+      this.newSectorsOfActivitiesSelected = response.body;
+    });
+
+
+    //TODO - add age group modal
+
     localStorage.removeItem('currentTabName');
     if (this.user == null || this.user == undefined) {
       this.accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
+        console.log(this.user);
         this.oldEmail = this.user.email;
         this.oldName = this.user.firstName;
         this.oldSurname = this.user.lastName;
 
         let currentTab = localStorage.getItem('personalAccountTabName');
+
         if (currentTab == null) {
           localStorage.setItem('personalAccountTabName', 'my-account-section');
           this.selectedTab = localStorage.getItem('personalAccountTabName');
@@ -114,7 +169,6 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
       this._dataService.UserHasUnsignedSurveys(this.user.id).subscribe((response: any) => {
         this.userHasUnsignedSurveys = response.body;
-        console.log(this.userHasUnsignedSurveys);
       });
     }
 
@@ -186,9 +240,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
     //TODO - deselect all regions
-    console.log(this.newRegionsSelected);
 
-    let regionContainers = document.getElementsByClassName('region-checkbox-container');
+    let regionContainers = document.getElementsByClassName('checkbox-container');
 
     for (var i = 0; i < regionContainers.length; i++) {
       this._renderer2.removeClass(regionContainers[i].lastChild, 'is-selected');
@@ -201,6 +254,64 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
     this.regionModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  public DisplayPositionModal(event: MouseEvent) {
+    event.stopPropagation();
+
+    let positionsContainers = document.getElementsByClassName('checkbox-container');
+
+    for (var i = 0; i < positionsContainers.length; i++) {
+      this._renderer2.removeClass(positionsContainers[i].lastChild, 'is-selected');
+      this._renderer2.addClass(positionsContainers[i].lastChild, 'is-not-selected');
+    }
+
+    for (var i = 0; i < this.newPositionsSelected.length; i++) {
+      this._renderer2.addClass(document.getElementById(`${this.newPositionsSelected[i].positionName}-position-container`), 'is-selected');
+    }
+
+    this.renderer2.setStyle(this.positionModal.nativeElement, 'display', 'flex');
+    this.positionModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+
+  }
+
+  public DisplayEducationsModal(event: MouseEvent) {
+    event.stopPropagation();
+
+    let educationsContainers = document.getElementsByClassName('checkbox-container');
+    console.log(educationsContainers);
+
+    for (var i = 0; i < educationsContainers.length; i++) {
+      this._renderer2.removeClass(educationsContainers[i].lastChild, 'is-selected');
+      this._renderer2.addClass(educationsContainers[i].lastChild, 'is-not-selected');
+    }
+
+    for (var i = 0; i < this.newEducationsSelected.length; i++) {
+      this._renderer2.addClass(document.getElementById(`${this.newEducationsSelected[i].educationName}-education-container`), 'is-selected');
+    }
+
+    this.renderer2.setStyle(this.educationModal.nativeElement, 'display', 'flex');
+    this.educationModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+
+  }
+
+  public DisplaySectorsOfActivitiesModal(event: MouseEvent) {
+    event.stopPropagation();
+
+    let sectorsOfActivitiesContainers = document.getElementsByClassName('checkbox-container');
+
+    for (var i = 0; i < sectorsOfActivitiesContainers.length; i++) {
+      this._renderer2.removeClass(sectorsOfActivitiesContainers[i].lastChild, 'is-selected');
+      this._renderer2.addClass(sectorsOfActivitiesContainers[i].lastChild, 'is-not-selected');
+    }
+
+    for (var i = 0; i < this.newSectorsOfActivitiesSelected.length; i++) {
+      this._renderer2.addClass(document.getElementById(`${this.newSectorsOfActivitiesSelected[i].sectorOfActivityName}-sector-of-activity-container`), 'is-selected');
+    }
+
+    this.renderer2.setStyle(this.sectorsOfActivitiesModal.nativeElement, 'display', 'flex');
+    this.sectorsOfActivitiesModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+
   }
 
   public EditInputField(fieldName: string, event: MouseEvent) {
@@ -219,7 +330,6 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     personalInformationForm.control.enable();
 
     if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
-      console.info(this.formHasError);
       setTimeout(() => {
         document.getElementById('error-message-container').style.display = 'flex';
         document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
@@ -335,14 +445,12 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     let nextSibling = this.genderModal.nativeElement.firstChild.children[1].firstChild;
 
     while (nextSibling) {
-      console.log(nextSibling);
       this._renderer2.removeClass(nextSibling, 'gender-option-selected');
       nextSibling = nextSibling.nextElementSibling;
     }
 
 
     for (var i = 0; i < genderContainer.children.length; i++) {
-      console.log(genderContainer.children[i].innerText.toString());
       if (genderContainer.children[i].innerText.toString() == this.user.gender.genderName) {
         this._renderer2.addClass(genderContainer.children[i], 'gender-option-selected');
         break;
@@ -351,6 +459,53 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     }
 
     this.genderModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  public SelectAgeGroup(event, ageGroup: AgeGroupViewModel) {
+    this.newAgeGroupSelected = ageGroup;
+
+    let nextSibling = event.target.nextElementSibling;
+
+    while (nextSibling) {
+      this._renderer2.removeClass(nextSibling, 'age-group-option-selected');
+      nextSibling = nextSibling.nextElementSibling;
+    }
+
+    let previousSibling = event.target.previousElementSibling;
+
+    while (previousSibling) {
+      this._renderer2.removeClass(previousSibling, 'age-group-option-selected');
+      previousSibling = previousSibling.previousElementSibling;
+    }
+
+
+    this._renderer2.addClass(event.target, 'age-group-option-selected');
+  }
+
+  public DisplayAgeGroupModal(event: any) {
+    event.stopPropagation();
+    this._renderer2.setStyle(this.ageGroupsModal.nativeElement, 'display', 'flex');
+    this.newAgeGroupSelected = this.user.ageGroup;
+
+    let ageGroupContainer = this.ageGroupsModal.nativeElement.firstChild.children[1];
+
+    let nextSibling = this.ageGroupsModal.nativeElement.firstChild.children[1].firstChild.nextSibling;
+
+    while (nextSibling) {
+      this._renderer2.removeClass(nextSibling, 'age-group-option-selected');
+      nextSibling = nextSibling.nextElementSibling;
+    }
+
+
+    for (var i = 0; i < ageGroupContainer.children.length; i++) {
+      if (ageGroupContainer.children[i].innerText.toString() == this.user.ageGroup.groupAgeRange) {
+        this._renderer2.addClass(ageGroupContainer.children[i], 'age-group-option-selected');
+        break;
+      }
+
+    }
+
+    this.ageGroupsModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
   }
 
   public SelectGender(event: any, gender: string) {
@@ -375,12 +530,18 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   }
 
   public SetGender(personalInformationForm: NgForm) {
-    console.log(this.personalInformationForm);
     let newGender = new GenderViewModel();
     this.personalInformationForm.form.markAsDirty();
     newGender.genderName = this.selectedGender;
     this.user.gender = newGender;
     this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
+  }
+
+  public SetAgeGroup(personalInformationForm: NgForm) {
+    let newAgeGroup = new AgeGroupViewModel(this.newAgeGroupSelected.id, this.newAgeGroupSelected.groupAgeRange);
+    this.personalInformationForm.form.markAsDirty();
+    this.user.ageGroup = newAgeGroup;
+    this._renderer2.setStyle(this.ageGroupsModal.nativeElement, 'display', 'none');
   }
 
   @HostListener('document:click', ['$event'])
@@ -393,6 +554,10 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
 
     this.renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
     this.renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
+    this.renderer2.setStyle(this.positionModal.nativeElement, 'display', 'none');
+    this.renderer2.setStyle(this.educationModal.nativeElement, 'display', 'none');
+    this.renderer2.setStyle(this.sectorsOfActivitiesModal.nativeElement, 'display', 'none');
+    this.renderer2.setStyle(this.ageGroupsModal.nativeElement, 'display', 'none');
     document.getElementById('error-message-container').style.display = 'none';
   }
 
@@ -400,7 +565,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     event.stopPropagation();
   }
 
-  public ToggleRegionSelection(event: any) {
+  public ToggleSelection(event: any) {
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
@@ -427,6 +592,57 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
     //reset form and close it
     this.personalInformationForm.form.markAsDirty();
     regionsForm.resetForm();
+    this.OnDocumentClicked(null);
+  }
+
+  public SubmitPositionForm(positionForm: NgForm) {
+    this.newPositionsSelected = new Array<PositionViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newPositionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
+    this.user.positions = this.newPositionsSelected;
+    //reset form and close it
+    this.personalInformationForm.form.markAsDirty();
+    positionForm.resetForm();
+    this.OnDocumentClicked(null);
+  }
+
+  public SubmitEducationForm(educationForm: NgForm) {
+    this.newEducationsSelected = new Array<EducationViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newEducationsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
+    this.user.educations = this.newEducationsSelected;
+    //reset form and close it
+    this.personalInformationForm.form.markAsDirty();
+    educationForm.resetForm();
+    this.OnDocumentClicked(null);
+  }
+
+  public SubmitSectorOfActivityForm(sectorOfActivityForm: NgForm) {
+    this.newSectorsOfActivitiesSelected = new Array<SectorOfActivityViewModel>();
+    let elements = document.getElementsByClassName('is-selected');
+
+    for (var i = 0; i < elements.length; i++) {
+      this.newSectorsOfActivitiesSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    }
+
+
+
+    this.user.sectorsOfActivities = this.newSectorsOfActivitiesSelected;
+    //reset form and close it
+    this.personalInformationForm.form.markAsDirty();
+    sectorOfActivityForm.resetForm();
     this.OnDocumentClicked(null);
   }
 

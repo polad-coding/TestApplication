@@ -15,9 +15,10 @@ namespace KPProject.ViewModels
         public Gender Gender { get; set; }
         public string Email { get; set; }
         public List<RegionModel> Regions { get; set; }
-        public string Education { get; set; }
-        public string Position { get; set; }
-        public string SectorOfActivity { get; set; }
+        public List<PositionModel> Positions { get; set; }
+        public List<EducationModel> Educations { get; set; }
+        public List<SectorOfActivityModel> SectorsOfActivities { get; set; }
+        public AgeGroupModel AgeGroup { get; set; }
         public string PhoneNumber { get; set; }
         public string ProfessionalEmail { get; set; }
         public string Bio { get; set; }

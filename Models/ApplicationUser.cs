@@ -14,9 +14,6 @@ namespace KPProject.Models
         public int GenderId { get; set; }
         public Gender Gender { get; set; } = new Gender();
         public virtual List<UserRegion> Regions { get; set; } = new List<UserRegion>();
-        public string Education { get; set; }
-        public string SectorOfActivity { get; set; }
-        public string Position { get; set; }
         public string ProfessionalEmail { get; set; }
         public string Bio { get; set; }
         public virtual List<UserLanguage> Languages { get; set; } = new List<UserLanguage>();
@@ -25,6 +22,11 @@ namespace KPProject.Models
         public string ProfileImageName { get; set; }
         public virtual List<ApplicationUserCertification> ApplicationUserCertifications { get; set; } = new List<ApplicationUserCertification>();
         public List<ApplicationUserAssociatedCoupon> ApplicationUserAssociatedCoupons { get; set; }
+        public List<ApplicationUserPosition> Positions { get; set; }
+        public List<ApplicationUserEducation> Educations { get; set; }
+        public List<ApplicationUserSectorOfActivity> SectorsOfActivities { get; set; }
+        public int AgeGroupModelId { get; set; }
+        public AgeGroupModel AgeGroupModel { get; set; }
 
     }
 }

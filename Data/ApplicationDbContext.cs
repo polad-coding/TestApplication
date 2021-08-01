@@ -32,6 +32,16 @@ namespace KPProject.Data
         public DbSet<GeneralCoupon> GeneralCoupons { get; set; }
         public DbSet<AssociatedCoupon> AssociatedCoupons { get; set; }
         public DbSet<ApplicationUserAssociatedCoupon> ApplicationUserAssociatedCoupons { get; set; }
+        public DbSet<EducationModel> Educations { get; set; }
+        public DbSet<PositionModel> Positions { get; set; }
+        public DbSet<SectorOfActivityModel> SectorsOfActivity { get; set; }
+        public DbSet<ApplicationUserEducation> ApplicationUserEducations { get; set; }
+        public DbSet<ApplicationUserPosition> ApplicationUserPositions { get; set; }
+        public DbSet<ApplicationUserSectorOfActivity> ApplicationUserSectorsOfActivities { get; set; }
+        public DbSet<AnonymisedUserEducation> AnonymisedUserEducations { get; set; }
+        public DbSet<AnonymisedUserPosition> AnonymisedUserPositions { get; set; }
+        public DbSet<AnonymisedUserSectorsOfActivity> AnonymisedUserSectorsOfActivities { get; set; }
+        public DbSet<AgeGroupModel> AgeGroups { get; set; }
 
 
         public ApplicationDbContext(
@@ -48,9 +58,15 @@ namespace KPProject.Data
             builder.Entity<AnonymisedUserRegion>().HasKey(aur => new { aur.AnonymisedUserId, aur.RegionId });
             builder.Entity<ApplicationUserAssociatedCoupon>().HasKey(auac => new { auac.ApplicationUserId, auac.AssociatedCouponId });
             builder.Entity<ApplicationUserCertification>().HasKey(aus => new { aus.ApplicationUserId, aus.CertificationId });
+            builder.Entity<ApplicationUserEducation>().HasKey(aue => new { aue.ApplicationUserId, aue.EducationId });
+            builder.Entity<ApplicationUserPosition>().HasKey(aup => new { aup.ApplicationUserId, aup.PositionId});
+            builder.Entity<ApplicationUserSectorOfActivity>().HasKey(ausoa => new { ausoa.ApplicationUserId, ausoa.SectorOfActivityId});
             builder.Entity<SurveyFirstStageModel>().HasKey(sft => new { sft.SurveyId, sft.ValueId });
             builder.Entity<SurveySecondStageModel>().HasKey(sss => new { sss.SurveyId, sss.ValueId });
             builder.Entity<SurveyThirdStageModel>().HasKey(sts => new { sts.SurveyId, sts.ValueId });
+            builder.Entity<AnonymisedUserEducation>().HasKey(aue => new { aue.AnonymisedUserId, aue.EducationId });
+            builder.Entity<AnonymisedUserPosition>().HasKey(aup => new { aup.AnonymisedUserId, aup.PositionId });
+            builder.Entity<AnonymisedUserSectorsOfActivity>().HasKey(ausoa => new { ausoa.AnonymisedUserId, ausoa.SectorOfActivityId });
 
             builder.Entity<GeneralCoupon>().HasIndex(gc => gc.CouponBody).IsUnique();
             builder.Entity<AssociatedCoupon>().HasIndex(ac => ac.CouponBody).IsUnique();

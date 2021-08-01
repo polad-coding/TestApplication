@@ -13,10 +13,14 @@ namespace KPProject.Interfaces
         List<ValueModel> GetAllValues();
         Task<UserViewModel> GetCurrentUserAsync(string userId);
         Task<List<RegionModel>> GetAllRegionsAsync();
+        Task<List<PositionModel>> GetAllPositionsAsync();
+        Task<List<EducationModel>> GetAllEducationsAsync();
+        Task<List<SectorOfActivityModel>> GetAllSectorsOfActivitiesAsync();
         Task<List<LanguageModel>> GetAllLanguagesAsync();
         Task<bool> MailIsRegisteredAsync(string mail);
         Task<bool> ProfessionalEmailIsRegisteredAsync(string professionalEmail);
         Task<UserViewModel> ChangeUserPersonalDataAsync(UserViewModel userViewModel);
         Task<string> UploadProfileImageAsync(string data, string userId);
+        Task<List<AgeGroupModel>> GetAllAgeGroupsAsync();
     }
 }

@@ -73,6 +73,42 @@ namespace KPProject.Controllers
             return Ok(regions);
         }
 
+        [HttpGet]
+        [Route("GetSelectedLanguagesForCurrentUser")]
+        public async Task<ActionResult<List<LanguageModel>>> GetSelectedLanguagesForCurrentUserAsync()
+        {
+            var languages = await _dataService.GetSelectedLanguagesForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(languages);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedPositionsForCurrentUser")]
+        public async Task<ActionResult<List<PositionModel>>> GetSelectedPositionsForCurrentUserAsync()
+        {
+            var positions = await _dataService.GetSelectedPositionsForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(positions);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedEducationsForCurrentUser")]
+        public async Task<ActionResult<List<EducationModel>>> GetSelectedEducationsForCurrentUserAsync()
+        {
+            var educations = await _dataService.GetSelectedEducationsForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(educations);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedSectorsOfActivityForCurrentUser")]
+        public async Task<ActionResult<List<SectorOfActivityModel>>> GetSelectedSectorsOfActivityForCurrentUserAsync()
+        {
+            var sectorsOfActivity = await _dataService.GetSelectedSectorsOfActivityForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(sectorsOfActivity);
+        }
+
         [HttpPost]
         [Route("DeleteSurveySecondStageResults")]
         public async Task<ActionResult> DeleteSurveySecondStageResultsAsync([FromBody] int surveyId)

@@ -36,7 +36,6 @@ import { WrapUpComponent } from './wrap-up/wrap-up.component';
 import { PersonalSurveyResultsAndReportsComponent } from './personal-survey-results-and-reports/personal-survey-results-and-reports.component';
 import { PractitionerSurveyResultsAndReportsComponent } from './practitioner-survey-results-and-reports/practitioner-survey-results-and-reports.component';
 import { EnterCodePageComponent } from './enter-code-page/enter-code-page.component';
-import { EnterSurveyAccountFormComponent } from './enter-survey-account-form/enter-survey-account-form.component';
 import { CertificationAndMembershipComponent } from './certification-and-membership/certification-and-membership.component';
 import { PractitionersDirectoryComponent } from './practitioners-directory/practitioners-directory.component';
 import { PersonalReportComponent } from './personal-report/personal-report.component';
@@ -73,7 +72,6 @@ export function tokenGetter() {
     PersonalSurveyResultsAndReportsComponent,
     PractitionerSurveyResultsAndReportsComponent,
     EnterCodePageComponent,
-    EnterSurveyAccountFormComponent,
     CertificationAndMembershipComponent,
     PractitionersDirectoryComponent,
     PersonalReportComponent,

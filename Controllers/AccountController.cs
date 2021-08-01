@@ -52,6 +52,59 @@ namespace KPProject.Controllers
             return BadRequest();
         }
 
+        [HttpGet("AgeGroups")]
+        public async Task<ActionResult> GetAllAgeGroupsAsync()
+        {
+            var ageGroups = await _accountService.GetAllAgeGroupsAsync();
+
+            if (ageGroups != null)
+            {
+                return Ok(ageGroups);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("Positions")]
+        public async Task<ActionResult> GetAllPositionsAsync()
+        {
+            var positions = await _accountService.GetAllPositionsAsync();
+
+            if (positions != null)
+            {
+                return Ok(positions);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("Educations")]
+        public async Task<ActionResult> GetAllEducationsAsync()
+        {
+            var educations = await _accountService.GetAllEducationsAsync();
+
+            if (educations != null)
+            {
+                return Ok(educations);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("SectorsOfActivities")]
+        public async Task<ActionResult> GetAllSectorsOfActivitiesAsync()
+        {
+            var sectorsOfActivities = await _accountService.GetAllSectorsOfActivitiesAsync();
+
+            if (sectorsOfActivities != null)
+            {
+                return Ok(sectorsOfActivities);
+            }
+
+            return BadRequest();
+        }
+
+
         [HttpGet("Languages")]
         public async Task<ActionResult> GetAllLanguagesAsync()
         {

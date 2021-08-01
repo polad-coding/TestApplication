@@ -69,6 +69,14 @@
     <Compile Remove="Migrations\20210523092138_Added_Memebership_Entity_To_Database.Designer.cs" />
     <Compile Remove="Migrations\20210706074200_Added_CouponBody_Field_To_Order_Entity_And_Changed_The_Name_Of_The_Field_In_AC_Entity.cs" />
     <Compile Remove="Migrations\20210706074200_Added_CouponBody_Field_To_Order_Entity_And_Changed_The_Name_Of_The_Field_In_AC_Entity.Designer.cs" />
+    <Compile Remove="Migrations\20210730171844_Added_Secondary_Account_Information_Fields_Entities.cs" />
+    <Compile Remove="Migrations\20210730171844_Added_Secondary_Account_Information_Fields_Entities.Designer.cs" />
+    <Compile Remove="Migrations\20210731190143_Added_Age_Group_Entity.cs" />
+    <Compile Remove="Migrations\20210731190143_Added_Age_Group_Entity.Designer.cs" />
+    <Compile Remove="Migrations\20210731190223_Added_Age_Group_Entity.cs" />
+    <Compile Remove="Migrations\20210731190223_Added_Age_Group_Entity.Designer.cs" />
+    <Compile Remove="Migrations\20210731190608_Added_Age_Group_Entity.cs" />
+    <Compile Remove="Migrations\20210731190608_Added_Age_Group_Entity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,8 +84,10 @@
     <None Remove="ClientApp\src\app-services\data-service.ts" />
     <None Remove="ClientApp\src\app-services\email-sender-service.ts" />
     <None Remove="ClientApp\src\app-services\survey-service.ts" />
+    <None Remove="ClientApp\src\view-models\age-group-view-model.ts" />
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\certification-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\education-view-model.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
     <None Remove="ClientApp\src\view-models\general-coupon-view-model.ts" />
     <None Remove="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
@@ -85,11 +95,13 @@
     <None Remove="ClientApp\src\view-models\membership-view-model.ts" />
     <None Remove="ClientApp\src\view-models\message-view-model.ts" />
     <None Remove="ClientApp\src\view-models\order-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\position-view-model.ts" />
     <None Remove="ClientApp\src\view-models\practitioners-search-filter-view-model.ts" />
     <None Remove="ClientApp\src\view-models\region-view-model.ts" />
     <None Remove="ClientApp\src\view-models\register-view-model.ts" />
     <None Remove="ClientApp\src\view-models\report-html-content-view-model.ts" />
     <None Remove="ClientApp\src\view-models\report-table-value-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\sector-of-activity-view-model.ts" />
     <None Remove="ClientApp\src\view-models\send-orders-receipt-view-model.ts" />
     <None Remove="ClientApp\src\view-models\signin-view-model.ts" />
     <None Remove="ClientApp\src\view-models\survey-first-stage-save-request-model.ts" />
@@ -139,8 +151,10 @@
     <TypeScriptCompile Include="ClientApp\src\app-services\data-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\email-sender-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\age-group-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\certification-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\education-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\general-coupon-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
@@ -148,10 +162,12 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\membership-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\message-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\order-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\position-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\practitioners-search-filter-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\report-html-content-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\report-table-value-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\sector-of-activity-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\send-orders-receipt-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\signin-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\register-view-model.ts" />
