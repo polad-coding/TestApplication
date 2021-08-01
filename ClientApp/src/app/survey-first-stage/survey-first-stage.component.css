@@ -147,8 +147,13 @@
   height: 40px;
 }
 
-*::-webkit-scrollbar{
-    width:30px;
+*::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 30px;
+}
+
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
 }
 
 #step-title-container {

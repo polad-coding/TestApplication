@@ -52,8 +52,8 @@
       </div>
     </div>
     <div id="importance-buttons-section">
-      <button [ngClass]="{'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'important', 'not-important-button-style': currentValueClickedAtSelectionImportance == 'not-important'}" (click)="MarkAsLessImportant($event)">Less important</button>
-      <button [ngClass]="{'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'not-important', 'important-button-style': currentValueClickedAtSelectionImportance == 'important'}" (click)="MarkAsImportant($event)">Important</button>
+      <button [ngClass]="{'disable-dbl-tap-zoom':true, 'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'important', 'not-important-button-style': currentValueClickedAtSelectionImportance == 'not-important'}" (click)="MarkAsLessImportant($event)">Less important</button>
+      <button [ngClass]="{'disable-dbl-tap-zoom':true, 'decision-button': currentValueClickedAtSelectionImportance == null || currentValueClickedAtSelectionImportance == 'not-important', 'important-button-style': currentValueClickedAtSelectionImportance == 'important'}" (click)="MarkAsImportant($event)">Important</button>
     </div>
   </div>
   <div id="values-selected-stats-section-mobile" *ngIf="isSelectionStage && isMobile">
