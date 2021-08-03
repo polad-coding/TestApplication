@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.values-list {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
 #values-selected-stats-section {
   color: #006F91;
   font-size: 0.8rem;

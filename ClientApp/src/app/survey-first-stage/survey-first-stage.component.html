@@ -104,7 +104,7 @@
     </div>
     <div id="less-important-values-container">
       <p class="title">Less important</p>
-      <div cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="lessImportantValues" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
+      <div class="values-list" cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="lessImportantValues" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
         <ul>
           <li *ngFor="let value of lessImportantValues;" (click)="DisplayValueModal($event, value,'value-is-not-important')" cdkDrag>
             <span class="value-is-not-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>
@@ -115,7 +115,7 @@
     </div>
     <div id="important-values-container">
       <p class="title">Important</p>
-      <div cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValues" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
+      <div class="values-list" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValues" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':descriptiveModeIsOn, 'validation-container-row-mode':!descriptiveModeIsOn}">
         <ul>
           <li *ngFor="let value of importantValues" (click)="DisplayValueModal($event, value, 'value-is-important')" cdkDrag>
             <span class="value-is-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>

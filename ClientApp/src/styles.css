@@ -51,7 +51,6 @@ button{
   -webkit-appearance: none;
   width: 10px;
   height: 10px;
-  -webkit-overflow-scrolling: auto;
 }
 
   *::-webkit-scrollbar-track {

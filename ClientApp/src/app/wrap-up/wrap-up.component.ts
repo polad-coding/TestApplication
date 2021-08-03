@@ -86,6 +86,9 @@ export class WrapUpComponent implements OnInit {
             this.resultsSectionMyChart = new Chart('resultsSectionMyChart', {
               type: 'polarArea',
               options: {
+                tooltips: {
+                  enabled: false
+                },
                 animation: {
                   onComplete: () => {
                     this.imageString = this.resultsSectionMyChart.toBase64Image();
@@ -144,6 +147,9 @@ export class WrapUpComponent implements OnInit {
             var myChart = new Chart('myChart', {
               type: 'polarArea',
               options: {
+                tooltips: {
+                  enabled: false
+                },
                 legend: {
                   display: false,
                   position: 'bottom',

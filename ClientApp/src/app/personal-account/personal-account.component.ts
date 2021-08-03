@@ -175,6 +175,16 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
   }
 
   public AssociateUserDataToTheSurvey(personalInformationForm: NgForm) {
+    if (!this.ModalFieldsAreNotEmpty()) {
+      setTimeout(() => {
+        document.getElementById('error-message-container').style.display = 'flex';
+        document.getElementById('error-message-container').scrollIntoView({ behavior: 'smooth' });
+        this.errorMessage = "Some of the madatory fields are not filled, please compleate all mandatory fields!"
+        this.formHasError = true;
+      }, 100);
+      return;
+    }
+
     this.ChangeProfileData(null, personalInformationForm);
 
     if (!this.formHasError) {
@@ -184,6 +194,14 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit, OnChange
         }
       });
     }
+  }
+
+  private ModalFieldsAreNotEmpty(): boolean {
+    if (this.user.regions.length > 0 && this.user.educations.length > 0 && this.user.positions.length > 0 && this.user.sectorsOfActivities.length > 0 && this.user.ageGroup != undefined) {
+      return true;
+    }
+
+    return false;
   }
 
   public SelectTab(event: any) {
