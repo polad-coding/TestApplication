@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 
@@ -31,7 +31,6 @@ import { SurveySecondStageComponent } from './survey-second-stage/survey-second-
 import { AppSettingsService } from '../app-services/app-settings.service';
 import { SurveyThirdStageComponent } from './survey-third-stage/survey-third-stage.component';
 import { GetCodesComponent } from './get-codes/get-codes.component';
-import { OrderViewModel } from '../view-models/order-view-model';
 import { WrapUpComponent } from './wrap-up/wrap-up.component';
 import { PersonalSurveyResultsAndReportsComponent } from './personal-survey-results-and-reports/personal-survey-results-and-reports.component';
 import { PractitionerSurveyResultsAndReportsComponent } from './practitioner-survey-results-and-reports/practitioner-survey-results-and-reports.component';
@@ -42,6 +41,8 @@ import { PersonalReportComponent } from './personal-report/personal-report.compo
 import { PractitionerReportComponent } from './practitioner-report/practitioner-report.component';
 import { AuthorizationPageComponent } from './authorization-page/authorization-page.component';
 import { BackOfficePageComponent } from './back-office-page/back-office-page.component';
+import { CouponManagementToolsPageComponent } from './coupon-management-tools-page/coupon-management-tools-page.component';
+import { PersonalMyAccountSectionComponent } from './personal-my-account-section/personal-my-account-section.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -77,7 +78,9 @@ export function tokenGetter() {
     PersonalReportComponent,
     PractitionerReportComponent,
     AuthorizationPageComponent,
-    BackOfficePageComponent
+    BackOfficePageComponent,
+    CouponManagementToolsPageComponent,
+    PersonalMyAccountSectionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -107,7 +110,6 @@ export function tokenGetter() {
       { path: 'practitionerReport', component: PractitionerReportComponent },
       { path: 'wrap-up', component: WrapUpComponent },
       { path: 'enterCode', component: EnterCodePageComponent },
-      //{ path: 'enterSurveyAccount', component: EnterSurveyAccountFormComponent },
       { path: 'practitionersDirectory', component: PractitionersDirectoryComponent },
       { path: 'backOffice', component: BackOfficePageComponent }
     ]),

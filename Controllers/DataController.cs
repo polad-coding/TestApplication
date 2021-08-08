@@ -42,6 +42,20 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
+        [Route("CreateAssociatedCoupon")]
+        public async Task<ActionResult> CreateAssociatedCouponAsync(AssociatedCouponViewModel associatedCoupon)
+        {
+            var operactionSucceded = await _dataService.CreateAssociatedCouponAsync(associatedCoupon);
+
+            if (operactionSucceded)
+            {
+                return Ok();
+            }
+
+            return StatusCode(500);
+        }
+
+        [HttpPost]
         [Route("CheckIfAllGeneralCouponsAreUnique")]
         public async Task<ActionResult> CheckIfAllGeneralCouponsAreUniqueAsync(List<GeneralCoupon> generalCoupons)
         {

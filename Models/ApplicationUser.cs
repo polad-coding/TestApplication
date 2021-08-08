@@ -25,7 +25,7 @@ namespace KPProject.Models
         public List<ApplicationUserPosition> Positions { get; set; }
         public List<ApplicationUserEducation> Educations { get; set; }
         public List<ApplicationUserSectorOfActivity> SectorsOfActivities { get; set; }
-        public int AgeGroupModelId { get; set; }
+        public int? AgeGroupModelId { get; set; }
         public AgeGroupModel AgeGroupModel { get; set; }
 
     }

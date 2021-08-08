@@ -86,6 +86,7 @@
     <None Remove="ClientApp\src\app-services\survey-service.ts" />
     <None Remove="ClientApp\src\view-models\age-group-view-model.ts" />
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\associated-coupon-view-model.ts" />
     <None Remove="ClientApp\src\view-models\certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\education-view-model.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
@@ -153,6 +154,7 @@
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\age-group-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\application-user-certification-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\associated-coupon-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\education-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\general-coupon-view-model.ts" />
@@ -178,6 +180,10 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\transfer-codes-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\user-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\value-view-model.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\helper-methods\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

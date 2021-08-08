@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AssociatedCouponViewModel } from "../view-models/associated-coupon-view-model";
 import { GenderViewModel } from "../view-models/gender-view-model";
 import { GeneralCouponViewModel } from "../view-models/general-coupon-view-model";
 import { LanguageViewModel } from "../view-models/language-view-model";
@@ -29,6 +30,10 @@ export class DataService {
 
   public GetMembershipStatusOfTheUser(userId: string) {
     return this.http.get(`https://${this.url}/Data/GetMembershipStatusOfTheUser?userId=${userId}`, { observe: 'response' });
+  }
+
+  public CreateAssociatedCoupon(associatedCoupon: AssociatedCouponViewModel) {
+    return this.http.post(`https://${this.url}/Data/CreateAssociatedCoupon`, associatedCoupon, { observe: 'response' });
   }
 
   public DeleteSurveyFirstStageResults(surveyId: number) {

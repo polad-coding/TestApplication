@@ -1197,5 +1197,25 @@ namespace KPProject.Services
 
             return languages;
         }
+
+        public async Task<bool> CreateAssociatedCouponAsync(AssociatedCouponViewModel associatedCoupon)
+        {
+            var applicationUserId = "";
+            var newCoupon = new AssociatedCoupon() { CouponBody = associatedCoupon.CouponBody, DiscountRate = associatedCoupon.DiscountRate, NumberOfUsagesLeft = associatedCoupon.NumberOfUsages };
+            await _applicationDbContext.AssociatedCoupons.AddAsync(newCoupon);
+            await _applicationDbContext.SaveChangesAsync();
+
+            foreach (var email in associatedCoupon.AssociatedUsersEmails)
+            {
+                applicationUserId = await _applicationDbContext.Users.Where(u => u.Email == email).Select(u => u.Id).FirstAsync();
+
+                await _applicationDbContext.ApplicationUserAssociatedCoupons.AddAsync(new ApplicationUserAssociatedCoupon { ApplicationUserId = applicationUserId, AssociatedCouponId = newCoupon.Id });
+            }
+
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

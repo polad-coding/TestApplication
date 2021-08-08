@@ -25,6 +25,7 @@ namespace KPProject.Interfaces
         Task<List<SurveyResultViewModel>> GetSurveyResultsAsync(string userId);
         Task<List<ValueModel>> GetTheCurrentStageValuesAsync(int surveyId);
         Task<string> DecideToWhichStageToTransferAsync(int surveyId);
+        Task<bool> CreateAssociatedCouponAsync(AssociatedCouponViewModel associatedCoupon);
         Task<bool> CheckIfCodeIsValidAsync(string code);
         Task PopulateDBWithCertificationsAsync();
         Task<List<Certification>> GetAllCertificationsAsync();

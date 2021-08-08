@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AccountService } from '../../app-services/account.service';
 import { UserViewModel } from '../../view-models/user-view-model';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -25,7 +26,6 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   public languageModalIsVisible: boolean = false;
   public userAuthorizationOperationsContainerIsVisible: boolean = false;
   public currentTabName: string;
-
 
   constructor(private _router: Router, private _accountService: AccountService, private _jwtHelper: JwtHelperService, private _renderer2: Renderer2) {
 
@@ -80,11 +80,18 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
     if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')) != null && this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
       this.userRole = 'user';
     }
-    else {
+    else if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')) != null && this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
       this.userRole = 'practitioner';
+    }
+    else {
+      this.userRole = 'admin';
     }
   }
 
+
+  public RedirectToBackOffice() {
+    this._router.navigate(['backOffice']);
+  }
 
   public RedirectToPractitionersDirectory() {
     localStorage.setItem('personalAccountTabName', 'my-account-section');

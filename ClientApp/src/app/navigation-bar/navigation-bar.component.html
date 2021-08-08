@@ -1,12 +1,14 @@
   <div id="user-authorization-operations-container" *ngIf="user != undefined && userAuthorizationOperationsContainerIsVisible && !isMobile">
-    <button (click)="RedirectToPersonalAccount()" *ngIf="userRole == 'user'">To personal account</button>
-    <button (click)="RedirectToPractitionerAccount()" *ngIf="userRole == 'practitioner'">To practitioner account</button>
-    <button (click)="LogOutUser()">Log out</button>
-  </div>
+  <button (click)="RedirectToPersonalAccount()" *ngIf="userRole == 'user'">To personal account</button>
+  <button (click)="RedirectToPractitionerAccount()" *ngIf="userRole == 'practitioner'">To practitioner account</button>
+  <button (click)="RedirectToBackOffice()" *ngIf="userRole == 'admin'">To back office</button>
+  <button (click)="LogOutUser()">Log out</button>
+</div>
   <div id="user-authorization-operations-modal" *ngIf="user != undefined && userAuthorizationOperationsContainerIsVisible && isMobile">
     <div id="user-authorization-operations-container-mobile" *ngIf="user != undefined && userAuthorizationOperationsContainerIsVisible">
       <button (click)="RedirectToPersonalAccount()" *ngIf="userRole == 'user'">To personal account</button>
       <button (click)="RedirectToPractitionerAccount()" *ngIf="userRole == 'practitioner'">To practitioner account</button>
+      <button (click)="RedirectToBackOffice()" *ngIf="userRole == 'admin'">To back office</button>
       <button (click)="LogOutUser()">Log out</button>
     </div>
   </div>

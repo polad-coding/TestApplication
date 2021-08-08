@@ -1,10 +1,9 @@
-#actions-container
-{
-    width:100%;
-    display:flex;
-    flex-flow:column;
-    justify-content:center;
-    align-items:center;
+#actions-container {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 }
 
 *::-webkit-scrollbar {
@@ -29,22 +28,6 @@
   margin-top: 20px;
 }
 
-#add-new-general-coupon-button {
-  padding: 5px;
-  background-color: white;
-  color: #006F91;
-  cursor: pointer;
-  margin: 5px;
-}
-
-#create-new-general-coupons-button {
-  padding: 5px;
-  background-color: white;
-  color: #006F91;
-  cursor: pointer;
-  margin: 5px;
-}
-
 #home-title {
   color: #006F91;
   margin: 20px;
@@ -52,11 +35,11 @@
   text-align: center;
 }
 
-#actions-type-list{
-    min-width:330px;
-    min-height:200px;
-    margin:150px;
-    background-color:#006F91;
+#actions-type-list {
+  min-width: 330px;
+  min-height: 200px;
+  margin: 150px;
+  background-color: #006F91;
 }
 
 .dropdown-option-row {
@@ -67,68 +50,28 @@
   height: 50px;
   background-color: white;
   margin: 10px;
-  color:#006F91;
-  cursor:pointer;
+  color: #006F91;
+  cursor: pointer;
 }
 
-  .dropdown-option-row *{
-      pointer-events:none;
+  .dropdown-option-row * {
+    pointer-events: none;
   }
 
-  .arrow-image {
-    height: 20px;
-    width: 20px;
-    transform: rotate(-90deg);
-    position: absolute;
-    right: 10px;
-    filter: invert(27%) sepia(67%) saturate(1682%) hue-rotate(166deg) brightness(95%) contrast(102%);
-    cursor: pointer;
-  }
-
-  .actions{
-      flex-flow:column;
-
-
-  }
-
-.create-general-coupon-action-container input{
-    width:90%;
+.arrow-image {
+  height: 20px;
+  width: 20px;
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 10px;
+  filter: invert(27%) sepia(67%) saturate(1682%) hue-rotate(166deg) brightness(95%) contrast(102%);
+  cursor: pointer;
 }
 
-.coupon-creation-row {
-  padding: 10px;
-  border: 2px solid white;
-  margin: 5px;
-  text-align: center;
-  width: 90%;
-  margin: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-#general-coupons-list {
-  overflow-y: auto;
-  max-height: 400px;
-  min-height: 400px;
-  width: 100%;
-  border: 1px solid white;
-}
-
-.create-general-coupon-action-container {
-  min-width: 330px;
-  width: 330px;
-  min-height: 500px;
-  max-height: 500px;
-  margin: auto;
-  padding: 5px;
-  margin-bottom: 50px;
-  background: #006F91;
-  color: white;
-  display: flex;
+.actions {
   flex-flow: column;
-  align-items: center;
-  position: relative;
 }
+
 
 .action {
   display: flex;

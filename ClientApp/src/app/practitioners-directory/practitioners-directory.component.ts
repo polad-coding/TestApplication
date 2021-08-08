@@ -1,6 +1,7 @@
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, HostListener, OnInit, Renderer2, ViewChildren } from '@angular/core';
 import { element } from 'protractor';
-import { timer } from 'rxjs';
+import { forkJoin, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { CertificationViewModel } from '../../view-models/certification-view-model';
@@ -44,23 +45,17 @@ export class PractitionersDirectoryComponent implements OnInit {
 
     localStorage.setItem('currentTabName', 'whoWeAre');
 
-    this._accountService.GetAllLanguages().subscribe((response: any) => {
-      this.languages = response.body;
-    });
-
-    this._accountService.GetAllRegions().subscribe((response: any) => {
-      this.geographicalLocations = response.body;
-      console.log(this.geographicalLocations);
-    });
-
-    this._dataService.ReturnNumberOfPractitioners().subscribe((response: any) => {
-      this.numberOfPractitioners = response.body;
-      console.log(this.numberOfPractitioners);
-    });
+    forkJoin(this._accountService.GetAllLanguages(), this._accountService.GetAllRegions(), this._dataService.ReturnNumberOfPractitioners())
+      .pipe(map(([languagesResponse, regionsResponse, numberOfPractitionersResponse]: any) => {
+        this.languages = languagesResponse.body;
+        this.geographicalLocations = regionsResponse.body;
+        this.numberOfPractitioners = numberOfPractitionersResponse.body;
+      })).subscribe();
 
     this.practitionersSearchFilterViewModel.startingIndex = 0;
     this.practitionersSearchFilterViewModel.endingIndex = this.amountOfPractitionersToShow;
 
+    //TODO - here is the bug doesn't display all certifications
     this._dataService.GetPractitionersForDirectory(this.practitionersSearchFilterViewModel).subscribe((response: any) => {
       this.currentPractitioners = response.body;
 
@@ -68,6 +63,7 @@ export class PractitionersDirectoryComponent implements OnInit {
 
       for (var i = 0; i < this.currentPractitioners.length; i++) {
         this._dataService.GetPractitionersCertifications(this.currentPractitioners[i].id).subscribe((response: any) => {
+          console.log(response.body);
           this.practitionersCertifications.push(new Array<CertificationViewModel>());
           this.practitionersCertifications[this.practitionersCertifications.length - 1] = response.body;
         });

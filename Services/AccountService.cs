@@ -108,12 +108,20 @@ namespace KPProject.Services
 
             if (userViewModel.Email != oldEmail)
             {
-                File.Copy(
+                try
+                {
+                    File.Copy(
                     Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{userViewModel.ProfileImageName}.png"),
                     Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{oldUser.ProfileImageName}.png")
-                );
+                    );
 
-                File.Delete(Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{userViewModel.ProfileImageName}.png"));
+                    File.Delete(Path.Combine("wwwroot/dist/assets/Profile-Images/", $"{userViewModel.ProfileImageName}.png"));
+                }
+                catch (Exception)
+                {
+
+                }
+
             }
 
 

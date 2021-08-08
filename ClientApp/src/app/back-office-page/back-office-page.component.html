@@ -3,18 +3,8 @@
 <div id="error-message-container" *ngIf="pageHasError">
   <p>{{errorMessage}}</p>
 </div>
-<div class="create-general-coupon-action-container" *ngIf="backOfficeCurrentPageName == 'generalCouponCreationPage'">
-  <div id="general-coupons-list">
-    <div class="coupon-creation-row" *ngFor="let generalCoupon of listOfGeneralCoupons">
-      <p>Coupon body</p>
-      <input [(ngModel)]="generalCoupon.couponBody" type="text" required />
-      <p>Discount rate</p>
-      <input [(ngModel)]="generalCoupon.discountRate" type="number" required min="1" max="99" />
-    </div>
-  </div>
-  <button (click)="AddNewGeneralCoupon()" id="add-new-general-coupon-button">Add new coupon</button>
-  <button (click)="CreateGeneralCoupons()" id="create-new-general-coupons-button">Create coupons</button>
-</div>
+
+<app-coupon-management-tools-page [couponCreationType]="couponCreationType" (hideErrorContainerEventEmitter)="EmittErrorContainerHideEvent($event)" (currentPageNameEmitter)="EmittCurrentPage($event)" (errorMessageEmitter)="EmittError($event)" *ngIf="backOfficeCurrentPageName == 'generate-coupon-page'"></app-coupon-management-tools-page>
 
 <div id="actions-container" *ngIf="backOfficeCurrentPageName == 'home'">
   <h1 id="home-title">Please choose the action you want to perform</h1>
@@ -31,10 +21,8 @@
         <img  class="arrow-image" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
       </div>
       <div class="actions" style="display:none;" >
-        <button class="action" (click)="backOfficeCurrentPageName = 'generalCouponCreationPage'">General coupon creation</button>
-        <button class="action">Associated coupon creation</button>
-        <button class="action">Coupon deletion</button>
-        <button class="action">Coupon modification</button>
+        <button class="action" (click)="DisplayGeneralCouponCreationPage()">General coupon creation</button>
+        <button class="action" (click)="DisplayAssociatedCouponCreationPage()">Associated coupon creation</button>
       </div>
     </div>
     <div class="action-type-container">

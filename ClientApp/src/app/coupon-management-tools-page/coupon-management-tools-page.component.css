@@ -1,0 +1,148 @@
+#add-new-general-coupon-button {
+  padding: 5px;
+  background-color: white;
+  color: #006F91;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.back-to-home-page-container{
+    display:flex;
+    margin-top:20px;
+    margin-bottom:20px;
+    margin-left:50px;
+}
+
+.coupon-creation-row{
+    display:flex;
+    flex-flow:column;
+}
+
+.emails-container{
+    min-height:40px;
+    width:100%;
+    background-color:white;
+    display:flex;
+    overflow-x:auto;
+}
+
+.emails-container span{
+    background-color:#006F91;
+    color:white;
+    padding:3px;
+    margin:5px;
+}
+
+  .emails-container span:first-child{
+      margin-left:auto;
+  }
+
+  .emails-container span:last-child {
+    margin-right: auto;
+  }
+
+  .back-to-home-page-container button {
+    padding: 10px;
+    background-color: #006F91;
+    color: white;
+    cursor: pointer;
+  }
+
+#create-new-general-coupons-button {
+  padding: 5px;
+  background-color: white;
+  color: #006F91;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.create-coupon-action-container input {
+  width: 100%;
+}
+
+.coupon-creation-row {
+  padding: 10px;
+  border: 2px solid white;
+  margin: 5px;
+  text-align: center;
+  width: 90%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#associated-coupons-list {
+  display: flex;
+  align-items: center;
+}
+
+.coupons-list {
+  overflow-y: auto;
+  max-height: 400px;
+  /*min-height: 400px;*/
+  width: 100%;
+  border: 1px solid white;
+}
+
+.create-coupon-action-container {
+  min-width: 330px;
+  width: 330px;
+  /*min-height: 500px;*/
+  max-height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 5px;
+  margin-bottom: 50px;
+  background: #006F91;
+  color: white;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  position: relative;
+}
+
+#associate-new-user-button {
+  padding: 3px;
+  background-color: #90BFC5;
+  color:white;
+  cursor:pointer;
+}
+
+#add-associated-email-modal-container {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  padding: 20px;
+  position: absolute;
+  z-index:100;
+}
+
+#add-associated-email-modal {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 40px;
+  background-color: #90BFC5;
+  border-radius:5px;
+  box-shadow:0px 0px 50px black;
+}
+
+  #add-associated-email-modal input{
+      text-align:center;
+      margin-bottom:10px;
+  }
+
+  #add-associated-email-modal button{
+      padding:3px;
+      background-color:#006F91;
+      color:white;
+  }
+
+  #coupon-management-container {
+    position: relative;
+  }

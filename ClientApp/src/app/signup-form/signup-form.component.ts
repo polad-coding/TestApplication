@@ -7,6 +7,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
 import { SignInViewModel } from '../../view-models/signin-view-model';
 import { Router } from '@angular/router';
 import { error } from 'protractor';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup-form',
@@ -15,7 +16,6 @@ import { error } from 'protractor';
   providers: [AuthenticationService]
 })
 export class SignupFormComponent implements OnInit {
-
   public surveyCode: string;
   public formIsInvalid: boolean = false;
   public errorMessage = "";
@@ -35,64 +35,51 @@ export class SignupFormComponent implements OnInit {
     }
   }
 
-
-
   public CheckAgreeToTermRadio() {
     this.agreeToTermsRadioChecked = true;
   }
 
-  public SubmitSignUpForm(registerForm: NgForm)
-  {
+  private DisplayErrorMessage(errorMessage: string) {
+    this.errorMessage = errorMessage;
+    this.formIsInvalid = true;
+    setTimeout(() => {
+      document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
+
+  public SubmitSignUpForm(registerForm: NgForm) {
     if (this.registerViewModel.email != this.registerViewModel.confirmEmail) {
-      this.errorMessage = 'Please enter the same email addresses.';
-      this.formIsInvalid = true;
-      setTimeout(() => {
-        document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      this.DisplayErrorMessage('Please enter the same email address.');
     }
     else if (this.registerViewModel.password != this.registerViewModel.confirmPassword) {
-      this.formIsInvalid = true;  
-      this.errorMessage = 'Please enter the same passwords.';
-      setTimeout(() => {
-        document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+      this.DisplayErrorMessage('Please enter the same password.');
     }
     else {
-      this._authService.RegisterUser(this.registerViewModel).subscribe(response => {
-        let svw = new SignInViewModel();
-        svw.email = this.registerViewModel.email;
-        svw.password = this.registerViewModel.password;
-        this._authService.SignInUser(svw).subscribe(res => {
-          this.user = res.body;
+      this._authService.RegisterUser(this.registerViewModel)
+        .pipe(switchMap((registerUserResponse: any) => {
+          let svw = new SignInViewModel();
+
+          svw.email = this.registerViewModel.email;
+          svw.password = this.registerViewModel.password;
+
+          return this._authService.SignInUser(svw);
+        }))
+        .subscribe((signInUserResponse: any) => {
+          this.user = signInUserResponse.body;
+
           localStorage.setItem("jwt", this.user.accessToken);
+
           if (this.redirectToAccountPage == true) {
-              if (this.surveyCode == null) {
+            if (this.surveyCode == null) {
               this._router.navigate(['personalAccount']);
             }
           }
           else {
-            //TODO - implement event emitter
             this.displayIfOperationSuccessful.emit(this.user);
           }
-        },
-          error => {
-            this.formIsInvalid = true;
-            this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
-            setTimeout(() => {
-              document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-          })
-      },
-        error => {
-          this.formIsInvalid = true;
-          this.errorMessage = "The given data is incorrect, check if you entered correct email and password.";
-          setTimeout(() => {
-            document.getElementById('error-section').scrollIntoView({ behavior: 'smooth' });
-          }, 100);
+        }, error => {
+            this.DisplayErrorMessage('The given data is incorrect, check if you entered correct email and password.');
         });
     }
-
   }
-
-
 }
