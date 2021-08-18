@@ -54,21 +54,21 @@
   <div id="values-container">
     <div id="unselected-values" cdkScrollable>
       <div id="unselected-values-container" #unselectedValuesContainer cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="valuesGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)">
-        <div cdkDrag [ngClass]="{'value-ideogram-container':!descriptiveModeIsOn, 'value-ideogram-container-list-mode':descriptiveModeIsOn}" *ngFor="let value of currentValuesGroup" (click)="DisplayValueModal($event, value)">
+        <div cdkDrag [ngClass]="{'value-ideogram-container-list-mode':true}" *ngFor="let value of currentValuesGroup" (click)="DisplayValueModal($event, value)">
           <span>{{value.character}}</span>
-          <span *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</span>
+          <span>{{'Values.' + value.character + '.Title' | translate}}</span>
         </div>
       </div>
     </div>
-    <div id="display-option">
+    <div id="empty-space">
 
     </div>
     <div id="selected-values" cdkScrollable>
       <p>Selected Values</p>
       <div id="selected-values-container" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="valuesMarkedAsImportantGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
-        <div cdkDrag [ngClass]="{'value-ideogram-container':!descriptiveModeIsOn, 'value-ideogram-container-list-mode':descriptiveModeIsOn, 'value-is-important':!descriptiveModeIsOn}" *ngFor="let value of currentImportantValuesGroup" (click)="DisplayValueModal($event, value)">
-          <span [ngClass]="{'value-is-important':descriptiveModeIsOn}">{{value.character}}</span>
-          <span *ngIf="descriptiveModeIsOn">{{'Values.' + value.character + '.Title' | translate}}</span>
+        <div cdkDrag [ngClass]="{'value-ideogram-container-list-mode':true}" *ngFor="let value of currentImportantValuesGroup" (click)="DisplayValueModal($event, value)">
+          <span [ngClass]="{'value-is-important':true}">{{value.character}}</span>
+          <span>{{'Values.' + value.character + '.Title' | translate}}</span>
         </div>
       </div>
     </div>
@@ -93,19 +93,4 @@
     </button>
   </div>
 </div>
-<!--<div id="pages-section" *ngIf="isSelectionStage">
-  <div id="go-to-previous-group-container">
-    <button (click)="GoToPreviousGroupPage($event)">
-      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
-    </button>
-  </div>
-  <div class="values-page" #valuesPageButton *ngFor="let key of arrayOfPages;index as i" (click)="ChangePage($event,key, i)" [attr.data-id]="key" [attr.data-index]="i" [ngClass]="{'currentPage':currentPageIndex == i+1}">
-    <p>{{i + 1}}</p>
-  </div>
-  <div id="go-to-next-group-container">
-    <button (click)="GoToNextGroupPage()">
-      <img src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
-    </button>
-  </div>
-</div>-->
 <app-footer></app-footer>

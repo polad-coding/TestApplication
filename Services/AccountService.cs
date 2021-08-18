@@ -84,7 +84,6 @@ namespace KPProject.Services
                 SectorOfActivityId = soa.Id
             }));
 
-            //TODO - solve problems here, add migration, update database, add models, services and implement this feature finally
 
             oldUser.Email = userViewModel.Email;
             oldUser.UserName = userViewModel.Email;
@@ -101,10 +100,14 @@ namespace KPProject.Services
             oldUser.Bio = userViewModel.Bio;
             oldUser.Age = userViewModel.Age;
             oldUser.MyerBriggsCode = userViewModel.MyerBriggsCode;
-            oldUser.AgeGroupModel = await _dbContext.AgeGroups.FirstAsync(ag => ag.GroupAgeRange == userViewModel.AgeGroup.GroupAgeRange);
-            oldUser.ProfileImageName = $"{userViewModel.Email}-user-profile-image";
+            oldUser.ProfessionalEmail = userViewModel.ProfessionalEmail;
 
-            //TODO - here uncomment
+            if (userViewModel.AgeGroup != null)
+            {
+                oldUser.AgeGroupModel = await _dbContext.AgeGroups.FirstOrDefaultAsync(ag => ag.GroupAgeRange == userViewModel.AgeGroup.GroupAgeRange);
+            }
+
+            oldUser.ProfileImageName = $"{userViewModel.Email}-user-profile-image";
 
             if (userViewModel.Email != oldEmail)
             {

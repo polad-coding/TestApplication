@@ -21,18 +21,32 @@ namespace KPProject.Controllers
             _surveyService = surveyService;
         }
 
+        //[HttpPost]
+        //[Route("CreateSurvey")]
+        //public async Task<ActionResult<SurveyModel>> CreateSurveyAsync([FromBody]CreateSurveyViewModel createSurveyViewModel)
+        //{
+        //    var survey = await _surveyService.CreateSurveyAsync(createSurveyViewModel.Code, User.FindFirstValue(ClaimTypes.NameIdentifier), createSurveyViewModel.SurveyPractitionerId, createSurveyViewModel.NumberOfUsages);
+
+        //    if (survey == null)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    return Ok(survey);
+        //}
+
         [HttpPost]
         [Route("CreateSurvey")]
-        public async Task<ActionResult<SurveyModel>> CreateSurveyAsync([FromBody]CreateSurveyViewModel createSurveyViewModel)
+        public async Task<ActionResult> CreateSurveyAsync([FromBody] List<CreateOrderViewModel> orders)
         {
-            var survey = await _surveyService.CreateSurveyAsync(createSurveyViewModel.Code, User.FindFirstValue(ClaimTypes.NameIdentifier), createSurveyViewModel.SurveyPractitionerId, createSurveyViewModel.NumberOfUsages);
+            var requestSucceded = await _surveyService.CreateSurveyAsync(orders, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (survey == null)
+            if (requestSucceded)
             {
-                return BadRequest();
+                return Ok();
             }
 
-            return Ok(survey);
+            return StatusCode(500);
         }
 
     }

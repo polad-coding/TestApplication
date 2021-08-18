@@ -3,14 +3,14 @@
   height: 100px;
 }
 
-#user-account-manipulation-container{
-    margin-top:10px;
-    margin-left:auto;
-    margin-right:auto;
+#user-account-manipulation-container {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#navigation-bar-kp-logo{
-    cursor:pointer;
+#navigation-bar-kp-logo {
+  cursor: pointer;
 }
 
 #user-authorization-operations-container-mobile button {
@@ -45,22 +45,21 @@
   padding: 5px;
 }
 
-#sign-in-section{
-    min-width:max-content;
-    height:max-content;
-    margin-top:10px;
-    margin-right:10px;
-
+#sign-in-section {
+  min-width: max-content;
+  height: max-content;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 #user-authorization-operations-container button {
   color: #006F91;
 }
 
-#user-authorization-operations-container button:hover{
-  color: white;
-  background-color:#006F91;
-}
+  #user-authorization-operations-container button:hover {
+    color: white;
+    background-color: #006F91;
+  }
 
 #user-authorization-operations-container {
   position: absolute;
@@ -97,17 +96,17 @@
   padding: 5px;
 }
 
-#languages-modal-container img{
-    height:20px;
-    width:30px;
-    margin-bottom:5px;
-    margin-top:5px;
-}
+  #languages-modal-container img {
+    height: 20px;
+    width: 30px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
 
-#languages-modal-container img:hover{
-    box-shadow:0px 0px 3px black;
-    cursor:pointer;
-}
+    #languages-modal-container img:hover {
+      box-shadow: 0px 0px 3px black;
+      cursor: pointer;
+    }
 
 #arrow-image {
   height: 20px;
@@ -120,15 +119,15 @@
   margin-right: 10px;
 }
 
-#sign-in-section > div{
+#sign-in-section > div {
   display: flex;
   height: 30px;
   line-height: 30px;
 }
 
-#navigation-bar-main-part-top-section{
-    display:flex;
-    justify-content:flex-end;
+#navigation-bar-main-part-top-section {
+  display: flex;
+  justify-content: flex-end;
 }
 
 #signin-button {
@@ -149,34 +148,34 @@
     height: 90px;
   }
 
-#languages-container{
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    width:100%;
+#languages-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
 }
 
-#languages-container ul {
-  display: flex;
-  list-style: none;
-  flex-flow: row;
-}
+  #languages-container ul {
+    display: flex;
+    list-style: none;
+    flex-flow: row;
+  }
 
   #languages-container li img {
     width: 25px;
     height: 15px;
-    margin-right:10px;
+    margin-right: 10px;
   }
 
-  #languages-container li img:hover {
-    cursor: pointer;
-    box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
-  }
+    #languages-container li img:hover {
+      cursor: pointer;
+      box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    }
 
-#navigation-bar-actions{
-    width:100%;
-    display:flex;
-    align-items:center;
+#navigation-bar-actions {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
   #navigation-bar-actions ul {
@@ -193,27 +192,25 @@
 
     #navigation-bar-actions ul li {
       padding: 10px;
-      cursor:pointer;
+      cursor: pointer;
     }
 
+@media only screen and (min-width:768px) {
+  #navigation-bar-actions ul li {
+    padding: 5px;
+  }
+}
 
+#navigation-bar-actions ul li:hover {
+  background-color: #006F91;
+  color: white;
+}
 
-    @media only screen and (min-width:768px){
-      #navigation-bar-actions ul li {
-        padding: 5px;
-      }
-    }
-
-      #navigation-bar-actions ul li:hover {
-        background-color: #006F91;
-        color: white;
-      }
-
-    #navigation-bar-main-part {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-    }
+#navigation-bar-main-part {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 
 #navigation-bar-main-part {
   width: 100%;
@@ -222,27 +219,25 @@
   flex-flow: column;
 }
 
-#navigation-bar-main-part div{
-    flex-grow:1;
-}
+  #navigation-bar-main-part div {
+    flex-grow: 1;
+  }
 
-#navigation-bar-mobile{
-    height:50px;
-    width:100%;
-    display:flex;
-    position:relative;
+#navigation-bar-mobile {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  position: relative;
 }
-
 
 #actions-menu-button {
   width: 40px;
   height: 40px;
   margin-top: auto;
-  margin-left:10px;
-  background:transparent;
-  border:none;
+  margin-left: 10px;
+  background: transparent;
+  border: none;
 }
-
 
   #actions-menu-button img {
     height: 100%;
@@ -250,16 +245,11 @@
     filter: invert(30%) sepia(96%) saturate(588%) hue-rotate(152deg) brightness(94%) contrast(104%);
   }
 
-/*  #kp-logo-container {
-    display: flex;
-    width: 100%;
-  }*/
-
 #kp-logo {
-  width:50px;
-  height:50px;
-  margin-left:auto;
-  margin-right:auto;
+  width: 50px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #languages-menu-button {
@@ -268,9 +258,8 @@
   background: transparent;
   margin-top: auto;
   margin-right: 10px;
-  border:none;
+  border: none;
 }
-
 
   #languages-menu-button img {
     height: 100%;
@@ -311,16 +300,16 @@
   height: auto;
   width: 40%;
   top: 0;
-  right:50px;
+  right: 50px;
   background-color: #006F91;
   z-index: 500;
 }
 
-  #actions {
-    height: auto;
-    color: white;
-    font-family: barlowSemiCondensedMedium;
-  }
+#actions {
+  height: auto;
+  color: white;
+  font-family: barlowSemiCondensedMedium;
+}
 
 #languages {
   height: auto;
@@ -328,11 +317,11 @@
   font-family: barlowSemiCondensedMedium;
 }
 
-.side-bar-action{
-    height:50px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.side-bar-action {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .side-bar-language {
@@ -354,16 +343,16 @@
   cursor: pointer;
 }
 
-.side-bar-language img{
-    width:40px;
-    height:30px;
-    margin-right:10px;
-    margin-left:10px;
+.side-bar-language img {
+  width: 40px;
+  height: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
-  .side-bar-action:not(.side-bar-action:last-child) {
-    border-bottom: 1px solid white;
-  }
+.side-bar-action:not(.side-bar-action:last-child) {
+  border-bottom: 1px solid white;
+}
 
 .side-bar-language:not(.side-bar-language:last-child) {
   border-bottom: 1px solid white;

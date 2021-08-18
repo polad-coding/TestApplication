@@ -22,7 +22,6 @@
   color: #006F91;
 }
 
-
 .age-group-option-selected {
   border: none;
   color: white;
@@ -314,19 +313,6 @@ input[type=radio] {
     color: #006F91;
   }
 
-/*#valid-changes-section button {
-  width: 160px;
-  height: 60px;
-  background: white;
-  border: none;
-  color: #006F91;
-}
-
-  #valid-changes-section button:hover {
-    background: #006F91;
-    color: white;
-  }*/
-
 #valid-changes-section {
   display: flex;
   flex-flow: column;
@@ -419,9 +405,6 @@ input:disabled {
     cursor: pointer;
   }
 
-
-
-
 .modal-header {
   height: 40px;
   justify-content: center;
@@ -471,8 +454,6 @@ input:disabled {
   padding: 10px;
 }
 
-
-
 #error-message-container {
   max-width: 300px;
   height: auto;
@@ -485,7 +466,6 @@ input:disabled {
   background-color: red;
   color: white;
 }
-
 
 @media only screen and (min-width:950px) and (max-width:1050px) {
   #upload-image-container img:not(:last-child) {
@@ -506,6 +486,7 @@ input:disabled {
     font-size: 0.8rem;
   }
 }
+
 @media only screen and (min-width:320px) and (max-width:1000px) {
   #practitioner-account-main-part {
     flex-flow:column;
@@ -526,8 +507,6 @@ input:disabled {
     width: 150px;
   }
 }
-
-
 
   @media only screen and (min-width:780px) and (max-width:950px) {
 
@@ -591,8 +570,6 @@ input:disabled {
     .input-section {
       height: 60px;
     }
-
-
 
     #valid-changes-section {
       align-items: center;

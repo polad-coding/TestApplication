@@ -18,15 +18,20 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
   public accountSectionTabs: QueryList<ElementRef>;
   public currentSelectedTabIndex: number;
 
-  constructor(private _renderer2: Renderer2, private _helperMehtods: PersonalAccountComponentHelperMethods) {}
+  public userHasUnsignedSurveys: boolean = false;
+
+  constructor(private _renderer2: Renderer2, private _helperMethods: PersonalAccountComponentHelperMethods) { }
 
   ngAfterViewInit(): void {
     this.AdjustZIndexes();
   }
 
   ngOnInit() {
-    localStorage.removeItem('currentTabName');
-    this.selectedTab = this._helperMehtods.GetCurrentTab();
+    this._helperMethods.DecideIfJwtTokenIsValid();
+
+    localStorage.removeItem('currentNavigationBarTabName');
+    localStorage.removeItem('userAgreedOnTheClause');
+    this.selectedTab = this._helperMethods.GetCurrentTab();
   }
 
   public DisplayError(errorMessage: string) {
@@ -45,6 +50,8 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     });
 
     this.selectedTab = event.target.id;
+    console.log('here 6');
+
     localStorage.setItem('personalAccountTabName', this.selectedTab);
     this._renderer2.removeClass(event.target, 'section-not-selected');
     this._renderer2.addClass(event.target, 'section-selected');
@@ -96,4 +103,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     event.stopPropagation();
   }
 
+  public SetIfUserHasUnsignedSurvey(hasUnsignedSurvey) {
+    this.userHasUnsignedSurveys = hasUnsignedSurvey;
+  }
 }

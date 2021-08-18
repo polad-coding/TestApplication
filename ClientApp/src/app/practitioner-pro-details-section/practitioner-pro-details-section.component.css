@@ -28,7 +28,6 @@
     opacity: 0;
   }
 
-
 #practitioner-pro-account-container {
   width: 100%;
   height: auto;
@@ -101,7 +100,6 @@
 #bio-section div{
     align-self:flex-start;
 }
-
 
 #change-image-pencil-image {
   position: absolute;
@@ -290,7 +288,6 @@
       flex-flow: column;
     }
 
-
 #see-privacy-image-block {
   display: flex;
   flex-flow: column;
@@ -307,8 +304,6 @@
     text-decoration-line: underline;
     color: #006F91;
   }
-
-
 
 #valid-changes-section {
   display: flex;
@@ -514,6 +509,7 @@ input:disabled {
     font-size: 0.9rem;
   }
 }
+
 @media only screen and (min-width:320px) and (max-width:500px) {
   #practitioner-pro-account-form {
     font-size: 0.7rem;
@@ -538,8 +534,6 @@ input:disabled {
       margin-left: 0px;
       margin-top: 20px;
     }
-
-
 
     #upload-image-container img:not(:last-child) {
       height: 150px;
@@ -572,7 +566,6 @@ input:disabled {
       }
 
     #practitioner-pro-account-form {
-      /*font-size: 0.7rem;*/
       width: 95%;
     }
 

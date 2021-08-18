@@ -67,7 +67,6 @@
   padding-right: 50px;
 }
 
-
   #your-profile-section-texts p:first-child {
     font-family: barlowSemiCondensedMedium;
     font-size: 3rem;
@@ -181,12 +180,12 @@
 .pie-image-container {
   height: 30px;
   width: 30px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:white;
-  border:1px solid #006F91;
-  border-radius:50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #006F91;
+  border-radius: 50%;
   position: absolute;
 }
 
@@ -194,7 +193,7 @@
   position: absolute;
 }
 
-#resultsSectionMyChart {
+#results-section-image-chart {
   position: absolute;
 }
 
@@ -291,7 +290,6 @@
   filter: invert(100%) sepia(3%) saturate(7455%) hue-rotate(43deg) brightness(111%) contrast(103%);
 }
 
-
 @media only screen and (min-width:400px) and (max-width:700px) {
   #legends-container {
     bottom: -45px;
@@ -303,19 +301,16 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:400px) {
-
-    #legends-container{
-        bottom:-45px;
-    }
+  #legends-container {
+    bottom: -45px;
+  }
 
   .legend {
     margin: 1px;
-    padding:0px;
-    font-size:0.8rem;
+    padding: 0px;
+    font-size: 0.8rem;
   }
 }
-
-
 
 @media only screen and (min-width:760px) and (max-width:1200px) {
   #brief-results-section-texts p:first-child {
@@ -377,7 +372,6 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:810px) {
-
   #your-profile-section {
     flex-flow: column-reverse;
     align-items: center;
@@ -402,18 +396,12 @@
 }
 
 @media only screen and (min-width:900px) and (max-width:1100px) {
-
-  /*  #perspectives-pie-diagram {
-    width: 1000px;
-  }*/
-
   #myChart {
     position: initial;
   }
 }
 
 @media only screen and (min-width:320px) and (max-width:1100px) {
-
   #perspectives-wheel-section {
     flex-flow: column-reverse;
     align-items: center;
@@ -464,7 +452,6 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:550px) {
-
   #perspectives-table-section {
     padding-left: 10px;
     padding-right: 10px;
@@ -472,7 +459,6 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:600px) {
-
   #actions-buttons-section {
     flex-flow: column;
     padding: 10px;
@@ -499,7 +485,6 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:530px) {
-
   #selected-perspectives-section > div {
     text-align: center;
   }
@@ -522,7 +507,6 @@
 }
 
 @media only screen and (min-width:600px) and (max-width:1100px) {
-
   #perspectives-pie-diagram {
     width: 100%;
   }
@@ -543,7 +527,6 @@
 }
 
 @media only screen and (min-width:490px) and (max-width:600px) {
-
   #perspectives-pie-diagram {
     width: 100%;
   }
@@ -564,7 +547,6 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:490px) {
-
   .pie-image-container {
     height: 20px;
     width: 20px;
@@ -595,14 +577,6 @@
   }
 }
 
-
-@media only screen and (min-width:320px) and (max-width:650px) {
-  #myChart {
-    /*-webkit-transform: scale(1.5);*/
-  }
-}
-
-
 @media only screen and (min-width:320px) and (max-width:400px) {
   #perspectives-pie-diagram {
     width: 100vw;
@@ -613,9 +587,7 @@
   }
 }
 
-
 @media only screen and (min-width:320px) and (max-width:1100px) {
-
   #whats-next-section-texts-section {
     font-size: 1rem;
   }
@@ -628,17 +600,16 @@
       width: 50%;
     }
 
-    #legends-container{
-        bottom:-95px;
-    }
+  #legends-container {
+    bottom: -95px;
+  }
 
-    #selected-perspectives-section{
-        margin-top:120px;
-    }
+  #selected-perspectives-section {
+    margin-top: 120px;
+  }
 }
 
 @media only screen and (min-width:320px) and (max-width:860px) {
-
   #whats-next-section {
     display: flex;
     flex-flow: column;
@@ -667,7 +638,6 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:600px) {
-
   #whats-next-section > img {
     width: 250px;
     height: 250px;

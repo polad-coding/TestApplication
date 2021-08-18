@@ -54,5 +54,6 @@ namespace KPProject.Interfaces
         Task<List<LanguageModel>> GetSelectedLanguagesForCurrentUserAsync(string userId);
         Task<bool> CheckIfAllGeneralCouponsAreUniqueAsync(List<GeneralCoupon> generalCoupons);
         Task<List<SectorOfActivityModel>> GetSelectedSectorsOfActivityForCurrentUserAsync(string userId);
+        Task<bool> DeleteAllOrdersOfTheCurrentUserAsync(string userId);
     }
 }

@@ -43,10 +43,10 @@
       <button *ngIf="surveyResult.isCompleated" class="survey-result-row-blue-cell" (click)="TransferToSynthesisPage(surveyResult.surveyId)">
         See synthesis
       </button>
-      <button *ngIf="surveyResult.isCompleated == false && surveyResult.firstStagePassed" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId, surveyResult.code)">
+      <button *ngIf="surveyResult.isCompleated == false && surveyResult.firstStagePassed" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId)">
         Resume survey
       </button>
-      <button *ngIf="surveyResult.isCompleated == false && surveyResult.firstStagePassed == false" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId, surveyResult.code)">
+      <button *ngIf="surveyResult.isCompleated == false && surveyResult.firstStagePassed == false" class="survey-result-row-blue-cell" (click)="ResumeSurvey(surveyResult.surveyId)">
         Take survey
       </button>
       <div *ngIf="!surveyResult.isCompleated" class="survey-result-empty-cell">
@@ -67,7 +67,6 @@
 
       </div>
       <div class="survey-result-empty-cell">
-
       </div>
     </div>
   </div>

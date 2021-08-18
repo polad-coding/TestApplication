@@ -95,7 +95,6 @@ label {
   cursor:pointer;
 }
 
-
 input {
   color: #006F91;
 }
@@ -124,7 +123,6 @@ input {
     color: white;
     background-color: #006F91;
   }
-
 
 .password-container {
   display: flex;

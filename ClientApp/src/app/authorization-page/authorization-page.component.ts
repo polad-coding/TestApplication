@@ -10,7 +10,9 @@ export class AuthorizationPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    localStorage.removeItem('currentTabName');
+    localStorage.removeItem('currentNavigationBarTabName');
+    localStorage.removeItem('personalAccountTabName');
+    localStorage.removeItem('practitionerAccountTabName');
   }
 
 }

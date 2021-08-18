@@ -1,6 +1,6 @@
 <app-navigation-bar></app-navigation-bar>
 <app-page-title titleText="The survey"></app-page-title>
-<div id="how-does-it-work-page" *ngIf="!secondStage">
+<div id="how-does-it-work-page" *ngIf="!startFromSecondStage">
   <h1>How does it work?</h1>
   <p>
     After being registered, you will be asked to complete your profile if necessary and then to enter a code to access the survey
@@ -28,15 +28,15 @@
   </div>
   <button (click)="NextPageButtonClicked()" [ngClass]="{'active-button': userAgreedWithTheClause, 'disabled-button': !userAgreedWithTheClause, 'next-button':true}">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg"/></button>
 </div>
-<div id="sign-in-register-page" *ngIf="secondStage && !userIsAuthorized">
+<div id="sign-in-register-page" *ngIf="startFromSecondStage && !userIsAuthorized">
   <div id="signin-form">
-    <app-signin-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetOperationResult($event)"></app-signin-form>
+    <app-signin-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetAuthorizationOperationResult($event)"></app-signin-form>
   </div>
   <div id="signun-form">
-    <app-signup-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetOperationResult($event)"></app-signup-form>
+    <app-signup-form [redirectToAccountPage]="false" (displayIfOperationSuccessful)="GetAuthorizationOperationResult($event)"></app-signup-form>
   </div>
 </div>
-<div id="enter-code-container" *ngIf="userAgreedWithTheClause && userIsAuthorized && secondStage">
+<div id="enter-code-container" *ngIf="userAgreedWithTheClause && startFromSecondStage && userIsAuthorized">
   <div tabindex="1" id="error-section-placeholder">
 
   </div>

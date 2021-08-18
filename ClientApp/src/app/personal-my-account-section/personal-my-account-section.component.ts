@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Quer
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
@@ -62,9 +62,13 @@ export class PersonalMyAccountSectionComponent implements OnInit {
   public formHasError: boolean = false;
 
   @Output()
-  public emitError: EventEmitter<string> = new EventEmitter<string>();
+  public errorEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  public usersHasUnsignedSurveyStatusEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+
 
   public userHasUnsignedSurveys: boolean = false;
+
 
   @ViewChild('personalInformationForm', { read: NgForm, static: false })
   public personalInformationForm: NgForm;
@@ -79,12 +83,10 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     private _dataService: DataService,
     private _renderer2: Renderer2,
     private renderer: Renderer,
-    private _helperMehtods: PersonalAccountComponentHelperMethods
+    private _helperMethods: PersonalAccountComponentHelperMethods
   ) { }
 
-  ngOnInit() {
-    this._helperMehtods.DecideIfJwtTokenIsValid();
-
+  ngOnInit() {  
     forkJoin(
       this.accountService.GetAllAgeGroups(),
       this.accountService.GetAllRegions(),
@@ -119,11 +121,11 @@ export class PersonalMyAccountSectionComponent implements OnInit {
       return this._dataService.UserHasUnsignedSurveys(this.user.id);
     })).subscribe((userHasUnsignedSurveysResponse: any) => {
       this.userHasUnsignedSurveys = userHasUnsignedSurveysResponse.body;
+      this.usersHasUnsignedSurveyStatusEmitter.emit(userHasUnsignedSurveysResponse.body);
       if (!this.userHasUnsignedSurveys) {
         localStorage.removeItem('surveyId');
       }
-
-    })
+    });
   }
 
   /**
@@ -131,21 +133,16 @@ export class PersonalMyAccountSectionComponent implements OnInit {
  * 
  * @param personalInformationForm
  */
-  public AssociateUserDataToTheSurvey(personalInformationForm: NgForm) {
-    if (!this._helperMehtods.ModalTypeFieldsAreNotEmpty(this.user.regions, this.user.educations, this.user.positions, this.user.sectorsOfActivities, this.user.ageGroup)) {
-      this.emitError.emit('Some of the mandatory fields are left empty please, fill up all mandatory fields.')
+  public AssociateUserDataToTheSurvey(event: MouseEvent, personalInformationForm: NgForm) {
+    event.stopPropagation();
+
+    if (!this._helperMethods.ModalTypeFieldsAreNotEmpty(this.user.regions, this.user.educations, this.user.positions, this.user.sectorsOfActivities, this.user.ageGroup)) {
+      console.log('1');
+      this.errorEmitter.emit('Some of the mandatory fields are left empty please, fill up all mandatory fields.')
       return;
     }
 
     this.ChangeProfileData(null, personalInformationForm);
-
-    if (!this.formHasError) {
-      this._dataService.AssociateUserDataToTheSurvey(this.user.id).subscribe((response: any) => {
-        if (response.ok) {
-          this._router.navigate(['wrap-up']);
-        }
-      });
-    }
   }
 
   public DisplayFieldModal(event: MouseEvent, optionType: string, optionsSelected: Array<any>, modal: ElementRef<any>) {
@@ -184,41 +181,65 @@ export class PersonalMyAccountSectionComponent implements OnInit {
   * @param event
   * @param personalInformationForm
   */
-  public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
+  public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm): boolean {
     if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
-      this.emitError.emit('Name or Surname fields were not filled correctly.Reminder: these fields must contain at least 2 characters and must not contain any numbers.');
-      return;
+      this.formHasError = true;
+
+      this.errorEmitter.emit('Name or Surname fields were not filled correctly.Reminder: these fields must contain at least 2 characters and must not contain any numbers.');
+      return false;
     }
 
     if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
-      this.emitError.emit('Your email addess is incorrect. Reminder: email address must be valid email.');
-      return;
+      this.formHasError = true;
+
+      this.errorEmitter.emit('Your email addess is incorrect. Reminder: email address must be valid email.');
+      return false;
     }
 
     if (personalInformationForm.controls['email'].pristine) {
-      this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+      this.accountService.ChangeUserPersonalData(this.user).pipe(switchMap((changeUserDataResponse: any) => {
         if (!this.userHasUnsignedSurveys) {
+          return of(null);
+        }
+
+        return this._dataService.AssociateUserDataToTheSurvey(this.user.id);
+      })).subscribe(secondResponse => {
+        if (secondResponse == null) {
           location.reload();
         }
-      });
+        else {
+          this._router.navigate(['wrap-up']);
+        }
+      }, error => console.log(error));
 
       return;
     }
 
     this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
       if (checkIfMailIsRegisteredResponse.body === true) {
-        this.emitError.emit('This email address already exists in our database.');
+        this.formHasError = true;
 
+        this.errorEmitter.emit('This email address already exists in our database.');
         this.user.email = this.oldEmail;
 
+
         personalInformationForm.controls['email'].markAsPristine();
-        return;
+        return of(null);
       }
       return this.accountService.ChangeUserPersonalData(this.user);
-    })).subscribe((changeUserPersonalDataResponse: any) => {
+    })).pipe(switchMap((secondResponse: any) => {
       if (!this.userHasUnsignedSurveys) {
-        location.reload();
+        return of(null);
       }
+
+      return this._dataService.AssociateUserDataToTheSurvey(this.user.id);
+    })).subscribe((thirdResponse: any) => {
+      if (thirdResponse == null) {
+        location.reload();
+        return;
+      }
+
+      this._router.navigate(['wrap-up']);
     });
   }
 
@@ -232,7 +253,6 @@ export class PersonalMyAccountSectionComponent implements OnInit {
       }
     }
 
-    this.emitError.emit('Your email addess is incorrect. Reminder: email address must be valid email.')
 
     this.user.email = this.oldEmail;
 
@@ -252,7 +272,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
       }
     }
 
-    this.emitError.emit('Name or Surname fields were not filled correctly. Reminder: these fields must contain at least 2 characters and must not contain any numbers.')
+    this.errorEmitter.emit('Name or Surname fields were not filled correctly. Reminder: these fields must contain at least 2 characters and must not contain any numbers.')
 
     this.user.firstName = this.oldName;
     this.user.lastName = this.oldSurname;
@@ -382,6 +402,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     });
 
     this.formHasError = false;
+    //TODO - check if we need this row here
     document.getElementById('error-message-container').style.display = 'none';
 
     this._renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');

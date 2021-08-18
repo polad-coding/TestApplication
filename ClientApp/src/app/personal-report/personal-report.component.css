@@ -8,6 +8,10 @@
     align-items:center;
 }
 
+#loading-gif {
+  pointer-events: none;
+}
+
   #loading-screen-gif-container img {
     height: 300px;
     width: 400px;

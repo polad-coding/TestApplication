@@ -1,6 +1,6 @@
 #survey-results-and-reports-titles {
   display: flex;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
 .title {
@@ -14,9 +14,9 @@
   display: flex;
   align-items: center;
   padding-right: 10px;
-  margin-bottom:10px;
-  height:40px;
-  font-size:0.8rem
+  margin-bottom: 10px;
+  height: 40px;
+  font-size: 0.8rem
 }
 
   .survey-result-row div, .survey-result-row button {
@@ -36,11 +36,9 @@
   word-wrap: anywhere;
 }
 
-  .reports-cell-buttons {
-    display: flex;
-  }
-
-
+.reports-cell-buttons {
+  display: flex;
+}
 
 .survey-result-row-white-cell button, .survey-result-row-white-cell-disabled-button button {
   position: absolute;
@@ -92,8 +90,8 @@
     width: 70px;
   }
 
-.survey-result-row-white-cell-disabled-button{
-    pointer-events:none;
+.survey-result-row-white-cell-disabled-button {
+  pointer-events: none;
 }
 
 #survey-results-and-reports-table-container {
@@ -104,7 +102,7 @@
 
 .survey-result-row-blue-cell {
   color: white;
-  height:40px;
+  height: 40px;
 }
 
 .survey-result-row-blue-cell {
@@ -137,34 +135,23 @@
   padding: 0px;
 }
 
-.survey-result-empty-cell{
-    margin:10px;
+.survey-result-empty-cell {
+  margin: 10px;
 }
 
-.email-button button{
-    color:white;
+.email-button button {
+  color: white;
 }
 
 @media only screen and (min-width:600px) and (max-width:740px) {
-
-/*  .survey-result-row-white-cell, .survey-result-row-blue-cell, .survey-result-row-white-cell-disabled-button {
-    padding: 3px;
-    margin: 3px;
-    text-align: center;
-  }*/
 
   .survey-result-row {
     height: 70px;
   }
 
-  .survey-result-row div{
-      height:70px;
-  }
-
-/*  .survey-result-empty-cell {
-    margin: 3px;
-    padding: 3px;
-  }*/
+    .survey-result-row div {
+      height: 70px;
+    }
 }
 
 @media only screen and (min-width:330px) and (max-width:600px) {
@@ -178,11 +165,9 @@
     height: 90px;
   }
 
-  .survey-result-row div{
-      height:90px;
-  }
-
-
+    .survey-result-row div {
+      height: 90px;
+    }
 
   .survey-result-empty-cell {
     margin: 3px;
@@ -196,22 +181,20 @@
 
 @media only screen and (min-width:330px) and (max-width:1100px) {
 
-
-    .reports-cell-buttons button{
-        height:100%;
-        width:100%;
-        margin:0px;
-    }
+  .reports-cell-buttons button {
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+  }
 
   .survey-result-row-white-cell, .survey-result-row-blue-cell, .survey-result-row-white-cell-disabled-button {
     text-align: center;
   }
-
 }
 
 @media only screen and (min-width:330px) and (max-width:600px) {
-  .reports-cell-buttons{
-      margin:3px;
+  .reports-cell-buttons {
+    margin: 3px;
   }
 
     .reports-cell-buttons button:first-child {
@@ -222,19 +205,19 @@
     flex-flow: column;
   }
 
-  .email-button{
-      padding:0px;
+  .email-button {
+    padding: 0px;
   }
 
-  .survey-result-empty-cell{
-      padding:0px;
+  .survey-result-empty-cell {
+    padding: 0px;
   }
 }
 
 @media only screen and (min-width:600px) and (max-width:1100px) {
-    .reports-cell-buttons button:first-child{
-        margin-right:3px;
-    }
+  .reports-cell-buttons button:first-child {
+    margin-right: 3px;
+  }
 }
 
 @media only screen and (min-width:430px) and (max-width:600px) {
@@ -260,7 +243,6 @@
       height: 40px;
       width: 40px;
     }
-
 
     #see-policy-container a {
       font-size: 0.6rem;

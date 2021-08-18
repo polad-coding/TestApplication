@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, HostListener, Input, OnInit } from '@angular/core';
 import { AccountService } from '../../app-services/account.service';
-import { AuthenticationService } from '../../app-services/authentication-service';
 import { DataService } from '../../app-services/data-service';
 import { ApplicationUserCertificationViewModel } from '../../view-models/application-user-certification-view-model';
 import { CertificationViewModel } from '../../view-models/certification-view-model';
@@ -9,6 +8,8 @@ import { UserViewModel } from '../../view-models/user-view-model';
 import { render, paypal } from 'creditcardpayments/creditCardPayments';
 import { Router } from '@angular/router';
 import { EmailSenderService } from '../../app-services/email-sender-service';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-certification-and-membership',
@@ -20,13 +21,17 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
 
   @Input()
   public user: UserViewModel;
+
   public certifications: Array<CertificationViewModel>;
   public practitionersCertifications: Array<ApplicationUserCertificationViewModel>;
   public membership: MembershipViewModel;
+
   public desktopVersion: boolean = true;
+
   public paypalModalIsVisible: boolean = false;
 
   constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router, private _emailSenderService: EmailSenderService) {
+    //Here we are loading script because for some reason DinkToPdf library that we are using to generate PDFs is conflicting with paypal script, and throws the error when we try to generate PDF.
     this.LoadScript();
   }
 
@@ -39,6 +44,9 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
     }
   }
 
+  /**
+  *Loads the script needed for paypal transactions.
+  * */
   private LoadScript() {
     let script = document.createElement('script');
     script.src = 'https://www.paypal.com/sdk/js?client-id=AQf-UPTlE9mFmveSuPSTXNNlpYzbN5GcUbSaY4V_Xr0EpyYaOBCsgdJj2rwLLQ52a5gagRy3AHotD8aP';
@@ -48,7 +56,6 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
     script.id = 'paypal-script';
     document.getElementsByTagName('head')[0].appendChild(script);
   }
-
 
   @HostListener('document:click', ['$event'])
   public OnDocumentClicked(event) {
@@ -77,49 +84,56 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
   ngOnInit() {
     localStorage.setItem('practitionerAccountTabName', 'certification-membership-section');
 
+    this.onResize(null);
 
-    if (window.innerWidth <= 850) {
-      this.desktopVersion = false;
-    }
-    else if (window.innerWidth > 850) {
-      this.desktopVersion = true;
-    }
-    this._accountService.GetCurrentUser().subscribe((response: any) => {
-      this.user = response.body;
-      this._dataService.GetAllCertifications().subscribe((response: any) => {
-        if (response.ok) {
-          this.certifications = response.body;
-          this.certifications = this.certifications.reverse();
-          this._dataService.GetPractitionersCertifications(null).subscribe((practitionersCertificationResponse: any) => {
-            console.log(practitionersCertificationResponse);
-            this.practitionersCertifications = practitionersCertificationResponse.body;
+    this._dataService.GetAllCertifications().pipe(switchMap((getAllCertificationsResponse: any) => {
+      if (!getAllCertificationsResponse.ok) {
+        return of(null);
+      }
 
-            this._dataService.GetMembershipStatus().subscribe((membershipStatusResponse: any) => {
-              this.membership = membershipStatusResponse.body;
-            });
+      this.certifications = getAllCertificationsResponse.body;
+      this.certifications = this.certifications.reverse();
 
-            render({
-              id: "#paypalContainer",
-              currency: "USD",
-              value: "50",
-              onApprove: (details) => {
-                this._dataService.RenewMembership().subscribe(response => {
-                  if (response.ok) {
-                    this._emailSenderService.SendMembershipRenewalReceipt().subscribe(sendMembershipRenewalReceiptResponse => {
-                        location.reload();
-                    });
-                  }
-                }, error => {
-                  alert('We had a problem processing your request, please try again!');
-                })
-              }
-            })
+      return this._dataService.GetPractitionersCertifications(null);
+    })).pipe(switchMap((getPractitionersCertificationsResponse: any) => {
+      if (getPractitionersCertificationsResponse == null) {
+        return of(null);
+      }
 
+      this.practitionersCertifications = getPractitionersCertificationsResponse.body;
+      this.practitionersCertifications = this.practitionersCertifications.reverse();
 
-          });
-        }
-      });
-    })
+      return this._dataService.GetMembershipStatus();
+    })).subscribe((getMembershipStatusResponse: any) => {
+      if (getMembershipStatusResponse == null) {
+        return
+      }
+
+      this.membership = getMembershipStatusResponse.body;
+    });
+
+    setTimeout(() => {
+      this.RenderPaypal();
+    }, 300);
   }
 
+  /**
+   *Renders paypal actions inside modal, on transaction approval, renews the membership.
+   * */
+  private RenderPaypal() {
+    render({
+      id: "#paypalContainer",
+      currency: "USD",
+      value: "50",
+      onApprove: (details) => {
+        this._dataService.RenewMembership().subscribe(response => {
+          if (response.ok) {
+            location.reload();
+          }
+        }, error => {
+          alert('We had a problem processing your request, please try again!');
+        })
+      }
+    })
+  }
 }

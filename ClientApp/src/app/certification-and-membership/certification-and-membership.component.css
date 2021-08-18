@@ -74,8 +74,6 @@
   width: 220px;
 }
 
-
-
 .level {
   background-color: #9AC7EC;
   color: #006F91;
@@ -413,11 +411,10 @@
   width: 100%;
   top: 0;
   left: 0;
-
 }
 
-#paypalContainer{
-    padding:10px;
+#paypalContainer {
+  padding: 10px;
 }
 
 #paypal-modal-container {
@@ -434,7 +431,7 @@
     background-color: #006F91;
     color: white;
     padding: 5px;
-    border-radius:10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
   }
 
   #paypal-modal-container div {
@@ -446,18 +443,16 @@
 }
 
 .modalIsVisible {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-  @media only screen and (min-width: 850px) and (max-width: 1100px) {
-    #desktop-container {
+@media only screen and (min-width: 850px) and (max-width: 1100px) {
+  #desktop-container {
     font-size: 0.8rem;
   }
 }
-
-/*certification-membership-container-mobile*/
 
 @media only screen and (min-width: 500px) and (max-width: 800px) {
 
@@ -482,7 +477,6 @@
   }
 }
 
-
 @media only screen and (min-width: 330px) and (max-width: 500px) {
   #certification-membership-container-mobile {
     font-size: 0.6rem;
@@ -497,35 +491,34 @@
     margin-bottom: 5px;
   }
 
-  #actions-section-mobile{
-      padding:0px;
+  #actions-section-mobile {
+    padding: 0px;
   }
 
-  #actions-section-mobile > div {
+    #actions-section-mobile > div {
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+  #bottom-section-mobile > p {
+    font-size: 0.6rem;
+  }
+
+  #lock-section-mobile img {
     height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 60px;
   }
 
-  #bottom-section-mobile > p{
-      font-size:0.6rem;
-  }
-
-  #lock-section-mobile img{
-      height:40px;
-      width:60px;
-  }
-
-  #lock-section-mobile p{
-      font-size:0.6rem;
-      line-height:1;
+  #lock-section-mobile p {
+    font-size: 0.6rem;
+    line-height: 1;
   }
 
   #profile-image {
     height: 180px;
     width: 180px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
   }
-
 }

@@ -124,7 +124,6 @@
   z-index:10;
 }
 
-
 #valid-your-order-container {
   display: flex;
   justify-content: flex-end;
@@ -132,8 +131,6 @@
   align-items: center;
   width: 30%;
 }
-
-
 
 .information-icon {
   height: 20px;

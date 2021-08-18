@@ -1,5 +1,5 @@
-footer{
-    color:#006F91;
+footer {
+  color: #006F91;
 }
 
 @font-face {
@@ -65,7 +65,6 @@ footer{
     width: 1200px;
   }
 
-
   #title-page > p {
     font-size: 2.8rem;
     color: #006F91;
@@ -121,38 +120,32 @@ footer{
   color: #006F91;
   display: -webkit-box;
   align-items: center;
-  font-size:1rem;
-  height:50px;
-  line-height:50px;
+  font-size: 1rem;
+  height: 50px;
+  line-height: 50px;
 }
 
 .perspective-with-index-1 {
-  /*filter: invert(11%) sepia(65%) saturate(7418%) hue-rotate(351deg) brightness(97%) contrast(105%);*/
   -webkit-filter: grayscale(1) !important;
 }
 
 .perspective-with-index-2 {
-  /*filter: invert(57%) sepia(78%) saturate(3659%) hue-rotate(1deg) brightness(94%) contrast(101%);*/
   -webkit-filter: invert(57%) sepia(78%) saturate(3659%) hue-rotate(1deg) brightness(94%) contrast(101%);
 }
 
 .perspective-with-index-3 {
-  /*filter: invert(76%) sepia(13%) saturate(4892%) hue-rotate(2deg) brightness(107%) contrast(104%);*/
   -webkit-filter: invert(76%) sepia(13%) saturate(4892%) hue-rotate(2deg) brightness(107%) contrast(104%);
 }
 
 .perspective-with-index-4 {
-  /*filter: invert(33%) sepia(70%) saturate(2807%) hue-rotate(132deg) brightness(90%) contrast(103%);*/
   -webkit-filter: invert(33%) sepia(70%) saturate(2807%) hue-rotate(132deg) brightness(90%) contrast(103%);
 }
 
 .perspective-with-index-5 {
-  /*filter: invert(45%) sepia(28%) saturate(4267%) hue-rotate(169deg) brightness(97%) contrast(101%);*/
   -webkit-filter: invert(45%) sepia(28%) saturate(4267%) hue-rotate(169deg) brightness(97%) contrast(101%);
 }
 
 .perspective-with-index-6 {
-  /*filter: invert(28%) sepia(76%) saturate(522%) hue-rotate(211deg) brightness(88%) contrast(92%);*/
   -webkit-filter: invert(28%) sepia(76%) saturate(522%) hue-rotate(211deg) brightness(88%) contrast(92%);
 }
 
@@ -165,23 +158,23 @@ footer{
   font-size: 20px;
 }
 
-#survey-results-page-main-content-title-texts{
-    text-align:center;
+#survey-results-page-main-content-title-texts {
+  text-align: center;
 }
 
-  #survey-results-page-main-content-title-texts{
-      font-size:1.5rem;
-  }
+#survey-results-page-main-content-title-texts {
+  font-size: 1.5rem;
+}
 
   #survey-results-page-main-content-title-texts > div {
     display: -webkit-box;
     text-align: center;
   }
 
-#survey-results-page-main-content-title-texts div img{
-    height:50px;
-    width:50px;
-}
+  #survey-results-page-main-content-title-texts div img {
+    height: 50px;
+    width: 50px;
+  }
 
 #survey-results-page-main-content-right-part {
   display: -webkit-box;
@@ -206,7 +199,6 @@ footer{
   line-height: 45px;
   margin-bottom: -15px;
 }
-
 
   .table-cell span:nth-child(1), .table-cell span:nth-child(2), .table-cell span:nth-child(3) {
     border-right: 1px solid black;
@@ -293,24 +285,24 @@ footer{
   text-align: center;
 }
 
-.secondary-perspective-container{
-    page-break-after:always;
+.secondary-perspective-container {
+  page-break-after: always;
 }
 
-.perspectives-table-explanation{
-    border-left:1px solid #006F91;
-    border-bottom:1px solid #006F91;
+.perspectives-table-explanation {
+  border-left: 1px solid #006F91;
+  border-bottom: 1px solid #006F91;
 }
 
-  .perspectives-table-explanation:last-child{
-      border-right:1px solid #006F91;
+  .perspectives-table-explanation:last-child {
+    border-right: 1px solid #006F91;
   }
 
-  .reminder-header {
-    display: -webkit-box;
-    height: 300px;
-    margin-top: 250px;
-  }
+.reminder-header {
+  display: -webkit-box;
+  height: 300px;
+  margin-top: 250px;
+}
 
   .reminder-header img {
     height: 180px;
@@ -332,13 +324,12 @@ footer{
     font-size: 40px;
     height: 100px;
     padding: 30px;
-    /*margin-top:140px;*/
   }
 
 .reminder-title {
   display: -webkit-box;
-  margin-top:40px;
-  padding-top:60px;
+  margin-top: 40px;
+  padding-top: 60px;
 }
 
   .reminder-title img {
@@ -364,17 +355,17 @@ footer{
   color: #006F91;
 }
 
-.perspectives-table-title{
-    height:40px;
-    text-align:center;
-    line-height:40px;
-    width:235px;
-    font-size:1.5rem;
+.perspectives-table-title {
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  width: 235px;
+  font-size: 1.5rem;
 }
 
-.page-footer{
-    text-align:center;
-    color:#006F91;
+.page-footer {
+  text-align: center;
+  color: #006F91;
 }
 
 .values-questions-container {
@@ -394,35 +385,35 @@ footer{
   color: black;
 }
 
-.perspectives-table-explanation p{
-    align-self:center;
-    height:max-content;
+  .perspectives-table-explanation p {
+    align-self: center;
+    height: max-content;
+  }
+
+#questions-to-consider-page {
+  page-break-after: always;
+  font-family: barlowSemiCondensedLight;
 }
 
-#questions-to-consider-page{
-    page-break-after:always;
-   font-family:barlowSemiCondensedLight;
+#kp-perspectives-table-title-images {
+  display: -webkit-box;
 }
 
-#kp-perspectives-table-title-images{
-    display:-webkit-box;
+.kp-perspectives-table-title-image {
+  width: 225px;
+  height: 225px;
+  margin-right: 10px;
 }
 
-.kp-perspectives-table-title-image{
-    width:225px;
-    height:225px;
-    margin-right:10px;
-}
-
-#questions-to-consider-page-questions{
-    font-size:1.5rem;
+#questions-to-consider-page-questions {
+  font-size: 1.5rem;
 }
 
 .ol-item {
-    font-size:2.8rem;
-    color:#006F91;
-    margin-left:20px;
-    font-family:barlowSemiCondensed;
+  font-size: 2.8rem;
+  color: #006F91;
+  margin-left: 20px;
+  font-family: barlowSemiCondensed;
 }
 
   .ol-item * {
@@ -446,7 +437,7 @@ footer{
 #bottom-texts-section .ul-item {
   color: #006F91;
   font-family: barlowSemiCondensed;
-  margin-bottom:30px;
+  margin-bottom: 30px;
 }
 
   #bottom-texts-section .ul-item * {
@@ -460,76 +451,70 @@ footer{
   width: 50px;
 }
 
-.top-nine-values-table-row{
-    font-size:2rem;
+.top-nine-values-table-row {
+  font-size: 2rem;
 }
 
-.top-nine-values-table-row div img {
-  height: 100px;
-  width: 100px;
-}
-
-
-  .top-nine-values-table-row span:first-child {
-      font-family:barlowSemiCondensedBold;
+  .top-nine-values-table-row div img {
+    height: 100px;
+    width: 100px;
   }
 
+  .top-nine-values-table-row span:first-child {
+    font-family: barlowSemiCondensedBold;
+  }
 
-.top-nine-values-table-row span:last-child{
-    color:#006F91;
+  .top-nine-values-table-row span:last-child {
+    color: #006F91;
+  }
+
+#bottom-texts-section {
+  font-size: 1.5rem;
 }
 
-#bottom-texts-section{
-    font-size:1.5rem;
+.value-container-header {
+  display: -webkit-box;
+  border-top: 1px solid #006F91;
+  border-left: 1px solid #006F91;
+  border-bottom: 1px solid #006F91;
+  margin-bottom: 30px;
 }
 
-.value-container-header{
-    display:-webkit-box;
-    border-top:1px solid #006F91;
-    border-left:1px solid #006F91;
-    border-bottom:1px solid #006F91;
-    margin-bottom:30px;
-}
-
-  .value-container-header img{
-      height:50px;
-      width:50px;
+  .value-container-header img {
+    height: 50px;
+    width: 50px;
   }
 
   .value-container-header > div {
     border-right: 1px solid #006F91;
   }
 
-#values-questions-pages{
+#values-questions-pages {
 }
 
-#value-container-questions{
-    border-left:1px solid #006F91;
-    border-right:1px solid #006F91;
-    border-bottom:1px solid #006F91;
-    font-family:barlowSemiCondensedLight;
-    font-size:1.8rem;
-    margin-bottom:30px;
-    margin-top:-30px;
-    height:auto;
+#value-container-questions {
+  border-left: 1px solid #006F91;
+  border-right: 1px solid #006F91;
+  border-bottom: 1px solid #006F91;
+  font-family: barlowSemiCondensedLight;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  margin-top: -30px;
+  height: auto;
 }
 
-#value-container-questions span{
-    max-width:100px;
-}
-
-.questions-li-element{
-    color:#006F91;
-}
-
-  .questions-li-element span{
-      color:black;
+  #value-container-questions span {
+    max-width: 100px;
   }
 
-  .value-container-questions li {
-    margin-bottom: 20px;
+.questions-li-element {
+  color: #006F91;
+}
+
+  .questions-li-element span {
+    color: black;
   }
 
-  /*.values-questions-container {
-    page-break-inside: auto;
-  }*/
+.value-container-questions li {
+  margin-bottom: 20px;
+}

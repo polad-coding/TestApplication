@@ -15,7 +15,7 @@ export class SurveyComponent implements OnInit {
   }
 
   ngOnInit() {
-    localStorage.setItem('currentTabName', 'survey');
+    localStorage.setItem('currentNavigationBarTabName', 'survey');
     window.scroll(0, 0);
   }
 

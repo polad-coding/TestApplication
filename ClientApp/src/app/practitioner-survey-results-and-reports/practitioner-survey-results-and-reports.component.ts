@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
@@ -21,27 +21,11 @@ export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
   constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router) { }
 
   ngOnInit() {
-    console.log(this.surveysResults);
+    localStorage.setItem('practitionerAccountTabName', 'survey-results-and-reports-section');
 
-    localStorage.setItem('practitionerAccountTabName', 'servey-results-and-reports-section');
-
-
-    if (this.user == undefined || this.user == null) {
-
-      this._accountService.GetCurrentUser().subscribe((response :any)=> {
-        this.user = response.body;
-        this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
-          this.surveysResults = response.body;
-          console.log(this.surveysResults);
-        });
-      });
-    }
-    else {
-      this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
-        this.surveysResults = response.body;
-        console.log(this.surveysResults);
-      });
-    }
+    this._dataService.GetSurveyResults(null).subscribe((response: any) => {
+      this.surveysResults = response.body;
+    });
   }
 
   public GoToGetCodesTab() {

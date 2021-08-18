@@ -20,14 +20,15 @@
     <form class="modal-form education-form" #educationForm="ngForm">
       <div *ngFor="let education of educations" class="checkbox-container education-checkbox-container">
         <input type="checkbox" (click)="ToggleSelection($event)" name="education" ngModel value="{{education | json}}">
-        <label class="is-not-selected" id="{{education.educationName + '-education-container'}}" for="education">{{education.educationName}}</label>
+        <label class="is-not-selected" id="{{'education-with-id-' + education.id}}" for="education">{{education.educationName}}</label>
       </div>
     </form>
-    <div class="modal-submit-button" (click)="SubmitEducationForm(educationForm)">
+    <div class="modal-submit-button" (click)="SubmitMultipleChoiceForm('education',educationForm)">
       <button>Confirm</button>
     </div>
   </div>
 </div>
+
 <div class="modal-container" #positionModalContainer>
   <div class="modal" (click)="PreventEventPropagation($event)">
     <div class="modal-header">
@@ -36,10 +37,10 @@
     <form class="modal-form" #positionForm="ngForm">
       <div *ngFor="let position of positions" class="checkbox-container">
         <input type="checkbox" (click)="ToggleSelection($event)" name="position" ngModel value="{{position | json}}">
-        <label class="is-not-selected" id="{{position.positionName + '-position-container'}}" for="position">{{position.positionName}}</label>
+        <label class="is-not-selected" id="{{'position-with-id-' + position.id}}" for="position">{{position.positionName}}</label>
       </div>
     </form>
-    <div class="modal-submit-button" (click)="SubmitPositionForm(educationForm)">
+    <div class="modal-submit-button" (click)="SubmitMultipleChoiceForm('position',positionForm)">
       <button>Confirm</button>
     </div>
   </div>
@@ -53,14 +54,15 @@
     <form class="modal-form" #sectorsOfActivitiesForm="ngForm">
       <div *ngFor="let sectorOfActivity of sectorsOfActivities" class="checkbox-container">
         <input type="checkbox" (click)="ToggleSelection($event)" name="sectorOfActivity" ngModel value="{{sectorOfActivity | json}}">
-        <label class="is-not-selected" id="{{sectorOfActivity.sectorOfActivityName + '-sector-of-activity-container'}}" for="sectorOfActivity">{{sectorOfActivity.sectorOfActivityName}}</label>
+        <label class="is-not-selected" id="{{'sector-of-activity-with-id-' + sectorOfActivity.id}}" for="sectorOfActivity">{{sectorOfActivity.sectorOfActivityName}}</label>
       </div>
     </form>
-    <div class="modal-submit-button" (click)="SubmitSectorOfActivityForm(sectorsOfActivitiesForm)">
+    <div class="modal-submit-button" (click)="SubmitMultipleChoiceForm('sectorOfActivity',sectorsOfActivitiesForm)">
       <button>Confirm</button>
     </div>
   </div>
 </div>
+
 <div class="modal-container" #regionModalContainer>
   <div class="modal" (click)="PreventEventPropagation($event)">
     <div class="modal-header">
@@ -69,14 +71,15 @@
     <form class="modal-form" #regionsForm="ngForm">
       <div *ngFor="let region of regions" class="checkbox-container">
         <input type="checkbox" (click)="ToggleSelection($event)" name="region" ngModel value="{{region | json}}">
-        <label class="is-not-selected" id="{{region.regionName + '-country-container'}}" for="region">{{region.regionName}}</label>
+        <label class="is-not-selected" id="{{'region-with-id-' + region.id}}" for="region">{{region.regionName}}</label>
       </div>
     </form>
     <div class="modal-submit-button">
-      <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
+      <button (click)="SubmitMultipleChoiceForm('region',regionsForm)">Confirm</button>
     </div>
   </div>
 </div>
+
 <div class="modal-container" #gendersModalContainer>
   <div class="modal" (click)="PreventEventPropagation($event)">
     <div class="modal-header">
@@ -92,6 +95,7 @@
     </div>
   </div>
 </div>
+
 <div id="practitioner-account-container">
   <div id="practitioner-account-form-container">
     <div id="practitioner-account-main-part">
@@ -175,7 +179,7 @@
               </div>
             </div>
             <div class="edit-button-section">
-              <button (click)="DisplayRegionsModal($event)">
+              <button (click)="DisplayFieldModal($event, 'region', newRegionsSelected, regionModal)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
@@ -191,7 +195,7 @@
               <p class="modal-selection-container" *ngIf="user == undefined || user.educations.length == 0">No educations selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="DisplayEducationsModal($event)">
+              <button (click)="DisplayFieldModal($event,'education', newEducationsSelected, educationModal)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
@@ -207,7 +211,7 @@
               <p class="modal-selection-container" *ngIf="user == undefined || user.positions.length == 0">No positions selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="DisplayPositionModal($event)">
+              <button (click)="DisplayFieldModal($event, 'position', newPositionsSelected, positionModal)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
@@ -223,7 +227,7 @@
               <p class="modal-selection-container" *ngIf="user == undefined || user.sectorsOfActivities.length == 0">No sectors of activity selected</p>
             </div>
             <div class="edit-button-section">
-              <button (click)="DisplaySectorsOfActivitiesModal($event)">
+              <button (click)="DisplayFieldModal($event, 'sector-of-activity', newSectorsOfActivitiesSelected, sectorsOfActivitiesModal)">
                 <img src="../../assets/KP-logo-accessories--png/pencil.svg" />
               </button>
             </div>
@@ -256,7 +260,6 @@
             </div>
           </div>
         </form>
-
       </div>
     </div>
     <div id="submit-form-section">

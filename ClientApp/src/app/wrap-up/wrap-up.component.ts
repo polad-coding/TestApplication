@@ -4,6 +4,7 @@ import { Chart } from 'chart.js';
 import { ValueViewModel } from '../../view-models/value-view-model';
 import { DataService } from '../../app-services/data-service';
 import { Route, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wrap-up',
@@ -12,36 +13,25 @@ import { Route, Router } from '@angular/router';
   providers: [DataService]
 })
 export class WrapUpComponent implements OnInit {
+  public surveyId: number;
 
   public corePerspectiveId: number;
   public secondaryPerspectiveId: number;
+
   public valuesFromThirdStage: Array<ValueViewModel> = new Array<ValueViewModel>();
+
   private relativeWeightOfThePerspectives: Array<number> = new Array<number>();
-  public resultsSectionMyChart: Chart;
+
   public imageString;
 
-  constructor(private _dataService: DataService, private _router: Router) {
+  constructor(private _dataService: DataService, private _router: Router) {}
 
-    let surveyId = localStorage.getItem('surveyId');
-
-    if (surveyId == null || surveyId == undefined) {
-      localStorage.setItem('personalAccountTabName', 'servey-results-and-reports-section');
-      this._router.navigate(['personalAccount']);
-    }
-
-    this._dataService.DecideToWhichStageToTransfer(Number.parseInt(localStorage.getItem('surveyId'))).subscribe(response => {
-      if (response.body != 'wrap-up') {
-        this._router.navigate([response.body]);
-      }
-    });
-  }
-
-  public DownloadYourPersonalReport() {
+  public DownloadPersonalReport() {
     this._router.navigate(['personalReport']);
   }
 
   public TransferToPersonalAccountPage() {
-    localStorage.setItem('currentTabName', 'my-account-section');
+    localStorage.setItem('currentNavigationBarTabName', 'my-account-section');
     this._router.navigate(['personalAccount']);
   }
 
@@ -49,154 +39,166 @@ export class WrapUpComponent implements OnInit {
     this._router.navigate(['practitionersDirectory']);
   }
 
+  private AssureThatSurveyIdIsValid() {
+    if (this.surveyId == null || this.surveyId == undefined) {
+      localStorage.setItem('personalAccountTabName', 'survey-results-and-reports-section');
+      this._router.navigate(['personalAccount']);
+    }
+  }
+
+  private AssureThatTheUserIsAtTheValidStep() {
+    this._dataService.DecideToWhichStageToTransfer(this.surveyId).subscribe(response => {
+      if (response.body != 'wrap-up') {
+        this._router.navigate([response.body]);
+      }
+    });
+  }
+
+  /**
+   * Calculate max graph slice value, to display the graph slices proportionaly.
+   * */
+  private CalculateMaxGraphSliceValue(): number {
+    let maxGraphSliceValue = 0;
+
+    this.relativeWeightOfThePerspectives.forEach(v => {
+      if (v > maxGraphSliceValue) {
+        maxGraphSliceValue = v;
+      }
+    });
+
+    maxGraphSliceValue += 1;
+    maxGraphSliceValue = Math.round(maxGraphSliceValue);
+
+    return maxGraphSliceValue;
+  }
+
+  private CalculateCoreAndSecondaryPerspectiveIds() {
+    let temp = new Array<number>();
+
+    this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
+
+    temp = temp.sort((a, b) => a - b);
+
+    this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
+    this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
+  }
+
+  private RenderResultsSectionImageChart(maxGraphSliceValue: number) {
+    let resultsSectionImageChart = new Chart('results-section-image-chart', {
+      type: 'polarArea',
+      options: {
+        tooltips: {
+          enabled: false
+        },
+        animation: {
+          onComplete: () => {
+            this.imageString = resultsSectionImageChart.toBase64Image();
+          }
+        },
+        legend: {
+          display: false
+        },
+        scale: {
+          display: false,
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            display: false,
+            max: maxGraphSliceValue,
+            min: 0
+          }
+        }
+      },
+      data: {
+        labels: [],
+        datasets: [{
+          data: this.relativeWeightOfThePerspectives.reverse(),
+          backgroundColor: [
+            '#544595',
+            '#009EE3',
+            '#009640',
+            '#FFCC00',
+            '#ED7102',
+            '#E30513'
+          ],
+          borderWidth: 0
+        }]
+      }
+    });
+
+  }
+
+  private RenderMainChart(maxGraphSliceValue: number) {
+    let myChart = new Chart('myChart', {
+      type: 'polarArea',
+      options: {
+        tooltips: {
+          enabled: false
+        },
+        legend: {
+          display: false
+        },
+        scale: {
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            display: false,
+            max: maxGraphSliceValue,
+            min: 0
+          }
+        }
+      },
+      data: {
+        labels: [
+          'Expansion',
+          'Systems',
+          'Relational',
+          'Management',
+          'Family',
+          'Grounding'
+        ],
+        datasets: [{
+          data: this.relativeWeightOfThePerspectives,
+          backgroundColor: [
+            '#544595',
+            '#009EE3',
+            '#009640',
+            '#FFCC00',
+            '#ED7102',
+            '#E30513'
+          ],
+          borderWidth: 0
+        }]
+      }
+    });
+  }
+
   ngOnInit() {
 
-    let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+    this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    this.AssureThatSurveyIdIsValid();
+
+    this.AssureThatTheUserIsAtTheValidStep();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    this._dataService.GetTheRelativeWeightOfThePerspectives(surveyId).subscribe((response: any) => {
-      if (response.ok) {
-        this.relativeWeightOfThePerspectives = response.body;
-        this._dataService.GetSurveyThirdStageResults(surveyId).subscribe((thirdStageResults: any) => {
-          if (thirdStageResults.ok) {
-            this.valuesFromThirdStage = thirdStageResults.body;
-            let maxGraphSliceValue = 0;
-            this.relativeWeightOfThePerspectives.forEach(v => {
-              if (v > maxGraphSliceValue) {
-                console.log(v);
-                maxGraphSliceValue = v;
-              }
-            });
+    this._dataService.GetTheRelativeWeightOfThePerspectives(this.surveyId).pipe(switchMap((getTheRelativeWeightOfThePerspectivesResult: any) => {
+      this.relativeWeightOfThePerspectives = getTheRelativeWeightOfThePerspectivesResult.body;
 
-            //Get the biggest values
+      return this._dataService.GetSurveyThirdStageResults(this.surveyId);
+    })).subscribe((getSurveyThirdStageResultsResponse: any) => {
+      this.valuesFromThirdStage = getSurveyThirdStageResultsResponse.body;
 
-            let temp = new Array<number>();
+      let maxGraphSliceValue = this.CalculateMaxGraphSliceValue();
 
-            this.relativeWeightOfThePerspectives.forEach(e => temp.push(e));
+      this.CalculateCoreAndSecondaryPerspectiveIds();
 
-            temp = temp.sort((a, b) => a - b);
+      this.RenderResultsSectionImageChart(maxGraphSliceValue);
 
-            this.corePerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[5]) + 1;
-            this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
-
-            maxGraphSliceValue += 1;
-            maxGraphSliceValue = Math.round(maxGraphSliceValue);
-
-            this.resultsSectionMyChart = new Chart('resultsSectionMyChart', {
-              type: 'polarArea',
-              options: {
-                tooltips: {
-                  enabled: false
-                },
-                animation: {
-                  onComplete: () => {
-                    this.imageString = this.resultsSectionMyChart.toBase64Image();
-                  }
-                },
-                legend: {
-                  display: false,
-                  position: 'bottom',
-                  labels: {
-                    fontColor: '#006F91',
-                    fontFamily: 'barlowSemiCondensedLight',
-                    boxWidth: 0,
-                    padding: 0,
-                    fontSize:0 
-                  },
-                },
-                scale: {
-                  display: false,
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    display: false,
-                    max: maxGraphSliceValue,
-                    min: 0
-                  }
-                }
-              },
-              
-              data: {
-                labels: [],
-                //labels: [
-                //  'Expansion',
-                //  'Systems',
-                //  'Relational',
-                //  'Management',
-                //  'Family',
-                //  'Grounding'
-                //],
-                datasets: [{
-                  data: this.relativeWeightOfThePerspectives.reverse(),
-                  backgroundColor: [
-                    '#544595',
-                    '#009EE3',
-                    '#009640',
-                    '#FFCC00',
-                    '#ED7102',
-                    '#E30513'
-                  ],
-                  borderWidth:0
-                }]
-              }
-            });
-
-
-            var myChart = new Chart('myChart', {
-              type: 'polarArea',
-              options: {
-                tooltips: {
-                  enabled: false
-                },
-                legend: {
-                  display: false,
-                  position: 'bottom',
-                  labels: {
-                    fontColor: '#006F91',
-                    fontFamily: 'barlowSemiCondensedLight',
-                    boxWidth: 10,
-                    padding: 30
-                  },
-                },
-                scale: {
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    display: false,
-                    max: maxGraphSliceValue,
-                    min: 0
-                  }
-                }
-              },
-              data: {
-                labels: [
-                  'Expansion',
-                  'Systems',
-                  'Relational',
-                  'Management',
-                  'Family',
-                  'Grounding'
-                ],
-                datasets: [{
-                  data: this.relativeWeightOfThePerspectives,
-                  backgroundColor: [
-                    '#544595',
-                    '#009EE3',
-                    '#009640',
-                    '#FFCC00',
-                    '#ED7102',
-                    '#E30513'
-                  ],
-                  borderWidth: 0
-                }]
-              }
-            });
-          }
-        });
-      }
+      this.RenderMainChart(maxGraphSliceValue);
     });
   }
 }

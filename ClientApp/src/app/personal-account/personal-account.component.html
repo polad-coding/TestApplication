@@ -11,7 +11,7 @@
     <div [ngStyle]="{'margin-left': userHasUnsignedSurveys ? 'auto':'none','margin-right': userHasUnsignedSurveys ? 'auto':'none'}" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'my-account-section', 'section-not-selected': selectedTab != 'my-account-section'}" #accountSectionTab (click)="SelectTab($event)" id="my-account-section">
       <p>My account</p>
     </div>
-    <div *ngIf="!userHasUnsignedSurveys" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'servey-results-and-reports-section', 'section-not-selected': selectedTab != 'servey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="servey-results-and-reports-section">
+    <div *ngIf="!userHasUnsignedSurveys" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'survey-results-and-reports-section', 'section-not-selected': selectedTab != 'survey-results-and-reports-section'}" #accountSectionTab (click)="SelectTab($event)" id="survey-results-and-reports-section">
       <p>My codes, survey results and reports</p>
     </div>
     <div *ngIf="!userHasUnsignedSurveys" [ngClass]="{'personal-account-section': true, 'section-selected' : selectedTab == 'get-codes-section', 'section-not-selected': selectedTab != 'get-codes-section'}" #accountSectionTab (click)="SelectTab($event)" id="get-codes-section">
@@ -21,11 +21,11 @@
   <div id="get-codes-container" *ngIf="selectedTab == 'get-codes-section' && !userHasUnsignedSurveys">
     <app-get-codes [user]="user"></app-get-codes>
   </div>
-  <div id="survey-results-and-reports-container" *ngIf="selectedTab == 'servey-results-and-reports-section' && !userHasUnsignedSurveys">
+  <div id="survey-results-and-reports-container" *ngIf="selectedTab == 'survey-results-and-reports-section' && !userHasUnsignedSurveys">
     <app-personal-survey-results-and-reports></app-personal-survey-results-and-reports>
   </div>
   <div id="personal-account-form-container" *ngIf="selectedTab == 'my-account-section'">
-    <app-personal-my-account-section (emitError)="DisplayError($event)"></app-personal-my-account-section>
+    <app-personal-my-account-section (usersHasUnsignedSurveyStatusEmitter)="SetIfUserHasUnsignedSurvey($event)" (errorEmitter)="DisplayError($event)"></app-personal-my-account-section>
   </div>
 </div>
 <app-footer></app-footer>

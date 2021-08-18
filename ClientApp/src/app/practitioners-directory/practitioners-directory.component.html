@@ -41,7 +41,7 @@
 <app-page-title titleText="Values Practitioner"></app-page-title>
 <div id="practitioners-directory-container">
   <div id="filters-row">
-    <div id="languages-filters-container" (click)="ShowLanguagesModal($event)">
+    <div id="languages-filters-container" (click)="ShowModal($event,'languages-modal')">
       <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.languagesSelected.length == 0">
         <p>{{selectedLanguagesText}}</p>
         <div class="arrowhead-image-container">
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div id="geographical-filters-container" (click)="ShowRegionsModal($event)">
+    <div id="geographical-filters-container" (click)="ShowModal($event,'regions-modal')">
       <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.geographicalLocationsSelected.length == 0">
         <p>{{selectedRegionsText}}</p>
         <div class="arrowhead-image-container">
@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div id="gender-filters-container" (click)="ShowGendersModal($event)">
+    <div id="gender-filters-container" (click)="ShowModal($event,'genders-modal')">
       <div class="filter-container" *ngIf="practitionersSearchFilterViewModel.genderSelected == undefined">
         <p>No gender preference</p>
         <div class="arrowhead-image-container">

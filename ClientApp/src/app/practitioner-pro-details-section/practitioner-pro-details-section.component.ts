@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { error } from 'protractor';
+import { forkJoin, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { LanguageViewModel } from '../../view-models/language-view-model';
@@ -17,84 +18,99 @@ import { UserViewModel } from '../../view-models/user-view-model';
 export class PractitionerProDetailsSectionComponent implements OnInit, AfterViewInit {
 
   public certificationLevel: string;
+  public certificateLevelString: string = '';
   public membership: string;
+
   @Input()
   public user: UserViewModel;
+
   @ViewChildren('inputField')
   public inputFields: QueryList<ElementRef>;
   @ViewChild('proInformationForm', { read: NgForm, static: false })
   public proInformationForm: NgForm;
+
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
-  public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   @ViewChild('languageModalContainer', { read: ElementRef, static: false })
   public languageModal: ElementRef;
+
+  //Used to display which options are selected currently, when the modal is opened.
+  public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   public newLanguagesSelected: Array<LanguageViewModel> = new Array<LanguageViewModel>();
-  public profileImageName;
+
   public regions: Array<RegionViewModel>;
   public languages: Array<LanguageViewModel>;
+
+  public profileImageName;
+  public dummyNumber: number;
+
+  //Used to share a loading gif when user is uploading new image.
+  public isUploadingProccess: boolean = false;
+
   @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
-  public certificateLevel: string = '';
+
+  //If the form submitted was incorrect these three properties will be used to return form fields to initial values.
   public oldProfessionalEmail: string;
   public oldPhoneNumber: string;
   public oldWebsite: string;
-  public isUploadingProccess: boolean = false;
-  public dummyNumber: number;
 
-  constructor(private _dataService: DataService, private renderer2: Renderer2, private renderer: Renderer, private accountService: AccountService, private _router: Router) { }
+  constructor(
+    private _dataService: DataService,
+    private renderer2: Renderer2,
+    private renderer: Renderer,
+    private accountService: AccountService,
+    private _router: Router
+  ) { }
 
   ngAfterViewInit(): void {
     this.oldProfessionalEmail = this.user.professionalEmail;
     this.oldPhoneNumber = this.user.phoneNumber;
     this.oldWebsite = this.user.website;
-    this._dataService.GetMembershipStatus().subscribe((response: any) => {
-      console.log(response.body);
-      if (response.body != '' && response.body != undefined && response.body != null) {
-        this.membership = 'OK';
-      }
-    });
-
-    this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
-      let certifications: any = response.body;
-      console.log(certifications);
-      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
-      if (certifications.length > 0) {
-        this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
-        this.certificationLevel = certifications[certifications.length - 1].certification.certificationType;
-      }
-      else {
-        this.certificateLevel = '';
-      }
-    });
   }
 
   ngOnInit() {
     this.dummyNumber = Math.floor(Math.random() * 100000);
 
-    this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {
-      this.newRegionsSelected = response.body;
+    forkJoin(
+      this._dataService.GetSelectedRegionsForCurrentUser(),
+      this._dataService.GetSelectedLanguagesForCurrentUser(),
+      this.accountService.GetAllRegions(),
+      this.accountService.GetAllLanguages()).pipe(map(([firstResponse, secondResponse, thirdResponse, fourthResponse]: any) => {
+        this.newRegionsSelected = firstResponse.body;
+        this.newLanguagesSelected = secondResponse.body;
+        this.regions = thirdResponse.body;
+        this.languages = fourthResponse.body;
+      })).subscribe();
+
+    this._dataService.GetMembershipStatus().subscribe((response: any) => {
+      if (response.body != '' && response.body != undefined && response.body != null) {
+        this.membership = 'OK';
+      }
     });
 
-    this._dataService.GetSelectedLanguagesForCurrentUser().subscribe((response: any) => {
-      this.newLanguagesSelected = response.body;
-    });
+    this._dataService.GetPractitionersCertifications(null).subscribe((response: any) => {
+      let certifications: any = response.body;
+      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
 
-    this.accountService.GetAllRegions().subscribe((response: any) => {
-      this.regions = response.body;
-    });
+      if (certifications.length > 0) {
+        this.certificateLevelString = 'Level ' + certifications[certifications.length - 1].certification.level;
+        this.certificationLevel = certifications[certifications.length - 1].certification.certificationType;
+        return;
+      }
 
-    this.accountService.GetAllLanguages().subscribe((response: any) => {
-      this.languages = response.body;
+      this.certificateLevelString = '';
     });
 
     localStorage.setItem('practitionerAccountTabName', 'pro-details-section');
-
   }
 
   public EditInputField(fieldName: string, event: MouseEvent) {
     event.stopPropagation();
+
     this.OnDocumentClicked(null);
+
     let elements = this.inputFields.filter(el => el.nativeElement.name === fieldName);
+
     elements.forEach(element => {
       this.renderer2.removeAttribute(element.nativeElement, 'disabled');
       this.renderer2.setStyle(element.nativeElement, 'border', '1px solid #9AC7EC');
@@ -117,60 +133,39 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
       this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
         window.location.reload();
       });
+      return;
     }
-    else {
-      if (personalInformationForm.errors === null) {
-        this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
-          if (response.body == true) {
-            this.errorMessage.emit('Your ordinary and professional email addresses cannot be duplicate.');
-          }
-          else {
-            this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail).subscribe(response => {
-              if (response.body === true) {
-                this.errorMessage.emit('This email address already exists in our database.');
-              }
-              else {
-                this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-                  window.location.reload();
-                });
-              }
-            });
-          }
-        });
+
+    this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
+      if (checkIfMailIsRegisteredResponse.body == true) {
+        this.errorMessage.emit('Your ordinary and professional email addresses cannot be duplicate.');
+        this.user.professionalEmail = this.oldProfessionalEmail;
+        personalInformationForm.controls['professionalEmail'].markAsPristine();
+        return of(null);
       }
-      else {
-        if (personalInformationForm.controls['email'].errors.required) {
-        }
-        else if (personalInformationForm.controls['email'].errors.pattern) {
-        }
+
+      return this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail);
+    })).pipe(switchMap((checkIfProfessionalMailIsRegisteredResponse: any) => {
+      if (checkIfProfessionalMailIsRegisteredResponse == null) {
+        return of(null);
       }
-    }
-  }
 
-  public CheckIfValidWebURL(personalInformationForm: NgForm): boolean {
-    if (personalInformationForm.controls['website'].pristine) {
-      return true;
-    }
-
-    let website: string = personalInformationForm.controls['website'].value;
-    let stringIsWebsite = new RegExp('/^(https?:\/\/)?(www\.)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\.)+[\w]{2,}(\/\S*)?$/ig');
-
-
-
-    if (website != null && website.length > 0) {
-      if (stringIsWebsite.test(website)) {
-        return true;
+      if (checkIfProfessionalMailIsRegisteredResponse.body == true) {
+        this.errorMessage.emit('This email address already exists in our database.');
+        this.user.professionalEmail = this.oldProfessionalEmail;
+        personalInformationForm.controls['professionalEmail'].markAsPristine();
+        return of(null);
       }
-    }
-    else {
-      return true;
-    }
 
-    this.errorMessage.emit('Your website URL is in incorrect format.');
-    this.user.website = this.oldWebsite;
-    personalInformationForm.controls['website'].markAsPristine();
+      return this.accountService.ChangeUserPersonalData(this.user);
+    })).subscribe((changeUserPersonalDataResponse: any) => {
+      if (changeUserPersonalDataResponse == null) {
+        return;
+      }
 
-    return false;
+      window.location.reload();
+      return
+    });
   }
 
   public CheckIfMobileNumber(personalInformationForm: NgForm): boolean {
@@ -181,17 +176,12 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     let phoneNumber: string = personalInformationForm.controls['phoneNumber'].value;
     let stringIsNumber = new RegExp('^[0-9]*$');
 
-    if (phoneNumber != null && phoneNumber.length > 0) {
-      if (stringIsNumber.test(phoneNumber)) {
-        return true;
-      }
-    }
-    else {
+    if (phoneNumber != null && phoneNumber.length > 0 && stringIsNumber.test(phoneNumber)) {
       return true;
     }
 
     this.errorMessage.emit('Your phone number is in incorrect format. Reminder:phone number must be without whitespaces.');
-    this.user.profileImageName = this.oldPhoneNumber;
+    this.user.phoneNumber = this.oldPhoneNumber;
     personalInformationForm.controls['phoneNumber'].markAsPristine();
 
     return false;
@@ -205,12 +195,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     let email: string = personalInformationForm.controls['professionalEmail'].value;
     let stringIsEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
 
-    if (email != null && email.length > 0) {
-      if (stringIsEmail.test(email)) {
-        return true;
-      }
-    }
-    else {
+    if (email != null && email.length > 0 && stringIsEmail.test(email)) {
       return true;
     }
 
@@ -221,10 +206,8 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     return false;
   }
 
-
   public DisplayRegionsModal(event: MouseEvent) {
     event.stopPropagation();
-    //TODO - deselect all regions
 
     let regionContainers = document.getElementsByClassName('checkbox-container');
 
@@ -244,7 +227,6 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
 
   public DisplayLanguagesModal(event: MouseEvent) {
     event.stopPropagation();
-    //TODO - deselect all regions
 
     let languageContainers = document.getElementsByClassName('checkbox-container');
     console.log(languageContainers);
@@ -263,7 +245,6 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
 
   }
 
-
   @HostListener('document:click', ['$event'])
   public OnDocumentClicked(event) {
     this.inputFields.forEach(el => {
@@ -279,25 +260,24 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     event.stopPropagation();
   }
 
-
-
+  /**
+   * Toggles option selection inside the modals.
+   * @param event
+   */
   public ToggleSelection(event: any) {
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
       this.renderer2.removeClass(element, 'is-not-selected');
       this.renderer2.addClass(element, 'is-selected');
-      //this.newRegionsSelected.push(JSON.parse(event.target.value));
     }
     else {
       this.renderer2.removeClass(element, 'is-selected');
       this.renderer2.addClass(element, 'is-not-selected');
-      //this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
     }
   }
 
   public SubmitRegionsForm(regionsForm: NgForm) {
-    //populate the regions array with these elements
     this.newRegionsSelected = new Array<RegionViewModel>();
     let elements = document.getElementsByClassName('is-selected');
 
@@ -305,15 +285,11 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
       this.newRegionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
     }
 
-
-
     this.user.regions = this.newRegionsSelected;
-    //reset form and close it
     this.proInformationForm.form.markAsDirty();
     regionsForm.resetForm();
     this.OnDocumentClicked(null);
   }
-
 
   public SubmitLanguagesForm(languagesForm: NgForm) {
     this.newLanguagesSelected = new Array<LanguageViewModel>();
@@ -323,10 +299,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
       this.newLanguagesSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
     }
 
-
-
     this.user.languages = this.newLanguagesSelected;
-    //reset form and close it
     this.proInformationForm.form.markAsDirty();
     languagesForm.resetForm();
     this.OnDocumentClicked(null);

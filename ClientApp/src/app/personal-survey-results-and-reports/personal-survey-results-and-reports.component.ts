@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { error } from 'protractor';
+import { switchMap } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { SurveyService } from '../../app-services/survey-service';
@@ -19,20 +19,14 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
   public surveysResults: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
   public surveyId: number;
 
-  constructor(private _router: Router, private _dataService: DataService, private _accountService: AccountService, private _surveyService: SurveyService) {
-
-  }
+  constructor(private _router: Router, private _dataService: DataService, private _accountService: AccountService, private _surveyService: SurveyService) { }
 
   ngOnInit() {
-    this._accountService.GetCurrentUser().subscribe((getCurrentUserResponse: any) => {
+    this._accountService.GetCurrentUser().pipe(switchMap((getCurrentUserResponse: any) => {
       this.user = getCurrentUserResponse.body;
-      this._dataService.GetSurveyResults(this.user.id).subscribe((response: any) => {
-        this.surveysResults = response.body;
-        console.log(this.surveysResults);
-      }),
-        error => {
-          console.log(error);
-        };
+      return this._dataService.GetSurveyResults(this.user.id);
+    })).subscribe((getSurveyResultsResponse: any) => {
+      this.surveysResults = getSurveyResultsResponse.body;
     });
   }
 
@@ -46,6 +40,8 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
   }
 
   public GenerateIndividualReport(surveyId: number) {
+    console.log('here 7');
+
     localStorage.setItem('surveyId', surveyId.toString());
     this._router.navigate(['personalReport']);
   }
@@ -55,41 +51,22 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
     this._router.navigate(['wrap-up']);
   }
 
-  public ResumeSurvey(surveyId: number, code: string) {
-    console.log(surveyId);
-
+  public ResumeSurvey(surveyId: number) {
     if (surveyId === 0) {
-      localStorage.setItem('surveyCode', code);
+      console.log('here 8');
 
-      //this._surveyService.CreateSurvey(code, null).subscribe((response: any) => {
-      //  console.log(response);
-      //  if (response.ok) {
       localStorage.setItem('surveyId', surveyId.toString());
-      localStorage.removeItem('surveyCode');
       this._router.navigate(['surveyFirstStage']);
-      //  }
-      //},
-      //  error => {
-      //    console.log(error);
-      //  });
 
+      return;
     }
-    else {
-      localStorage.setItem('surveyId', surveyId.toString());
-      //Go to DB and check which stage is passed
-      console.log(surveyId);
-      this._dataService.GetTheCurrentStageValues(surveyId).subscribe((currentStageValuesResponse: any) => {
-        this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe((stageTransferResponse: any) => {
-          let valuesToTransfer = currentStageValuesResponse.body;
-          console.log(stageTransferResponse.body);
-          this._router.navigate([stageTransferResponse.body], { state: { values: valuesToTransfer } });
+    console.log('here 9');
 
-        });
-      });
-    }
+    localStorage.setItem('surveyId', surveyId.toString());
 
-    //Get the data for the stage
-    //Navigate to the respective stage
+    this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe((stageTransferResponse: any) => {
+      this._router.navigate([stageTransferResponse.body]);
+    });
   }
 
 }

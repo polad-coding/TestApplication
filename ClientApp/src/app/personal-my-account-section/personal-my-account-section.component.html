@@ -186,7 +186,7 @@
     </div>
     <div class="input-section">
       <div class="label-section">
-        <label for="Position">Position / Profession:</label>
+        <label for="Position" id="position-profession-label">Position / Profession:</label>
       </div>
       <div class="input-field-section">
         <div *ngFor="let position of user.positions" class="modal-selection-container">
@@ -252,7 +252,7 @@
   </div>
   <div id="valid-changes-section">
     <button *ngIf="!userHasUnsignedSurveys" [ngClass]="{'is-enabled': !personalInformationForm.pristine,'is-disabled' : personalInformationForm.pristine}" (click)="ChangeProfileData($event,personalInformationForm)">Valid changes</button>
-    <button *ngIf="userHasUnsignedSurveys" class="is-enabled" (click)="AssociateUserDataToTheSurvey(personalInformationForm)">Get your survey result</button>
+    <button *ngIf="userHasUnsignedSurveys" class="is-enabled" (click)="AssociateUserDataToTheSurvey($event,personalInformationForm)">Get your survey result</button>
   </div>
   <div id="see-privacy-image-block">
     <div id="see-privacy-container">

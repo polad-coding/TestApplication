@@ -151,7 +151,6 @@ namespace KPProject.Services
             entries.ForEach(e => values.Add(e.Value));
             var seed = (await _applicationDbContext.Surveys.FirstAsync(survey => survey.Id == surveyId)).Seed;
 
-            //TODO - remove comment here
             this.Shuffle(values, seed);
 
             return values;
@@ -386,7 +385,6 @@ namespace KPProject.Services
                 }
             });
 
-            //TODO - Decrease number of usages for each coupon
 
             await _applicationDbContext.Orders.AddRangeAsync(ordersToSave);
 
@@ -404,20 +402,24 @@ namespace KPProject.Services
         {
             ordersList.ForEach(o =>
             {
-                if (o.CouponBody != null)
-                {
-                    var coupon = _applicationDbContext.AssociatedCoupons.FirstOrDefault(ac => ac.CouponBody == o.CouponBody);
+                var coupon = _applicationDbContext.AssociatedCoupons.FirstOrDefault(ac => ac.CouponBody == o.CouponBody);
 
-                    if (coupon != null)
+                for (int i = 0; i < o.NumberOfUsages; i++)
+                {
+                    if (o.CouponBody != null)
                     {
-                        if (coupon.NumberOfUsagesLeft == 1)
+
+                        if (coupon != null)
                         {
-                            _applicationDbContext.AssociatedCoupons.Remove(coupon);
-                        }
-                        else
-                        {
-                            coupon.NumberOfUsagesLeft -= 1;
-                            _applicationDbContext.AssociatedCoupons.Update(coupon);
+                            if (coupon.NumberOfUsagesLeft == 1)
+                            {
+                                _applicationDbContext.AssociatedCoupons.Remove(coupon);
+                            }
+                            else
+                            {
+                                coupon.NumberOfUsagesLeft -= 1;
+                                _applicationDbContext.AssociatedCoupons.Update(coupon);
+                            }
                         }
                     }
                 }
@@ -451,7 +453,7 @@ namespace KPProject.Services
                 var practitioner = _applicationDbContext.Users.FirstOrDefault(u => u.Id == survey.PractitionerUserId);
                 var practitionerFullName = practitioner == null ? "" : practitioner.FirstName + " " + practitioner.LastName.ToUpper();
                 var surveyTaker = _userManager.FindByIdAsync(survey.SurveyTakerUserId).Result;
-                var surveyTakerEmail = surveyTaker.Email;
+                var surveyTakerEmail = surveyTaker == null ? null : surveyTaker.Email;
 
                 surveyResults.Add(new SurveyResultViewModel()
                 {
@@ -475,7 +477,7 @@ namespace KPProject.Services
             var values = new List<ValueModel>();
 
             values = await _applicationDbContext.Values.ToListAsync();
-            //TODO - remove comment here
+
             this.Shuffle(values, survey.Seed);
 
             return values;
@@ -929,8 +931,8 @@ namespace KPProject.Services
         }
 
         public async Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel)
-        {
-            var order = await _applicationDbContext.Surveys.FirstOrDefaultAsync(s => s.Code == transferCodesViewModel.Code && s.PractitionerUserId != transferCodesViewModel.UserId);
+        {   //TODO - check the method here.
+            var order = await _applicationDbContext.Surveys.FirstOrDefaultAsync(s => s.Code == transferCodesViewModel.Code && s.PractitionerUserId != null && s.SurveyTakerUserId == null);
 
             if (order == null)
             {
@@ -1216,6 +1218,22 @@ namespace KPProject.Services
             await _applicationDbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<bool> DeleteAllOrdersOfTheCurrentUserAsync(string userId)
+        {
+            var ordersToDelete = await _applicationDbContext.Orders.Where(order => order.UserId == userId).ToListAsync();
+
+            _applicationDbContext.Orders.RemoveRange(ordersToDelete);
+
+            var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

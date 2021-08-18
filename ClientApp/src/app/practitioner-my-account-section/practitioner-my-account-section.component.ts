@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, QueryList, Renderer, Renderer2, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, QueryList, Renderer, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { element } from 'protractor';
+import { forkJoin, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { AgeGroupViewModel } from '../../view-models/age-group-view-model';
-import { CertificationViewModel } from '../../view-models/certification-view-model';
 import { EducationViewModel } from '../../view-models/education-view-model';
 import { GenderViewModel } from '../../view-models/gender-view-model';
 import { PositionViewModel } from '../../view-models/position-view-model';
@@ -23,17 +23,19 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
 
   @Input()
   public user: UserViewModel;
+
+  //If the form submitted was incorrect these three properties will be used to return form fields to initial values.
   private oldEmail: string;
   private oldName: string;
   private oldSurname: string;
-  //public errorMessage: string = '';
-  @ViewChildren('inputField')
-  public inputFields: QueryList<ElementRef>;
+
+  //These field represent all the options that will be displayed when the respective modals are activated.
   public regions: Array<RegionViewModel>;
   public positions: Array<PositionViewModel>;
   public educations: Array<EducationViewModel>;
   public ageGroups: Array<AgeGroupViewModel>;
   public sectorsOfActivities: Array<SectorOfActivityViewModel>;
+
   @ViewChild('regionModalContainer', { read: ElementRef, static: false })
   public regionModal: ElementRef;
   @ViewChild('gendersModalContainer', { read: ElementRef, static: false })
@@ -46,145 +48,112 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
   public educationModal: ElementRef;
   @ViewChild('sectorsOfActivitiesModalContainer', { read: ElementRef, static: false })
   public sectorsOfActivitiesModal: ElementRef;
+
+  //Used to display which options are selected currently, when the modal is opened.
   public newRegionsSelected: Array<RegionViewModel> = new Array<RegionViewModel>();
   public newPositionsSelected: Array<PositionViewModel> = new Array<PositionViewModel>();
   public newEducationsSelected: Array<EducationViewModel> = new Array<EducationViewModel>();
   public newSectorsOfActivitiesSelected: Array<SectorOfActivityViewModel> = new Array<SectorOfActivityViewModel>();
   public newAgeGroupSelected: AgeGroupViewModel = new AgeGroupViewModel(undefined, undefined);
-  public profileImageName;
+  public selectedGender: string;
+
+  @ViewChildren('inputField')
+  public inputFields: QueryList<ElementRef>;
+
   @Input()
   public certificateLevel: string = '';
   public imageSectionIsVisible: string = 'true';
-  @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
+  public profileImageName;
+
+  //Used to share a loading gif when user is uploading new image.
   public isUploadingProccess: boolean = false;
-  public selectedGender: string;
+
+  @Output()
+  public errorMessage: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild('personalInformationForm', { read: NgForm, static: false })
   public personalInformationForm: NgForm;
+
+  //Used to assign the dummy number to the image attribute, to avoid image caching by the browser.
   public dummyNumber: number;
 
 
-  constructor(private _dataService: DataService, private _router: Router, private _renderer2: Renderer2, private accountService: AccountService, private renderer: Renderer) { }
+  constructor(
+    private _dataService: DataService,
+    private _router: Router,
+    private _renderer2: Renderer2,
+    private accountService: AccountService,
+    private renderer: Renderer
+  ) { }
+
   ngAfterViewInit(): void {
-    this._dataService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
-      let certifications: any = response.body;
-      console.log(certifications);
-      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
-      if (certifications.length > 0) {
-        this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
-      }
-      else {
-        this.certificateLevel = '';
-      }
-    });
-    //setTimeout(() => {
-    this.oldEmail = this.user.email;
-    this.oldName = this.user.firstName;
-    this.oldSurname = this.user.lastName;
-    console.log(this.oldName);
-    console.log(this.oldSurname);
-    //}, 100);
+
   }
 
   ngOnInit() {
-    this.accountService.GetAllAgeGroups().subscribe((response: any) => {
-      this.ageGroups = response.body;
-      console.log(this.ageGroups);
-    });
-
-    this.accountService.GetAllRegions().subscribe((response: any) => {
-      this.regions = response.body;
-    });
-
-    this.accountService.GetAllEducations().subscribe((response: any) => {
-      this.educations = response.body;
-    });
-
-    this.accountService.GetAllPositions().subscribe((response: any) => {
-      this.positions = response.body;
-
-    });
-
-    this.accountService.GetAllSectorsOfActivities().subscribe((response: any) => {
-      this.sectorsOfActivities = response.body;
-    });
-
-    this._dataService.GetSelectedRegionsForCurrentUser().subscribe((response: any) => {
-      this.newRegionsSelected = response.body;
-    });
-
-    this._dataService.GetSelectedEducationsForCurrentUser().subscribe((response: any) => {
-      this.newEducationsSelected = response.body;
-    });
-
-    this._dataService.GetSelectedPositionsForCurrentUser().subscribe((response: any) => {
-      this.newPositionsSelected = response.body;
-    });
-
-    this._dataService.GetSelectedSectorsOfActivityForCurrentUser().subscribe((response: any) => {
-      this.newSectorsOfActivitiesSelected = response.body;
-    });
-
     localStorage.setItem('practitionerAccountTabName', 'my-account-section');
+
+    forkJoin(
+      this.accountService.GetAllAgeGroups(),
+      this.accountService.GetAllRegions(),
+      this.accountService.GetAllEducations(),
+      this.accountService.GetAllPositions(),
+      this.accountService.GetAllSectorsOfActivities()
+    ).pipe(map((
+      [
+        getAllAgeGroupsResponse,
+        getAllRegionsResponse,
+        getAllEducationsResponse,
+        getAllPositionsResponse,
+        getAllSectorsOfActivitiesResponse
+      ]: any) => {
+      this.ageGroups = getAllAgeGroupsResponse.body;
+      this.regions = getAllRegionsResponse.body;
+      this.educations = getAllEducationsResponse.body;
+      this.positions = getAllPositionsResponse.body;
+      this.sectorsOfActivities = getAllSectorsOfActivitiesResponse.body;
+    })).subscribe();
+
+      this.oldEmail = this.user.email;
+      this.oldName = this.user.firstName;
+      this.oldSurname = this.user.lastName;
+      this.newRegionsSelected = this.user.regions;
+      this.newPositionsSelected = this.user.positions;
+      this.newEducationsSelected = this.user.educations;
+      this.newSectorsOfActivitiesSelected = this.user.sectorsOfActivities;
+
+      this._dataService.GetPractitionersCertifications(this.user.id).subscribe((getPractitionersCertificationsResponse: any) => {
+      let certifications: any = getPractitionersCertificationsResponse.body;
+      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
+
+      if (certifications.length > 0) {
+        this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
+        console.log(this.certificateLevel);
+        return;
+      }
+
+      this.certificateLevel = '';
+    });
 
     this.dummyNumber = Math.floor(Math.random() * 100000);
   }
 
-  public DisplayPositionModal(event: MouseEvent) {
+  public DisplayFieldModal(event: MouseEvent, optionType: string, optionsSelected: Array<any>, modal: ElementRef<any>) {
     event.stopPropagation();
 
-    let positionsContainers = document.getElementsByClassName('checkbox-container');
+    let elements = document.getElementsByClassName('checkbox-container');
 
-    for (var i = 0; i < positionsContainers.length; i++) {
-      this._renderer2.removeClass(positionsContainers[i].lastChild, 'is-selected');
-      this._renderer2.addClass(positionsContainers[i].lastChild, 'is-not-selected');
+    for (var i = 0; i < elements.length; i++) {
+      this._renderer2.removeClass(elements[i].lastChild, 'is-selected');
+      this._renderer2.addClass(elements[i].lastChild, 'is-not-selected');
     }
 
-    for (var i = 0; i < this.newPositionsSelected.length; i++) {
-      this._renderer2.addClass(document.getElementById(`${this.newPositionsSelected[i].positionName}-position-container`), 'is-selected');
+    for (var i = 0; i < optionsSelected.length; i++) {
+      this._renderer2.addClass(document.getElementById(`${optionType}-with-id-${optionsSelected[i].id}`), 'is-selected');
     }
 
-    this._renderer2.setStyle(this.positionModal.nativeElement, 'display', 'flex');
-    this.positionModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
-
-  }
-
-  public DisplayEducationsModal(event: MouseEvent) {
-    event.stopPropagation();
-
-    let educationsContainers = document.getElementsByClassName('checkbox-container');
-    console.log(this.educationModal);
-
-    for (var i = 0; i < educationsContainers.length; i++) {
-      this._renderer2.removeClass(educationsContainers[i].lastChild, 'is-selected');
-      this._renderer2.addClass(educationsContainers[i].lastChild, 'is-not-selected');
-    }
-
-    for (var i = 0; i < this.newEducationsSelected.length; i++) {
-      this._renderer2.addClass(document.getElementById(`${this.newEducationsSelected[i].educationName}-education-container`), 'is-selected');
-    }
-
-    this._renderer2.setStyle(this.educationModal.nativeElement, 'display', 'flex');
-    this.educationModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
-
-  }
-
-  public DisplaySectorsOfActivitiesModal(event: MouseEvent) {
-    event.stopPropagation();
-
-    let sectorsOfActivitiesContainers = document.getElementsByClassName('checkbox-container');
-
-    for (var i = 0; i < sectorsOfActivitiesContainers.length; i++) {
-      this._renderer2.removeClass(sectorsOfActivitiesContainers[i].lastChild, 'is-selected');
-      this._renderer2.addClass(sectorsOfActivitiesContainers[i].lastChild, 'is-not-selected');
-    }
-
-    for (var i = 0; i < this.newSectorsOfActivitiesSelected.length; i++) {
-      this._renderer2.addClass(document.getElementById(`${this.newSectorsOfActivitiesSelected[i].sectorOfActivityName}-sector-of-activity-container`), 'is-selected');
-    }
-
-    this._renderer2.setStyle(this.sectorsOfActivitiesModal.nativeElement, 'display', 'flex');
-    this.sectorsOfActivitiesModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
-
+    this._renderer2.setStyle(modal.nativeElement, 'display', 'flex');
+    modal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
   }
 
   public SelectAgeGroup(event, ageGroup: AgeGroupViewModel) {
@@ -298,29 +267,13 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
   }
 
-  public DisplayRegionsModal(event: MouseEvent) {
-    event.stopPropagation();
-    //TODO - deselect all regions
-
-    let regionContainers = document.getElementsByClassName('checkbox-container');
-
-    for (var i = 0; i < regionContainers.length; i++) {
-      this._renderer2.removeClass(regionContainers[i].lastChild, 'is-selected');
-      this._renderer2.addClass(regionContainers[i].lastChild, 'is-not-selected');
-    }
-
-    for (var i = 0; i < this.newRegionsSelected.length; i++) {
-      this._renderer2.addClass(document.getElementById(`${this.newRegionsSelected[i].regionName}-country-container`), 'is-selected');
-    }
-
-    this._renderer2.setStyle(this.regionModal.nativeElement, 'display', 'flex');
-    this.regionModal.nativeElement.firstChild.scrollIntoView({ behavior: 'smooth' });
-  }
 
   public EditInputField(fieldName: string, event: MouseEvent) {
     event.stopPropagation();
     this.OnDocumentClicked(null);
+
     let elements = this.inputFields.filter(el => el.nativeElement.name === fieldName);
+
     elements.forEach(element => {
       this._renderer2.removeAttribute(element.nativeElement, 'disabled');
       this._renderer2.setStyle(element.nativeElement, 'border', '1px solid #9AC7EC');
@@ -342,29 +295,41 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
       this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
         window.location.reload();
       });
-    }
-    else {
-      this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).subscribe(response => {
-        if (response.body === true) {
-          this.user.email = this.oldEmail;
-          personalInformationForm.controls['email'].markAsPristine();
-          this.errorMessage.emit('Entered email is already registered. Please enter something else.');
-        }
-        else {
-          this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.email).subscribe((response: any) => {
-            if (response.body) {
-              this.errorMessage.emit('This email address is already registered.');
 
-            }
-            else {
-              this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
-                window.location.reload();
-              });
-            }
-          })
-        }
-      });
+      return;
     }
+
+    this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
+      if (checkIfMailIsRegisteredResponse.body === true) {
+
+        this.errorMessage.emit('This email address already exists in our database.');
+        this.user.email = this.oldEmail;
+
+        personalInformationForm.controls['email'].markAsPristine();
+        return of(null);
+      }
+
+      return this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.email);
+    })).pipe(switchMap((checkIfProfessionalMailIsRegisteredResponse: any) => {
+      if (checkIfProfessionalMailIsRegisteredResponse == null) {
+        return of(null);
+      }
+
+      if (checkIfProfessionalMailIsRegisteredResponse.body == true) {
+        this.errorMessage.emit('This email address already exists in our database.');
+        this.user.email = this.oldEmail;
+        personalInformationForm.controls['email'].markAsPristine();
+        return of(null);
+      }
+
+      return this.accountService.ChangeUserPersonalData(this.user);
+    })).subscribe((changeUserPersonalDataResponse: any) => {
+      if (changeUserPersonalDataResponse == null) {
+        return;
+      }
+
+      location.reload();
+    });
   }
 
   public CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
@@ -404,6 +369,10 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     return false;
   }
 
+  /**
+  * When document is clicked disables all the fields, hides all the modals and error messages.
+  * @param event
+  */
   @HostListener('document:click', ['$event'])
   public OnDocumentClicked(event) {
     this.inputFields.forEach(el => {
@@ -419,60 +388,35 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this._renderer2.setStyle(this.ageGroupsModal.nativeElement, 'display', 'none');
   }
 
-  public SubmitPositionForm(positionForm: NgForm) {
-    this.newPositionsSelected = new Array<PositionViewModel>();
+  public SubmitMultipleChoiceForm(optionType: string, form: NgForm) {
+    let newOptionsSelected = new Array<any>();
     let elements = document.getElementsByClassName('is-selected');
 
     for (var i = 0; i < elements.length; i++) {
-      this.newPositionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+      newOptionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
     }
 
-
-
-    this.user.positions = this.newPositionsSelected;
-    //reset form and close it
-    this.personalInformationForm.form.markAsDirty();
-    positionForm.resetForm();
-    this.OnDocumentClicked(null);
-  }
-
-  public SubmitEducationForm(educationForm: NgForm) {
-    this.newEducationsSelected = new Array<EducationViewModel>();
-    let elements = document.getElementsByClassName('is-selected');
-
-    console.log(elements);
-
-    for (var i = 0; i < elements.length; i++) {
-      this.newEducationsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
+    if (optionType == 'region') {
+      this.newRegionsSelected = newOptionsSelected;
+      this.user.regions = this.newRegionsSelected;
+    }
+    else if (optionType == 'position') {
+      this.newPositionsSelected = newOptionsSelected;
+      this.user.positions = this.newPositionsSelected;
+    }
+    else if (optionType == 'education') {
+      this.newEducationsSelected = newOptionsSelected;
+      this.user.educations = this.newEducationsSelected;
+    }
+    else if (optionType == 'sectorOfActivity') {
+      this.newSectorsOfActivitiesSelected = newOptionsSelected;
+      this.user.sectorsOfActivities = this.newSectorsOfActivitiesSelected;
     }
 
-    console.log(this.newEducationsSelected);
-
-
-    this.user.educations = this.newEducationsSelected;
-    //reset form and close it
     this.personalInformationForm.form.markAsDirty();
-    educationForm.resetForm();
+    form.resetForm();
     this.OnDocumentClicked(null);
   }
-
-  public SubmitSectorOfActivityForm(sectorOfActivityForm: NgForm) {
-    this.newSectorsOfActivitiesSelected = new Array<SectorOfActivityViewModel>();
-    let elements = document.getElementsByClassName('is-selected');
-
-    for (var i = 0; i < elements.length; i++) {
-      this.newSectorsOfActivitiesSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
-    }
-
-
-
-    this.user.sectorsOfActivities = this.newSectorsOfActivitiesSelected;
-    //reset form and close it
-    this.personalInformationForm.form.markAsDirty();
-    sectorOfActivityForm.resetForm();
-    this.OnDocumentClicked(null);
-  }
-
 
   public PreventEventPropagation(event: MouseEvent) {
     event.stopPropagation();
@@ -484,40 +428,20 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     if (element.className === 'is-not-selected') {
       this._renderer2.removeClass(element, 'is-not-selected');
       this._renderer2.addClass(element, 'is-selected');
-      //this.newRegionsSelected.push(JSON.parse(event.target.value));
     }
     else {
       this._renderer2.removeClass(element, 'is-selected');
       this._renderer2.addClass(element, 'is-not-selected');
-      //this.newRegionsSelected = this.newRegionsSelected.filter(el => !(el.regionName === JSON.parse(event.target.value).regionName));
     }
-  }
-
-  public SubmitRegionsForm(regionsForm: NgForm) {
-    //populate the regions array with these elements
-    this.newRegionsSelected = new Array<RegionViewModel>();
-    let elements = document.getElementsByClassName('is-selected');
-
-    for (var i = 0; i < elements.length; i++) {
-      this.newRegionsSelected.push(JSON.parse((<any>elements[i].previousSibling).value));
-    }
-
-
-
-    this.user.regions = this.newRegionsSelected;
-    //reset form and close it
-    this.personalInformationForm.form.markAsDirty();
-    regionsForm.resetForm();
-    this.OnDocumentClicked(null);
   }
 
   public ChooseNewProfileImage(files: FileList) {
     this.isUploadingProccess = true;
     this.ToBase64(files[0]).then((value: string) => {
       this.accountService.UploadProfileImage((value)).subscribe((response: any) => {
-        window.location.reload();
+        location.reload();
         this.profileImageName = response.body;
-      }, error => window.location.reload());
+      }, error => location.reload());
     });
   }
 

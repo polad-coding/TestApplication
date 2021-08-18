@@ -6,6 +6,7 @@
     </div>
   </div>
 </div>
+
 <div id="desktop-container" *ngIf="desktopVersion">
   <div id="title-section">
     <p></p>
@@ -18,8 +19,7 @@
     <div id="left-part">
       <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
       <p>Certified practitioner</p>
-      <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
-      <!--<p>Membership {{}}</p>-->
+      <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications.length}}</p>
     </div>
     <div id="right-part">
       <div id="levels-container">
@@ -40,7 +40,6 @@
         <div class="status-drop">
           <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] == undefined" />
           <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180-f.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[1] != undefined" />
-
         </div>
         <div class="status-drop">
           <img src="../../assets/KP-logo-accessories--png/00-0-Drop-180.png" *ngIf="practitionersCertifications != undefined && practitionersCertifications[2] == undefined" />
@@ -108,11 +107,12 @@
     </div>
   </div>
 </div>
+
 <div id="certification-membership-container-mobile" *ngIf="!desktopVersion">
   <div id="image-section-mobile">
     <img id="profile-image" src="../../assets/Profile-Images/{{user.profileImageName}}.png" />
     <p>Certified practitioner</p>
-    <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications[practitionersCertifications.length - 1].certification.level}}</p>
+    <p *ngIf="practitionersCertifications != undefined && practitionersCertifications[practitionersCertifications.length - 1] !== undefined">Level {{practitionersCertifications.length}}</p>
     <p *ngIf="membership != null">Membership OK</p>
     <p *ngIf="membership == null">Membership needs the renewal</p>
   </div>

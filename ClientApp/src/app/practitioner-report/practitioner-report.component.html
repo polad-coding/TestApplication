@@ -3,18 +3,19 @@
   <button id="download-your-report-button" *ngIf="fileURL != undefined" (click)="OpenPopUp()">Download Your Report</button>
 </div>
 <div style="height:500px;width:500px;visibility:hidden;">
-  <canvas style="display:none;" id="myChart">
+  <canvas style="display:none;" id="chart-with-the-legend">
   </canvas>
-  <canvas style="display:none;" id="myChartWithoutLabel">
+  <canvas style="display:none;" id="chart-without-the-legend">
   </canvas>
 </div>
 <div id="report" style="display:none;">
   <div id="title-page">
     <h1>Value Practitioner Report</h1>
-    <img src="{{imageStringWithoutLabel}}" />
+    <img src="{{imageStringWithoutLegend}}" />
     <p>{{user.firstName}} {{user.lastName}}</p>
-    <p><span>{{surveyResults.code}}</span> — <span>{{surveyResults.takenOn | date:'yyyy-MMMM-d'}}</span></p>
+    <p><span>{{surveyResult.code}}</span> — <span>{{surveyResult.takenOn | date:'yyyy-MMMM-d'}}</span></p>
   </div>
+
   <div id="survey-results-page">
     <div id="survey-results-page-title">
       <h1 id="survey-results-page-title-text">Results of the survey</h1>
@@ -81,6 +82,7 @@
       </div>
     </div>
   </div>
+
   <div id="values-table-page">
     <div id="values-table">
       <div id="grounding-column">
@@ -133,6 +135,7 @@
       </div>
     </div>
   </div>
+
   <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1">
     <div class="reminder-header">
       <div class="reminder-text-container">
@@ -271,6 +274,7 @@
       </p>
     </div>
   </div>
+
   <div class="reminder" id="grounding-reminder" *ngIf="secondaryPerspectiveId == 1">
     <div class="reminder-header">
       <div class="reminder-text-container">

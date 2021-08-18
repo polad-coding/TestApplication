@@ -14,6 +14,7 @@
     </div>
   </div>
 </div>
+
 <div id="languages-modal-container" #languageModalContainer>
   <div id="languages-modal" (click)="PreventEventPropagation($event)">
     <div class="modal-header">
@@ -44,7 +45,7 @@
         </div>
         <p>Certified</p>
         <p>practitioner</p>
-        <p>{{certificateLevel}}</p>
+        <p>{{certificateLevelString}}</p>
       </div>
       <div id="practitioner-pro-account-form">
         <div id="certificate-identificator-container">
@@ -60,7 +61,8 @@
             <p>Membership:</p>
           </div>
           <div id="membership-content-part">
-            <p>{{membership}}</p>
+            <p *ngIf="membership != undefined && membership != ''">{{membership}}</p>
+            <p *ngIf="membership == undefined || membership == ''">Overdue</p>
           </div>
         </div>
         <p></p>

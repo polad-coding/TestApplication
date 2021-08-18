@@ -30,8 +30,6 @@
   border-radius: 3px;
 }
 
-
-
   .filter-container p {
     margin-right: 10px;
     max-width: 200px;
@@ -197,8 +195,8 @@
   border-radius: 5px;
 }
 
-#genders-modal{
-    height:200px;
+#genders-modal {
+  height: 200px;
 }
 
 #send-email-button {
@@ -225,7 +223,6 @@
 }
 
 @media only screen and (min-width:880px) and (max-width:1250px) {
-
   #practitioners-row {
     height: 150px;
   }
@@ -250,7 +247,6 @@
 }
 
 @media only screen and (min-width:480px) and (max-width:880px) {
-
   #practitioners-row {
     height: 150px;
     margin-top: 0px;
@@ -277,11 +273,10 @@
 }
 
 @media only screen and (min-width:330px) and (max-width:480px) {
-
-    #practitioners-row{
-        height:100px;
-        margin-top:0px;
-    }
+  #practitioners-row {
+    height: 100px;
+    margin-top: 0px;
+  }
 
   #previous-practitioner-button img, #next-practitioner-button img {
     height: 50px;
@@ -302,28 +297,28 @@
     font-size: 0.8rem;
   }
 
-  #filters-row{
-      font-size:0.8rem;
+  #filters-row {
+    font-size: 0.8rem;
   }
 
-  .information-row-title{
-      text-align:left;
-      margin-right:0px;
+  .information-row-title {
+    text-align: left;
+    margin-right: 0px;
   }
 }
 
-  @media only screen and (min-width:330px) and (max-width:880px) {
-    #filters-row {
-      flex-flow: column;
-    }
-
-    .filter-container {
-      margin-bottom: 10px;
-    }
-
-      .filter-container p {
-        width: 100%;
-        max-width: none;
-        min-width: none;
-      }
+@media only screen and (min-width:330px) and (max-width:880px) {
+  #filters-row {
+    flex-flow: column;
   }
+
+  .filter-container {
+    margin-bottom: 10px;
+  }
+
+    .filter-container p {
+      width: 100%;
+      max-width: none;
+      min-width: none;
+    }
+}

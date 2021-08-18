@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AccountService } from '../../app-services/account.service';
 import { UserViewModel } from '../../view-models/user-view-model';
-import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -25,23 +24,30 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   public languageSelected: string = 'english';
   public languageModalIsVisible: boolean = false;
   public userAuthorizationOperationsContainerIsVisible: boolean = false;
-  public currentTabName: string;
+  public currentNavigationBarTabName: string;
 
-  constructor(private _router: Router, private _accountService: AccountService, private _jwtHelper: JwtHelperService, private _renderer2: Renderer2) {
+  constructor(
+    private _router: Router,
+    private _accountService: AccountService,
+    private _jwtHelper: JwtHelperService,
+    private _renderer2: Renderer2
+  ) { }
 
-  }
-
-  public DisplayLanguageModal(event: any) {
+  /**
+   * Displays languages modal. Used in desktop of the site.
+   * @param event
+   */
+  public ToggleLanguageModalVisibility(event: any) {
     event.stopPropagation();
-    if (this.languageModalIsVisible == true) {
+
+    if (this.languageModalIsVisible) {
       this.languageModalIsVisible = false;
       this._renderer2.setStyle(event.target.nextElementSibling, 'transform', 'rotate(-90deg)');
+      return;
     }
-    else {
-      this.languageModalIsVisible = true;
-      this._renderer2.setStyle(event.target.nextElementSibling, 'transform', 'rotate(-270deg)');
-    }
-    console.debug(event.target.nextSibling);
+
+    this.languageModalIsVisible = true;
+    this._renderer2.setStyle(event.target.nextElementSibling, 'transform', 'rotate(-270deg)');
   }
 
   public SelectLanguage(event: any) {
@@ -51,36 +57,33 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (window.innerWidth < 768) {
-      this.isMobile = true;
-    }
-    else {
-      this.isMobile = false;
-    }
+    this.onResize(null);
   }
 
   ngOnInit() {
-    if (window.innerWidth < 768) {
-      this.isMobile = true;
-    }
-    else {
-      this.isMobile = false;
-    }
+    this.onResize(null);
 
     let jwt = localStorage.getItem('jwt');
+    this.currentNavigationBarTabName = localStorage.getItem('currentNavigationBarTabName');
+
     if (jwt && !this._jwtHelper.isTokenExpired(jwt)) {
       this.userIsAuthorized = true;
+
       this._accountService.GetCurrentUser().subscribe((response: any) => {
         this.user = response.body;
       });
     }
 
-    this.currentTabName = localStorage.getItem('currentTabName');
+    this.IdentifyRoleOfTheUser();
+  }
 
-    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')) != null && this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
+  private IdentifyRoleOfTheUser() {
+    let decodedToken = this._jwtHelper.decodeToken(localStorage.getItem('jwt'));
+
+    if (decodedToken != null && decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {
       this.userRole = 'user';
     }
-    else if (this._jwtHelper.decodeToken(localStorage.getItem('jwt')) != null && this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+    else if (decodedToken != null && decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
       this.userRole = 'practitioner';
     }
     else {
@@ -88,13 +91,13 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   public RedirectToBackOffice() {
     this._router.navigate(['backOffice']);
   }
 
   public RedirectToPractitionersDirectory() {
     localStorage.setItem('personalAccountTabName', 'my-account-section');
+    localStorage.setItem('practitionerAccountTabName', 'my-account-section');
     this._router.navigate(['practitionersDirectory']);
   }
 
@@ -109,7 +112,7 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
 
   public RedirectToPractitionerAccount() {
     localStorage.setItem('practitionerAccountTabName', 'my-account-section');
-    localStorage.setItem('currentTabName', 'prosAccess');
+    localStorage.setItem('currentNavigationBarTabName', 'prosAccess');
     this._router.navigate(['practitionerAccount']);
   }
 
@@ -130,24 +133,37 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
   public DocumentClicked() {
     this.actionsSideBarIsVisible = false;
     this.languagesSideBarIsVisible = false;
+
     if (this.languageModalIsVisible) {
       this._renderer2.setStyle(document.getElementById('arrow-image'), 'transform', 'rotate(-90deg)');
     }
+
     this.languageModalIsVisible = false;
     this.userAuthorizationOperationsContainerIsVisible = false;
   }
 
+  /**
+   * Displays th modal that appears under the email of the user in navigation bar. Modal provides actions to manipulate the session and other actions related to the user.
+   * @param event
+   */
   public DisplayUserAuthorizationManipulationModal(event: any) {
     event.stopPropagation();
     this.userAuthorizationOperationsContainerIsVisible = true;
   }
 
-  public DisplayActionsSideBar(event: MouseEvent)
-  {
+  /**
+   * Displays actions sidebar in mobile version of the site.
+   * @param event
+   */
+  public DisplayActionsSideBar(event: MouseEvent) {
     event.stopPropagation();
     this.actionsSideBarIsVisible = true;
   }
 
+  /**
+   * Displays languages sidebar in mobile version of the site.
+   * @param event
+   */
   public DisplayLanguagesSideBar(event: MouseEvent) {
     event.stopPropagation();
     this.languagesSideBarIsVisible = true;
@@ -170,7 +186,4 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
       this.isMobile = false;
     }
   }
-
-
-
 }

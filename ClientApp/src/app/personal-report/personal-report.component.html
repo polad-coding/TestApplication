@@ -3,23 +3,21 @@
   <button id="download-your-report-button" *ngIf="fileURL != undefined" (click)="OpenPopUp()">Download Your Report</button>
 </div>
 <div style="height:500px;width:500px;visibility:hidden;">
-  <canvas style="display:none; height:100%; width:100%;" id="myChart">
+  <canvas style="display:none; height:100%; width:100%;" id="chart-with-the-legend">
   </canvas>
-  <canvas style="display:none; height:100%; width:100%;" id="myChartWithoutLegend">
+  <canvas style="display:none; height:100%; width:100%;" id="chart-without-the-legend">
   </canvas>
 </div>
 <div id="report" style="display:none;">
   <div id="title-page">
-    <!--<img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
     <h1>Value Perspective Individual Report</h1>
-    <!--<img style="height:1000px; width:2000px;margin-left:-250px;" src="http://somefreedomain.ml/assets/Images/210101-Results-BASE-cropped.svg" />-->
     <img src="{{imageStringWithoutLegend}}" />
     <p>{{user.firstName}} {{user.lastName}}</p>
-    <p><span>{{surveyResults.code}}</span> — <span>{{surveyResults.takenOn | date:'yyyy-MMMM-d'}}</span></p>
+    <p><span>{{surveyResult.code}}</span> — <span>{{surveyResult.takenOn | date:'yyyy-MMMM-d'}}</span></p>
   </div>
+
   <div id="survey-results-page">
     <div id="survey-results-page-title">
-      <!--<img id="survey-results-page-title-image" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="font-size:80px;" id="survey-results-page-title-text">Value Perspective Report</h1>
     </div>
     <div id="survey-results-page-texts">
@@ -83,7 +81,6 @@
       </div>
     </div>
     <div id="survey-results-page-main-content">
-
       <div style="height:800px; width:800px; margin-left:-50px; margin-right:400px;" id="survey-results-page-main-content-left-part">
         <img style="height:100%; width:100%;" src="{{imageString}}" />
       </div>
@@ -110,9 +107,9 @@
       </div>
     </div>
   </div>
+
   <div id="human-energy-wheel-page" style="page-break-after:always; font-family:barlowSemiCondensedLight; color:#006F91;">
     <div id="human-energy-wheel-page-title" style="text-align:center;">
-      <!--<img id="human-energy-wheel-page-title-image" style="height:200px; width:150px;" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="font-size:80px;" id="survey-results-page-title-text">The Values Perspectives</h1>
     </div>
     <p style="font-size:1.5rem;">
@@ -225,38 +222,7 @@
       </div>
     </div>
   </div>
-  <!--<div id="your-values-perspectives-section">
-    <div style="text-align:center;">
-      <img id="values-table-page-title-image" style="height:180px; width:150px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />
-      <h1 style="font-size:30px; color:#006F91; font-family:barlowSemiCondensedLight;">Your Values Perspectives</h1>
-    </div>
-    <p style="font-size:2rem;">Through the Value Perspectives survey, you have chosen as Core and Second Perspectives:</p><br /><br />
-    <div>
-      <div style="width:33%;"></div>
-      <div style="width: 33%;">
-        <p style="font-size:1.3rem;">Core perspective:</p>
-        <div>
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
-        </div>
-        <div style="line-height:50px;"><span style="font-family:barlowSemiCondensed;"> {{'Perspectives.' + corePerspectiveId + '.Title' | translate}}   </span> </div>
-        <div>
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
-        </div>
-        <p>Secondary Perspective</p>
-      </div>
-      <div style="width: 33%;"></div>
-    </div>
-  </div>-->
+
   <div>
     <div style="text-align:center;color:#006F91;font-size:2.5rem; margin-bottom:30px;">
       <h1>Your Values Perspectives</h1>
@@ -289,6 +255,7 @@
       </div>
     </div>
   </div>
+
   <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
@@ -397,10 +364,6 @@
       </p>
     </div>
   </div>
-
-
-
-  <!------------------------------------------------>
   <div class="secondary-perspective-container" id="grounding-reminder" *ngIf="secondaryPerspectiveId == 1">
     <div class="reminder-title">
       <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
@@ -485,12 +448,9 @@
       </p>
     </div>
   </div>
-  <!------------------------------------------------>
-
 
   <div id="questions-to-consider-page">
     <div id="questions-to-consider-page-header" style="text-align:center;">
-      <!--<img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="color:#006F91; font-size:5rem;">Questions to consider on Perspectives</h1>
     </div>
     <p style="font-size:1.8rem;">Use these questions to reflect your Core and Second Values Perspectives</p>
@@ -681,9 +641,9 @@
       </div>
     </div>
   </div>
+
   <div id="your-highest-priority-values-page" style="font-family:barlowSemiCondensedLight;page-break-after:always;">
     <div id="your-highest-priority-values-page-header" style="text-align:center;">
-      <!--<img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
       <h1 style="color:#006F91; font-size:5rem;">Your Highest-Priority values</h1>
     </div>
     <p style="font-size:2rem;">Your Highest-Priority values are:</p>
@@ -855,9 +815,9 @@
       </ul>
     </div>
   </div>
+
   <div id="values-questions-pages">
     <div id="values-questions-pages-header" style="text-align:center;">
-      <!--<img style="width:150px; height:180px" src="http://somefreedomain.ml/assets/KP-logo-full/KP-logo-006F91.jpg" />-->
     </div>
     <div class="values-questions-container" *ngFor="let value of valuesFromThirdStage; index as i">
       <div class="value-container-header">
@@ -887,6 +847,7 @@
       </div>
     </div>
   </div>
+
   <div id="ending-texts-section" style="margin-top:30px; font-family:barlowSemiCondensedLight; font-size:1.8rem;">
     <h1 style="text-align:center; color:#006F91; font-size:4rem;">
       Learn more on Values and how they work with you <br /> <span style="text-decoration:underline">kairiospraxis.com</span>

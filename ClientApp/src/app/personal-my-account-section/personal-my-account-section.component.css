@@ -24,17 +24,6 @@ input[type=radio] {
   min-width: 20px;
 }
 
-#tip-container {
-  width: 90%;
-  height: max-content;
-  background-color: #91c0c6;
-  color: white;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  margin: auto;
-  margin-bottom: 20px;
-}
 
 #personal-account-form {
   width: 70%;
@@ -485,5 +474,11 @@ input:disabled {
   #see-privacy-image-block img {
     height: 70px;
     width: 70px;
+  }
+}
+
+@media only screen and (min-width:320px) and (max-width:500px) {
+  #position-profession-label {
+      font-size:0.7rem;
   }
 }

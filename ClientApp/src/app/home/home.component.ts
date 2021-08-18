@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnChanges, OnInit, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import {
   trigger,
-  state,
   style,
   animate,
   transition,
@@ -28,41 +27,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChildren("slide")
   public slides: QueryList<ElementRef>;
-  public currentWidth: number = window.innerWidth;
   public slidesNoVisible: number = 1;
   public currentIndex: number = 1;
   public lastSlideIndex: number;
+
+  public currentWidth: number = window.innerWidth;
 
   constructor(private renderer: Renderer2, private _router: Router) { }
 
   ngAfterViewInit(): void {
     this.lastSlideIndex = this.slides.length;
-    if (window.innerWidth >= 1304) {
-
-      this.slidesNoVisible = 4;
-      this.currentIndex = 4;
-    }
-    else if (window.innerWidth <= 1304 && window.innerWidth > 650) {
-      console.log('here 3');
-
-      this.slidesNoVisible = 3;
-      this.currentIndex = 3;
-    }
-    else if (window.innerWidth <= 650 && window.innerWidth > 430) {
-      console.log('here 2');
-
-      this.slidesNoVisible = 2;
-      this.currentIndex = 2;
-    }
-    else if (window.innerWidth <= 430) {
-      console.log('here 1');
-      this.slidesNoVisible = 1;
-      this.currentIndex = 1;
-    }
-
     document.getElementById('kp-main-page-slideshow-container').style.display = 'flex';
 
-    this.DisplayNewSlides();
+    this.onResize(null);
   }
 
   public RedirectToSurveyPage() {
@@ -78,44 +55,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (window.innerWidth >= 1304) {
       this.slidesNoVisible = 4;
       this.currentIndex = 4;
-      this.DisplayNewSlides();
-
     }
     else if (window.innerWidth <= 1304 && window.innerWidth > 650) {
       this.slidesNoVisible = 3;
       this.currentIndex = 3;
-      this.DisplayNewSlides();
-
     }
     else if (window.innerWidth <= 650 && window.innerWidth > 430) {
       this.slidesNoVisible = 2;
       this.currentIndex = 2;
-      this.DisplayNewSlides();
-
     }
     else {
       this.slidesNoVisible = 1;
       this.currentIndex = 1;
-      this.DisplayNewSlides();
-
     }
+
+    this.DisplayNewSlides();
   }
 
   public DisplayNewSlides() {
-
     if (this.slides == undefined) {
       return;
     }
 
     this.slides.forEach((e, index) => {
-      console.log(this.currentIndex.toString());
       if ((index >= (this.currentIndex - this.slidesNoVisible)) && (index < this.currentIndex)) {
-      //if (index < this.currentIndex) {
         this.renderer.setStyle(e.nativeElement, 'display', 'flex');
+        return;
       }
-      else {
-        this.renderer.setStyle(e.nativeElement, 'display', 'none');
-      }
+
+      this.renderer.setStyle(e.nativeElement, 'display', 'none');
     });
 
   }
@@ -135,34 +103,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    localStorage.removeItem('currentTabName');
-    if (window.innerWidth >= 1304) {
-      console.log(window.innerWidth);
-      console.log(window.outerHeight);
-      console.log('here 4');
+    localStorage.removeItem('currentNavigationBarTabName');
 
-      this.slidesNoVisible = 4;
-      this.currentIndex = 4;
-    }
-    else if (window.innerWidth <= 1304 && window.innerWidth > 650) {
-      console.log('here 3');
-
-      this.slidesNoVisible = 3;
-      this.currentIndex = 3;
-    }
-    else if (window.innerWidth <= 650 && window.innerWidth > 430) {
-      console.log('here 2');
-
-      this.slidesNoVisible = 2;
-      this.currentIndex = 2;
-    }
-    else if (window.innerWidth <= 430) {
-      console.log('here 1');
-      this.slidesNoVisible = 1;
-      this.currentIndex = 1;
-    } 
-
-    this.DisplayNewSlides();
+    this.onResize(null);
   }
 
 }

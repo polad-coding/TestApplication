@@ -42,6 +42,20 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
+        [Route("DeleteAllOrdersOfTheCurrentUser")]
+        public async Task<ActionResult> DeleteAllOrdersOfTheCurrentUserAsync()
+        {
+            var requestSucceded = await _dataService.DeleteAllOrdersOfTheCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (requestSucceded)
+            {
+                return Ok();
+            }
+
+            return StatusCode(500);
+        }
+
+        [HttpPost]
         [Route("CreateAssociatedCoupon")]
         public async Task<ActionResult> CreateAssociatedCouponAsync(AssociatedCouponViewModel associatedCoupon)
         {
@@ -370,6 +384,11 @@ namespace KPProject.Controllers
         [Route("GetSurveyResults")]
         public async Task<ActionResult<List<SurveyResultViewModel>>> GetSurveyResultsAsync([FromQuery] string userId)
         {
+            if (userId == null)
+            {
+                userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+
             var data = await _dataService.GetSurveyResultsAsync(userId);
 
             return Ok(data);

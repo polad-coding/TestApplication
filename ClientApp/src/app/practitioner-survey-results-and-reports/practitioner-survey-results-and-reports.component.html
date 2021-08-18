@@ -29,11 +29,9 @@
       </div>
       <div *ngIf="surveyResult.takersEmail != user.email" class="survey-result-row-white-cell">
         <p>{{surveyResult.takersEmail}}</p>
-        <!--<button (click)="SendEmail(surveyResult.practitionerId)"><span>@</span></button>-->
       </div>
       <div *ngIf="surveyResult.takersEmail == user.email" class="survey-result-row-white-cell">
         <p></p>
-        <!--<button (click)="SendEmail(surveyResult.practitionerId)"><span>@</span></button>-->
       </div>
       <div class="reports-cell-buttons" *ngIf="surveyResult.isCompleated">
         <button class="survey-result-row-blue-cell" (click)="GenerateIndividualReport(surveyResult.surveyId)">IR</button>

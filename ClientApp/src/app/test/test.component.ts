@@ -33,7 +33,6 @@ export class TestComponent implements OnInit, AfterViewInit {
   public relativeWeightOfThePerspectives: Array<number> = new Array<number>();
   public reportTableValues: Array<Array<ReportTableValueViewModel>> = new Array<Array<ReportTableValueViewModel>>();
   public surveyResults: SurveyResultViewModel;
-  //TODO - get information about survey taker and survey 
 
   constructor(private _as: AccountService, private _ds: DataService, private router: Router) {
     
