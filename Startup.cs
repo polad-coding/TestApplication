@@ -19,6 +19,7 @@ using System.Text;
 using Microsoft.AspNetCore.HttpOverrides;
 using DinkToPdf.Contracts;
 using DinkToPdf;
+using System.IO;
 
 namespace KPProject
 {
@@ -34,16 +35,14 @@ namespace KPProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
-                    "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
-
-            //var context = new CustomAssemblyLoadContext();
-            //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
-
             //services.AddDbContext<ApplicationDbContext>(options =>
-            //options.UseMySql(
-            //"Server=localhost;Database=KPProjectDatabase;user=polad; password=polad5689742;"));
+            //    options.UseMySql(
+            //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
+
+            var context = new CustomAssemblyLoadContext();
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -84,11 +83,9 @@ namespace KPProject
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
-                        //ValidIssuer = "somefreedomain.ml",
-                        //ValidAudience = "somefreedomain.ml",
-                        ValidIssuer = "localhost:5001",
-                        ValidAudience = "localhost:5001",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc")),
+                        ValidIssuer = Configuration.GetSection("JwtIssuer").Value,
+                        ValidAudience = Configuration.GetSection("JwtAudience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JwtKey").Value)),
                         ClockSkew = TimeSpan.Zero
                     };
                 });
