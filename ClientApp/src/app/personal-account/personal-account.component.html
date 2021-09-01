@@ -25,7 +25,7 @@
     <app-personal-survey-results-and-reports></app-personal-survey-results-and-reports>
   </div>
   <div id="personal-account-form-container" *ngIf="selectedTab == 'my-account-section'">
-    <app-personal-my-account-section (usersHasUnsignedSurveyStatusEmitter)="SetIfUserHasUnsignedSurvey($event)" (errorEmitter)="DisplayError($event)"></app-personal-my-account-section>
+    <app-personal-my-account-section (usersHasUnsignedSurveyStatusEmitter)="IdentifyIfUserHasUnsignedSurvey($event)" (errorEmitter)="DisplayError($event)"></app-personal-my-account-section>
   </div>
 </div>
 <app-footer></app-footer>

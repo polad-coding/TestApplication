@@ -23,7 +23,6 @@ import { PersonalAccountComponent } from './personal-account/personal-account.co
 import { PractitionerAccountComponent } from './practitioner-account/practitioner-account.component';
 import { PractitionerMyAccountSectionComponent } from './practitioner-my-account-section/practitioner-my-account-section.component';
 import { PractitionerProDetailsSectionComponent } from './practitioner-pro-details-section/practitioner-pro-details-section.component';
-import { TestComponent } from './test/test.component';
 import { SurveyFirstStageComponent } from './survey-first-stage/survey-first-stage.component';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop'; 
@@ -40,8 +39,6 @@ import { PractitionersDirectoryComponent } from './practitioners-directory/pract
 import { PersonalReportComponent } from './personal-report/personal-report.component';
 import { PractitionerReportComponent } from './practitioner-report/practitioner-report.component';
 import { AuthorizationPageComponent } from './authorization-page/authorization-page.component';
-import { BackOfficePageComponent } from './back-office-page/back-office-page.component';
-import { CouponManagementToolsPageComponent } from './coupon-management-tools-page/coupon-management-tools-page.component';
 import { PersonalMyAccountSectionComponent } from './personal-my-account-section/personal-my-account-section.component';
 
 export function tokenGetter() {
@@ -64,7 +61,6 @@ export function tokenGetter() {
     PractitionerAccountComponent,
     PractitionerMyAccountSectionComponent,
     PractitionerProDetailsSectionComponent,
-    TestComponent,
     SurveyFirstStageComponent,
     SurveySecondStageComponent,
     SurveyThirdStageComponent,
@@ -78,8 +74,6 @@ export function tokenGetter() {
     PersonalReportComponent,
     PractitionerReportComponent,
     AuthorizationPageComponent,
-    BackOfficePageComponent,
-    CouponManagementToolsPageComponent,
     PersonalMyAccountSectionComponent
   ],
   imports: [
@@ -110,8 +104,7 @@ export function tokenGetter() {
       { path: 'practitionerReport', component: PractitionerReportComponent },
       { path: 'wrap-up', component: WrapUpComponent },
       { path: 'enterCode', component: EnterCodePageComponent },
-      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent },
-      { path: 'backOffice', component: BackOfficePageComponent }
+      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent }
     ]),
     JwtModule.forRoot({
       config: {

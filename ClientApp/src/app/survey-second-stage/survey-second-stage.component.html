@@ -65,7 +65,7 @@
     </div>
     <div id="selected-values" cdkScrollable>
       <p>Selected Values</p>
-      <div id="selected-values-container" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="valuesMarkedAsImportantGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
+      <div id="selected-values-container" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValuesGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
         <div cdkDrag [ngClass]="{'value-ideogram-container-list-mode':true}" *ngFor="let value of currentImportantValuesGroup" (click)="DisplayValueModal($event, value)">
           <span [ngClass]="{'value-is-important':true}">{{value.character}}</span>
           <span>{{'Values.' + value.character + '.Title' | translate}}</span>

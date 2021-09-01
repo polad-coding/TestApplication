@@ -62,11 +62,10 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
 
   @Input()
   public certificateLevel: string = '';
-  public imageSectionIsVisible: string = 'true';
   public profileImageName;
 
   //Used to share a loading gif when user is uploading new image.
-  public isUploadingProccess: boolean = false;
+  public isImageUploadingProccess: boolean = false;
 
   @Output()
   public errorMessage: EventEmitter<string> = new EventEmitter<string>();
@@ -77,16 +76,22 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
   //Used to assign the dummy number to the image attribute, to avoid image caching by the browser.
   public dummyNumber: number;
 
-
   constructor(
     private _dataService: DataService,
     private _router: Router,
     private _renderer2: Renderer2,
-    private accountService: AccountService,
+    private _accountService: AccountService,
     private renderer: Renderer
   ) { }
 
   ngAfterViewInit(): void {
+    this.oldEmail = this.user.email;
+    this.oldName = this.user.firstName;
+    this.oldSurname = this.user.lastName;
+    this.newRegionsSelected = this.user.regions;
+    this.newPositionsSelected = this.user.positions;
+    this.newEducationsSelected = this.user.educations;
+    this.newSectorsOfActivitiesSelected = this.user.sectorsOfActivities;
 
   }
 
@@ -94,11 +99,11 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     localStorage.setItem('practitionerAccountTabName', 'my-account-section');
 
     forkJoin(
-      this.accountService.GetAllAgeGroups(),
-      this.accountService.GetAllRegions(),
-      this.accountService.GetAllEducations(),
-      this.accountService.GetAllPositions(),
-      this.accountService.GetAllSectorsOfActivities()
+      this._accountService.GetAllAgeGroups(),
+      this._accountService.GetAllRegions(),
+      this._accountService.GetAllEducations(),
+      this._accountService.GetAllPositions(),
+      this._accountService.GetAllSectorsOfActivities()
     ).pipe(map((
       [
         getAllAgeGroupsResponse,
@@ -114,21 +119,16 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
       this.sectorsOfActivities = getAllSectorsOfActivitiesResponse.body;
     })).subscribe();
 
-      this.oldEmail = this.user.email;
-      this.oldName = this.user.firstName;
-      this.oldSurname = this.user.lastName;
-      this.newRegionsSelected = this.user.regions;
-      this.newPositionsSelected = this.user.positions;
-      this.newEducationsSelected = this.user.educations;
-      this.newSectorsOfActivitiesSelected = this.user.sectorsOfActivities;
+    this._accountService.GetCurrentUser().pipe(switchMap((getCurrentResponse: any) => {
+      this.user = getCurrentResponse.body;
 
-      this._dataService.GetPractitionersCertifications(this.user.id).subscribe((getPractitionersCertificationsResponse: any) => {
+      return this._accountService.GetPractitionersCertifications(this.user.id);
+    })).subscribe((getPractitionersCertificationsResponse: any) => {
       let certifications: any = getPractitionersCertificationsResponse.body;
       certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
 
       if (certifications.length > 0) {
         this.certificateLevel = 'Level ' + certifications[certifications.length - 1].certification.level;
-        console.log(this.certificateLevel);
         return;
       }
 
@@ -210,7 +210,6 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this._renderer2.setStyle(this.ageGroupsModal.nativeElement, 'display', 'none');
   }
 
-
   public DisplayGenderModal(event: any) {
     event.stopPropagation();
     this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'flex');
@@ -267,7 +266,6 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this._renderer2.setStyle(this.genderModal.nativeElement, 'display', 'none');
   }
 
-
   public EditInputField(fieldName: string, event: MouseEvent) {
     event.stopPropagation();
     this.OnDocumentClicked(null);
@@ -283,23 +281,23 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
 
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
     event.stopPropagation();
-    if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
+    if (!this.NameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
       return;
     }
 
-    if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
+    if (!this.EmailStringIsCorrect(personalInformationForm)) {
       return;
     }
 
     if (personalInformationForm.controls['email'].pristine) {
-      this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+      this._accountService.ChangeUserPersonalData(this.user).subscribe(response => {
         window.location.reload();
       });
 
       return;
     }
 
-    this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
+    this._accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
       if (checkIfMailIsRegisteredResponse.body === true) {
 
         this.errorMessage.emit('This email address already exists in our database.');
@@ -309,7 +307,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
         return of(null);
       }
 
-      return this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.email);
+      return this._accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.email);
     })).pipe(switchMap((checkIfProfessionalMailIsRegisteredResponse: any) => {
       if (checkIfProfessionalMailIsRegisteredResponse == null) {
         return of(null);
@@ -322,7 +320,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
         return of(null);
       }
 
-      return this.accountService.ChangeUserPersonalData(this.user);
+      return this._accountService.ChangeUserPersonalData(this.user);
     })).subscribe((changeUserPersonalDataResponse: any) => {
       if (changeUserPersonalDataResponse == null) {
         return;
@@ -332,7 +330,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     });
   }
 
-  public CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
+  public EmailStringIsCorrect(personalInformationForm: NgForm): boolean {
     let email: string = personalInformationForm.controls['email'].value;
     let stringIsEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
 
@@ -349,7 +347,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     return false;
   }
 
-  public CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm: NgForm): boolean {
+  public NameAndSurnameFieldsAreFilledCorrectly(personalInformationForm: NgForm): boolean {
     let firstName: string = personalInformationForm.controls['firstName'].value;
     let lastName: string = personalInformationForm.controls['lastName'].value;
     let checkIfNumberExist = new RegExp('[0-9]');
@@ -388,7 +386,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     this._renderer2.setStyle(this.ageGroupsModal.nativeElement, 'display', 'none');
   }
 
-  public SubmitMultipleChoiceForm(optionType: string, form: NgForm) {
+  public SubmitMultipleChoiceModalSelections(optionType: string, form: NgForm) {
     let newOptionsSelected = new Array<any>();
     let elements = document.getElementsByClassName('is-selected');
 
@@ -422,7 +420,7 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
     event.stopPropagation();
   }
 
-  public ToggleSelection(event: any) {
+  public ToggleModalOptionSelection(event: any) {
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
@@ -436,9 +434,9 @@ export class PractitionerMyAccountSectionComponent implements OnInit, AfterViewI
   }
 
   public ChooseNewProfileImage(files: FileList) {
-    this.isUploadingProccess = true;
+    this.isImageUploadingProccess = true;
     this.ToBase64(files[0]).then((value: string) => {
-      this.accountService.UploadProfileImage((value)).subscribe((response: any) => {
+      this._accountService.UploadProfileImage((value)).subscribe((response: any) => {
         location.reload();
         this.profileImageName = response.body;
       }, error => location.reload());

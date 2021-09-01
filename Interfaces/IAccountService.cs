@@ -1,8 +1,6 @@
 ﻿using KPProject.Models;
 using KPProject.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KPProject.Interfaces
@@ -10,7 +8,7 @@ namespace KPProject.Interfaces
     public interface IAccountService
     {
 
-        List<ValueModel> GetAllValues();
+        Task<List<ValueModel>> GetAllValuesAsync();
         Task<UserViewModel> GetCurrentUserAsync(string userId);
         Task<List<RegionModel>> GetAllRegionsAsync();
         Task<List<PositionModel>> GetAllPositionsAsync();
@@ -21,6 +19,18 @@ namespace KPProject.Interfaces
         Task<bool> ProfessionalEmailIsRegisteredAsync(string professionalEmail);
         Task<UserViewModel> ChangeUserPersonalDataAsync(UserViewModel userViewModel);
         Task<string> UploadProfileImageAsync(string data, string userId);
-        Task<List<AgeGroupModel>> GetAllAgeGroupsAsync();
+        Task<List<AgeGroup>> GetAllAgeGroupsAsync();
+        Task<List<Certification>> GetAllCertificationsAsync();
+        Task<List<ApplicationUserCertification>> GetPractitionersCertificationsAsync(string userId);
+        Task<Membership> GetMembershipStatusAsync(string userId);
+        Task<bool> RenewMembershipAsync(string userId);
+        Task<bool> UserHasUnsignedSurveysAsync(string userId);
+        Task<bool> AssociateUserDataToTheSurveyAsync(string userId);
+        Task<List<PositionModel>> GetSelectedPositionsForCurrentUserAsync(string userId);
+        Task<List<EducationModel>> GetSelectedEducationsForCurrentUserAsync(string userId);
+        Task<List<RegionModel>> GetSelectedRegionsForCurrentUserAsync(string userId);
+        Task<List<LanguageModel>> GetSelectedLanguagesForCurrentUserAsync(string userId);
+        Task<List<SectorOfActivityModel>> GetSelectedSectorsOfActivityForCurrentUserAsync(string userId);
+
     }
 }

@@ -16,7 +16,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
 export class PersonalSurveyResultsAndReportsComponent implements OnInit {
 
   public user: UserViewModel;
-  public surveysResults: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
+  public surveys: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
   public surveyId: number;
 
   constructor(private _router: Router, private _dataService: DataService, private _accountService: AccountService, private _surveyService: SurveyService) { }
@@ -24,13 +24,14 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
   ngOnInit() {
     this._accountService.GetCurrentUser().pipe(switchMap((getCurrentUserResponse: any) => {
       this.user = getCurrentUserResponse.body;
-      return this._dataService.GetSurveyResults(this.user.id);
+
+      return this._surveyService.GetSurveysOfTheGivenUser(this.user.id);
     })).subscribe((getSurveyResultsResponse: any) => {
-      this.surveysResults = getSurveyResultsResponse.body;
+      this.surveys = getSurveyResultsResponse.body;
     });
   }
 
-  public ChangeToGetCodesTab() {
+  public SwitchToGetCodesTab() {
     localStorage.setItem('personalAccountTabName', 'get-codes-section');
     window.location.reload();
   }
@@ -40,8 +41,6 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
   }
 
   public GenerateIndividualReport(surveyId: number) {
-    console.log('here 7');
-
     localStorage.setItem('surveyId', surveyId.toString());
     this._router.navigate(['personalReport']);
   }
@@ -64,7 +63,7 @@ export class PersonalSurveyResultsAndReportsComponent implements OnInit {
 
     localStorage.setItem('surveyId', surveyId.toString());
 
-    this._dataService.DecideToWhichStageToTransfer(surveyId).subscribe((stageTransferResponse: any) => {
+    this._surveyService.DecideToWhichStageToTransfer(surveyId).subscribe((stageTransferResponse: any) => {
       this._router.navigate([stageTransferResponse.body]);
     });
   }

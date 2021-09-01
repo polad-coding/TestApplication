@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { SingleDataSet, Label } from 'ng2-charts';
 import { Chart } from 'chart.js';
 import { ValueViewModel } from '../../view-models/value-view-model';
 import { DataService } from '../../app-services/data-service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { SurveyService } from '../../app-services/survey-service';
 
 @Component({
   selector: 'app-wrap-up',
   templateUrl: './wrap-up.component.html',
   styleUrls: ['./wrap-up.component.css'],
-  providers: [DataService]
+  providers: [DataService, SurveyService]
 })
 export class WrapUpComponent implements OnInit {
   public surveyId: number;
@@ -24,7 +24,7 @@ export class WrapUpComponent implements OnInit {
 
   public imageString;
 
-  constructor(private _dataService: DataService, private _router: Router) {}
+  constructor(private _dataService: DataService, private _router: Router, private _surveySurvey: SurveyService) { }
 
   public DownloadPersonalReport() {
     this._router.navigate(['personalReport']);
@@ -47,7 +47,7 @@ export class WrapUpComponent implements OnInit {
   }
 
   private AssureThatTheUserIsAtTheValidStep() {
-    this._dataService.DecideToWhichStageToTransfer(this.surveyId).subscribe(response => {
+    this._surveySurvey.DecideToWhichStageToTransfer(this.surveyId).subscribe(response => {
       if (response.body != 'wrap-up') {
         this._router.navigate([response.body]);
       }
@@ -83,7 +83,7 @@ export class WrapUpComponent implements OnInit {
     this.secondaryPerspectiveId = this.relativeWeightOfThePerspectives.indexOf(temp[4]) + 1;
   }
 
-  private RenderResultsSectionImageChart(maxGraphSliceValue: number) {
+  private InitializeResultsSectionImageChart(maxGraphSliceValue: number) {
     let resultsSectionImageChart = new Chart('results-section-image-chart', {
       type: 'polarArea',
       options: {
@@ -129,7 +129,7 @@ export class WrapUpComponent implements OnInit {
 
   }
 
-  private RenderMainChart(maxGraphSliceValue: number) {
+  private InitializeMainChart(maxGraphSliceValue: number) {
     let myChart = new Chart('myChart', {
       type: 'polarArea',
       options: {
@@ -185,10 +185,10 @@ export class WrapUpComponent implements OnInit {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    this._dataService.GetTheRelativeWeightOfThePerspectives(this.surveyId).pipe(switchMap((getTheRelativeWeightOfThePerspectivesResult: any) => {
+    this._surveySurvey.GetTheRelativeWeightOfThePerspectives(this.surveyId).pipe(switchMap((getTheRelativeWeightOfThePerspectivesResult: any) => {
       this.relativeWeightOfThePerspectives = getTheRelativeWeightOfThePerspectivesResult.body;
 
-      return this._dataService.GetSurveyThirdStageResults(this.surveyId);
+      return this._surveySurvey.GetSurveyThirdStageResults(this.surveyId);
     })).subscribe((getSurveyThirdStageResultsResponse: any) => {
       this.valuesFromThirdStage = getSurveyThirdStageResultsResponse.body;
 
@@ -196,9 +196,9 @@ export class WrapUpComponent implements OnInit {
 
       this.CalculateCoreAndSecondaryPerspectiveIds();
 
-      this.RenderResultsSectionImageChart(maxGraphSliceValue);
+      this.InitializeResultsSectionImageChart(maxGraphSliceValue);
 
-      this.RenderMainChart(maxGraphSliceValue);
+      this.InitializeMainChart(maxGraphSliceValue);
     });
   }
 }

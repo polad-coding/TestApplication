@@ -5,12 +5,12 @@
     </div>
     <form class="modal-form" #regionsForm="ngForm">
       <div *ngFor="let region of regions" class="checkbox-container">
-        <input type="checkbox" (click)="ToggleSelection($event)" name="region" ngModel value="{{region | json}}">
+        <input type="checkbox" (click)="ToggleModalOptionSelection($event)" name="region" ngModel value="{{region | json}}">
         <label class="is-not-selected" id="{{region.regionName + '-country-container'}}" for="region">{{region.regionName}}</label>
       </div>
     </form>
     <div id="region-modal-submit-button">
-      <button (click)="SubmitRegionsForm(regionsForm)">Confirm</button>
+      <button (click)="SubmitRegionsModal(regionsForm)">Confirm</button>
     </div>
   </div>
 </div>
@@ -22,12 +22,12 @@
     </div>
     <form class="modal-form" #languagesForm="ngForm">
       <div *ngFor="let language of languages" class="checkbox-container">
-        <input type="checkbox" (click)="ToggleSelection($event)" name="language" ngModel value="{{language | json}}">
+        <input type="checkbox" (click)="ToggleModalOptionSelection($event)" name="language" ngModel value="{{language | json}}">
         <label class="is-not-selected" id="{{language.languageName + '-language-container'}}" for="language">{{language.languageName}}</label>
       </div>
     </form>
     <div id="language-modal-submit-button">
-      <button (click)="SubmitLanguagesForm(languagesForm)">Confirm</button>
+      <button (click)="SubmitLanguagesModal(languagesForm)">Confirm</button>
     </div>
   </div>
 </div>
@@ -37,9 +37,9 @@
     <div id="practitioner-pro-account-main-part">
       <div id="practitioner-pro-account-photo-section">
         <div id="upload-image-container">
-          <img *ngIf="user.profileImageName === null && !isUploadingProccess" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
-          <img *ngIf="isUploadingProccess" style="background:white;" src="../../assets/Images/loading-screen.gif" />
-          <img *ngIf="user.profileImageName !== null && ! isUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png?dummy={{dummyNumber}}" />
+          <img *ngIf="user.profileImageName === null && !isImageUploadingProccess" src="../../assets/KP-logotype/KP-logotype-006F91-empty.svg" />
+          <img *ngIf="isImageUploadingProccess" style="background:white;" src="../../assets/Images/loading-screen.gif" />
+          <img *ngIf="user.profileImageName !== null && ! isImageUploadingProccess" src="../../assets/Profile-Images/{{user.profileImageName}}.png?dummy={{dummyNumber}}" />
           <input type="file" id="image-upload-element" (change)="ChooseNewProfileImage($event.target.files)" />
           <img id="change-image-pencil-image" src="../../assets/KP-logo-accessories--png/pencil.svg" />
         </div>
@@ -53,7 +53,7 @@
             <p>Certification level:</p>
           </div>
           <div id="certificate-content-part">
-            <p>{{certificationLevel}}</p>
+            <p>{{currentCertificationLevelTitle}}</p>
           </div>
         </div>
         <div id="membership-identificator-container">
@@ -61,8 +61,8 @@
             <p>Membership:</p>
           </div>
           <div id="membership-content-part">
-            <p *ngIf="membership != undefined && membership != ''">{{membership}}</p>
-            <p *ngIf="membership == undefined || membership == ''">Overdue</p>
+            <p *ngIf="membershipStatusText != undefined && membershipStatusText != ''">{{membershipStatusText}}</p>
+            <p *ngIf="membershipStatusText == undefined || membershipStatusText == ''">Overdue</p>
           </div>
         </div>
         <p></p>

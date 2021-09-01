@@ -23,12 +23,12 @@
     </div>
     <div id="right-part">
       <div id="levels-container">
-        <div class="level" *ngFor="let certification of certifications; index as i">
+        <div class="level" *ngFor="let certification of allCertifications; index as i">
           <p>Level {{i + 1}}</p>
         </div>
       </div>
       <div id="certification-types-container">
-        <div class="certification-type" *ngFor="let certification of certifications; index as i">
+        <div class="certification-type" *ngFor="let certification of allCertifications; index as i">
           <p>{{certification.certificationType}}</p>
         </div>
       </div>
@@ -124,12 +124,12 @@
   </div>
   <div id="main-section-mobile">
     <div id="levels-container-mobile">
-      <div class="level-mobile" *ngFor="let certification of certifications; index as i">
+      <div class="level-mobile" *ngFor="let certification of allCertifications; index as i">
         <p>Level {{i + 1}}</p>
       </div>
     </div>
     <div id="certification-types-container-mobile">
-      <div class="certification-type-mobile" *ngFor="let certification of certifications; index as i">
+      <div class="certification-type-mobile" *ngFor="let certification of allCertifications; index as i">
         <p>{{certification.certificationType}}</p>
       </div>
     </div>

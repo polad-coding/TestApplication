@@ -28,10 +28,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChildren("slide")
   public slides: QueryList<ElementRef>;
   public slidesNoVisible: number = 1;
-  public currentIndex: number = 1;
+  public currentSlideIndex: number = 1;
   public lastSlideIndex: number;
-
-  public currentWidth: number = window.innerWidth;
 
   constructor(private renderer: Renderer2, private _router: Router) { }
 
@@ -54,19 +52,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public onResize(event) {
     if (window.innerWidth >= 1304) {
       this.slidesNoVisible = 4;
-      this.currentIndex = 4;
+      this.currentSlideIndex = 4;
     }
     else if (window.innerWidth <= 1304 && window.innerWidth > 650) {
       this.slidesNoVisible = 3;
-      this.currentIndex = 3;
+      this.currentSlideIndex = 3;
     }
     else if (window.innerWidth <= 650 && window.innerWidth > 430) {
       this.slidesNoVisible = 2;
-      this.currentIndex = 2;
+      this.currentSlideIndex = 2;
     }
     else {
       this.slidesNoVisible = 1;
-      this.currentIndex = 1;
+      this.currentSlideIndex = 1;
     }
 
     this.DisplayNewSlides();
@@ -78,7 +76,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     this.slides.forEach((e, index) => {
-      if ((index >= (this.currentIndex - this.slidesNoVisible)) && (index < this.currentIndex)) {
+      if ((index >= (this.currentSlideIndex - this.slidesNoVisible)) && (index < this.currentSlideIndex)) {
         this.renderer.setStyle(e.nativeElement, 'display', 'flex');
         return;
       }
@@ -88,16 +86,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   }
 
-  public GoRight() {
-    if (this.currentIndex != this.slidesNoVisible) {
-      this.currentIndex--;
+  public GoToThePreviousSlide() {
+    if (this.currentSlideIndex != this.slidesNoVisible) {
+      this.currentSlideIndex--;
       this.DisplayNewSlides();
     }
   }
 
-  public GoLeft() {
-    if (this.currentIndex < this.lastSlideIndex) {
-      this.currentIndex++;
+  public GoToTheNextSlide() {
+    if (this.currentSlideIndex < this.lastSlideIndex) {
+      this.currentSlideIndex++;
       this.DisplayNewSlides();
     }
   }

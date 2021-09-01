@@ -23,7 +23,7 @@ export class SignupFormComponent implements OnInit {
 
   public user: UserViewModel;
 
-  public agreeToTermsRadioChecked: boolean = false;
+  public userIsAgreedOnTheTerms: boolean = false;
 
   //These flag points if, after the successful signin, we need to redirect the user to his account. Or we should display him enter code page if its not the case.
   @Input()
@@ -40,7 +40,7 @@ export class SignupFormComponent implements OnInit {
   }
 
   public CheckAgreeToTermRadio() {
-    this.agreeToTermsRadioChecked = true;
+    this.userIsAgreedOnTheTerms = true;
   }
 
   private DisplayErrorMessage(errorMessage: string) {

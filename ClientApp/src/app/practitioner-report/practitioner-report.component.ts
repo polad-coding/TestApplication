@@ -10,13 +10,14 @@ import { SurveyResultViewModel } from '../../view-models/survey-result-view-mode
 import { ReportHTMLContentViewModel } from '../../view-models/report-html-content-view-model';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
+import { SurveyService } from '../../app-services/survey-service';
 
 
 @Component({
   selector: 'app-practitioner-report',
   templateUrl: './practitioner-report.component.html',
   styleUrls: ['./practitioner-report.component.css'],
-  providers: [AccountService, DataService]
+  providers: [AccountService, DataService, SurveyService]
 })
 export class PractitionerReportComponent implements OnInit, AfterViewInit {
 
@@ -25,7 +26,7 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   public imageString: string;
 
   //Used in the practitioner report table, to retrive the title of the perspectives.
-  public textFilePerspectiveIndexes: Array<number> = [1, 2, 3, 4, 5, 6];
+  public listOfPerspectivesIds: Array<number> = [1, 2, 3, 4, 5, 6];
 
   public user: UserViewModel;
 
@@ -43,7 +44,7 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
   public fileURL: string;
   public popUpWindow: Window;
 
-  constructor(private _as: AccountService, private _dataService: DataService, private router: Router, private _location: Location) {}
+  constructor(private _as: AccountService, private _dataService: DataService, private router: Router, private _location: Location, private _surveyService: SurveyService) { }
 
   /**
    * Opens the window with the generated report.
@@ -203,15 +204,15 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
 
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
-    this._dataService.GetParticularSurveyResults(surveyId).pipe(switchMap((getParticularSurveyResultsResponse: any) => {
+    this._surveyService.GetParticularSurveyResults(surveyId).pipe(switchMap((getParticularSurveyResultsResponse: any) => {
       this.surveyResult = getParticularSurveyResultsResponse.body;
       this.user = this.surveyResult.surveyTakerUser;
 
-      return this._dataService.GetTheRelativeWeightOfThePerspectives(surveyId);
+      return this._surveyService.GetTheRelativeWeightOfThePerspectives(surveyId);
     })).pipe(switchMap((getTheRelativeWeightOfThePerspectivesResponse: any) => {
       this.relativeWeightOfThePerspectives = getTheRelativeWeightOfThePerspectivesResponse.body;
 
-      return this._dataService.GetSurveyThirdStageResults(surveyId);
+      return this._surveyService.GetSurveyThirdStageResults(surveyId);
     })).pipe(switchMap((getSurveyThirdStageResultsResponse: any) => {
       this.valuesFromThirdStage = getSurveyThirdStageResultsResponse.body;
 
@@ -221,7 +222,7 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
 
       this.InitializeChartWithTheLegend();
 
-      return this._dataService.GetValuesSelectionsAtDifferentSurveyStages(surveyId);
+      return this._surveyService.GetValuesSelectionsAtDifferentSurveyStages(surveyId);
     })).subscribe((getValuesSelectionsAtDifferentSurveyStagesResponse: any) => {
       this.reportTableValues = getValuesSelectionsAtDifferentSurveyStagesResponse.body;
       this.BalanceTableValuesAmounts();

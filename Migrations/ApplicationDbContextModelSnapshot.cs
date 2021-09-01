@@ -99,7 +99,7 @@ namespace KPProject.Migrations
                     b.ToTable("PersistedGrants");
                 });
 
-            modelBuilder.Entity("KPProject.Models.AgeGroupModel", b =>
+            modelBuilder.Entity("KPProject.Models.AgeGroup", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -208,6 +208,9 @@ namespace KPProject.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AgeGroupId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("AgeGroupModelId")
                         .HasColumnType("int");
 
@@ -281,7 +284,7 @@ namespace KPProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgeGroupModelId");
+                    b.HasIndex("AgeGroupId");
 
                     b.HasIndex("GenderId");
 
@@ -844,7 +847,7 @@ namespace KPProject.Migrations
 
             modelBuilder.Entity("KPProject.Models.AnonymisedUser", b =>
                 {
-                    b.HasOne("KPProject.Models.AgeGroupModel", "AgeGroup")
+                    b.HasOne("KPProject.Models.AgeGroup", "AgeGroup")
                         .WithMany()
                         .HasForeignKey("AgeGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -888,7 +891,7 @@ namespace KPProject.Migrations
             modelBuilder.Entity("KPProject.Models.AnonymisedUserRegion", b =>
                 {
                     b.HasOne("KPProject.Models.AnonymisedUser", "AnonymisedUser")
-                        .WithMany("AnonymisedUserRegions")
+                        .WithMany("Regions")
                         .HasForeignKey("AnonymisedUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -917,9 +920,9 @@ namespace KPProject.Migrations
 
             modelBuilder.Entity("KPProject.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("KPProject.Models.AgeGroupModel", "AgeGroupModel")
+                    b.HasOne("KPProject.Models.AgeGroup", "AgeGroup")
                         .WithMany()
-                        .HasForeignKey("AgeGroupModelId");
+                        .HasForeignKey("AgeGroupId");
 
                     b.HasOne("KPProject.Models.Gender", "Gender")
                         .WithMany()
@@ -931,7 +934,7 @@ namespace KPProject.Migrations
             modelBuilder.Entity("KPProject.Models.ApplicationUserAssociatedCoupon", b =>
                 {
                     b.HasOne("KPProject.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ApplicationUserAssociatedCoupons")
+                        .WithMany("AssociatedCoupons")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -946,7 +949,7 @@ namespace KPProject.Migrations
             modelBuilder.Entity("KPProject.Models.ApplicationUserCertification", b =>
                 {
                     b.HasOne("KPProject.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ApplicationUserCertifications")
+                        .WithMany("Certifications")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -4,7 +4,7 @@ import { ValueViewModel } from '../../view-models/value-view-model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SurveyService } from '../../app-services/survey-service';
 import { SurveyFirstStageSaveRequestModel } from '../../view-models/survey-first-stage-save-request-model';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { switchMap } from 'rxjs/operators';
 import { iif, of } from 'rxjs';
@@ -31,7 +31,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   @ViewChild('valueIdeogram', { read: ElementRef, static: false })
   public valueIdeogram: ElementRef;
 
-  //Represents values list at the bottom.
+  //Represents values at the bottom list.
   @ViewChildren('valueContainers')
   public valueContainers: QueryList<ElementRef>;
 
@@ -39,7 +39,6 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   @ViewChild('valueModalIdeogram', { read: ElementRef, static: false })
   public valueModalIdeogram: ElementRef;
   public valueModalIsVisible: boolean = false;
-
 
   public isSelectionStage: boolean = false;
   public isValidationStage: boolean = false;
@@ -232,7 +231,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     this.SelectNewValue(event, this.currentIndex + 1);
   }
 
-  public ProceedToValidationStep(event: MouseEvent) {
+  public ProceedToValidationStage(event: MouseEvent) {
     this.isSelectionStage = false;
     this.isValidationStage = true;
   }
@@ -249,7 +248,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this._dataService.GetFirstStageValues(this.surveyId).subscribe((getFirstStageValuesResponse: any) => {
+    this._surveyService.GetFirstStageValues(this.surveyId).subscribe((getFirstStageValuesResponse: any) => {
       this.MarkAllValuesImportance(getFirstStageValuesResponse.body);
     });
 
@@ -342,12 +341,12 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
 
     this.AssureThatSurveyIdIsNotNull();
 
-    this._dataService.DecideToWhichStageToTransfer(this.surveyId).pipe(switchMap((decideToWhichStageToTransferResponse: any) => {
+    this._surveyService.DecideToWhichStageToTransfer(this.surveyId).pipe(switchMap((decideToWhichStageToTransferResponse: any) => {
       this.currentSurveyStage = decideToWhichStageToTransferResponse.body
 
       return iif(() =>
         this.currentSurveyStage == 'surveyFirstStage' || this.currentSurveyStage == 'surveySecondStage',
-        this._dataService.GetValuesForFirstStage(this.surveyId),
+        this._surveyService.GetValuesForFirstStage(this.surveyId),
         of(decideToWhichStageToTransferResponse.body)
       )
 
@@ -372,7 +371,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.ProccedToSelectionStage(null);
       setTimeout(() => {
-        this.ProceedToValidationStep(null);
+        this.ProceedToValidationStage(null);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 800);
     }, 800);
@@ -414,7 +413,7 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
       valuesToSave.push(this.values[v.nativeElement.dataset.id]);
     });
 
-    this._dataService.SaveFirstStageResults(new SurveyFirstStageSaveRequestModel(valuesToSave, this.surveyId)).subscribe(response => {
+    this._surveyService.SaveFirstStageResults(new SurveyFirstStageSaveRequestModel(valuesToSave, this.surveyId)).subscribe(response => {
       this._router.navigate(['surveySecondStage']);
     });
 

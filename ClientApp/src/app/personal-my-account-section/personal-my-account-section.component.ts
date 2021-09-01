@@ -13,13 +13,12 @@ import { PositionViewModel } from '../../view-models/position-view-model';
 import { RegionViewModel } from '../../view-models/region-view-model';
 import { SectorOfActivityViewModel } from '../../view-models/sector-of-activity-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
-import { PersonalAccountComponentHelperMethods } from '../helper-methods/personal-account-component-helper-methods';
 
 @Component({
   selector: 'app-personal-my-account-section',
   templateUrl: './personal-my-account-section.component.html',
   styleUrls: ['./personal-my-account-section.component.css'],
-  providers: [AccountService, DataService, PersonalAccountComponentHelperMethods]
+  providers: [AccountService, DataService]
 })
 export class PersonalMyAccountSectionComponent implements OnInit {
 
@@ -66,9 +65,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
   @Output()
   public usersHasUnsignedSurveyStatusEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-
   public userHasUnsignedSurveys: boolean = false;
-
 
   @ViewChild('personalInformationForm', { read: NgForm, static: false })
   public personalInformationForm: NgForm;
@@ -79,20 +76,19 @@ export class PersonalMyAccountSectionComponent implements OnInit {
   constructor(
     private _router: Router,
     private _jwtHelper: JwtHelperService,
-    private accountService: AccountService,
+    private _accountService: AccountService,
     private _dataService: DataService,
     private _renderer2: Renderer2,
-    private renderer: Renderer,
-    private _helperMethods: PersonalAccountComponentHelperMethods
+    private renderer: Renderer
   ) { }
 
   ngOnInit() {  
     forkJoin(
-      this.accountService.GetAllAgeGroups(),
-      this.accountService.GetAllRegions(),
-      this.accountService.GetAllEducations(),
-      this.accountService.GetAllPositions(),
-      this.accountService.GetAllSectorsOfActivities()
+      this._accountService.GetAllAgeGroups(),
+      this._accountService.GetAllRegions(),
+      this._accountService.GetAllEducations(),
+      this._accountService.GetAllPositions(),
+      this._accountService.GetAllSectorsOfActivities()
     ).pipe(map((
       [
         getAllAgeGroupsResponse,
@@ -108,7 +104,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
       this.sectorsOfActivities = getAllSectorsOfActivitiesResponse.body;
     })).subscribe();
 
-    this.accountService.GetCurrentUser().pipe(switchMap((getCurrentUserResponse: any) => {
+    this._accountService.GetCurrentUser().pipe(switchMap((getCurrentUserResponse: any) => {
       this.user = getCurrentUserResponse.body;
       this.oldEmail = this.user.email;
       this.oldName = this.user.firstName;
@@ -118,7 +114,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
       this.newEducationsSelected = this.user.educations;
       this.newSectorsOfActivitiesSelected = this.user.sectorsOfActivities;
 
-      return this._dataService.UserHasUnsignedSurveys(this.user.id);
+      return this._accountService.UserHasUnsignedSurveys(this.user.id);
     })).subscribe((userHasUnsignedSurveysResponse: any) => {
       this.userHasUnsignedSurveys = userHasUnsignedSurveysResponse.body;
       this.usersHasUnsignedSurveyStatusEmitter.emit(userHasUnsignedSurveysResponse.body);
@@ -126,6 +122,14 @@ export class PersonalMyAccountSectionComponent implements OnInit {
         localStorage.removeItem('surveyId');
       }
     });
+  }
+
+  private ModalTypeFieldsAreNotEmpty(regions: Array<RegionViewModel>, educations: Array<EducationViewModel>, positions: Array<PositionViewModel>, sectorsOfActivities: Array<SectorOfActivityViewModel>, ageGroup: AgeGroupViewModel): boolean {
+    if (regions.length > 0 && educations.length > 0 && positions.length > 0 && sectorsOfActivities.length > 0 && ageGroup != undefined) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -136,8 +140,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
   public AssociateUserDataToTheSurvey(event: MouseEvent, personalInformationForm: NgForm) {
     event.stopPropagation();
 
-    if (!this._helperMethods.ModalTypeFieldsAreNotEmpty(this.user.regions, this.user.educations, this.user.positions, this.user.sectorsOfActivities, this.user.ageGroup)) {
-      console.log('1');
+    if (!this.ModalTypeFieldsAreNotEmpty(this.user.regions, this.user.educations, this.user.positions, this.user.sectorsOfActivities, this.user.ageGroup)) {
       this.errorEmitter.emit('Some of the mandatory fields are left empty please, fill up all mandatory fields.')
       return;
     }
@@ -182,14 +185,14 @@ export class PersonalMyAccountSectionComponent implements OnInit {
   * @param personalInformationForm
   */
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm): boolean {
-    if (!this.CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
+    if (!this.NameAndSurnameFieldsAreFilledCorrectly(personalInformationForm)) {
       this.formHasError = true;
 
       this.errorEmitter.emit('Name or Surname fields were not filled correctly.Reminder: these fields must contain at least 2 characters and must not contain any numbers.');
       return false;
     }
 
-    if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
+    if (!this.EmailStringIsCorrect(personalInformationForm)) {
       this.formHasError = true;
 
       this.errorEmitter.emit('Your email addess is incorrect. Reminder: email address must be valid email.');
@@ -197,12 +200,12 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     }
 
     if (personalInformationForm.controls['email'].pristine) {
-      this.accountService.ChangeUserPersonalData(this.user).pipe(switchMap((changeUserDataResponse: any) => {
+      this._accountService.ChangeUserPersonalData(this.user).pipe(switchMap((changeUserDataResponse: any) => {
         if (!this.userHasUnsignedSurveys) {
           return of(null);
         }
 
-        return this._dataService.AssociateUserDataToTheSurvey(this.user.id);
+        return this._accountService.AssociateUserDataToTheSurvey(this.user.id);
       })).subscribe(secondResponse => {
         if (secondResponse == null) {
           location.reload();
@@ -215,7 +218,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
       return;
     }
 
-    this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
+    this._accountService.CheckIfMailIsRegistered(personalInformationForm.value.email).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
       if (checkIfMailIsRegisteredResponse.body === true) {
         this.formHasError = true;
 
@@ -226,13 +229,13 @@ export class PersonalMyAccountSectionComponent implements OnInit {
         personalInformationForm.controls['email'].markAsPristine();
         return of(null);
       }
-      return this.accountService.ChangeUserPersonalData(this.user);
+      return this._accountService.ChangeUserPersonalData(this.user);
     })).pipe(switchMap((secondResponse: any) => {
       if (!this.userHasUnsignedSurveys) {
         return of(null);
       }
 
-      return this._dataService.AssociateUserDataToTheSurvey(this.user.id);
+      return this._accountService.AssociateUserDataToTheSurvey(this.user.id);
     })).subscribe((thirdResponse: any) => {
       if (thirdResponse == null) {
         location.reload();
@@ -243,7 +246,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     });
   }
 
-  private CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
+  private EmailStringIsCorrect(personalInformationForm: NgForm): boolean {
     let email: string = personalInformationForm.controls['email'].value;
     let stringIsEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
 
@@ -261,7 +264,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     return false;
   }
 
-  private CheckIfNameAndSurnameFieldsAreFilledCorrectly(personalInformationForm: NgForm): boolean {
+  private NameAndSurnameFieldsAreFilledCorrectly(personalInformationForm: NgForm): boolean {
     let firstName: string = personalInformationForm.controls['firstName'].value;
     let lastName: string = personalInformationForm.controls['lastName'].value;
     let hasANumber = new RegExp('[0-9]');
@@ -402,7 +405,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     });
 
     this.formHasError = false;
-    //TODO - check if we need this row here
+
     document.getElementById('error-message-container').style.display = 'none';
 
     this._renderer2.setStyle(this.regionModal.nativeElement, 'display', 'none');
@@ -417,7 +420,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     event.stopPropagation();
   }
 
-  public ToggleSelection(event: any) {
+  public ToggleModalOptionSelection(event: any) {
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
@@ -430,7 +433,7 @@ export class PersonalMyAccountSectionComponent implements OnInit {
     }
   }
 
-  public SubmitMultipleChoiceForm(optionType: string, form: NgForm) {
+  public SubmitMultipleChoiceModalSelections(optionType: string, form: NgForm) {
     let newOptionsSelected = new Array<any>();
     let elements = document.getElementsByClassName('is-selected');
 

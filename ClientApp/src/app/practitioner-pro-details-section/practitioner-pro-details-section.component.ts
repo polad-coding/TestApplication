@@ -17,9 +17,9 @@ import { UserViewModel } from '../../view-models/user-view-model';
 })
 export class PractitionerProDetailsSectionComponent implements OnInit, AfterViewInit {
 
-  public certificationLevel: string;
+  public currentCertificationLevelTitle: string;
   public certificateLevelString: string = '';
-  public membership: string;
+  public membershipStatusText: string;
 
   @Input()
   public user: UserViewModel;
@@ -45,7 +45,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   public dummyNumber: number;
 
   //Used to share a loading gif when user is uploading new image.
-  public isUploadingProccess: boolean = false;
+  public isImageUploadingProccess: boolean = false;
 
   @Output() errorMessage: EventEmitter<string> = new EventEmitter<string>();
 
@@ -58,7 +58,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     private _dataService: DataService,
     private renderer2: Renderer2,
     private renderer: Renderer,
-    private accountService: AccountService,
+    private _accountService: AccountService,
     private _router: Router
   ) { }
 
@@ -66,39 +66,40 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     this.oldProfessionalEmail = this.user.professionalEmail;
     this.oldPhoneNumber = this.user.phoneNumber;
     this.oldWebsite = this.user.website;
+
+    this._accountService.GetPractitionersCertifications(this.user.id).subscribe((response: any) => {
+      console.log(response);
+      let certifications: any = response.body;
+      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
+
+      if (certifications.length > 0) {
+        this.certificateLevelString = 'Level ' + certifications[certifications.length - 1].certification.level;
+        this.currentCertificationLevelTitle = certifications[certifications.length - 1].certification.certificationType;
+        return;
+      }
+
+      this.certificateLevelString = '';
+    });
   }
 
   ngOnInit() {
     this.dummyNumber = Math.floor(Math.random() * 100000);
 
     forkJoin(
-      this._dataService.GetSelectedRegionsForCurrentUser(),
-      this._dataService.GetSelectedLanguagesForCurrentUser(),
-      this.accountService.GetAllRegions(),
-      this.accountService.GetAllLanguages()).pipe(map(([firstResponse, secondResponse, thirdResponse, fourthResponse]: any) => {
+      this._accountService.GetSelectedRegionsForCurrentUser(),
+      this._accountService.GetSelectedLanguagesForCurrentUser(),
+      this._accountService.GetAllRegions(),
+      this._accountService.GetAllLanguages()).pipe(map(([firstResponse, secondResponse, thirdResponse, fourthResponse]: any) => {
         this.newRegionsSelected = firstResponse.body;
         this.newLanguagesSelected = secondResponse.body;
         this.regions = thirdResponse.body;
         this.languages = fourthResponse.body;
       })).subscribe();
 
-    this._dataService.GetMembershipStatus().subscribe((response: any) => {
+    this._accountService.GetMembershipStatus().subscribe((response: any) => {
       if (response.body != '' && response.body != undefined && response.body != null) {
-        this.membership = 'OK';
+        this.membershipStatusText = 'OK';
       }
-    });
-
-    this._dataService.GetPractitionersCertifications(null).subscribe((response: any) => {
-      let certifications: any = response.body;
-      certifications = certifications.sort((a, b) => a.certification.level - b.certification.level);
-
-      if (certifications.length > 0) {
-        this.certificateLevelString = 'Level ' + certifications[certifications.length - 1].certification.level;
-        this.certificationLevel = certifications[certifications.length - 1].certification.certificationType;
-        return;
-      }
-
-      this.certificateLevelString = '';
     });
 
     localStorage.setItem('practitionerAccountTabName', 'pro-details-section');
@@ -121,22 +122,22 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   public ChangeProfileData(event: MouseEvent, personalInformationForm: NgForm) {
     event.stopPropagation();
 
-    if (!this.CheckIfEmailStringIsCorrect(personalInformationForm)) {
+    if (!this.EmailStringIsCorrect(personalInformationForm)) {
       return;
     }
 
-    if (!this.CheckIfMobileNumber(personalInformationForm)) {
+    if (!this.MobileNumberIsCorrect(personalInformationForm)) {
       return;
     }
 
     if (personalInformationForm.controls['professionalEmail'].pristine) {
-      this.accountService.ChangeUserPersonalData(this.user).subscribe(response => {
+      this._accountService.ChangeUserPersonalData(this.user).subscribe(response => {
         window.location.reload();
       });
       return;
     }
 
-    this.accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
+    this._accountService.CheckIfMailIsRegistered(personalInformationForm.value.professionalEmail).pipe(switchMap((checkIfMailIsRegisteredResponse: any) => {
       if (checkIfMailIsRegisteredResponse.body == true) {
         this.errorMessage.emit('Your ordinary and professional email addresses cannot be duplicate.');
         this.user.professionalEmail = this.oldProfessionalEmail;
@@ -144,7 +145,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
         return of(null);
       }
 
-      return this.accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail);
+      return this._accountService.CheckIfProfessionalMailIsRegistered(personalInformationForm.value.professionalEmail);
     })).pipe(switchMap((checkIfProfessionalMailIsRegisteredResponse: any) => {
       if (checkIfProfessionalMailIsRegisteredResponse == null) {
         return of(null);
@@ -157,7 +158,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
         return of(null);
       }
 
-      return this.accountService.ChangeUserPersonalData(this.user);
+      return this._accountService.ChangeUserPersonalData(this.user);
     })).subscribe((changeUserPersonalDataResponse: any) => {
       if (changeUserPersonalDataResponse == null) {
         return;
@@ -168,7 +169,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     });
   }
 
-  public CheckIfMobileNumber(personalInformationForm: NgForm): boolean {
+  private MobileNumberIsCorrect(personalInformationForm: NgForm): boolean {
     if (personalInformationForm.controls['phoneNumber'].pristine) {
       return true;
     }
@@ -187,7 +188,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     return false;
   }
 
-  public CheckIfEmailStringIsCorrect(personalInformationForm: NgForm): boolean {
+  private EmailStringIsCorrect(personalInformationForm: NgForm): boolean {
     if (personalInformationForm.controls['professionalEmail'].pristine) {
       return true;
     }
@@ -264,7 +265,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
    * Toggles option selection inside the modals.
    * @param event
    */
-  public ToggleSelection(event: any) {
+  public ToggleModalOptionSelection(event: any) {
     let element = event.target.nextSibling;
 
     if (element.className === 'is-not-selected') {
@@ -277,7 +278,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     }
   }
 
-  public SubmitRegionsForm(regionsForm: NgForm) {
+  public SubmitRegionsModal(regionsForm: NgForm) {
     this.newRegionsSelected = new Array<RegionViewModel>();
     let elements = document.getElementsByClassName('is-selected');
 
@@ -291,7 +292,7 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
     this.OnDocumentClicked(null);
   }
 
-  public SubmitLanguagesForm(languagesForm: NgForm) {
+  public SubmitLanguagesModal(languagesForm: NgForm) {
     this.newLanguagesSelected = new Array<LanguageViewModel>();
     let elements = document.getElementsByClassName('is-selected');
 
@@ -306,9 +307,9 @@ export class PractitionerProDetailsSectionComponent implements OnInit, AfterView
   }
 
   public ChooseNewProfileImage(files: FileList) {
-    this.isUploadingProccess = true;
+    this.isImageUploadingProccess = true;
     this.ToBase64(files[0]).then((value: string) => {
-      this.accountService.UploadProfileImage((value)).subscribe((response: any) => {
+      this._accountService.UploadProfileImage((value)).subscribe((response: any) => {
         window.location.reload();
         console.log('here');
         this.profileImageName = response.body;

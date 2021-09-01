@@ -17,7 +17,7 @@
     </div>
   </div>
   <div id="survey-results-and-reports-surveys">
-    <div class="survey-result-row" *ngFor="let surveyResult of surveysResults">
+    <div class="survey-result-row" *ngFor="let surveyResult of surveys">
       <div class="survey-result-row-white-cell">
         <p>{{surveyResult.code}}</p>
       </div>
@@ -72,7 +72,7 @@
   </div>
 </div>
 <div id="get-code-section">
-  <button (click)="ChangeToGetCodesTab()">Get a code</button>
+  <button (click)="SwitchToGetCodesTab()">Get a code</button>
   <div id="see-policy-container">
     <img src="../../assets/KP-logo-accessories--png/0-00-KP-Lock.svg" />
     <a>See privacy policy</a>

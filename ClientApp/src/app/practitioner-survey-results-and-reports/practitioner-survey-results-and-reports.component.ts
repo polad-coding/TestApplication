@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
+import { SurveyService } from '../../app-services/survey-service';
 import { SurveyResultViewModel } from '../../view-models/survey-result-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
 
@@ -9,26 +10,26 @@ import { UserViewModel } from '../../view-models/user-view-model';
   selector: 'app-practitioner-survey-results-and-reports',
   templateUrl: './practitioner-survey-results-and-reports.component.html',
   styleUrls: ['./practitioner-survey-results-and-reports.component.css'],
-  providers: [DataService, AccountService]
+  providers: [DataService, AccountService, SurveyService]
 })
 export class PractitionerSurveyResultsAndReportsComponent implements OnInit {
 
   @Input()
   public user: UserViewModel;
-  public surveysResults: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
+  public surveys: Array<SurveyResultViewModel> = new Array<SurveyResultViewModel>();
   public surveyId: number;
 
-  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router) { }
+  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router, private _surveyService: SurveyService) { }
 
   ngOnInit() {
     localStorage.setItem('practitionerAccountTabName', 'survey-results-and-reports-section');
 
-    this._dataService.GetSurveyResults(null).subscribe((response: any) => {
-      this.surveysResults = response.body;
+    this._surveyService.GetSurveysOfTheGivenUser(null).subscribe((response: any) => {
+      this.surveys = response.body;
     });
   }
 
-  public GoToGetCodesTab() {
+  public SwitchToGetCodesTab() {
     localStorage.setItem('practitionerAccountTabName', 'get-codes-and-support-section');
     window.location.reload();
   }

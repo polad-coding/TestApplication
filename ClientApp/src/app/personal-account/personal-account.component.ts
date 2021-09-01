@@ -1,17 +1,16 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
-import { PersonalAccountComponentHelperMethods } from '../helper-methods/personal-account-component-helper-methods';
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-personal-account',
   templateUrl: './personal-account.component.html',
-  styleUrls: ['./personal-account.component.css'],
-  providers: [PersonalAccountComponentHelperMethods]
+  styleUrls: ['./personal-account.component.css']
 })
 export class PersonalAccountComponent implements OnInit, AfterViewInit {
 
   public errorMessage: string = '';
   public formHasError: boolean = false;
-  public formIsPristine: true;
 
   public selectedTab: string = 'my-account-section';
   @ViewChildren('accountSectionTab', { read: ElementRef })
@@ -20,18 +19,39 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
 
   public userHasUnsignedSurveys: boolean = false;
 
-  constructor(private _renderer2: Renderer2, private _helperMethods: PersonalAccountComponentHelperMethods) { }
+  constructor(private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private _router: Router) { }
 
   ngAfterViewInit(): void {
     this.AdjustZIndexes();
   }
 
   ngOnInit() {
-    this._helperMethods.DecideIfJwtTokenIsValid();
+    this.AssureThatJwtTokenIsValid();
 
     localStorage.removeItem('currentNavigationBarTabName');
     localStorage.removeItem('userAgreedOnTheClause');
-    this.selectedTab = this._helperMethods.GetCurrentTab();
+    this.selectedTab = this.GetCurrentTab();
+  }
+
+  private AssureThatJwtTokenIsValid(): void {
+    if (localStorage.getItem('jwt') == null || this._jwtHelper.isTokenExpired(localStorage.getItem('jwt'))) {
+      this._router.navigate(['authorizationPage']);
+    }
+
+    if (this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Practitioner') {
+      this._router.navigate(['practitionerAccount']);
+    }
+  }
+
+  private GetCurrentTab(): string {
+    let currentTab = localStorage.getItem('personalAccountTabName');
+
+    if (currentTab == null) {
+      localStorage.setItem('personalAccountTabName', 'my-account-section');
+      currentTab = localStorage.getItem('personalAccountTabName');
+    }
+
+    return currentTab;
   }
 
   public DisplayError(errorMessage: string) {
@@ -103,7 +123,7 @@ export class PersonalAccountComponent implements OnInit, AfterViewInit {
     event.stopPropagation();
   }
 
-  public SetIfUserHasUnsignedSurvey(hasUnsignedSurvey) {
+  public IdentifyIfUserHasUnsignedSurvey(hasUnsignedSurvey) {
     this.userHasUnsignedSurveys = hasUnsignedSurvey;
   }
 }

@@ -3,6 +3,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
+import { SurveyService } from '../../app-services/survey-service';
 import { CertificationViewModel } from '../../view-models/certification-view-model';
 import { GenderViewModel } from '../../view-models/gender-view-model';
 import { LanguageViewModel } from '../../view-models/language-view-model';
@@ -19,7 +20,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
 export class PractitionersDirectoryComponent implements OnInit {
 
   //Used to identify if we can go to the next practitioner, or its the last one.
-  public numberOfPractitioners: number;
+  public totalNumberOfPractitioners: number;
 
   //Texts displayed at the filter containers at the top.
   public selectedGendersText: string = 'No gender preference';
@@ -37,7 +38,7 @@ export class PractitionersDirectoryComponent implements OnInit {
 
   public currentPractitioners: Array<UserViewModel> = new Array<UserViewModel>();
 
-  public currentUserIsAMember: boolean = false;
+  public currentPractitionerIsAMember: boolean = false;
 
   public practitionersCertifications: Array<Array<CertificationViewModel>> = new Array<Array<CertificationViewModel>>();
 
@@ -54,7 +55,7 @@ export class PractitionersDirectoryComponent implements OnInit {
 
   private InitializeModalsData() {
     forkJoin(this._accountService.GetAllLanguages(), this._accountService.GetAllRegions())
-      .pipe(map(([languagesResponse, regionsResponse, numberOfPractitionersResponse]: any) => {
+      .pipe(map(([languagesResponse, regionsResponse]: any) => {
         this.languages = languagesResponse.body;
         this.geographicalLocations = regionsResponse.body;
       })).subscribe();
@@ -70,7 +71,7 @@ export class PractitionersDirectoryComponent implements OnInit {
     this.InitializeModalsData();
 
     this._dataService.ReturnNumberOfPractitioners().subscribe((returnNumberOfPractitionersResponse: any) => {
-      this.numberOfPractitioners = returnNumberOfPractitionersResponse.body;
+      this.totalNumberOfPractitioners = returnNumberOfPractitionersResponse.body;
     });
 
     this.practitionersSearchFilterViewModel.startingIndex = 0;
@@ -85,10 +86,11 @@ export class PractitionersDirectoryComponent implements OnInit {
   private InitializePractitionersThatSatisfyTheFilters() {
     this._dataService.GetPractitionersForDirectory(this.practitionersSearchFilterViewModel).pipe(switchMap((getPractitionersForDirectoryResponse: any) => {
       this.currentPractitioners = getPractitionersForDirectoryResponse.body;
+      console.log(this.currentPractitioners);
       let arrayOfGetPractitionersCertificationsObservables = new Array<Observable<any>>();
 
       for (var i = 0; i < this.currentPractitioners.length; i++) {
-        arrayOfGetPractitionersCertificationsObservables.push(this._dataService.GetPractitionersCertifications(this.currentPractitioners[i].id));
+        arrayOfGetPractitionersCertificationsObservables.push(this._accountService.GetPractitionersCertifications(this.currentPractitioners[i].id));
       }
 
       return forkJoin(arrayOfGetPractitionersCertificationsObservables);
@@ -97,14 +99,14 @@ export class PractitionersDirectoryComponent implements OnInit {
         this.practitionersCertifications.push(response.body);
       })
 
-      return this._dataService.GetMembershipStatusOfTheUser(this.currentPractitioners[this.currentPractitionerIndex].id);
+      return this._accountService.GetMembershipStatusOfTheUser(this.currentPractitioners[this.currentPractitionerIndex].id);
     })).subscribe((getMembershipStatusOfTheUserResponse: any) => {
       if (getMembershipStatusOfTheUserResponse.body == null) {
-        this.currentUserIsAMember = false;
+        this.currentPractitionerIsAMember = false;
         return;
       }
 
-      this.currentUserIsAMember = true;
+      this.currentPractitionerIsAMember = true;
     });
   }
 
@@ -113,12 +115,12 @@ export class PractitionersDirectoryComponent implements OnInit {
    * @param event
    */
   public SelectPractitioner(event: any) {
-    this.ResetTheCurrentPractitioner(Number.parseInt(event.target.id.split('-').pop()));
+    this.ResetWhoIsTheCurrentPractitioner(Number.parseInt(event.target.id.split('-').pop()));
 
     this.IdentifyIfTheCurrentPractitionerIsAMember();
   }
 
-  private ResetTheCurrentPractitioner(practitionerId: number) {
+  private ResetWhoIsTheCurrentPractitioner(practitionerId: number) {
     this._renderer2.removeClass(document.getElementById(`practitioner-${this.currentPractitionerIndex}`), 'current-practitioner');
 
     this.currentPractitionerIndex = practitionerId;
@@ -127,14 +129,13 @@ export class PractitionersDirectoryComponent implements OnInit {
   }
 
   private IdentifyIfTheCurrentPractitionerIsAMember() {
-    console.log(this.currentPractitioners[this.currentPractitionerIndex]);
-    this._dataService.GetMembershipStatusOfTheUser(this.currentPractitioners[this.currentPractitionerIndex].id).subscribe((response: any) => {
+    this._accountService.GetMembershipStatusOfTheUser(this.currentPractitioners[this.currentPractitionerIndex].id).subscribe((response: any) => {
       if (response.body == null) {
-        this.currentUserIsAMember = false;
+        this.currentPractitionerIsAMember = false;
         return;
       }
       
-      this.currentUserIsAMember = true;
+      this.currentPractitionerIsAMember = true;
     });
   }
 
@@ -147,7 +148,7 @@ export class PractitionersDirectoryComponent implements OnInit {
   }
 
   private UserIsAtTheVeryLastPractitioner(): boolean {
-    if (this.numberOfPractitioners <= this.practitionersSearchFilterViewModel.startingIndex + this.currentPractitionerIndex + 1) {
+    if (this.totalNumberOfPractitioners <= this.practitionersSearchFilterViewModel.startingIndex + this.currentPractitionerIndex + 1) {
       return true;
     }
 
@@ -161,7 +162,7 @@ export class PractitionersDirectoryComponent implements OnInit {
 
     //In case if we dont have to load new set of the practitioner.
     if (this.currentPractitionerIndex > 0) {
-      this.ResetTheCurrentPractitioner(this.currentPractitionerIndex - 1);
+      this.ResetWhoIsTheCurrentPractitioner(this.currentPractitionerIndex - 1);
       this.IdentifyIfTheCurrentPractitionerIsAMember();
       return;
     }
@@ -183,7 +184,7 @@ export class PractitionersDirectoryComponent implements OnInit {
 
     //In case if we dont have to load new set of the practitioner.
     if (this.currentPractitionerIndex < this.currentPractitioners.length - 1) {
-      this.ResetTheCurrentPractitioner(this.currentPractitionerIndex + 1);
+      this.ResetWhoIsTheCurrentPractitioner(this.currentPractitionerIndex + 1);
       this.IdentifyIfTheCurrentPractitionerIsAMember();
       return;
     }
@@ -199,11 +200,11 @@ export class PractitionersDirectoryComponent implements OnInit {
   }
 
   public LanguageClicked(event: any) {
-    this.ToggleOptionSelection(event);
+    this.ToggleModalOptionSelection(event);
   }
 
   public RegionClicked(event: any) {
-    this.ToggleOptionSelection(event);
+    this.ToggleModalOptionSelection(event);
   }
 
   public GenderClicked(event: any) {
@@ -215,14 +216,14 @@ export class PractitionersDirectoryComponent implements OnInit {
     }
 
 
-    this.ToggleOptionSelection(event);
+    this.ToggleModalOptionSelection(event);
   }
 
   /**
    * Toggles modals options.
    * @param event
    */
-  private ToggleOptionSelection(event) {
+  private ToggleModalOptionSelection(event) {
     if (event.target.classList.contains('modal-unit-is-not-selected')) {
       this._renderer2.removeClass(event.target, 'modal-unit-is-not-selected');
       this._renderer2.addClass(event.target, 'modal-unit-is-selected');

@@ -41,7 +41,7 @@ namespace KPProject.Data
         public DbSet<AnonymisedUserEducation> AnonymisedUserEducations { get; set; }
         public DbSet<AnonymisedUserPosition> AnonymisedUserPositions { get; set; }
         public DbSet<AnonymisedUserSectorsOfActivity> AnonymisedUserSectorsOfActivities { get; set; }
-        public DbSet<AgeGroupModel> AgeGroups { get; set; }
+        public DbSet<AgeGroup> AgeGroups { get; set; }
 
 
         public ApplicationDbContext(

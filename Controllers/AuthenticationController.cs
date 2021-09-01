@@ -1,10 +1,6 @@
 ﻿using KPProject.Interfaces;
 using KPProject.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KPProject.Controllers
@@ -31,7 +27,7 @@ namespace KPProject.Controllers
                 return Ok(signedInUser);
             }
 
-            return BadRequest();
+            return StatusCode(401);
         }
 
         [HttpPost]
@@ -45,7 +41,7 @@ namespace KPProject.Controllers
                 return Ok(newUser);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
 

@@ -1,20 +1,21 @@
 import { Component, ElementRef, HostListener, Input, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { render, paypal } from 'creditcardpayments/creditCardPayments';
+import { render } from 'creditcardpayments/creditCardPayments';
 import { OrderViewModel } from '../../view-models/order-view-model';
 import { DataService } from '../../app-services/data-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserViewModel } from '../../view-models/user-view-model';
-import { EmailSenderService } from '../../app-services/email-sender-service';
 import { SurveyService } from '../../app-services/survey-service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AccountService } from '../../app-services/account.service';
+import { CouponService } from '../../app-services/coupon-service';
+import { OrderService } from '../../app-services/order-service';
 
 @Component({
   selector: 'app-get-codes',
   templateUrl: './get-codes.component.html',
   styleUrls: ['./get-codes.component.css'],
-  providers: [DataService, EmailSenderService, AccountService, SurveyService],
+  providers: [DataService, AccountService, SurveyService, CouponService, OrderService],
   host: {
     '(document:click)': 'DocumentClicked()',
   }
@@ -47,7 +48,7 @@ export class GetCodesComponent implements OnInit {
   public secondInformationModalIsVisible = false;
   public mobileModeIsOn = false;
 
-  constructor(private _accountService: AccountService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _dataService: DataService, private _jwtHelper: JwtHelperService, private _emailSenderService: EmailSenderService) {
+  constructor(private _accountService: AccountService, private _orderService: OrderService, private _surveyService: SurveyService, private _renderer2: Renderer2, private _couponService: CouponService, private _dataService: DataService, private _jwtHelper: JwtHelperService) {
     //Here we are loading script because for some reason DinkToPdf library that we are using to generate PDFs is conflicting with paypal script, and throws the error when we try to generate PDF.
     this.LoadScript();
   }
@@ -57,7 +58,7 @@ export class GetCodesComponent implements OnInit {
    * @param event
    */
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  public onResize(event) {
     if (event.target.innerWidth <= 599 && this.mobileModeIsOn == false) {
       this.listOfOrders = new Array<OrderViewModel>();
       this.counter = 0;
@@ -117,7 +118,7 @@ export class GetCodesComponent implements OnInit {
       if (this.CurrentUserIsPractitioner()) {
         console.log('here');
         this.enablePractitionersDiscount = true;
-        return this._dataService.GetMembershipStatus();
+        return this._accountService.GetMembershipStatus();
       }
 
       return of(null);
@@ -159,7 +160,7 @@ export class GetCodesComponent implements OnInit {
       return;
     }
 
-    this._dataService.GetCoupon(coupon).subscribe((getCouponResponse: any) => {
+    this._couponService.GetCoupon(coupon).subscribe((getCouponResponse: any) => {
       if (getCouponResponse.body == null) {
         return;
       }
@@ -179,7 +180,7 @@ export class GetCodesComponent implements OnInit {
   }
 
   /**
-   *On transaction approval, generates orders with codes, creates the surveys from these orders and then removes them.
+   * Renders paypal actions. On transaction approval, generates orders with codes, creates the surveys from these orders and then removes these orders.
    * */
   private RenderPayPal() {
     render({
@@ -187,15 +188,16 @@ export class GetCodesComponent implements OnInit {
       currency: "USD",
       value: `${this.grandTotalSum.toFixed(2)}`,
       onApprove: (details) => {
-        this._dataService.GenerateCodesForTheUser(this.listOfOrders).pipe(switchMap((generateCodesForTheUserResponse: any) => {
-          console.log('here 4');
+        this._orderService.GenerateOrdersForTheUser(this.listOfOrders).pipe(switchMap((generateCodesForTheUserResponse: any) => {
 
           localStorage.setItem('personalAccountTabName', 'survey-results-and-reports-section');
           localStorage.setItem('practitionerAccountTabName', 'survey-results-and-reports-section');
 
-          return this._surveyService.CreateSurvey(generateCodesForTheUserResponse.body);
+          console.log(generateCodesForTheUserResponse.body);
+
+          return this._surveyService.CreateSurveys(generateCodesForTheUserResponse.body);
         })).pipe(switchMap((surveysCreateResponse) => {
-          return this._dataService.DeleteAllOrdersOfTheCurrentUser();
+          return this._orderService.DeleteAllOrdersOfTheCurrentUser();
         })).subscribe((deleteAllOrdersOfTheUserResponse: any) => {
           location.reload();
         });
@@ -210,7 +212,7 @@ export class GetCodesComponent implements OnInit {
   public DisplayPayPalModal(event: MouseEvent) {
     event.stopPropagation();
 
-    this._dataService.CheckIfAllCouponsAreValid(this.listOfOrders).subscribe((response: any) => {
+    this._couponService.CheckIfAllCouponsAreValid(this.listOfOrders).subscribe((response: any) => {
       if (response.body.result == false) {
         alert('Some of your coupons were used too many times.');
         return;
@@ -256,7 +258,7 @@ export class GetCodesComponent implements OnInit {
     }
   }
 
-  public SelectNewOption(order: OrderViewModel, numberOfCodes: number, numberOfUsages: number, pricePerUnit: number, defaultNumberOfUsages: number) {
+  private SelectNewOption(order: OrderViewModel, numberOfCodes: number, numberOfUsages: number, pricePerUnit: number, defaultNumberOfUsages: number) {
     this.listOfOrders[order.id].numberOfCodes = numberOfCodes;
     this.listOfOrders[order.id].numberOfUsages = numberOfUsages;
     this.listOfOrders[order.id].pricePerUnit = pricePerUnit;
@@ -266,7 +268,7 @@ export class GetCodesComponent implements OnInit {
     this.CalculateNewGrandTotalSum();
   }
 
-  public NumberOfCodesChanged(event, order) {
+  public ChangeTheNumberOfCodes(event, order) {
     if (order.numberOfCodes < 0) {
       return;
     }
@@ -277,7 +279,7 @@ export class GetCodesComponent implements OnInit {
     this.CalculateNewGrandTotalSum();
   }
 
-  public NumberOfCodesChangedMobile(event) {
+  public ChangeTheNumberOfCodesMobile(event) {
     if (this.listOfOrders[0].numberOfCodes < 0) {
       return;
     }
@@ -319,7 +321,4 @@ export class GetCodesComponent implements OnInit {
     this.grandTotalSum -= practitionerDiscountValue;
   }
 
-  public DisplayCodesOptionsDropDown(event, order) {
-    this._renderer2.setStyle(this.dropDownList.nativeElement, 'display', 'flex');
-  }
 }

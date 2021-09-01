@@ -95,7 +95,7 @@
         </select>
       </div>
       <div class="column">
-        <input class="number-of-codes-field" id="number-of-codes-container" type="number" (focusout)="NumberOfCodesChanged($event,order)" [(ngModel)]="order.numberOfCodes" />
+        <input class="number-of-codes-field" id="number-of-codes-container" type="number" (focusout)="ChangeTheNumberOfCodes($event,order)" [(ngModel)]="order.numberOfCodes" />
       </div>
       <div class="column" id="number-of-surveys">
         <span>{{order.numberOfUsages}}</span>
@@ -151,7 +151,7 @@
   </div>
 </div>
 
-<div id="order-container-mobile" *ngIf="mobileModeIsOn" (touchend)="NumberOfCodesChangedMobile($event)">
+<div id="order-container-mobile" *ngIf="mobileModeIsOn" (touchend)="ChangeTheNumberOfCodesMobile($event)">
   <div id="paypal-modal-container" [ngStyle]="{'display': paypalModalIsVisible == true ? 'flex':'none'}">
     <div id="paypal-header">Choose your payment method</div>
     <div id="paypalContainer"></div>

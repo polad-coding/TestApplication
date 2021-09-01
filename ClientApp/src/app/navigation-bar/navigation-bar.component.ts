@@ -17,13 +17,13 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
 
   public user: UserViewModel;
   public userRole: string = 'user';
-  public isMobile: boolean = false;
+  public isMobileVersion: boolean = false;
   public actionsSideBarIsVisible: boolean = false;
   public languagesSideBarIsVisible: boolean = false;
   public userIsAuthorized: boolean = false;
   public languageSelected: string = 'english';
   public languageModalIsVisible: boolean = false;
-  public userAuthorizationOperationsContainerIsVisible: boolean = false;
+  public userAccountManagementContainerIsVisible: boolean = false;
   public currentNavigationBarTabName: string;
 
   constructor(
@@ -139,16 +139,16 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
     }
 
     this.languageModalIsVisible = false;
-    this.userAuthorizationOperationsContainerIsVisible = false;
+    this.userAccountManagementContainerIsVisible = false;
   }
 
   /**
    * Displays th modal that appears under the email of the user in navigation bar. Modal provides actions to manipulate the session and other actions related to the user.
    * @param event
    */
-  public DisplayUserAuthorizationManipulationModal(event: any) {
+  public DisplayUserAccountManagementContainer(event: any) {
     event.stopPropagation();
-    this.userAuthorizationOperationsContainerIsVisible = true;
+    this.userAccountManagementContainerIsVisible = true;
   }
 
   /**
@@ -169,21 +169,21 @@ export class NavigationBarComponent implements OnInit, AfterViewInit {
     this.languagesSideBarIsVisible = true;
   }
 
-  public LanguagesSideBarClick(event: MouseEvent) {
+  public LanguagesSideBarClicked(event: MouseEvent) {
     event.stopPropagation();
   }
 
-  public ActionsSideBarClick(event: MouseEvent) {
+  public ActionsSideBarClicked(event: MouseEvent) {
     event.stopPropagation();
   }
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
     if (window.innerWidth < 768) {
-      this.isMobile = true;
+      this.isMobileVersion = true;
     }
     else {
-      this.isMobile = false;
+      this.isMobileVersion = false;
     }
   }
 }

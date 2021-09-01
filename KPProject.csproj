@@ -77,12 +77,16 @@
     <Compile Remove="Migrations\20210731190223_Added_Age_Group_Entity.Designer.cs" />
     <Compile Remove="Migrations\20210731190608_Added_Age_Group_Entity.cs" />
     <Compile Remove="Migrations\20210731190608_Added_Age_Group_Entity.Designer.cs" />
+    <Compile Remove="Migrations\20210831083152_Changed_The_Naming_In_Anonymised_User_Model.cs" />
+    <Compile Remove="Migrations\20210831083152_Changed_The_Naming_In_Anonymised_User_Model.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\src\app-services\authentication-service.ts" />
+    <None Remove="ClientApp\src\app-services\coupon-service.ts" />
     <None Remove="ClientApp\src\app-services\data-service.ts" />
     <None Remove="ClientApp\src\app-services\email-sender-service.ts" />
+    <None Remove="ClientApp\src\app-services\order-service.ts" />
     <None Remove="ClientApp\src\app-services\survey-service.ts" />
     <None Remove="ClientApp\src\view-models\age-group-view-model.ts" />
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
@@ -149,8 +153,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app-services\authentication-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app-services\coupon-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\data-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\email-sender-service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app-services\order-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app-services\survey-service.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\age-group-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\application-user-certification-view-model.ts" />
@@ -180,10 +186,6 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\transfer-codes-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\user-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\value-view-model.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientApp\src\app\helper-methods\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

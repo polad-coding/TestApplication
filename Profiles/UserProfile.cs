@@ -24,7 +24,7 @@ namespace KPProject.Profiles
                 .ForMember(dest => dest.SectorsOfActivities,
                             opt => opt.MapFrom(src => src.SectorsOfActivities.Select(element => element.SectorOfActivity)))
                 .ForMember(dest => dest.AgeGroup,
-                            opt => opt.MapFrom(src => src.AgeGroupModel))
+                            opt => opt.MapFrom(src => src.AgeGroup))
                 .ReverseMap();
         }
     }

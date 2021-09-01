@@ -1,11 +1,12 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
-import { NavigationExtras, Route, Router } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AppSettingsService } from '../../app-services/app-settings.service';
 import { DataService } from '../../app-services/data-service';
+import { SurveyService } from '../../app-services/survey-service';
 import { SurveySecondStageSaveRequestModel } from '../../view-models/survey-second-stage-save-request-model';
 import { ValueViewModel } from '../../view-models/value-view-model';
 
@@ -13,7 +14,7 @@ import { ValueViewModel } from '../../view-models/value-view-model';
   selector: 'app-survey-second-stage',
   templateUrl: './survey-second-stage.component.html',
   styleUrls: ['./survey-second-stage.component.css'],
-  providers: [DataService]
+  providers: [DataService, SurveyService]
 })
 export class SurveySecondStageComponent implements OnInit {
 
@@ -21,11 +22,11 @@ export class SurveySecondStageComponent implements OnInit {
   public values: Array<ValueViewModel> = new Array<ValueViewModel>();
 
   public valuesGroupedByPerspectives: Map<number, Array<ValueViewModel>> = new Map<number, Array<ValueViewModel>>();
-  public valuesMarkedAsImportantGroupedByPerspectives: Map<number, Array<ValueViewModel>> = new Map<number, Array<ValueViewModel>>();
+  public importantValuesGroupedByPerspectives: Map<number, Array<ValueViewModel>> = new Map<number, Array<ValueViewModel>>();
 
   //Used to store the groups of the values that we have to mark as important by default.
   //Reminder values must be marked as important by default if the array of the grouped values has less than 4 elements.
-  public defaultValuesMarkedAsImportantGroupedByPerspectives: Map<number, Array<ValueViewModel>> = new Map<number, Array<ValueViewModel>>();
+  public valuesMarkedAsImportantByDefaultGroupedByPerspectives: Map<number, Array<ValueViewModel>> = new Map<number, Array<ValueViewModel>>();
 
   public numberOfPagesToShow: number = 0;
   public currentPageIndex: number = 1;
@@ -36,7 +37,7 @@ export class SurveySecondStageComponent implements OnInit {
   public currentImportantValuesGroup: Array<ValueViewModel> = new Array<ValueViewModel>();
 
   @ViewChildren('valuesPageButton')
-  public valuesPageButtons: QueryList<ElementRef>;
+  public pageButtons: QueryList<ElementRef>;
 
   public valueModalIsVisible: boolean = false;
 
@@ -58,7 +59,7 @@ export class SurveySecondStageComponent implements OnInit {
 
   private currentSurveyStage: string = '';
 
-  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private _router: Router) {
+  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private _router: Router, private _surveyService: SurveyService) {
     let ne = _router.getCurrentNavigation().extras.state;
 
     if (ne != undefined && ne.startFromSelectionStage == true) {
@@ -71,7 +72,7 @@ export class SurveySecondStageComponent implements OnInit {
       return;
     }
 
-    this._dataService.DeleteSurveySecondStageResults(this.surveyId).subscribe(response => {
+    this._surveyService.DeleteSurveySecondStageResults(this.surveyId).subscribe(response => {
       this._router.navigate(['surveyFirstStage'], { state: { startFromValidationStep: true } });
     })
   }
@@ -117,8 +118,8 @@ export class SurveySecondStageComponent implements OnInit {
 
   private InitializeImportantValuesMaps() {
     this.valuesGroupedByPerspectives.forEach((value, key) => {
-      this.valuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
-      this.defaultValuesMarkedAsImportantGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+      this.importantValuesGroupedByPerspectives.set(key, new Array<ValueViewModel>());
+      this.valuesMarkedAsImportantByDefaultGroupedByPerspectives.set(key, new Array<ValueViewModel>());
     });
   }
 
@@ -137,14 +138,14 @@ export class SurveySecondStageComponent implements OnInit {
 
     this.AssureSurveyIdIsNotNull();
 
-    this._dataService.DecideToWhichStageToTransfer(this.surveyId).pipe(switchMap((decideToWhichStageToTransferResponse: any) => {
+    this._surveyService.DecideToWhichStageToTransfer(this.surveyId).pipe(switchMap((decideToWhichStageToTransferResponse: any) => {
       this.currentSurveyStage = decideToWhichStageToTransferResponse.body;
 
       if (this.currentSurveyStage == 'surveyFirstStage' || this.currentSurveyStage == 'wrap-up') {
         return of(decideToWhichStageToTransferResponse.body);
       }
 
-      return this._dataService.GetFirstStageValues(this.surveyId);
+      return this._surveyService.GetFirstStageValues(this.surveyId);
     })).pipe(switchMap((getFirstStageValuesResponse: any) => {
       //If we are not supposed to be at this stage of the survey, just navigate to the needed stage.
       if (typeof getFirstStageValuesResponse == 'string') {
@@ -167,7 +168,7 @@ export class SurveySecondStageComponent implements OnInit {
       }
 
       //If we came from the third stage of the survey, retrieve the previously selected results for the second stage of the survey.
-      return this._dataService.GetSecondStageValues(this.surveyId);
+      return this._surveyService.GetSecondStageValues(this.surveyId);
     })).pipe(switchMap((secondBlockResponse: any) => {
       if (secondBlockResponse == null) {
         return of(null);
@@ -189,7 +190,7 @@ export class SurveySecondStageComponent implements OnInit {
       this.CalculateCurrentGroupId();
 
       this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
-      this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+      this.currentImportantValuesGroup = this.importantValuesGroupedByPerspectives.get(this.currentGroupId);
 
       this.CheckIfStepIsFilledCorrectly();
 
@@ -219,22 +220,22 @@ export class SurveySecondStageComponent implements OnInit {
    * Removes the redundant array group from valuesMarkedAsImportantGroupedByPerspectives map, if this group is already exists in defaultValuesMarkedAsImportantGroupedByPerspectives map.
    * */
   private RemoveRedundantArraysFromImportantValuesMap() {
-    this.defaultValuesMarkedAsImportantGroupedByPerspectives.forEach((vl, i) => {
+    this.valuesMarkedAsImportantByDefaultGroupedByPerspectives.forEach((vl, i) => {
       if (vl.length > 0) {
-        this.valuesMarkedAsImportantGroupedByPerspectives.set(i, new Array<ValueViewModel>());
+        this.importantValuesGroupedByPerspectives.set(i, new Array<ValueViewModel>());
       }
     })
   }
 
   private PopulateMapOfImportantValuesWithThePreviousTimeSelections(secondStageSelections: Array<ValueViewModel>) {
     secondStageSelections.forEach(secondStageSelection => {
-      this.valuesMarkedAsImportantGroupedByPerspectives.get(secondStageSelection.perspectiveId).push(secondStageSelection);
+      this.importantValuesGroupedByPerspectives.get(secondStageSelection.perspectiveId).push(secondStageSelection);
     });
   }
 
   private CheckIfStepIsFilledCorrectly() {
     for (var i = 1; i <= 6; i++) {
-      if (this.valuesGroupedByPerspectives.has(i) && this.valuesMarkedAsImportantGroupedByPerspectives.get(i).length < 3) {
+      if (this.valuesGroupedByPerspectives.has(i) && this.importantValuesGroupedByPerspectives.get(i).length < 3) {
         this.stepIsFilledCorrectly = false;
         return;
       }
@@ -253,7 +254,7 @@ export class SurveySecondStageComponent implements OnInit {
     this.valuesGroupedByPerspectives.forEach((valueList, k) => {
       if (valueList.length < 4) {
         valueList.forEach(value => {
-          this.defaultValuesMarkedAsImportantGroupedByPerspectives.get(k).push(value);
+          this.valuesMarkedAsImportantByDefaultGroupedByPerspectives.get(k).push(value);
         });
 
         this.valuesGroupedByPerspectives.delete(k);
@@ -264,19 +265,19 @@ export class SurveySecondStageComponent implements OnInit {
   public ProceedNextStage(event) {
     let valuesToSafe = Array<ValueViewModel>();
 
-    this.valuesMarkedAsImportantGroupedByPerspectives.forEach(valueList => {
+    this.importantValuesGroupedByPerspectives.forEach(valueList => {
       valueList.forEach(value => {
         valuesToSafe.push(value);
       })
     });
 
-    this.defaultValuesMarkedAsImportantGroupedByPerspectives.forEach(valueList => {
+    this.valuesMarkedAsImportantByDefaultGroupedByPerspectives.forEach(valueList => {
       valueList.forEach(value => {
         valuesToSafe.push(value);
       })
     });
 
-    this._dataService.SaveSecondStageResults(new SurveySecondStageSaveRequestModel(valuesToSafe, this.surveyId)).subscribe(response => {
+    this._surveyService.SaveSecondStageResults(new SurveySecondStageSaveRequestModel(valuesToSafe, this.surveyId)).subscribe(response => {
       this._router.navigate(['surveyThirdStage']);
     });
   }
@@ -292,7 +293,7 @@ export class SurveySecondStageComponent implements OnInit {
 
     setTimeout(() => {
       this.MarkCompleatedPages();
-      this.valuesPageButtons.first.nativeElement.click();
+      this.pageButtons.first.nativeElement.click();
     }, 800)
   }
 
@@ -317,8 +318,8 @@ export class SurveySecondStageComponent implements OnInit {
    * If current group of important values has more than 2 items, mark visualy current page as compleated.
    * */
   public MarkCompleatedPages() {
-    this.valuesPageButtons.forEach((vpb: any) => {
-      if (this.valuesMarkedAsImportantGroupedByPerspectives.get(Number.parseInt(vpb.nativeElement.dataset.id)).length >= 3) {
+    this.pageButtons.forEach((vpb: any) => {
+      if (this.importantValuesGroupedByPerspectives.get(Number.parseInt(vpb.nativeElement.dataset.id)).length >= 3) {
         this._renderer2.addClass(vpb.nativeElement.firstChild, 'page-is-compleated');
         return;
       }
@@ -380,7 +381,7 @@ export class SurveySecondStageComponent implements OnInit {
     this.currentGroupId = key;
     this.currentPageIndex = index + 1;
     this.currentValuesGroup = this.valuesGroupedByPerspectives.get(this.currentGroupId);
-    this.currentImportantValuesGroup = this.valuesMarkedAsImportantGroupedByPerspectives.get(this.currentGroupId);
+    this.currentImportantValuesGroup = this.importantValuesGroupedByPerspectives.get(this.currentGroupId);
   }
 
   private DecideHowManyPagesToShow() {

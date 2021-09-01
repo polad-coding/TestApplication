@@ -1,19 +1,13 @@
 ﻿using KPProject.Interfaces;
 using KPProject.Models;
-using KPProject.Services;
 using KPProject.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KPProject.Controllers
 {
-    //[Authorize(Roles = "Practitioner,User")]
     [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -36,7 +30,7 @@ namespace KPProject.Controllers
                 return Ok(user);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
         [HttpGet("Regions")]
@@ -44,12 +38,12 @@ namespace KPProject.Controllers
         {
             var regions = await _accountService.GetAllRegionsAsync();
 
-            if (regions != null)
+            if (regions.Count > 0)
             {
                 return Ok(regions);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
         [HttpGet("AgeGroups")]
@@ -57,12 +51,12 @@ namespace KPProject.Controllers
         {
             var ageGroups = await _accountService.GetAllAgeGroupsAsync();
 
-            if (ageGroups != null)
+            if (ageGroups.Count > 0)
             {
                 return Ok(ageGroups);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
         [HttpGet("Positions")]
@@ -70,12 +64,12 @@ namespace KPProject.Controllers
         {
             var positions = await _accountService.GetAllPositionsAsync();
 
-            if (positions != null)
+            if (positions.Count > 0)
             {
                 return Ok(positions);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
         [HttpGet("Educations")]
@@ -83,12 +77,12 @@ namespace KPProject.Controllers
         {
             var educations = await _accountService.GetAllEducationsAsync();
 
-            if (educations != null)
+            if (educations.Count > 0)
             {
                 return Ok(educations);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
         [HttpGet("SectorsOfActivities")]
@@ -96,30 +90,29 @@ namespace KPProject.Controllers
         {
             var sectorsOfActivities = await _accountService.GetAllSectorsOfActivitiesAsync();
 
-            if (sectorsOfActivities != null)
+            if (sectorsOfActivities.Count > 0)
             {
                 return Ok(sectorsOfActivities);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
-
 
         [HttpGet("Languages")]
         public async Task<ActionResult> GetAllLanguagesAsync()
         {
             var languages = await _accountService.GetAllLanguagesAsync();
 
-            if (languages != null)
+            if (languages.Count > 0)
             {
                 return Ok(languages);
             }
 
-            return BadRequest();
+            return StatusCode(500);
         }
 
         [HttpGet("MailIsRegistered")]
-        public async Task<ActionResult> MailIsRegisteredAsync([FromQuery]string mail)
+        public async Task<ActionResult<bool>> MailIsRegisteredAsync([FromQuery]string mail)
         {
             var isRegistered = await _accountService.MailIsRegisteredAsync(mail);
 
@@ -127,7 +120,7 @@ namespace KPProject.Controllers
         }
 
         [HttpGet("ProfessionalEmailIsRegistered")]
-        public async Task<ActionResult> ProfessionalEmailIsRegisteredAsync([FromQuery] string professionalEmail)
+        public async Task<ActionResult<bool>> ProfessionalEmailIsRegisteredAsync([FromQuery] string professionalEmail)
         {
             var isRegistered = await _accountService.ProfessionalEmailIsRegisteredAsync(professionalEmail);
 
@@ -145,7 +138,7 @@ namespace KPProject.Controllers
                 return Ok(userWithNewData);
             }
 
-            return null;
+            return StatusCode(500);
         }
 
         [HttpPost]
@@ -161,5 +154,140 @@ namespace KPProject.Controllers
 
             return StatusCode(500);
         }
+
+        [HttpGet]
+        [Route("GetSelectedRegionsForCurrentUser")]
+        public async Task<ActionResult<List<RegionModel>>> GetSelectedRegionsForCurrentUserAsync()
+        {
+            var regions = await _accountService.GetSelectedRegionsForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(regions);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedLanguagesForCurrentUser")]
+        public async Task<ActionResult<List<LanguageModel>>> GetSelectedLanguagesForCurrentUserAsync()
+        {
+            var languages = await _accountService.GetSelectedLanguagesForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(languages);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedPositionsForCurrentUser")]
+        public async Task<ActionResult<List<PositionModel>>> GetSelectedPositionsForCurrentUserAsync()
+        {
+            var positions = await _accountService.GetSelectedPositionsForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(positions);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedEducationsForCurrentUser")]
+        public async Task<ActionResult<List<EducationModel>>> GetSelectedEducationsForCurrentUserAsync()
+        {
+            var educations = await _accountService.GetSelectedEducationsForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(educations);
+        }
+
+        [HttpGet]
+        [Route("GetSelectedSectorsOfActivityForCurrentUser")]
+        public async Task<ActionResult<List<SectorOfActivityModel>>> GetSelectedSectorsOfActivityForCurrentUserAsync()
+        {
+            var sectorsOfActivity = await _accountService.GetSelectedSectorsOfActivityForCurrentUserAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(sectorsOfActivity);
+        }
+
+        [HttpPost]
+        [Route("AssociateUserDataToTheSurvey")]
+        public async Task<ActionResult> AssociateUserDataToTheSurveyAsync([FromBody] string userId)
+        {
+            var operationSucceded = await _accountService.AssociateUserDataToTheSurveyAsync(userId);
+
+            if (operationSucceded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("UserHasUnsignedSurveys")]
+        public async Task<ActionResult<bool>> UserHasUnsignedSurveysAsync([FromQuery] string userId)
+        {
+            var hasUnsignedSurvey = await _accountService.UserHasUnsignedSurveysAsync(userId);
+
+            return Ok(hasUnsignedSurvey);
+        }
+
+        [HttpGet]
+        [Route("GetAllCertifications")]
+        public async Task<ActionResult<List<Certification>>> GetAllCertificationsAsync()
+        {
+            var certifications = await _accountService.GetAllCertificationsAsync();
+
+            if (certifications.Count > 0)
+            {
+                return Ok(certifications);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetPractitionersCertifications")]
+        public async Task<ActionResult<List<ApplicationUserCertification>>> GetPractitionersCertificationsAsync(string userId)
+        {
+            if (userId == null)
+            {
+                userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+
+            var practitionersCertifications = await _accountService.GetPractitionersCertificationsAsync(userId);
+
+            if (practitionersCertifications != null)
+            {
+                return Ok(practitionersCertifications);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("GetMembershipStatusOfTheUser")]
+        public async Task<ActionResult<Membership>> GetMembershipStatusOfTheUserAsync(string userId)
+        {
+            var membership = await _accountService.GetMembershipStatusAsync(userId);
+
+            return Ok(membership);
+        }
+
+        [HttpGet]
+        [Route("GetMembershipStatus")]
+        public async Task<ActionResult<Membership>> GetMembershipStatusAsync()
+        {
+            var membership = await _accountService.GetMembershipStatusAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return Ok(membership);
+        }
+
+        [HttpGet]
+        [Route("RenewMembership")]
+        public async Task<ActionResult> RenewMembershipAsync()
+        {
+            var operationSucceded = await _accountService.RenewMembershipAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (operationSucceded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+
     }
 }

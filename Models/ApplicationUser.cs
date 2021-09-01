@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KPProject.Models
 {
@@ -20,13 +17,13 @@ namespace KPProject.Models
         public string Website { get; set; }
         public string MyerBriggsCode { get; set; }
         public string ProfileImageName { get; set; }
-        public virtual List<ApplicationUserCertification> ApplicationUserCertifications { get; set; } = new List<ApplicationUserCertification>();
-        public List<ApplicationUserAssociatedCoupon> ApplicationUserAssociatedCoupons { get; set; }
+        public virtual List<ApplicationUserCertification> Certifications { get; set; } = new List<ApplicationUserCertification>();
+        public List<ApplicationUserAssociatedCoupon> AssociatedCoupons { get; set; }
         public List<ApplicationUserPosition> Positions { get; set; }
         public List<ApplicationUserEducation> Educations { get; set; }
         public List<ApplicationUserSectorOfActivity> SectorsOfActivities { get; set; }
         public int? AgeGroupModelId { get; set; }
-        public AgeGroupModel AgeGroupModel { get; set; }
+        public AgeGroup AgeGroup { get; set; }
 
     }
 }

@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
+import { OrderService } from '../../app-services/order-service';
 import { TransferCodesViewModel } from '../../view-models/transfer-codes-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
 
@@ -13,7 +14,7 @@ import { UserViewModel } from '../../view-models/user-view-model';
   selector: 'app-enter-code-page',
   templateUrl: './enter-code-page.component.html',
   styleUrls: ['./enter-code-page.component.css'],
-  providers: [DataService, AccountService]
+  providers: [DataService, AccountService, OrderService]
 })
 export class EnterCodePageComponent implements OnInit {
 
@@ -30,7 +31,7 @@ export class EnterCodePageComponent implements OnInit {
   public userIsAuthorized: boolean = false;
 
 
-  constructor(private _dataService: DataService, private _jwtHelper: JwtHelperService, private _router: Router, private _accountService: AccountService) { }
+  constructor(private _dataService: DataService, private _orderService: OrderService, private _jwtHelper: JwtHelperService, private _router: Router, private _accountService: AccountService) { }
 
   private AssureThatUserIsAuthorized() {
     let jwt = localStorage.getItem('jwt');
@@ -93,19 +94,19 @@ export class EnterCodePageComponent implements OnInit {
     document.getElementById('error-section').focus();
   }
 
-  public ProceedToTheNextStage(event: MouseEvent) {
+  public AssignCodeToTheUser(event: MouseEvent) {
     if (this.codeEntered == null || this.codeEntered == '') {
       this.DisplayErrorMessage('Please enter the code.');
       return;
     }
 
-    this._dataService.CheckIfCodeIsValid(this.codeEntered).pipe(switchMap((checkIfCodeIsValidResponse) => {
+    this._orderService.CheckIfCodeIsValid(this.codeEntered).pipe(switchMap((checkIfCodeIsValidResponse) => {
       if (checkIfCodeIsValidResponse.body == false) {
         return of('The entered code is not valid. Please try something else.');
       }
 
       this.errorMessage = null
-      return this._dataService.TransferTheCode(new TransferCodesViewModel(this.codeEntered, this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']));
+      return this._orderService.TransferTheCode(new TransferCodesViewModel(this.codeEntered, this._jwtHelper.decodeToken(localStorage.getItem('jwt'))['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']));
     })).subscribe((transferTheCodeResponse: any) => {
       if (typeof transferTheCodeResponse == 'string') {
         this.DisplayErrorMessage(transferTheCodeResponse);

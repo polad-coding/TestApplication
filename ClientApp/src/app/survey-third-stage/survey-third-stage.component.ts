@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../app-services/data-service';
 import { SurveyThirdStageSaveRequestModel } from '../../view-models/survey-third-stage-save-request-model';
@@ -7,12 +7,13 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { SurveyService } from '../../app-services/survey-service';
 
 @Component({
   selector: 'app-survey-third-stage',
   templateUrl: './survey-third-stage.component.html',
   styleUrls: ['./survey-third-stage.component.css'],
-  providers: [DataService]
+  providers: [DataService, SurveyService]
 })
 export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
@@ -43,10 +44,9 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
   public currentClickedValueCharacter: string;
 
+  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router, private _jwtHelper: JwtHelperService, private _surveyService: SurveyService) { }
 
-  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router, private _jwtHelper: JwtHelperService) { }
-
-  public GoToPreviousStep() {
+  public ReturnToSecondStage() {
     if (window.confirm("You are about to leave this 3rd step, if it has not been validated, your choices will not be saved.")) {
       this._router.navigate(['surveySecondStage'], { state: { startFromSelectionStage: true } });
     }
@@ -90,7 +90,7 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
   }
 
   public UploadSurveyResults() {
-    this._dataService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, this.surveyId)).subscribe(response => {
+    this._surveyService.SaveThirdStageResults(new SurveyThirdStageSaveRequestModel(this.selectedValues, this.surveyId)).subscribe(response => {
       localStorage.setItem('personalAccountTabName', 'my-account-section');
       this._router.navigate(['personalAccount']);
     });
@@ -225,14 +225,14 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
     this.AssureThatSurveyIdIsValid();
 
-    this._dataService.DecideToWhichStageToTransfer(this.surveyId).pipe(switchMap((decideToWhichStageToTransferResponse: any) => {
+    this._surveyService.DecideToWhichStageToTransfer(this.surveyId).pipe(switchMap((decideToWhichStageToTransferResponse: any) => {
       this.currentSurveyStage = decideToWhichStageToTransferResponse.body;
 
       if (this.currentSurveyStage == 'surveyFirstStage' || this.currentSurveyStage == 'surveySecondStage' || this.currentSurveyStage == 'wrap-up') {
         return of(this.currentSurveyStage);
       }
 
-      return this._dataService.GetTheCurrentStageValues(this.surveyId);
+      return this._surveyService.GetSecondStageValues(this.surveyId);
     })).subscribe((secondBlockResponse: any) => {
       //If we are not supposed to be at this stage, just redirect to the needed stage.
       if (typeof secondBlockResponse == 'string') {

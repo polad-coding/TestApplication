@@ -9,13 +9,14 @@ import { SurveyResultViewModel } from '../../view-models/survey-result-view-mode
 import { ReportHTMLContentViewModel } from '../../view-models/report-html-content-view-model';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
+import { SurveyService } from '../../app-services/survey-service';
 
 
 @Component({
   selector: 'app-personal-report',
   templateUrl: './personal-report.component.html',
   styleUrls: ['./personal-report.component.css'],
-  providers: [AccountService, DataService]
+  providers: [AccountService, DataService, SurveyService]
 })
 export class PersonalReportComponent implements OnInit, AfterViewInit {
 
@@ -37,7 +38,7 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
   public fileURL: string;
   public popUpWindow: Window;
 
-  constructor(private _as: AccountService, private _dataService: DataService, private router: Router, private _location: Location) {
+  constructor(private _as: AccountService, private _dataService: DataService, private router: Router, private _location: Location, private _surveyService: SurveyService) {
   }
 
   /**
@@ -219,15 +220,15 @@ export class PersonalReportComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     let surveyId = Number.parseInt(localStorage.getItem('surveyId'));
 
-    this._dataService.GetParticularSurveyResults(surveyId).pipe(switchMap((getParticularSurveyResultsResponse: any) => {
+    this._surveyService.GetParticularSurveyResults(surveyId).pipe(switchMap((getParticularSurveyResultsResponse: any) => {
       this.surveyResult = getParticularSurveyResultsResponse.body;
       this.user = this.surveyResult.surveyTakerUser;
 
-      return this._dataService.GetTheRelativeWeightOfThePerspectives(surveyId);
+      return this._surveyService.GetTheRelativeWeightOfThePerspectives(surveyId);
     })).pipe(switchMap((getTheRelativeWeightOfThePerspectivesResponse: any) => {
       this.relativeWeightOfThePerspectives = getTheRelativeWeightOfThePerspectivesResponse.body;
 
-      return this._dataService.GetSurveyThirdStageResults(surveyId);
+      return this._surveyService.GetSurveyThirdStageResults(surveyId);
     })).subscribe((getSurveyThirdStageResultsResponse: any) => {
       this.valuesFromThirdStage = getSurveyThirdStageResultsResponse.body;
 

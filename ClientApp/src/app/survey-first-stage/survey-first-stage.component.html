@@ -14,7 +14,7 @@
       <p>Choose up to 55 values out of 102</p>
     </div>
     <div class="step-validation-container">
-      <button id="procced-to-validation-step-button" [ngClass]="{'button-disabled':numberOfValuesQualified < 102, 'button-enabled':numberOfValuesQualified == 102}" (click)="ProceedToValidationStep($event)" *ngIf="!isStepDescriptionPage && !isValidationStage">Step validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
+      <button id="procced-to-validation-step-button" [ngClass]="{'button-disabled':numberOfValuesQualified < 102, 'button-enabled':numberOfValuesQualified == 102}" (click)="ProceedToValidationStage($event)" *ngIf="!isStepDescriptionPage && !isValidationStage">Step validation <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
       <button class="button-enabled to-selection-button" *ngIf="isStepDescriptionPage" (click)="ProccedToSelectionStage($event)">To selection<img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
       <button [ngClass]="{'button-enabled': importantValues.length <= 55 && importantValues.length >= 35,'button-disabled': importantValues.length > 55 || importantValues.length < 35, 'to-selection-button':true}" (click)="SaveFirstStageResults($event)" *ngIf="isValidationStage">Next step<img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.png" /> </button>
     </div>

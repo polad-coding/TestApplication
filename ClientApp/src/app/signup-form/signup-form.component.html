@@ -46,6 +46,6 @@
         the questions in the survey may refer to sensitive data.
       </label>
     </div>
-    <input [ngStyle]="{'pointer-events': agreeToTermsRadioChecked ? 'auto' : 'none'}" id="submit-button" type="submit" value="Register" />
+    <input [ngStyle]="{'pointer-events': userIsAgreedOnTheTerms ? 'auto' : 'none'}" id="submit-button" type="submit" value="Register" />
   </form>
 </div>

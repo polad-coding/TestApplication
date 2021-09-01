@@ -7,6 +7,5 @@ export class AppSettingsService {
   public static readonly CURRENT_DOMAIN = 'localhost:5001';
   //public static readonly CURRENT_DOMAIN = 'somefreedomain.ml'; 
 
-
   constructor() { }
 }

@@ -1,8 +1,5 @@
 ﻿using KPProject.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KPProject.ViewModels
 {
@@ -18,7 +15,7 @@ namespace KPProject.ViewModels
         public List<PositionModel> Positions { get; set; }
         public List<EducationModel> Educations { get; set; }
         public List<SectorOfActivityModel> SectorsOfActivities { get; set; }
-        public AgeGroupModel AgeGroup { get; set; }
+        public AgeGroup AgeGroup { get; set; }
         public string PhoneNumber { get; set; }
         public string ProfessionalEmail { get; set; }
         public string Bio { get; set; }

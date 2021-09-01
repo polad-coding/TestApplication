@@ -5,12 +5,12 @@
     </div>
     <form class="modal-form" #regionsForm="ngForm">
       <div *ngFor="let region of regions" class="checkbox-container">
-        <input type="checkbox" (click)="ToggleSelection($event)" name="region" ngModel value="{{region | json}}">
+        <input type="checkbox" (click)="ToggleModalOptionSelection($event)" name="region" ngModel value="{{region | json}}">
         <label class="is-not-selected" id="{{'region-with-id-' + region.id}}" for="region">{{region.regionName}}</label>
       </div>
     </form>
     <div class="modal-submit-button">
-      <button (click)="SubmitMultipleChoiceForm('region',regionsForm)">Confirm</button>
+      <button (click)="SubmitMultipleChoiceModalSelections('region',regionsForm)">Confirm</button>
     </div>
   </div>
 </div>
@@ -52,11 +52,11 @@
     </div>
     <form class="modal-form education-form" #educationForm="ngForm">
       <div *ngFor="let education of educations" class="checkbox-container education-checkbox-container">
-        <input type="checkbox" (click)="ToggleSelection($event)" name="education" ngModel value="{{education | json}}">
+        <input type="checkbox" (click)="ToggleModalOptionSelection($event)" name="education" ngModel value="{{education | json}}">
         <label class="is-not-selected" id="{{'education-with-id-' + education.id}}" for="education">{{education.educationName}}</label>
       </div>
     </form>
-    <div class="modal-submit-button" (click)="SubmitMultipleChoiceForm('education',educationForm)">
+    <div class="modal-submit-button" (click)="SubmitMultipleChoiceModalSelections('education',educationForm)">
       <button>Confirm</button>
     </div>
   </div>
@@ -69,11 +69,11 @@
     </div>
     <form class="modal-form" #positionForm="ngForm">
       <div *ngFor="let position of positions" class="checkbox-container">
-        <input type="checkbox" (click)="ToggleSelection($event)" name="position" ngModel value="{{position | json}}">
+        <input type="checkbox" (click)="ToggleModalOptionSelection($event)" name="position" ngModel value="{{position | json}}">
         <label class="is-not-selected" id="{{'position-with-id-' + position.id}}" for="position">{{position.positionName}}</label>
       </div>
     </form>
-    <div class="modal-submit-button" (click)="SubmitMultipleChoiceForm('position',positionForm)">
+    <div class="modal-submit-button" (click)="SubmitMultipleChoiceModalSelections('position',positionForm)">
       <button>Confirm</button>
     </div>
   </div>
@@ -86,11 +86,11 @@
     </div>
     <form class="modal-form" #sectorsOfActivitiesForm="ngForm">
       <div *ngFor="let sectorOfActivity of sectorsOfActivities" class="checkbox-container">
-        <input type="checkbox" (click)="ToggleSelection($event)" name="sectorOfActivity" ngModel value="{{sectorOfActivity | json}}">
+        <input type="checkbox" (click)="ToggleModalOptionSelection($event)" name="sectorOfActivity" ngModel value="{{sectorOfActivity | json}}">
         <label class="is-not-selected" id="{{'sector-of-activity-with-id-' + sectorOfActivity.id}}" for="sectorOfActivity">{{sectorOfActivity.sectorOfActivityName}}</label>
       </div>
     </form>
-    <div class="modal-submit-button" (click)="SubmitMultipleChoiceForm('sectorOfActivity',sectorsOfActivitiesForm)">
+    <div class="modal-submit-button" (click)="SubmitMultipleChoiceModalSelections('sectorOfActivity',sectorsOfActivitiesForm)">
       <button>Confirm</button>
     </div>
   </div>

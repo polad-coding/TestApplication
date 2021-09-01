@@ -1,28 +1,26 @@
 import { AfterViewInit, Component, HostListener, Input, OnInit } from '@angular/core';
-import { AccountService } from '../../app-services/account.service';
 import { DataService } from '../../app-services/data-service';
 import { ApplicationUserCertificationViewModel } from '../../view-models/application-user-certification-view-model';
 import { CertificationViewModel } from '../../view-models/certification-view-model';
 import { MembershipViewModel } from '../../view-models/membership-view-model';
 import { UserViewModel } from '../../view-models/user-view-model';
-import { render, paypal } from 'creditcardpayments/creditCardPayments';
-import { Router } from '@angular/router';
-import { EmailSenderService } from '../../app-services/email-sender-service';
+import { render } from 'creditcardpayments/creditCardPayments';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AccountService } from '../../app-services/account.service';
 
 @Component({
   selector: 'app-certification-and-membership',
   templateUrl: './certification-and-membership.component.html',
   styleUrls: ['./certification-and-membership.component.css'],
-  providers: [DataService, AccountService, EmailSenderService]
+  providers: [DataService, AccountService]
 })
 export class CertificationAndMembershipComponent implements OnInit, AfterViewInit {
 
   @Input()
   public user: UserViewModel;
 
-  public certifications: Array<CertificationViewModel>;
+  public allCertifications: Array<CertificationViewModel>;
   public practitionersCertifications: Array<ApplicationUserCertificationViewModel>;
   public membership: MembershipViewModel;
 
@@ -30,7 +28,7 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
 
   public paypalModalIsVisible: boolean = false;
 
-  constructor(private _dataService: DataService, private _accountService: AccountService, private _router: Router, private _emailSenderService: EmailSenderService) {
+  constructor(private _dataService: DataService, private _accountService: AccountService) {
     //Here we are loading script because for some reason DinkToPdf library that we are using to generate PDFs is conflicting with paypal script, and throws the error when we try to generate PDF.
     this.LoadScript();
   }
@@ -86,15 +84,15 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
 
     this.onResize(null);
 
-    this._dataService.GetAllCertifications().pipe(switchMap((getAllCertificationsResponse: any) => {
+    this._accountService.GetAllCertifications().pipe(switchMap((getAllCertificationsResponse: any) => {
       if (!getAllCertificationsResponse.ok) {
         return of(null);
       }
 
-      this.certifications = getAllCertificationsResponse.body;
-      this.certifications = this.certifications.reverse();
+      this.allCertifications = getAllCertificationsResponse.body;
+      this.allCertifications = this.allCertifications.reverse();
 
-      return this._dataService.GetPractitionersCertifications(null);
+      return this._accountService.GetPractitionersCertifications(this.user.id);
     })).pipe(switchMap((getPractitionersCertificationsResponse: any) => {
       if (getPractitionersCertificationsResponse == null) {
         return of(null);
@@ -103,7 +101,7 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
       this.practitionersCertifications = getPractitionersCertificationsResponse.body;
       this.practitionersCertifications = this.practitionersCertifications.reverse();
 
-      return this._dataService.GetMembershipStatus();
+      return this._accountService.GetMembershipStatus();
     })).subscribe((getMembershipStatusResponse: any) => {
       if (getMembershipStatusResponse == null) {
         return
@@ -126,7 +124,7 @@ export class CertificationAndMembershipComponent implements OnInit, AfterViewIni
       currency: "USD",
       value: "50",
       onApprove: (details) => {
-        this._dataService.RenewMembership().subscribe(response => {
+        this._accountService.RenewMembership().subscribe(response => {
           if (response.ok) {
             location.reload();
           }

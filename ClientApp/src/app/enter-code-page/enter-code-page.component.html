@@ -49,7 +49,7 @@
       Please enter it here:
     </p>
     <input [(ngModel)]="codeEntered" type="text" placeholder="Enter code" />
-    <button (click)="ProceedToTheNextStage($event)" [ngClass]="{'button-is-active': codeEntered != null && codeEntered != '', 'button-is-disabled':codeEntered == null || codeEntered == ''}">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
+    <button (click)="AssignCodeToTheUser($event)" [ngClass]="{'button-is-active': codeEntered != null && codeEntered != '', 'button-is-disabled':codeEntered == null || codeEntered == ''}">Next <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
   </div>
   <button (click)="RedirectToGetCodeTab()">Get a code <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
 </div>
