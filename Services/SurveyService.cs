@@ -315,13 +315,11 @@ namespace KPProject.Services
                 if (_applicationDbContext.SurveyFirstStages.FirstOrDefault(sfs => sfs.SurveyId == surveyId && sfs.ValueId == value.ValueId) != null)
                 {
                     value.SelectedAtFirstStage = true;
-                    continue;
                 }
 
                 if (_applicationDbContext.SurveySecondStages.FirstOrDefault(sss => sss.SurveyId == surveyId && sss.ValueId == value.ValueId) != null)
                 {
                     value.SelectedAtSecondStage = true;
-                    continue;
                 }
 
                 var thirdStageValuePriority = _applicationDbContext.SurveyThirdStages.FirstOrDefault(sts => sts.SurveyId == surveyId && sts.ValueId == value.ValueId);
