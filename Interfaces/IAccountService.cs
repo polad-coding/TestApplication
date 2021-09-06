@@ -31,6 +31,7 @@ namespace KPProject.Interfaces
         Task<List<RegionModel>> GetSelectedRegionsForCurrentUserAsync(string userId);
         Task<List<LanguageModel>> GetSelectedLanguagesForCurrentUserAsync(string userId);
         Task<List<SectorOfActivityModel>> GetSelectedSectorsOfActivityForCurrentUserAsync(string userId);
+        Task<bool> ResetPasswordAsync(ResetPasswordViewModel resetPasswordViewModel);
 
     }
 }

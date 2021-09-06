@@ -14,10 +14,12 @@ namespace KPProject.Controllers
     {
 
         private readonly IAccountService _accountService;
+        private readonly IEmailSender _emailSenderService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, IEmailSender emailSenderService)
         {
             _accountService = accountService;
+            _emailSenderService = emailSenderService;
         }
 
         [HttpGet("GetCurrentUser")]
@@ -288,6 +290,32 @@ namespace KPProject.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("EmailPasswordResetLink")]
+        public async Task<ActionResult> EmailPasswordResetLinkAsync([FromQuery]string email)
+        {
+            var emailIsSent = await _emailSenderService.EmailPasswordResetLinkAsync(email);
 
+            if (emailIsSent)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<ActionResult> ResetPasswordAsync([FromBody]ResetPasswordViewModel resetPasswordViewModel)
+        {
+            var operationSucceeded = await _accountService.ResetPasswordAsync(resetPasswordViewModel);
+
+            if (operationSucceeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

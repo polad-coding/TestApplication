@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -35,12 +35,12 @@ namespace KPProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseMySql(
-            //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(
+                    "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
 
-            var context = new CustomAssemblyLoadContext();
-            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
+            //var context = new CustomAssemblyLoadContext();
+            //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 

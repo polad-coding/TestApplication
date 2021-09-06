@@ -34,6 +34,10 @@ export class SigninFormComponent implements OnInit {
   ) {
   }
 
+  public RedirectToResetPasswordPage() {
+    this._router.navigate(['resetPassword']);
+  }
+
   ngOnInit() {
 
   }

@@ -4,6 +4,9 @@ using KPProject.Models;
 using KPProject.ViewModels;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -18,11 +21,13 @@ namespace KPProject.Services
         private readonly EmailConfiguration _emailConfig;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
-        public EmailSenderService(EmailConfiguration emailConfig, ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
+        private readonly IConfiguration _configuration;
+        public EmailSenderService(IConfiguration configuration, EmailConfiguration emailConfig, ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
         {
             _emailConfig = emailConfig;
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         public async Task<bool> SendReceiptsAsync(SendOrdersReceiptViewModel sendOrdersReceiptViewModel, string userId)
@@ -159,11 +164,42 @@ namespace KPProject.Services
             return message;
         }
 
+        private MessageViewModel GeneratePasswordResetMessage(string email, string messageContent)
+        {
+            var message = new MessageViewModel(new List<string> { email }, "Reset password", messageContent);
+
+            return message;
+        }
+
         public async Task<bool> SendMembershipRenewalReceipt(string userId)
         {
             var user = await _applicationDbContext.Users.FindAsync(userId);
             var message = this.GenerateMembershipRenewalMessage(user);
 
+            var emailToSend = this.CreateEmailMessage(message);
+
+            this.Send(emailToSend);
+
+            return true;
+        }
+
+        public async Task<bool> EmailPasswordResetLinkAsync(string email)
+        {
+            var user = await _applicationDbContext.Users.FirstAsync(u => u.Email == email || u.ProfessionalEmail == email);
+
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var queryParams = new Dictionary<string, string>()
+            {
+                {"token", resetToken },
+                {"email", email }
+            };
+
+            var url = QueryHelpers.AddQueryString("/resetPassword", queryParams);
+
+            var callback = $"https://{_configuration.GetSection("JwtIssuer").Value}{url}";
+
+            var message = this.GeneratePasswordResetMessage(email, callback);
             var emailToSend = this.CreateEmailMessage(message);
 
             this.Send(emailToSend);

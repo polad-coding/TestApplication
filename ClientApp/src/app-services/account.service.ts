@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ResetPasswordViewModel } from '../view-models/reset-password-view-model';
 import { UserViewModel } from '../view-models/user-view-model';
 import { AppSettingsService } from './app-settings.service';
 
@@ -104,5 +105,13 @@ export class AccountService {
 
   public GetSelectedSectorsOfActivityForCurrentUser() {
     return this.http.get(`https://${this.url}/Account/GetSelectedSectorsOfActivityForCurrentUser`, { observe: 'response' });
+  }
+
+  public EmailPasswordResetLink(email: string) {
+    return this.http.get(`https://${this.url}/Account/EmailPasswordResetLink?email=${email}`, { observe: 'response' });
+  }
+
+  public ResetPassword(resetPasswordViewModel: ResetPasswordViewModel) {
+    return this.http.post(`https://${this.url}/Account/ResetPassword`, resetPasswordViewModel, { observe: 'response' });
   }
 }

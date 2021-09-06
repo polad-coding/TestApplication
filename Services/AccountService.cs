@@ -369,5 +369,18 @@ namespace KPProject.Services
             return currentUserSelectedLanguages;
         }
 
+        public async Task<bool> ResetPasswordAsync(ResetPasswordViewModel resetPasswordViewModel)
+        {
+            var user = await _applicationDbContext.Users.FirstAsync(u => u.Email == resetPasswordViewModel.Email || u.ProfessionalEmail == resetPasswordViewModel.Email);
+
+            var resetPasswordOperationSucceeded = await _userManager.ResetPasswordAsync(user, resetPasswordViewModel.ResetToken, resetPasswordViewModel.Password);
+
+            if (resetPasswordOperationSucceeded.Succeeded)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

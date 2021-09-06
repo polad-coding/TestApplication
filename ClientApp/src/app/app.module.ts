@@ -40,6 +40,7 @@ import { PersonalReportComponent } from './personal-report/personal-report.compo
 import { PractitionerReportComponent } from './practitioner-report/practitioner-report.component';
 import { AuthorizationPageComponent } from './authorization-page/authorization-page.component';
 import { PersonalMyAccountSectionComponent } from './personal-my-account-section/personal-my-account-section.component';
+import { ResetPasswordPageComponent } from './reset-password-page/reset-password-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -74,7 +75,8 @@ export function tokenGetter() {
     PersonalReportComponent,
     PractitionerReportComponent,
     AuthorizationPageComponent,
-    PersonalMyAccountSectionComponent
+    PersonalMyAccountSectionComponent,
+    ResetPasswordPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -104,7 +106,9 @@ export function tokenGetter() {
       { path: 'practitionerReport', component: PractitionerReportComponent },
       { path: 'wrap-up', component: WrapUpComponent },
       { path: 'enterCode', component: EnterCodePageComponent },
-      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent }
+      { path: 'practitionersDirectory', component: PractitionersDirectoryComponent },
+      { path: 'resetPassword', component: ResetPasswordPageComponent },
+      { path: 'Account/ResetPassword', component: ResetPasswordPageComponent }
     ]),
     JwtModule.forRoot({
       config: {

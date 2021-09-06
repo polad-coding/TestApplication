@@ -106,6 +106,7 @@
     <None Remove="ClientApp\src\view-models\register-view-model.ts" />
     <None Remove="ClientApp\src\view-models\report-html-content-view-model.ts" />
     <None Remove="ClientApp\src\view-models\report-table-value-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\reset-password-view-model.ts" />
     <None Remove="ClientApp\src\view-models\sector-of-activity-view-model.ts" />
     <None Remove="ClientApp\src\view-models\send-orders-receipt-view-model.ts" />
     <None Remove="ClientApp\src\view-models\signin-view-model.ts" />
@@ -175,6 +176,7 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\region-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\report-html-content-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\report-table-value-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\reset-password-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\sector-of-activity-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\send-orders-receipt-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\signin-view-model.ts" />
