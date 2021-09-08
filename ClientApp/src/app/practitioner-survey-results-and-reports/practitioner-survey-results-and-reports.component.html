@@ -1,3 +1,29 @@
+<div id="code-transfer-modal-container" *ngIf="codeTransferModalIsVisible">
+  <div id="code-transfer-modal" (click)="StopEventPropagation($event)">
+    <div class="modal-row">
+      <span>From:</span>
+      <span>{{user.email}}</span>
+    </div>
+    <div class="modal-row">
+      <span>To*:</span>
+      <div class="modal-row-second-column">
+        <input type="text" [(ngModel)]="receiversEmail" (focusin)="RemoveErrorAppearence($event)" (focusout)="CheckIfReceiversEmailIsCorrect($event)" />
+        <span id="receivers-email-field-error-text">Empty</span>
+      </div>
+    </div>
+    <div class="modal-row">
+      <span>Object*:</span>
+      <input [(ngModel)]="messageSubject" disabled/>
+    </div>
+    <div class="modal-row">
+      <span>Message:</span>
+      <textarea [(ngModel)]="messageBody"  id="message-textarea"></textarea>
+    </div>
+    <div class="modal-row">
+      <button [ngClass]="{'button-is-active':!receiversEmailIsIncorrect,'button-is-disabled':receiversEmailIsIncorrect}" id="send-code-modal-button" (click)="EmailCodeTransferLink($event)">Send <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
+    </div>
+  </div>
+</div>
 <div id="survey-results-and-reports-table-container">
   <div id="survey-results-and-reports-titles">
     <div class="title">
@@ -24,8 +50,11 @@
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn != null && surveyResult.takenOn != ''">
         <p>{{surveyResult.takenOn | date:'yyyy MMM d'}}</p>
       </div>
-      <div class="survey-result-row-white-cell" *ngIf="surveyResult.takenOn == null || surveyResult.takenOn == ''">
+      <div class="survey-result-row-white-cell" *ngIf="surveyResult.firstStagePassed && !surveyResult.isCompleated">
         <p>Survey in progress</p>
+      </div>
+      <div class="survey-result-row-white-cell" *ngIf="!surveyResult.firstStagePassed && !surveyResult.isCompleated">
+        <p>...</p>
       </div>
       <div *ngIf="surveyResult.takersEmail != user.email" class="survey-result-row-white-cell">
         <p>{{surveyResult.takersEmail}}</p>
@@ -41,7 +70,10 @@
         <button class="survey-result-row-white-cell-disabled-button">IR</button>
         <button class="survey-result-row-white-cell-disabled-button">CR</button>
       </div>
-      <div *ngIf="surveyResult.isCompleated || surveyResult.takenOn != null" class="survey-result-row-blue-cell email-button">
+      <div *ngIf="!surveyResult.firstStagePassed && surveyResult.takersEmail == null" class="survey-result-row-blue-cell email-button">
+        <button (click)="DisplayCodeTransferModal($event, surveyResult)">@</button>
+      </div>
+      <div *ngIf="surveyResult.firstStagePassed || surveyResult.takersEmail != null" class="survey-result-row-white-cell email-button email-button-disabled">
         <button>@</button>
       </div>
       <div class="survey-result-empty-cell" *ngIf="!surveyResult.isCompleated && surveyResult.takenOn == null">

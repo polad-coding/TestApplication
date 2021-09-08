@@ -1,0 +1,1 @@
+{"version":3,"file":"email-message-to-practitioner-view-model.js","sourceRoot":"","sources":["email-message-to-practitioner-view-model.ts"],"names":[],"mappings":";;;AAAA;IAKE,6CAAY,cAAc,EAAE,cAAc,EAAE,cAAc;QACxD,IAAI,CAAC,cAAc,GAAG,cAAc,CAAC;QACrC,IAAI,CAAC,cAAc,GAAG,cAAc,CAAC;QACrC,IAAI,CAAC,cAAc,GAAG,cAAc,CAAC;IACvC,CAAC;IACH,0CAAC;AAAD,CAAC,AAVD,IAUC;AAVY,kFAAmC"}

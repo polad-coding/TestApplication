@@ -32,6 +32,6 @@ namespace KPProject.Interfaces
         Task<List<LanguageModel>> GetSelectedLanguagesForCurrentUserAsync(string userId);
         Task<List<SectorOfActivityModel>> GetSelectedSectorsOfActivityForCurrentUserAsync(string userId);
         Task<bool> ResetPasswordAsync(ResetPasswordViewModel resetPasswordViewModel);
-
+        Task<bool> CheckIfGivenPersonIsInUserRoleAsync(string email);
     }
 }

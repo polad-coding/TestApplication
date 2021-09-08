@@ -114,4 +114,8 @@ export class AccountService {
   public ResetPassword(resetPasswordViewModel: ResetPasswordViewModel) {
     return this.http.post(`https://${this.url}/Account/ResetPassword`, resetPasswordViewModel, { observe: 'response' });
   }
+
+  public CheckIfGivenPersonIsInUserRole(email: string) {
+    return this.http.get(`https://${this.url}/Account/CheckIfGivenPersonIsInUserRole?email=${email}`, { observe: 'response' });
+  }
 }

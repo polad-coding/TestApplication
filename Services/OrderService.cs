@@ -99,5 +99,29 @@ namespace KPProject.Services
 
             return false;
         }
+
+        public async Task<bool> TransferTheCodeAsync(string code, string email)
+        {
+            var order = await _applicationDbContext.Surveys.FirstOrDefaultAsync(s => s.Code == code && s.PractitionerUserId != null && s.SurveyTakerUserId == null);
+            var user = await _applicationDbContext.Users.FirstAsync(u => u.Email == email);
+
+            if (order == null)
+            {
+                return false;
+            }
+
+            order.SurveyTakerUserId = user.Id;
+
+            _applicationDbContext.Update(order);
+
+            var numberOfRowsAffected = await _applicationDbContext.SaveChangesAsync();
+
+            if (numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

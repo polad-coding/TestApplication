@@ -48,6 +48,20 @@ namespace KPProject.Controllers
         }
 
         [HttpGet]
+        [Route("TransferTheCode")]
+        public async Task<ActionResult> TransferTheCodeAsync([FromQuery] string code, [FromQuery] string email)
+        {
+            var isOperationSuccessful = await _orderService.TransferTheCodeAsync(code, email);
+
+            if (isOperationSuccessful)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
         [Route("CheckIfCodeIsValid")]
         public async Task<ActionResult<bool>> CheckIfCodeIsValidAsync(string code)
         {

@@ -1,3 +1,26 @@
+<div id="send-email-modal-container" *ngIf="sendEmailModalIsVisible">
+  <div id="send-email-modal" (click)="StopEventPropagation($event)">
+    <div class="modal-row">
+      <span>From:</span>
+      <span>{{user.email}}</span>
+    </div>
+    <div class="modal-row">
+      <span>To:</span>
+      <input type="text" [(ngModel)]="currentPractitionerFullName" disabled />
+    </div>
+    <div class="modal-row">
+      <span>Object*:</span>
+      <input [(ngModel)]="messageSubject" (keyup)="CheckIfSendEmailModalFieldsAreCorrect()" />
+    </div>
+    <div class="modal-row">
+      <span>Message*:</span>
+      <textarea [(ngModel)]="messageBody" id="message-textarea" (keyup)="CheckIfSendEmailModalFieldsAreCorrect()" ></textarea>
+    </div>
+    <div class="modal-row">
+      <button [ngClass]="{'button-is-active':sendEmailModalFieldsAreCorrect,'button-is-disabled':!sendEmailModalFieldsAreCorrect}" id="send-message-modal-button" (click)="EmailMessageToPractitioner($event)">Send <img src="../../assets/KP-logo-accessories--png/00-0-Drop-090.svg" /></button>
+    </div>
+  </div>
+</div>
 <div id="survey-results-and-reports-table-container">
   <div id="survey-results-and-reports-titles">
     <div class="title">
@@ -32,7 +55,7 @@
       </div>
       <div class="survey-result-row-white-cell practitioner-name-email-cell" [attr.data-practitionerId]="surveyResult.practitionerId" *ngIf="surveyResult.practitionerFullName != null && surveyResult.practitionerFullName != ''">
         <span>{{surveyResult.practitionerFullName}}</span>
-        <span class="send-email-container" (click)="SendEmail(surveyResult.practitionerId)">@</span>
+        <span class="send-email-container" (click)="OpenSendEmailModal($event, surveyResult)">@</span>
       </div>
       <div class="survey-result-row-white-cell" *ngIf="surveyResult.practitionerFullName == null || surveyResult.practitionerFullName == ''">
         <p>Choose a practitioner</p>

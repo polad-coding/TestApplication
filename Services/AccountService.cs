@@ -382,5 +382,15 @@ namespace KPProject.Services
 
             return false;
         }
+
+        public async Task<bool> CheckIfGivenPersonIsInUserRoleAsync(string email)
+        {
+            var user = await _applicationDbContext.Users.FirstAsync(u => u.Email == email || u.ProfessionalEmail == email);
+
+            var isInRoleUser = await _userManager.IsInRoleAsync(user, "User");
+
+            return isInRoleUser;
+        }
+
     }
 }

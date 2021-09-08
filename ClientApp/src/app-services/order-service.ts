@@ -23,6 +23,10 @@ export class OrderService {
     return this.http.post(`https://${this.url}/Order/TransferTheCode`, transferCodesViewModel, { observe: 'response' });
   }
 
+  public TransferTheCodeUsingEmailString(email: string, code: string) {
+    return this.http.get(`https://${this.url}/Order/TransferTheCode?email=${email}&&code=${code}`, { observe: 'response' });
+  }
+
   public DeleteAllOrdersOfTheCurrentUser() {
     return this.http.post(`https://${this.url}/Order/DeleteAllOrdersOfTheCurrentUser`, { observe: 'response' });
   }

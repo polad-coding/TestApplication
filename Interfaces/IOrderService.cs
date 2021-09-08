@@ -11,6 +11,6 @@ namespace KPProject.Interfaces
         Task<bool> CheckIfCodeIsValidAsync(string code, string userId);
         Task<bool> TransferTheCodeAsync(TransferCodesViewModel transferCodesViewModel);
         Task<bool> DeleteAllOrdersOfTheCurrentUserAsync(string userId);
-
+        Task<bool> TransferTheCodeAsync(string code, string email);
     }
 }

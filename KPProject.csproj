@@ -92,7 +92,9 @@
     <None Remove="ClientApp\src\view-models\application-user-certification-view-model.ts" />
     <None Remove="ClientApp\src\view-models\associated-coupon-view-model.ts" />
     <None Remove="ClientApp\src\view-models\certification-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\code-transfer-email-view-model.ts" />
     <None Remove="ClientApp\src\view-models\education-view-model.ts" />
+    <None Remove="ClientApp\src\view-models\email-message-to-practitioner-view-model.ts" />
     <None Remove="ClientApp\src\view-models\gender-view-model.ts" />
     <None Remove="ClientApp\src\view-models\general-coupon-view-model.ts" />
     <None Remove="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />
@@ -164,6 +166,8 @@
     <TypeScriptCompile Include="ClientApp\src\view-models\associated-coupon-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\certification-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\education-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\code-transfer-email-view-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\view-models\email-message-to-practitioner-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\general-coupon-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\gender-view-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\view-models\get-coupon-request-response-view-model.ts" />

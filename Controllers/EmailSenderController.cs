@@ -1,8 +1,6 @@
 ﻿using KPProject.Interfaces;
 using KPProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KPProject.Controllers
@@ -18,13 +16,56 @@ namespace KPProject.Controllers
             _emailSenderService = emailSender;
         }
 
-        [HttpGet]
-        [Route("SendMembershipRenewalReceipt")]
-        public async Task<ActionResult> SendMembershipRenewalReceipt()
-        {
-            var receiptIsSent = await _emailSenderService.SendMembershipRenewalReceipt(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //These methods support was suspended
+        //[HttpGet]
+        //[Route("SendMembershipRenewalReceipt")]
+        //public async Task<ActionResult> SendMembershipRenewalReceipt()
+        //{
+        //    var receiptIsSent = await _emailSenderService.SendMembershipRenewalReceipt(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (receiptIsSent)
+        //    if (receiptIsSent)
+        //    {
+        //        return Ok();
+        //    }
+
+        //    return StatusCode(500);
+        //}
+
+        //[HttpPost]
+        //[Route("SendReciept")]
+        //public ActionResult SendReciept(List<MessageViewModel> messages)
+        //{
+        //    var operationSuccessful = _emailSenderService.SendReciept(messages);
+
+        //    if (operationSuccessful)
+        //    {
+        //        return Ok();
+        //    }
+
+        //    return StatusCode(500);
+        //}
+
+        //[HttpPost]
+        //[Route("SendReceipts")]
+        //public async Task<ActionResult> SendReceiptsAsync(SendOrdersReceiptViewModel sendOrdersReceiptViewModel)
+        //{
+        //    var requestSucceded = await _emailSenderService.SendReceiptsAsync(sendOrdersReceiptViewModel, User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        //    if (requestSucceded)
+        //    {
+        //        return Ok();
+        //    }
+
+        //    return StatusCode(500);
+        //}
+
+        [HttpPost]
+        [Route("SendMessageToPractitioner")]
+        public async Task<ActionResult> SendMessageToPractitionerAsync(EmailMessageToPractitionerViewModel emailMessageToPractitioner)
+        {
+            var operationSucceded = await _emailSenderService.SendMessageToPractitionerAsync(emailMessageToPractitioner);
+
+            if (operationSucceded)
             {
                 return Ok();
             }
@@ -33,26 +74,12 @@ namespace KPProject.Controllers
         }
 
         [HttpPost]
-        [Route("SendReciept")]
-        public ActionResult SendReciept(List<MessageViewModel> messages)
+        [Route("EmailUserAboutNewCodeTransfered")]
+        public ActionResult EmailUserAboutNewCodeTransfered([FromBody] CodeTransferEmailViewModel emailCodeLinkViewModel)
         {
-            var operationSuccessful = _emailSenderService.SendReciept(messages);
+            var operationSucceded = _emailSenderService.EmailUserAboutNewCodeTransfered(emailCodeLinkViewModel);
 
-            if (operationSuccessful)
-            {
-                return Ok();
-            }
-
-            return StatusCode(500);
-        }
-
-        [HttpPost]
-        [Route("SendReceipts")]
-        public async Task<ActionResult> SendReceiptsAsync(SendOrdersReceiptViewModel sendOrdersReceiptViewModel)
-        {
-            var requestSucceded = await _emailSenderService.SendReceiptsAsync(sendOrdersReceiptViewModel, User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            if (requestSucceded)
+            if (operationSucceded)
             {
                 return Ok();
             }

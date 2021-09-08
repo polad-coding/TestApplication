@@ -317,5 +317,16 @@ namespace KPProject.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("CheckIfGivenPersonIsInUserRole")]
+        public async Task<ActionResult<bool>> CheckIfGivenPersonIsInUserRoleAsync([FromQuery]string email)
+        {
+            var operationResult = await _accountService.CheckIfGivenPersonIsInUserRoleAsync(email);
+
+            return Ok(operationResult);
+        }
+
+
     }
 }
