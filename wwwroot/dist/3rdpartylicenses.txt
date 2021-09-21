@@ -421,6 +421,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 ng2-charts
 ISC
 
+ngx-device-detector
+MIT
+
 punycode
 MIT
 Copyright Mathias Bynens <https://mathiasbynens.be/>

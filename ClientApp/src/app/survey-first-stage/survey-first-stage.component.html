@@ -104,25 +104,29 @@
     </div>
     <div id="less-important-values-container">
       <p class="title">Less important</p>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollUp($event,lessImportantValuesList)" class="arrow-up" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
       <div class="values-list" cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="lessImportantValues" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':true}">
         <ul>
           <li *ngFor="let value of lessImportantValues;" (click)="DisplayValueModal($event, value,'value-is-not-important')" cdkDrag>
             <span class="value-is-not-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>
-            <span >{{'Values.' + values[value.nativeElement.dataset.id].character + '.Title' | translate}}</span>
+            <span>{{'Values.' + values[value.nativeElement.dataset.id].character + '.Title' | translate}}</span>
           </li>
         </ul>
       </div>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollDown($event,lessImportantValuesList)" class="arrow-down" src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
     </div>
     <div id="important-values-container">
       <p class="title">Important</p>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollUp($event,importantValuesList)" class="arrow-up" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
       <div class="values-list" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValues" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)" [ngClass]="{'validation-container-list-mode':true}">
         <ul>
           <li *ngFor="let value of importantValues" (click)="DisplayValueModal($event, value, 'value-is-important')" cdkDrag>
             <span class="value-is-important">{{values[value.nativeElement.dataset.id].character | translate}}</span>
-            <span >{{'Values.' + values[value.nativeElement.dataset.id].character + '.Title' | translate}}</span>
+            <span>{{'Values.' + values[value.nativeElement.dataset.id].character + '.Title' | translate}}</span>
           </li>
         </ul>
       </div>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollDown($event,importantValuesList)" class="arrow-down" src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
     </div>
     <div id="value-modal" *ngIf="valueModalIsVisible">
       <div id="value-modal-ideogram-section">

@@ -53,24 +53,30 @@
   </div>
   <div id="values-container">
     <div id="unselected-values" cdkScrollable>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollUp($event,lessImportantValuesList)" class="arrow-up" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
       <div id="unselected-values-container" #unselectedValuesContainer cdkDropList #lessImportantValuesList="cdkDropList" [cdkDropListData]="valuesGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[importantValuesList]" (cdkDropListDropped)="Drop($event)">
         <div cdkDrag [ngClass]="{'value-ideogram-container-list-mode':true}" *ngFor="let value of currentValuesGroup" (click)="DisplayValueModal($event, value)">
           <span>{{value.character}}</span>
           <span>{{'Values.' + value.character + '.Title' | translate}}</span>
         </div>
       </div>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollDown($event,lessImportantValuesList)" class="arrow-down" src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
     </div>
     <div id="empty-space">
 
     </div>
-    <div id="selected-values" cdkScrollable>
-      <p>Selected Values</p>
-      <div id="selected-values-container" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValuesGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
-        <div cdkDrag [ngClass]="{'value-ideogram-container-list-mode':true}" *ngFor="let value of currentImportantValuesGroup" (click)="DisplayValueModal($event, value)">
-          <span [ngClass]="{'value-is-important':true}">{{value.character}}</span>
-          <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+    <div id="selected-values-section">
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollUp($event,importantValuesList)" class="arrow-down" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+      <div id="selected-values" cdkScrollable>
+        <p>Selected Values</p>
+        <div id="selected-values-container" cdkDropList #importantValuesList="cdkDropList" [cdkDropListData]="importantValuesGroupedByPerspectives.get(currentGroupId)" [cdkDropListConnectedTo]="[lessImportantValuesList]" (cdkDropListDropped)="Drop($event)">
+          <div cdkDrag [ngClass]="{'value-ideogram-container-list-mode':true}" *ngFor="let value of currentImportantValuesGroup" (click)="DisplayValueModal($event, value)">
+            <span [ngClass]="{'value-is-important':true}">{{value.character}}</span>
+            <span>{{'Values.' + value.character + '.Title' | translate}}</span>
+          </div>
         </div>
       </div>
+      <img *ngIf="currentDeviceIsIOS" (click)="ScrollDown($event,importantValuesList)" class="arrow-up" src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
     </div>
     <div id="value-modal" *ngIf="valueModalIsVisible">
       <div id="value-modal-ideogram-section">

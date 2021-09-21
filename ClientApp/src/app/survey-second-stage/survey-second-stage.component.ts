@@ -1,7 +1,8 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AppSettingsService } from '../../app-services/app-settings.service';
@@ -14,7 +15,7 @@ import { ValueViewModel } from '../../view-models/value-view-model';
   selector: 'app-survey-second-stage',
   templateUrl: './survey-second-stage.component.html',
   styleUrls: ['./survey-second-stage.component.css'],
-  providers: [DataService, SurveyService]
+  providers: [DataService, SurveyService, DeviceDetectorService]
 })
 export class SurveySecondStageComponent implements OnInit {
 
@@ -59,7 +60,17 @@ export class SurveySecondStageComponent implements OnInit {
 
   private currentSurveyStage: string = '';
 
-  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _jwtHelper: JwtHelperService, private _router: Router, private _surveyService: SurveyService) {
+  public currentDeviceIsIOS: boolean = false;
+
+  constructor(
+    private _dataService: DataService,
+    private _renderer2: Renderer2,
+    private _jwtHelper: JwtHelperService,
+    private _router: Router,
+    private _surveyService: SurveyService,
+    private _deviceDetectorService: DeviceDetectorService
+  )
+  {
     let ne = _router.getCurrentNavigation().extras.state;
 
     if (ne != undefined && ne.startFromSelectionStage == true) {
@@ -77,23 +88,21 @@ export class SurveySecondStageComponent implements OnInit {
     })
   }
 
-  //TODO - we will decide if we need it then or not.
+  public ScrollDown(event, container: CdkDropList) {
+    container.element.nativeElement.scrollTo({
+      top: container.element.nativeElement.scrollTop + 100,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
 
-  //public ScrollUpInUnselectedValuesContainer(event) {
-  //  event.target.nextSibling.scrollBy({ top: -70, behavior: 'smooth' });
-  //}
-
-  //public ScrollDownInUnselectedValuesContainer(event) {
-  //  event.target.previousSibling.scrollBy({ top: 70, behavior: 'smooth' });
-  //}
-
-  //public ScrollUpInSelectedValuesContainer(event) {
-  //  event.target.nextSibling.scrollBy({ top: -50, behavior: 'smooth' });
-  //}
-
-  //public ScrollDownInSelectedValuesContainer(event) {
-  //  event.target.previousSibling.scrollBy({ top: 50, behavior: 'smooth' });
-  //}
+  public ScrollUp(event, container: CdkDropList) {
+    container.element.nativeElement.scrollTo({
+      top: container.element.nativeElement.scrollTop - 100,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
 
   private CalculateCurrentGroupId() {
     this.valuesGroupedByPerspectives.forEach((vl, key) => {
@@ -133,6 +142,8 @@ export class SurveySecondStageComponent implements OnInit {
 
   ngOnInit() {
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    this.currentDeviceIsIOS = this._deviceDetectorService.os === 'iOS' || this._deviceDetectorService.browser === 'Safari'; 
 
     this.AssureUserIsAuthorized();
 

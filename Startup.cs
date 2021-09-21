@@ -101,8 +101,8 @@ namespace KPProject
             services.AddScoped<IEmailSender, EmailSenderService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICouponService, CouponService>();
-            var emailConfig = Configuration
-                .Get<EmailConfiguration>();
+
+            var emailConfig = Configuration.Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
 
             // In production, the Angular files will be served from this directory
@@ -137,6 +137,7 @@ namespace KPProject
             //app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
@@ -145,7 +146,6 @@ namespace KPProject
             app.UseRouting();
 
             app.UseCors("EnableCORS");
-
 
             app.UseAuthentication();
 

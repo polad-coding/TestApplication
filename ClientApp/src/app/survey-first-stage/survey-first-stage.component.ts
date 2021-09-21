@@ -1,19 +1,20 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { DataService } from '../../app-services/data-service';
 import { ValueViewModel } from '../../view-models/value-view-model';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SurveyService } from '../../app-services/survey-service';
 import { SurveyFirstStageSaveRequestModel } from '../../view-models/survey-first-stage-save-request-model';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { switchMap } from 'rxjs/operators';
 import { iif, of } from 'rxjs';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-survey-first-stage',
   templateUrl: './survey-first-stage.component.html',
   styleUrls: ['./survey-first-stage.component.css'],
-  providers: [DataService, SurveyService]
+  providers: [DataService, SurveyService, DeviceDetectorService]
 })
 export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   //List of all values
@@ -59,7 +60,16 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
   //Specifies at which stage of the survey we currently must be.
   private currentSurveyStage: string;
 
-  constructor(private _dataService: DataService, private _surveyService: SurveyService, private _jwtHelper: JwtHelperService, private _renderer2: Renderer2, private _router: Router) {
+  public currentDeviceIsIOS: boolean = false;
+
+  constructor(
+    private _dataService: DataService,
+    private _surveyService: SurveyService,
+    private _jwtHelper: JwtHelperService,
+    private _renderer2: Renderer2,
+    private _router: Router,
+    private _deviceDetectorService: DeviceDetectorService
+  ) {
   }
 
   public ProceedToPersonalSpace() {
@@ -327,6 +337,22 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public ScrollDown(event, container: CdkDropList) {
+    container.element.nativeElement.scrollTo({
+      top: container.element.nativeElement.scrollTop + 100,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  public ScrollUp(event, container: CdkDropList) {
+    container.element.nativeElement.scrollTo({
+      top: container.element.nativeElement.scrollTop - 100,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
   /**
    *Decides at which stage of the survey we must be not, if its third stage or wrap up, redirect to these pages.
    *If its the second stage populates the value list and redirects directly to the validation stage of first survey stage.
@@ -334,6 +360,8 @@ export class SurveyFirstStageComponent implements OnInit, AfterViewInit {
    * */
   ngOnInit() {
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    this.currentDeviceIsIOS = this._deviceDetectorService.os === 'iOS' || this._deviceDetectorService.browser === 'Safari'; 
 
     this.onResize(null);
 

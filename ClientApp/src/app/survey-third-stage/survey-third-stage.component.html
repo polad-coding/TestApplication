@@ -68,12 +68,14 @@
     <img id="close-modal-icon" (click)="CloseModal($event)" src="../../assets/Images/close.svg" />
   </div>
   <div id="body-section-values-from-previous-step-container">
-    <div cdkDropList [cdkDropListData]="values" (cdkDropListDropped)="drop($event)" id="important-values-box">
+    <img *ngIf="currentDeviceIsIOS" (click)="ScrollUp($event,importantValuesList)" class="arrow-up" src="../../assets/KP-logo-accessories--png/0-00-Arrow-left.png" />
+    <div cdkDropList #importantValuesList [cdkDropListData]="values" (cdkDropListDropped)="drop($event)" id="important-values-box">
       <div cdkDrag class="important-value" *ngFor="let value of values;index as i" (click)="DisplayValueModal($event, value)">
         <span>{{value.character}}</span>
         <span>{{'Values.' + value.character + '.Title' | translate}}</span>
       </div>
     </div>
+    <img *ngIf="currentDeviceIsIOS" (click)="ScrollDown($event,importantValuesList)" class="arrow-down" src="../../assets/KP-logo-accessories--png/0-00-Arrow-right.png" />
   </div>
   <div id="table-section">
     <div class="priorities-container">

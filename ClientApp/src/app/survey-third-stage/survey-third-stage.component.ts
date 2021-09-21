@@ -3,17 +3,18 @@ import { Router } from '@angular/router';
 import { DataService } from '../../app-services/data-service';
 import { SurveyThirdStageSaveRequestModel } from '../../view-models/survey-third-stage-save-request-model';
 import { ValueViewModel } from '../../view-models/value-view-model';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SurveyService } from '../../app-services/survey-service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-survey-third-stage',
   templateUrl: './survey-third-stage.component.html',
   styleUrls: ['./survey-third-stage.component.css'],
-  providers: [DataService, SurveyService]
+  providers: [DataService, SurveyService, DeviceDetectorService]
 })
 export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
@@ -44,7 +45,16 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
   public currentClickedValueCharacter: string;
 
-  constructor(private _dataService: DataService, private _renderer2: Renderer2, private _router: Router, private _jwtHelper: JwtHelperService, private _surveyService: SurveyService) { }
+  public currentDeviceIsIOS: boolean = false;
+
+  constructor(
+    private _dataService: DataService,
+    private _renderer2: Renderer2,
+    private _router: Router,
+    private _jwtHelper: JwtHelperService,
+    private _surveyService: SurveyService,
+    private _deviceDetectorService: DeviceDetectorService
+  ) { }
 
   public ReturnToSecondStage() {
     if (window.confirm("You are about to leave this 3rd step, if it has not been validated, your choices will not be saved.")) {
@@ -64,16 +74,6 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
       randomIndex = Math.floor(Math.random() * valuesLength);
     }
   }
-
-  //TODO - to delete later.
-  //public ScrollDownInUnselectedValuesContainer(event) {
-  //  event.target.previousSibling.scrollBy({ top: 70, behavior: 'smooth' });
-
-  //}
-
-  //public ScrollUpInUnselectedValuesContainer(event) {
-  //  event.target.nextSibling.scrollBy({ top: -70, behavior: 'smooth' });
-  //}
 
   public DisplayValueModal(event: any, value: ValueViewModel) {
     if (!this.valueModalIsVisible) {
@@ -201,6 +201,22 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
     this.selectedValues.push(new ValueViewModel((<any>this.ninethRowArray[0]).id, (<any>this.ninethRowArray[0]).character, 0, 0, null, 9));
   }
 
+  public ScrollDown(event, container: any) {
+    container.scrollTo({
+      top: container.scrollTop + 100,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  public ScrollUp(event, container: any) {
+    container.scrollTo({
+      top: container.scrollTop - 100,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
   ngAfterViewInit(): void {
 
   }
@@ -220,6 +236,8 @@ export class SurveyThirdStageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.surveyId = Number.parseInt(localStorage.getItem('surveyId'));
+
+    this.currentDeviceIsIOS = this._deviceDetectorService.os === 'iOS' || this._deviceDetectorService.browser === 'Safari'; 
 
     this.AssureThatUserIsAuthorized();
 
