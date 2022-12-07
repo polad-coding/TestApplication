@@ -29,31 +29,31 @@
           <h3 style="font-family:barlowSemiCondensed;font-size:30px;">Perspectives</h3>
           <p style="margin-bottom:-1px;">{{'Survey.WrapUp.PerspectivesWheelSectionTexts.CorePerspective' | translate}}</p>
           <span id="primary-perspective-span">
-            <img *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-            <img *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-            <img *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-            <img *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-            <img *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-            <img *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+            <img *ngIf="corePerspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="corePerspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="corePerspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="corePerspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="corePerspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="corePerspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
             {{'Perspectives.' + corePerspectiveId + '.Title'| translate}}
           </span>
           <p style="margin-bottom:-1px;">{{'Survey.WrapUp.PerspectivesWheelSectionTexts.SecondPerspective' | translate}}</p>
           <span id="secondary-perspective-span">
-            <img *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-            <img *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-            <img *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-            <img *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-            <img *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-            <img *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+            <img *ngIf="secondaryPerspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="secondaryPerspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="secondaryPerspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="secondaryPerspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="secondaryPerspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="secondaryPerspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
             {{'Perspectives.' + secondaryPerspectiveId + '.Title'| translate}}
           </span><br /> <br />
           <div style="display:-webkit-box;" *ngFor="let rwop of relativeWeightOfThePerspectives.reverse(); let i = index;">
-            <img *ngIf="i == 0" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="i == 1" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="i == 2" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="i == 3" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="i == 4" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="i == 5" style="height:50px;width:50px;" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="i == 0" style="height:50px;width:50px;" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="i == 1" style="height:50px;width:50px;" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="i == 2" style="height:50px;width:50px;" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="i == 3" style="height:50px;width:50px;" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="i == 4" style="height:50px;width:50px;" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="i == 5" style="height:50px;width:50px;" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
             <div style="">
               <span>{{'Perspectives.' + listOfPerspectivesIds[i] + '.Title' | translate}}  </span>
               <span>{{rwop | number: '1.0-2'}}%</span>
@@ -67,12 +67,12 @@
               <div style="display:-webkit-box; margin-bottom:10px;">
                 <span>{{i + 1}}</span>
                 <div>
-                  <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-                  <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-                  <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-                  <img *ngIf="value.perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-                  <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-                  <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+                  <img *ngIf="value.perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+                  <img *ngIf="value.perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                  <img *ngIf="value.perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+                  <img *ngIf="value.perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+                  <img *ngIf="value.perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                  <img *ngIf="value.perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
                 </div>
                 <span>{{'Values.' + value.character + '.Title' | translate}}</span>
               </div>
@@ -143,7 +143,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-red.png" />
       <div class="reminder-title-text">
         <p>Grounding,</p>
         <p>as your Core Perspective</p>
@@ -166,7 +166,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-orange.png" />
       <div class="reminder-title-text">
         <p>Family,</p>
         <p>as your Core Perspective</p>
@@ -189,7 +189,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
       <div class="reminder-title-text">
         <p>Management,</p>
         <p>as your Core Perspective</p>
@@ -212,7 +212,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-green.png" />
       <div class="reminder-title-text">
         <p>Relational,</p>
         <p>as your Core Perspective</p>
@@ -235,7 +235,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-blue.png" />
       <div class="reminder-title-text">
         <p>Systems,</p>
         <p>as your Core Perspective</p>
@@ -258,7 +258,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-violet.png" />
       <div class="reminder-title-text">
         <p>Expansion,</p>
         <p>as your Core Perspective</p>
@@ -282,7 +282,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-red.png" />
       <div class="reminder-title-text">
         <p>Grounding,</p>
         <p>as your Second Perspective</p>
@@ -301,7 +301,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-orange.png" />
       <div class="reminder-title-text">
         <p>Family,</p>
         <p>as your Second Perspective</p>
@@ -320,7 +320,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
       <div class="reminder-title-text">
         <p>Management,</p>
         <p>as your Second Perspective</p>
@@ -339,7 +339,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-green.png" />
       <div class="reminder-title-text">
         <p>Relational,</p>
         <p>as your Second Perspective</p>
@@ -358,7 +358,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-blue.png" />
       <div class="reminder-title-text">
         <p>Systems,</p>
         <p>as your Second Perspective</p>
@@ -377,7 +377,7 @@
       </div>
     </div>
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-violet.png" />
       <div class="reminder-title-text">
         <p>Expansion,</p>
         <p>as your Second Perspective</p>

@@ -58,22 +58,22 @@
         <div style="width:33%;"></div>
         <div style="display:-webkit-box; width:33%;">
           <div>
-            <img *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-            <img *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-            <img *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-            <img *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-            <img *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-            <img *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+            <img *ngIf="corePerspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="corePerspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="corePerspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="corePerspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="corePerspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="corePerspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
           </div>
           <div style="line-height:50px;"><span style="font-family:barlowSemiCondensed;"> {{'Perspectives.' + corePerspectiveId + '.Title' | translate}}   </span> </div>
           <div style="line-height:50px;"><span style="margin-left:10px;">and</span></div>
           <div style="padding-top:-50px;">
-            <img *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-            <img *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-            <img *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-            <img *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-            <img *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-            <img *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+            <img *ngIf="secondaryPerspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+            <img *ngIf="secondaryPerspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+            <img *ngIf="secondaryPerspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+            <img *ngIf="secondaryPerspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+            <img *ngIf="secondaryPerspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+            <img *ngIf="secondaryPerspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
           </div>
           <div style="line-height:50px;"><span style="font-family: barlowSemiCondensed; "> {{'Perspectives.' + secondaryPerspectiveId + '.Title' | translate}}</span></div>
         </div>
@@ -92,12 +92,12 @@
               <div style="display:-webkit-box; margin-bottom:10px;">
                 <span style="font-size:2rem;">{{i + 1}}</span>
                 <div>
-                  <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-                  <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-                  <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-                  <img *ngIf="value.perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-                  <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-                  <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+                  <img *ngIf="value.perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+                  <img *ngIf="value.perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                  <img *ngIf="value.perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+                  <img *ngIf="value.perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+                  <img *ngIf="value.perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                  <img *ngIf="value.perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
                 </div>
                 <span style="font-size:2rem; font-family:barlowSemiCondensedLight;">{{'Values.' + value.character + '.Title' | translate}}</span>
               </div>
@@ -121,7 +121,7 @@
       to best live your life in a way that honors the values that are most important to you.
     </p>
     <div style="text-align:center;">
-      <img style="height:750px;width:750px" src="http://somefreedomain.ml/assets/Downut/KP-Downut-GB-HumanEnergy.svg" />
+      <img style="height:750px;width:750px" src="{{baseUrl}}/assets/Downut/KP-Downut-GB-HumanEnergy.svg" />
     </div>
     <div class="perspectives-table">
       <div class="perspectives-table-titles" style="display:-webkit-box;">
@@ -232,24 +232,24 @@
       <p style="font-size:2rem;">Core perspective:</p>
       <div style="display:-webkit-box; text-align:center; margin-left:600px;">
         <div>
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+          <img style="width:50px; height:50px;" *ngIf="corePerspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
         </div>
         <div style="line-height: 50px; height: 50px;"><span style="color:#006F91; font-family:barlowSemiCondensedLight; font-size:2rem;">{{'Perspectives.' + corePerspectiveId + '.Title' | translate}}</span></div>
       </div>
       <p style="font-size:2rem;">Secondary Perspective:</p>
       <div style="display:-webkit-box; text-align:center; margin-left:600px;">
         <div style="line-height:50px; height:50px;">
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
-          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-r.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-o.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-y.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-g.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-b.png" />
+          <img style="width:50px; height:50px;" *ngIf="secondaryPerspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-090-f-v.png" />
         </div>
         <div style="line-height: 50px; height: 50px;"><span style="color:#006F91; font-family:barlowSemiCondensedLight; font-size:2rem;">{{'Perspectives.' + secondaryPerspectiveId + '.Title' | translate}}</span></div>
       </div>
@@ -258,7 +258,7 @@
 
   <div class="reminder" id="grounding-reminder" *ngIf="corePerspectiveId == 1">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-red.png" />
       <div class="reminder-title-text">
         <p>Grounding,</p>
         <p>as your Core Perspective</p>
@@ -276,7 +276,7 @@
   </div>
   <div class="reminder" id="family-reminder" *ngIf="corePerspectiveId == 2">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-orange.png" />
       <div class="reminder-title-text">
         <p>Family,</p>
         <p>as your Core Perspective</p>
@@ -294,7 +294,7 @@
   </div>
   <div class="reminder" id="management-reminder" *ngIf="corePerspectiveId == 3">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
       <div class="reminder-title-text">
         <p>Management,</p>
         <p>as your Core Perspective</p>
@@ -312,7 +312,7 @@
   </div>
   <div class="reminder" id="relational-reminder" *ngIf="corePerspectiveId == 4 ">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-green.png" />
       <div class="reminder-title-text">
         <p>Relational,</p>
         <p>as your Core Perspective</p>
@@ -330,7 +330,7 @@
   </div>
   <div class="reminder" id="systems-reminder" *ngIf="corePerspectiveId == 5 ">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-blue.png" />
       <div class="reminder-title-text">
         <p>Systems,</p>
         <p>as your Core Perspective</p>
@@ -348,7 +348,7 @@
   </div>
   <div class="reminder" id="expansion-reminder" *ngIf="corePerspectiveId == 6">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-violet.png" />
       <div class="reminder-title-text">
         <p>Expansion,</p>
         <p>as your Core Perspective</p>
@@ -366,7 +366,7 @@
   </div>
   <div class="secondary-perspective-container" id="grounding-reminder" *ngIf="secondaryPerspectiveId == 1">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-red.png" />
       <div class="reminder-title-text">
         <p>Grounding,</p>
         <p>as your Second Perspective</p>
@@ -380,7 +380,7 @@
   </div>
   <div class="secondary-perspective-container" id="family-reminder" *ngIf="secondaryPerspectiveId == 2">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-orange.png" />
       <div class="reminder-title-text">
         <p>Family,</p>
         <p>as your Second Perspective</p>
@@ -394,7 +394,7 @@
   </div>
   <div class="secondary-perspective-container" id="management-reminder" *ngIf="secondaryPerspectiveId == 3">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
       <div class="reminder-title-text">
         <p>Management,</p>
         <p>as your Second Perspective</p>
@@ -408,7 +408,7 @@
   </div>
   <div class="secondary-perspective-container" id="relational-reminder" *ngIf="secondaryPerspectiveId == 4">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-green.png" />
       <div class="reminder-title-text">
         <p>Relational,</p>
         <p>as your Second Perspective</p>
@@ -422,7 +422,7 @@
   </div>
   <div class="secondary-perspective-container" id="systems-reminder" *ngIf="secondaryPerspectiveId == 5">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-blue.png" />
       <div class="reminder-title-text">
         <p>Systems,</p>
         <p>as your Second Perspective</p>
@@ -436,7 +436,7 @@
   </div>
   <div class="secondary-perspective-container" id="expansion-reminder" *ngIf="secondaryPerspectiveId == 6">
     <div class="reminder-title">
-      <img src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+      <img src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-violet.png" />
       <div class="reminder-title-text">
         <p>Expansion,</p>
         <p>as your Second Perspective</p>
@@ -456,31 +456,31 @@
     <p style="font-size:1.8rem;">Use these questions to reflect your Core and Second Values Perspectives</p>
     <div id="kp-perspectives-table-title-images">
       <div>
-        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-red.png" />
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 1 || secondaryPerspectiveId == 1" src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-red.png" />
         <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 1 && secondaryPerspectiveId != 1"> </div>
       </div>
       <div>
-        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 2 || secondaryPerspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-orange.png" />
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 2 || secondaryPerspectiveId == 2" src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-orange.png" />
         <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 2 && secondaryPerspectiveId != 2">
         </div>
       </div>
       <div>
-        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 3 || secondaryPerspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 3 || secondaryPerspectiveId == 3" src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-yellow.png" />
         <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 3 && secondaryPerspectiveId != 3">
         </div>
       </div>
       <div>
-        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 4 || secondaryPerspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-green.png" />
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 4 || secondaryPerspectiveId == 4" src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-green.png" />
         <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 4 && secondaryPerspectiveId != 4">
         </div>
       </div>
       <div>
-        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 5 || secondaryPerspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-blue.png" />
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 5 || secondaryPerspectiveId == 5" src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-blue.png" />
         <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 5 && secondaryPerspectiveId != 5">
         </div>
       </div>
       <div>
-        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 6 || secondaryPerspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logotype/KP-logotype-006F91-violet.png" />
+        <img class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId == 6 || secondaryPerspectiveId == 6" src="{{baseUrl}}/assets/KP-logotype/KP-logotype-006F91-violet.png" />
         <div class="kp-perspectives-table-title-image" *ngIf="corePerspectiveId != 6 && secondaryPerspectiveId != 6">
         </div>
       </div>
@@ -653,36 +653,36 @@
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>1</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[0].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[0].character + '.Title' | translate}}</span>
         </div>
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>2</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[1].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[1].character + '.Title' | translate}}</span>
         </div>
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>3</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[2].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[2].character + '.Title' | translate}}</span>
         </div>
@@ -691,36 +691,36 @@
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>4</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[3].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[3].character + '.Title' | translate}}</span>
         </div>
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>5</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[4].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[4].character + '.Title' | translate}}</span>
         </div>
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>6</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[5].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[5].character + '.Title' | translate}}</span>
         </div>
@@ -729,36 +729,36 @@
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>7</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[6].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[6].character + '.Title' | translate}}</span>
         </div>
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>8</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[7].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[7].character + '.Title' | translate}}</span>
         </div>
         <div class="top-nine-values-table-row" style="width:100%; height:100px; line-height:100px; display:-webkit-box;">
           <span>9</span>
           <div>
-            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+            <img *ngIf="valuesFromThirdStage[8].perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
           </div>
           <span>{{'Values.' + valuesFromThirdStage[8].character + '.Title' | translate}}</span>
         </div>
@@ -827,12 +827,12 @@
             <div style="display:-webkit-box;width:100px;text-align:center;">
               <span style="align-self:center;">{{i + 1}}</span>
               <div style="align-self:center;">
-                <img *ngIf="value.perspectiveId == 1" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
-                <img *ngIf="value.perspectiveId == 2" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
-                <img *ngIf="value.perspectiveId == 3" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
-                <img *ngIf="value.perspectiveId == 4" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
-                <img *ngIf="value.perspectiveId == 5" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
-                <img *ngIf="value.perspectiveId == 6" src="http://somefreedomain.ml/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
+                <img *ngIf="value.perspectiveId == 1" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-r.png" />
+                <img *ngIf="value.perspectiveId == 2" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-o.png" />
+                <img *ngIf="value.perspectiveId == 3" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-y.png" />
+                <img *ngIf="value.perspectiveId == 4" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-g.png" />
+                <img *ngIf="value.perspectiveId == 5" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-b.png" />
+                <img *ngIf="value.perspectiveId == 6" src="{{baseUrl}}/assets/KP-logo-accessories--png/00-0-Drop-045-f-v.png" />
               </div>
             </div>
           </div>

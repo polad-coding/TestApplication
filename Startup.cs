@@ -37,9 +37,10 @@ namespace KPProject
         {
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseMySql(
-            //        "Server=localhost;Database=kpprojectdb;user=root; password=Polad5689742!;"));
+            //        "Server=localhost;Database=kpprojectdatabase;user=root; password=Polad5689742!;"));
 
             var context = new CustomAssemblyLoadContext();
+            //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.dll"));
             context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
@@ -168,15 +169,55 @@ namespace KPProject
                 }
             });
 
-            //CreateRoles(serviceProvider).Wait();
-            //CreateUsers(serviceProvider).Wait();
-            //CreatePerspectives(serviceProvider).Wait();
-            //CreateValues(serviceProvider).Wait();
-            //CreatePerspectivesLanguageFiles(serviceProvider).Wait();
-            //CreateValuesLanguageFiles(serviceProvider).Wait();
-            //CreateCertifications(serviceProvider).Wait();
-            //CreateAdmin(serviceProvider).Wait();
-            //PopulateDBWithCoupons(serviceProvider).Wait();
+            CreateGenders(serviceProvider).Wait();
+            CreateLanguages(serviceProvider).Wait();
+            CreatePositions(serviceProvider).Wait();
+            CreateAgeGroups(serviceProvider).Wait();
+            CreateCertification(serviceProvider).Wait();
+            CreateEducations(serviceProvider).Wait();
+            CreatePerspectives(serviceProvider).Wait();
+            CreateSectorsOfActivity(serviceProvider).Wait();
+            CreateRegions(serviceProvider).Wait();
+            CreateRoles(serviceProvider).Wait();
+            CreateCertifications(serviceProvider).Wait();
+            CreateAdmin(serviceProvider).Wait();
+            PopulateDBWithCoupons(serviceProvider).Wait();
+            CreatePractitioiners(serviceProvider).Wait();
+        }
+
+        public async Task CreatePositions(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithPositionsAsync();
+        }
+
+        public async Task CreatePractitioiners(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithPractitioners();
+        }
+
+        public async Task CreateAgeGroups(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithAgeGroupsAsync();
+        }
+
+        public async Task CreateCertification(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithCertificationAsync();
+        }
+
+        public async Task CreateSectorsOfActivity(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithSectorsOfActivityAsync();
         }
 
         public async Task CreateValues(IServiceProvider serviceProvider)
@@ -184,7 +225,6 @@ namespace KPProject
             var dataService = serviceProvider.GetRequiredService<IDataService>();
 
             await dataService.PopulateDBWithValuesAsync();
-
         }
 
         public async Task CreateCertifications(IServiceProvider serviceProvider)
@@ -202,6 +242,14 @@ namespace KPProject
 
         }
 
+        public async Task CreateEducations(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithEducationsAsync();
+
+        }
+
         public async Task CreateValuesLanguageFiles(IServiceProvider serviceProvider)
         {
             var dataService = serviceProvider.GetRequiredService<IDataService>();
@@ -216,6 +264,21 @@ namespace KPProject
 
             await dataService.PopulateDBWithPerspectivesAsync();
 
+        }
+
+        public async Task CreateLanguages(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.PopulateDBWithLanguagesAsync();
+
+        }
+
+        public async Task CreateGenders(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
+
+            await dataService.GenerateGenders();
         }
 
         public async Task CreateRoles(IServiceProvider serviceProvider)
@@ -236,109 +299,23 @@ namespace KPProject
 
         public async Task CreateAdmin(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
 
-            if (await userManager.FindByEmailAsync("admin@gmail.com") != null) 
-            {
-                return;
-            }
+            await dataService.PopulateDBWithAdmin();
+        }
 
-            var created = await userManager.CreateAsync(new ApplicationUser
-            {
-                Email = "admin@gmail.com",
-                UserName = "admin@gmail.com"
-            },"Admin123!");
+        public async Task CreateRegions(IServiceProvider serviceProvider)
+        {
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
 
-            if (created.Succeeded)
-            {
-                await userManager.AddToRoleAsync(await userManager.FindByEmailAsync("admin@gmail.com"), "Admin");
-            }
+            await dataService.PopulateDbWithRegions();
         }
 
         public async Task CreateUsers(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var dataService = serviceProvider.GetRequiredService<IDataService>();
 
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "Aasd",
-                LastName = "asd",
-                Email = "asdad@gmail.com",
-                UserName = "asdad@gmail.com",
-                Website = "asdadsad",
-                Bio = "asdadasdasd",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "fghj",
-                LastName = "fgj",
-                Email = "fgj@gmail.com",
-                UserName = "fgj@gmail.com",
-                Website = "fghj",
-                Bio = "fghj",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "gf",
-                LastName = "sdfg",
-                Email = "sdf@gmail.com",
-                UserName = "sdf@gmail.com",
-                Website = "dsfg",
-                Bio = "sdfg",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "sdfg",
-                LastName = "sdg",
-                Email = "sdgt@gmail.com",
-                UserName = "sdgt@gmail.com",
-                Website = "revs",
-                Bio = "vwre",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "d qwd  ",
-                LastName = "ADSa",
-                Email = "ASD@gmail.com",
-                UserName = "ASD@gmail.com",
-                Website = "ASFSAFD",
-                Bio = "ASDVBS",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "JYRG",
-                LastName = "RTYJH",
-                Email = "JKL@gmail.com",
-                UserName = "JKL@gmail.com",
-                Website = "NGHNBF",
-                Bio = "CVBDG",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "YIKIY",
-                LastName = "UKHR",
-                Email = "RTY@gmail.com",
-                UserName = "RTY@gmail.com",
-                Website = "GHVDDA",
-                Bio = "SDCA WQ",
-            }, "plamf12345");
-
-            await userManager.CreateAsync(new ApplicationUser
-            {
-                FirstName = "CXVBCV",
-                LastName = "XVCBSD",
-                Email = "CVB@gmail.com",
-                UserName = "CVB@gmail.com",
-                Website = "ASDFSADF",
-                Bio = "asdADW",
-            }, "plamf12345");
-
+            await dataService.PopulateDbWithUsers();
         }
     }
 }

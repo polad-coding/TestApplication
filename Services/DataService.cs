@@ -242,7 +242,7 @@ namespace KPProject.Services
 
             foreach (var user in users)
             {
-                if (await _userManager.IsInRoleAsync(user,"Practitioner"))
+                if (await _userManager.IsInRoleAsync(user, "Practitioner"))
                 {
                     counter += 1;
                 }
@@ -277,9 +277,11 @@ namespace KPProject.Services
 
                 await _applicationDbContext.SaveChangesAsync();
 
+                var admin = await _userManager.FindByEmailAsync("admin@gmail.com");
+
                 listOfAssociatedCoupons.ForEach(ac =>
                 {
-                    _applicationDbContext.ApplicationUserAssociatedCoupons.Add(new ApplicationUserAssociatedCoupon { AssociatedCouponId = ac.Id, ApplicationUserId = "3a10366e-4d73-441d-a18c-43deb1e508c7" });
+                    _applicationDbContext.ApplicationUserAssociatedCoupons.Add(new ApplicationUserAssociatedCoupon { AssociatedCouponId = ac.Id, ApplicationUserId = admin.Id });
                 });
 
 
@@ -287,5 +289,292 @@ namespace KPProject.Services
             }
         }
 
+        public async Task GenerateGenders()
+        {
+            if (_applicationDbContext.Gender.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Gender.AddAsync(new Gender { GenderName = "Male" });
+            await _applicationDbContext.Gender.AddAsync(new Gender { GenderName = "Female" });
+            await _applicationDbContext.Gender.AddAsync(new Gender { GenderName = "Other" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDbWithRegions()
+        {
+            if (_applicationDbContext.Regions.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Regions.AddAsync(new RegionModel { RegionName = "Japan" });
+            await _applicationDbContext.Regions.AddAsync(new RegionModel { RegionName = "Russia" });
+            await _applicationDbContext.Regions.AddAsync(new RegionModel { RegionName = "USA" });
+            await _applicationDbContext.Regions.AddAsync(new RegionModel { RegionName = "Canada" });
+            await _applicationDbContext.Regions.AddAsync(new RegionModel { RegionName = "Moldova" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithSectorsOfActivityAsync()
+        {
+            if (_applicationDbContext.SectorsOfActivity.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.SectorsOfActivity.AddAsync(new SectorOfActivityModel { SectorOfActivityName = "IT" });
+            await _applicationDbContext.SectorsOfActivity.AddAsync(new SectorOfActivityModel { SectorOfActivityName = "Finances" });
+            await _applicationDbContext.SectorsOfActivity.AddAsync(new SectorOfActivityModel { SectorOfActivityName = "Humanitarian Sciences" });
+            await _applicationDbContext.SectorsOfActivity.AddAsync(new SectorOfActivityModel { SectorOfActivityName = "Technical Sciences" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithPositionsAsync()
+        {
+            if (_applicationDbContext.Positions.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Positions.AddAsync(new PositionModel { PositionName = "HR" });
+            await _applicationDbContext.Positions.AddAsync(new PositionModel { PositionName = "Junior software developer" });
+            await _applicationDbContext.Positions.AddAsync(new PositionModel { PositionName = "Senior software developer" });
+            await _applicationDbContext.Positions.AddAsync(new PositionModel { PositionName = "CEO" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithLanguagesAsync()
+        {
+            if (_applicationDbContext.Languages.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Languages.AddAsync(new LanguageModel { LanguageName = "Russian" });
+            await _applicationDbContext.Languages.AddAsync(new LanguageModel { LanguageName = "Greek" });
+            await _applicationDbContext.Languages.AddAsync(new LanguageModel { LanguageName = "English" });
+            await _applicationDbContext.Languages.AddAsync(new LanguageModel { LanguageName = "French" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithEducationsAsync()
+        {
+            if (_applicationDbContext.Educations.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Educations.AddAsync(new EducationModel { EducationName = "Bachelor" });
+            await _applicationDbContext.Educations.AddAsync(new EducationModel { EducationName = "Master" });
+            await _applicationDbContext.Educations.AddAsync(new EducationModel { EducationName = "PhD" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithCertificationAsync()
+        {
+            if (_applicationDbContext.Certifications.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.Certifications.AddAsync(new Certification { Level = 1, CertificationType = "Individual assessment" });
+            await _applicationDbContext.Certifications.AddAsync(new Certification { Level = 2, CertificationType = "Group assessment" });
+            await _applicationDbContext.Certifications.AddAsync(new Certification { Level = 3, CertificationType = "Individual assessment Certifier" });
+            await _applicationDbContext.Certifications.AddAsync(new Certification { Level = 4, CertificationType = "Group assessment Certifier" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithAgeGroupsAsync()
+        {
+            if (_applicationDbContext.AgeGroups.Count() != 0)
+            {
+                return;
+            }
+
+            await _applicationDbContext.AgeGroups.AddAsync(new AgeGroup { GroupAgeRange = "Under 25" });
+            await _applicationDbContext.AgeGroups.AddAsync(new AgeGroup { GroupAgeRange = "From 25 to 35" });
+            await _applicationDbContext.AgeGroups.AddAsync(new AgeGroup { GroupAgeRange = "From 35 to 50" });
+            await _applicationDbContext.AgeGroups.AddAsync(new AgeGroup { GroupAgeRange = "Over 50" });
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDbWithUsers()
+        {
+            if (_applicationDbContext.Users.Count() != 0)
+            {
+                return;
+            }
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "Aasd",
+                LastName = "asd",
+                Email = "asdad@gmail.com",
+                UserName = "asdad@gmail.com",
+                Website = "asdadsad",
+                Bio = "asdadasdasd",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "fghj",
+                LastName = "fgj",
+                Email = "fgj@gmail.com",
+                UserName = "fgj@gmail.com",
+                Website = "fghj",
+                Bio = "fghj",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "gf",
+                LastName = "sdfg",
+                Email = "sdf@gmail.com",
+                UserName = "sdf@gmail.com",
+                Website = "dsfg",
+                Bio = "sdfg",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "sdfg",
+                LastName = "sdg",
+                Email = "sdgt@gmail.com",
+                UserName = "sdgt@gmail.com",
+                Website = "revs",
+                Bio = "vwre",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "d qwd  ",
+                LastName = "ADSa",
+                Email = "ASD@gmail.com",
+                UserName = "ASD@gmail.com",
+                Website = "ASFSAFD",
+                Bio = "ASDVBS",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "JYRG",
+                LastName = "RTYJH",
+                Email = "JKL@gmail.com",
+                UserName = "JKL@gmail.com",
+                Website = "NGHNBF",
+                Bio = "CVBDG",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "YIKIY",
+                LastName = "UKHR",
+                Email = "RTY@gmail.com",
+                UserName = "RTY@gmail.com",
+                Website = "GHVDDA",
+                Bio = "SDCA WQ",
+            }, "Plamf5689742!");
+
+            await _userManager.CreateAsync(new ApplicationUser
+            {
+                FirstName = "CXVBCV",
+                LastName = "XVCBSD",
+                Email = "CVB@gmail.com",
+                UserName = "CVB@gmail.com",
+                Website = "ASDFSADF",
+                Bio = "asdADW",
+            }, "Plamf5689742!");
+
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
+        public async Task PopulateDBWithAdmin()
+        {
+            if (await _userManager.FindByEmailAsync("admin@gmail.com") != null)
+            {
+                return;
+            }
+
+            var created = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "admin@gmail.com",
+                UserName = "admin@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Male")
+            }, "Admin123!");
+
+            if (created.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("admin@gmail.com"), "Admin");
+            }
+        }
+
+        public async Task PopulateDBWithPractitioners()
+        {
+            var practitioners = await _userManager.GetUsersInRoleAsync("Practitioner");
+
+            if (practitioners.Count > 0)
+            {
+                return;
+            }
+
+            var firstUser = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "jerome@gmail.com",
+                UserName = "jerome@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Male")
+            }, "Admin123!");
+
+            var secondUser = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "victor@gmail.com",
+                UserName = "victor@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Female")
+            }, "Admin123!");
+
+            var thirdUser = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "stathis@gmail.com",
+                UserName = "stathis@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Male")
+            }, "Admin123!");
+
+            var fourthUser = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "polad@gmail.com",
+                UserName = "polad@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Male")
+            }, "Admin123!");
+
+            var fifthUser = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "mike@gmail.com",
+                UserName = "mike@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Male")
+            }, "Admin123!");
+
+            var sixUser = await _userManager.CreateAsync(new ApplicationUser
+            {
+                Email = "megan@gmail.com",
+                UserName = "megan@gmail.com",
+                Gender = await _applicationDbContext.Gender.FirstOrDefaultAsync(g => g.GenderName == "Female")
+            }, "Admin123!");
+
+            await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("jerome@gmail.com"), "Practitioner");
+            await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("victor@gmail.com"), "Practitioner");
+            await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("stathis@gmail.com"), "Practitioner");
+            await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("polad@gmail.com"), "Practitioner");
+            await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("mike@gmail.com"), "Practitioner");
+            await _userManager.AddToRoleAsync(await _userManager.FindByEmailAsync("megan@gmail.com"), "Practitioner");
+        }
     }
 }

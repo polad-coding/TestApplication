@@ -30,6 +30,8 @@ export class PractitionerReportComponent implements OnInit, AfterViewInit {
 
   public user: UserViewModel;
 
+  public baseUrl: string = 'http://praxis-dev-temp.com';
+
   public corePerspectiveId: number;
   public secondaryPerspectiveId: number;
 

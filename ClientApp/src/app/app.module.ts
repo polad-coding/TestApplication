@@ -116,7 +116,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['somefreedomain.ml', 'localhost:5001', 'localhost:5000'],
+        whitelistedDomains: ['praxis-dev-temp.com', 'localhost:5001', 'localhost:5000', 'localhost:44373'],
         blacklistedRoutes: []
       }
     })

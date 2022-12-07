@@ -18,5 +18,16 @@ namespace KPProject.Interfaces
         Task<List<UserViewModel>> GetPractitionersForDirectoryAsync(PractitionersSearchFilterViewModel practitionersSearchFilterViewModel);
         Task<int> ReturnNumberOfPractitionersAsync();
         Task PopulateDBWithCoupons();
+        Task GenerateGenders();
+        Task PopulateDbWithRegions();
+        Task PopulateDBWithSectorsOfActivityAsync();
+        Task PopulateDBWithPositionsAsync();
+        Task PopulateDBWithLanguagesAsync();
+        Task PopulateDBWithEducationsAsync();
+        Task PopulateDBWithCertificationAsync();
+        Task PopulateDBWithAgeGroupsAsync();
+        Task PopulateDbWithUsers();
+        Task PopulateDBWithAdmin();
+        Task PopulateDBWithPractitioners();
     }
 }

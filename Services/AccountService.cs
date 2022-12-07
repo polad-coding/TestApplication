@@ -293,7 +293,7 @@ namespace KPProject.Services
         /// <returns></returns>
         public async Task<bool> AssociateUserDataToTheSurveyAsync(string userId)
         {
-            var user = await _applicationDbContext.Users.Where((u) => u.Id == userId).Include(u => u.Regions).Include(u => u.Educations).Include(u => u.Positions).Include(u => u.SectorsOfActivities).FirstAsync();
+            var user = await _applicationDbContext.Users.Where((u) => u.Id == userId).Include(u => u.Regions).Include(u => u.Educations).Include(u => u.Positions).Include(u => u.SectorsOfActivities).Include(u => u.AgeGroup).FirstAsync();
 
             var anonymisedUser = new AnonymisedUser() { AgeGroup = user.AgeGroup, Gender = user.Gender, MyerBriggsCode = user.MyerBriggsCode };
 
