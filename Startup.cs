@@ -41,9 +41,13 @@ namespace KPProject
 
             var context = new CustomAssemblyLoadContext();
             //context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.dll"));
-            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(), "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
+            context.LoadUnmanagedLibrary(Path.Combine(Directory.GetCurrentDirectory(),  "bin", "Debug", "netcoreapp3.1", "publish", "libwkhtmltox.so"));
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql("Server=localhost;Database=kpprojectdatabase;user=root; password=12345;port=3306;SSL Mode=None", options => options.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: System.TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null)
+));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -84,9 +88,9 @@ namespace KPProject
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = Configuration.GetSection("JwtIssuer").Value,
-                        ValidAudience = Configuration.GetSection("JwtAudience").Value,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetSection("JwtKey").Value)),
+                        ValidIssuer = "praxis-dev-temp.com",
+                        ValidAudience = "praxis-dev-temp.com",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jsnlckjnsalkncaslcjsncp3cbakjnLIU@BIUDBFIBVLB#!IBVbvsoibcjksdcuobsdc")),
                         ClockSkew = TimeSpan.Zero
                     };
                 });
@@ -109,7 +113,8 @@ namespace KPProject
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "wwwroot/dist";
+ //configuration.RootPath = "wwwroot/dist";
+               configuration.RootPath = "ClientApp/dist";
             });
         }
 
@@ -168,7 +173,8 @@ namespace KPProject
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
+	    
+	    CreateValues(serviceProvider).Wait();
             CreateGenders(serviceProvider).Wait();
             CreateLanguages(serviceProvider).Wait();
             CreatePositions(serviceProvider).Wait();
